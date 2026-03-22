@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mohit Tater — AI Product Consultant & Design Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
@@ -456,6 +456,35 @@
     border-color: var(--accent);
     color: var(--accent);
     background: var(--accent-dim);
+  }
+
+  /* ─── Focus & Accessibility ─── */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .top-cta:focus-visible {
+    outline-offset: 4px;
+    border-radius: 100px;
+  }
+
+  .stack-chip:focus-visible {
+    border-radius: 100px;
+  }
+
+  .bottom-links a:focus-visible,
+  .subpage-back:focus-visible {
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   /* ─── Responsive ─── */
