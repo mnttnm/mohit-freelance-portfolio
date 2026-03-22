@@ -458,6 +458,55 @@
     background: var(--accent-dim);
   }
 
+  /* ─── Subpage Footer ─── */
+  .subpage-footer {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 40px 0 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .subpage-nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  .subpage-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .subpage-nav a:hover {
+    color: var(--text-secondary);
+  }
+
+  .subpage-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 8px 20px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.25s;
+  }
+
+  .subpage-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(200,245,110,0.22);
+  }
+
   /* ─── Focus & Accessibility ─── */
   :focus-visible {
     outline: 2px solid var(--accent);
@@ -679,6 +728,14 @@
       <div class="work-name">Hackathon Projects</div>
       <p class="work-desc">Claude Code Observatory (Tableau Hackathon — enterprise analytics for AI coding tools), ComplyKit (Atlassian Hackathon — AI brand compliance for Jira), MarkDiff (semantic markdown comparison for LLM prompts).</p>
     </div>
+    <div class="subpage-footer">
+      <div class="subpage-nav">
+        <a href="#" onclick="showLanding(); return false;">Home</a>
+        <a href="#" onclick="showPage('background'); return false;">Background</a>
+        <a href="#" onclick="showPage('stack'); return false;">Stack</a>
+      </div>
+      <a href="mailto:mohittater.iiita@gmail.com" class="subpage-cta">Let's talk →</a>
+    </div>
   </div>
 </div>
 
@@ -710,6 +767,14 @@
       <div class="exp-role">UX Engineer</div>
       <div class="exp-company">GoodCode</div>
       <div class="exp-desc">Client-facing discovery with CPOs and CTOs. Translating business needs into product experiences.</div>
+    </div>
+    <div class="subpage-footer">
+      <div class="subpage-nav">
+        <a href="#" onclick="showLanding(); return false;">Home</a>
+        <a href="#" onclick="showPage('work'); return false;">Work</a>
+        <a href="#" onclick="showPage('stack'); return false;">Stack</a>
+      </div>
+      <a href="mailto:mohittater.iiita@gmail.com" class="subpage-cta">Let's talk →</a>
     </div>
   </div>
 </div>
@@ -764,6 +829,14 @@
         <span class="stack-chip">Build in Public</span>
         <span class="stack-chip">Win Without Pitching</span>
       </div>
+    </div>
+    <div class="subpage-footer">
+      <div class="subpage-nav">
+        <a href="#" onclick="showLanding(); return false;">Home</a>
+        <a href="#" onclick="showPage('work'); return false;">Work</a>
+        <a href="#" onclick="showPage('background'); return false;">Background</a>
+      </div>
+      <a href="mailto:mohittater.iiita@gmail.com" class="subpage-cta">Let's talk →</a>
     </div>
   </div>
 </div>
