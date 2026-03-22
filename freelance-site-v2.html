@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohit Tater — AI Product Consultant & Design Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0C;
+    --bg-elevated: #111114;
+    --bg-card: #161619;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.14);
+    --text-primary: #EDEBE5;
+    --text-secondary: #87878B;
+    --text-muted: #505054;
+    --accent: #C8F56E;
+    --accent-dim: rgba(200,245,110,0.07);
+    --warm: #E8C4A0;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Instrument Sans', -apple-system, sans-serif;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── Landing Page ─── */
+  .landing {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+    position: relative;
+  }
+
+  .landing::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(200,245,110,0.035) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ─── Top Bar ─── */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    opacity: 0;
+    animation: fadeIn 0.6s var(--ease-out) 0.1s forwards;
+  }
+
+  .brand {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .top-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 8px 20px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.25s;
+  }
+
+  .top-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(200,245,110,0.22);
+  }
+
+  /* ─── Main Content ─── */
+  .main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    opacity: 0;
+    animation: fadeIn 0.7s var(--ease-out) 0.25s forwards;
+  }
+
+  /* ─── Left: Identity ─── */
+  .identity-col {
+    padding: 20px 0;
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .headline {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+
+  .headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 440px;
+    margin-bottom: 28px;
+  }
+
+  .proof-row {
+    display: flex;
+    gap: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .proof-item {}
+
+  .proof-num {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .proof-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  /* ─── Right: Services ─── */
+  .services-col {}
+
+  .services-header {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .svc {
+    background: var(--bg-elevated);
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    transition: background 0.25s;
+    cursor: default;
+  }
+
+  .svc:hover {
+    background: var(--bg-card);
+  }
+
+  .svc-name {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    letter-spacing: -0.01em;
+  }
+
+  .svc-sub {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  .svc-price {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warm);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .svc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .tag {
+    font-size: 0.62rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── Bottom Bar ─── */
+  .bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    opacity: 0;
+    animation: fadeIn 0.6s var(--ease-out) 0.5s forwards;
+  }
+
+  .bottom-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .bottom-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .bottom-links a:hover {
+    color: var(--text-secondary);
+  }
+
+  .bottom-meta {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── Animations ─── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Sub Pages ─── */
+  .subpage {
+    display: none;
+    min-height: 100vh;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+
+  .subpage.active {
+    display: block;
+  }
+
+  .subpage-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 0 60px;
+  }
+
+  .subpage-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-bottom: 48px;
+    transition: color 0.2s;
+  }
+
+  .subpage-back:hover { color: var(--text-secondary); }
+
+  .subpage-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    line-height: 1.15;
+  }
+
+  /* ─── Sub: Background ─── */
+  .exp-item {
+    position: relative;
+    padding-left: 28px;
+    padding-bottom: 40px;
+    border-left: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { padding-bottom: 0; }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .exp-period {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .exp-role {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    margin-bottom: 2px;
+  }
+
+  .exp-company {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+
+  .exp-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  /* ─── Sub: Work ─── */
+  .work-item {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 20px;
+    background: var(--bg-elevated);
+  }
+
+  .work-metric {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .work-name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 6px 0;
+  }
+
+  .work-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ─── Sub: Stack ─── */
+  .stack-group { margin-bottom: 32px; }
+
+  .stack-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .stack-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack-chip {
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .stack-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 860px) {
+    .main-content {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 40px;
+    }
+
+    .landing {
+      min-height: auto;
+      padding-bottom: 24px;
+    }
+
+    .identity-col { padding: 20px 0 0; }
+
+    .proof-row { gap: 20px; }
+
+    .bottom-bar {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .proof-row { flex-wrap: wrap; gap: 16px; }
+    .svc { padding: 14px 16px; }
+  }
+
+  @media (min-height: 900px) {
+    .headline { font-size: clamp(2.6rem, 4vw, 3.8rem); }
+    .svc { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- LANDING — everything above the fold    -->
+<!-- ═══════════════════════════════════════ -->
+<div class="landing" id="landing">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="brand">Mohit Tater</div>
+    <a href="mailto:mohittater.iiita@gmail.com" class="top-cta">Let's talk →</a>
+  </div>
+
+  <!-- Main Split -->
+  <div class="main-content">
+
+    <!-- Left: Who I Am -->
+    <div class="identity-col">
+      <div class="eyebrow">Available for Q2 2026</div>
+      <h1 class="headline">I design & build <em>smarter products</em> with AI</h1>
+      <p class="desc">AI Product Consultant & Design Engineer. 10+ years bridging UX, frontend, and AI — I don't just advise, I ship production code.</p>
+      <div class="proof-row">
+        <div class="proof-item">
+          <div class="proof-num">5K+</div>
+          <div class="proof-label">Plugin Users</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-num">10+</div>
+          <div class="proof-label">Years Exp</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-num">UX × Dev × AI</div>
+          <div class="proof-label">Hybrid Practice</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Services -->
+    <div class="services-col">
+      <div class="services-header">Services — outcomes, not hours</div>
+      <div class="service-list">
+
+        <div class="svc">
+          <div>
+            <div class="svc-name">AI Product Evaluation</div>
+            <div class="svc-sub">Audit AI features, build eval frameworks, prioritize fixes</div>
+            <div class="svc-tags">
+              <span class="tag">Strategy</span>
+              <span class="tag">Eval Framework</span>
+              <span class="tag">2 weeks</span>
+            </div>
+          </div>
+          <div class="svc-price">from $4K</div>
+        </div>
+
+        <div class="svc">
+          <div>
+            <div class="svc-name">Rapid AI-Powered MVP</div>
+            <div class="svc-sub">Concept to working product in two weeks — built to validate</div>
+            <div class="svc-tags">
+              <span class="tag">Next.js</span>
+              <span class="tag">React</span>
+              <span class="tag">AI Integration</span>
+            </div>
+          </div>
+          <div class="svc-price">from $6K</div>
+        </div>
+
+        <div class="svc">
+          <div>
+            <div class="svc-name">AI Workflow Automation</div>
+            <div class="svc-sub">Map manual processes, build agentic workflows that cut 70% of busywork</div>
+            <div class="svc-tags">
+              <span class="tag">Agents</span>
+              <span class="tag">Claude</span>
+              <span class="tag">n8n</span>
+            </div>
+          </div>
+          <div class="svc-price">from $3K</div>
+        </div>
+
+        <div class="svc">
+          <div>
+            <div class="svc-name">Product & UX Design</div>
+            <div class="svc-sub">Research, IA, wireframes, interactive Figma prototypes</div>
+            <div class="svc-tags">
+              <span class="tag">Figma</span>
+              <span class="tag">Prototyping</span>
+              <span class="tag">Research</span>
+            </div>
+          </div>
+          <div class="svc-price">from $4K</div>
+        </div>
+
+        <div class="svc">
+          <div>
+            <div class="svc-name">Fullstack Development</div>
+            <div class="svc-sub">Production apps — React, Next.js, TypeScript, Supabase</div>
+            <div class="svc-tags">
+              <span class="tag">TypeScript</span>
+              <span class="tag">Tailwind</span>
+              <span class="tag">Vercel</span>
+            </div>
+          </div>
+          <div class="svc-price">contact</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <div class="bottom-links">
+      <a href="#" onclick="showPage('work'); return false;">Work</a>
+      <a href="#" onclick="showPage('background'); return false;">Background</a>
+      <a href="#" onclick="showPage('stack'); return false;">Stack</a>
+      <a href="https://twitter.com/tatermohit" target="_blank">Twitter</a>
+      <a href="https://linkedin.com/in/tatermohit" target="_blank">LinkedIn</a>
+      <a href="https://github.com/mnttnm" target="_blank">GitHub</a>
+    </div>
+    <div class="bottom-meta">Bengaluru, India · IIIT-Allahabad</div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- SUB-PAGES — hidden by default          -->
+<!-- ═══════════════════════════════════════ -->
+
+<!-- Work -->
+<div class="subpage" id="page-work">
+  <div class="subpage-inner">
+    <a href="#" class="subpage-back" onclick="showLanding(); return false;">← Back</a>
+    <h2 class="subpage-title">Shipped & proven</h2>
+    <div class="work-item">
+      <div class="work-metric">5,000+</div>
+      <div class="work-name">Figma Variable Explorer Plugin</div>
+      <p class="work-desc">A plugin for exploring and managing design tokens and variables in Figma. Used by thousands of designers across the community.</p>
+    </div>
+    <div class="work-item">
+      <div class="work-metric">250+</div>
+      <div class="work-name">Raycast Notes Extension</div>
+      <p class="work-desc">Keyboard-first note-taking for Raycast. Capture thoughts without leaving your workflow.</p>
+    </div>
+    <div class="work-item">
+      <div class="work-metric">→</div>
+      <div class="work-name">Client Engagements</div>
+      <p class="work-desc">React/Next.js frontend migrations, AI-powered content extraction tools, DAM interface design, SDR automation systems, agentic workflow consulting, and UX memory extraction pipelines for AI coding tools.</p>
+    </div>
+    <div class="work-item">
+      <div class="work-metric">→</div>
+      <div class="work-name">Hackathon Projects</div>
+      <p class="work-desc">Claude Code Observatory (Tableau Hackathon — enterprise analytics for AI coding tools), ComplyKit (Atlassian Hackathon — AI brand compliance for Jira), MarkDiff (semantic markdown comparison for LLM prompts).</p>
+    </div>
+  </div>
+</div>
+
+<!-- Background -->
+<div class="subpage" id="page-background">
+  <div class="subpage-inner">
+    <a href="#" class="subpage-back" onclick="showLanding(); return false;">← Back</a>
+    <h2 class="subpage-title">Where I've been</h2>
+    <div class="exp-item">
+      <div class="exp-period">2024 — Present</div>
+      <div class="exp-role">Freelance Consultant</div>
+      <div class="exp-company">AI Product & Design Engineering</div>
+      <div class="exp-desc">UX design, frontend development, and AI product consulting. Project-based and retainer engagements with startups and growth-stage companies. Building compound engineering workflows and shipping open-source tools.</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-period">Previously</div>
+      <div class="exp-role">Senior Software Developer</div>
+      <div class="exp-company">BlueJeans by Verizon</div>
+      <div class="exp-desc">Frontend engineering on enterprise video conferencing products at scale.</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-period">Previously</div>
+      <div class="exp-role">PM + Developer</div>
+      <div class="exp-company">Query.ai</div>
+      <div class="exp-desc">Rare dual role spanning product management and hands-on development for a security product.</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-period">Previously</div>
+      <div class="exp-role">UX Engineer</div>
+      <div class="exp-company">GoodCode</div>
+      <div class="exp-desc">Client-facing discovery with CPOs and CTOs. Translating business needs into product experiences.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Stack -->
+<div class="subpage" id="page-stack">
+  <div class="subpage-inner">
+    <a href="#" class="subpage-back" onclick="showLanding(); return false;">← Back</a>
+    <h2 class="subpage-title">What I work with</h2>
+    <div class="stack-group">
+      <div class="stack-label">Design</div>
+      <div class="stack-cloud">
+        <span class="stack-chip">Figma</span>
+        <span class="stack-chip">Prototyping</span>
+        <span class="stack-chip">Design Systems</span>
+        <span class="stack-chip">User Research</span>
+        <span class="stack-chip">Information Architecture</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <div class="stack-label">Engineering</div>
+      <div class="stack-cloud">
+        <span class="stack-chip">React</span>
+        <span class="stack-chip">Next.js</span>
+        <span class="stack-chip">TypeScript</span>
+        <span class="stack-chip">Tailwind CSS</span>
+        <span class="stack-chip">Vercel</span>
+        <span class="stack-chip">Supabase</span>
+        <span class="stack-chip">Node.js</span>
+        <span class="stack-chip">FastAPI</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <div class="stack-label">AI & Automation</div>
+      <div class="stack-cloud">
+        <span class="stack-chip">Claude</span>
+        <span class="stack-chip">Claude Code</span>
+        <span class="stack-chip">Vercel AI SDK</span>
+        <span class="stack-chip">Agentic Workflows</span>
+        <span class="stack-chip">n8n</span>
+        <span class="stack-chip">Prompt Engineering</span>
+        <span class="stack-chip">LLM Evaluation</span>
+        <span class="stack-chip">MCP Servers</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <div class="stack-label">Methodology</div>
+      <div class="stack-cloud">
+        <span class="stack-chip">Compound Engineering</span>
+        <span class="stack-chip">Skill Files</span>
+        <span class="stack-chip">CLAUDE.md</span>
+        <span class="stack-chip">Build in Public</span>
+        <span class="stack-chip">Win Without Pitching</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function showPage(id) {
+    document.getElementById('landing').style.display = 'none';
+    document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    page.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function showLanding() {
+    document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+    document.getElementById('landing').style.display = 'grid';
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>

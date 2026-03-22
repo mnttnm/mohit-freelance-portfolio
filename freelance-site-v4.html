@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohit Tater — AI Product Consultant & Design Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F0E8;
+    --surface: #FDFAF5;
+    --ink: #1A1714;
+    --ink-secondary: #5C564D;
+    --ink-muted: #928B80;
+    --ink-faint: #BEB7AC;
+    --accent: #B64D1F;
+    --accent-hover: #9C3F16;
+    --rule: rgba(26,23,20,0.09);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Instrument Sans', -apple-system, sans-serif;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ════════════════════════════════════════════════
+     HERO — full-bleed, image-led, brand dominant
+     No inherited page gutters on the hero itself.
+     Only the inner text column is constrained.
+     ════════════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  /* Real photographic anchor — warm architectural light */
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80')
+      center / cover no-repeat;
+  }
+
+  /* Warm scrim: keeps text legible against the calm bottom region */
+  .hero-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to top,
+        rgba(20, 18, 14, 0.88) 0%,
+        rgba(20, 18, 14, 0.62) 35%,
+        rgba(20, 18, 14, 0.18) 60%,
+        rgba(20, 18, 14, 0.04) 100%
+      );
+  }
+
+  /* Grain over image for tactile quality */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Inner text column — the only constrained element */
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(28px, 5vw, 64px) clamp(48px, 7vh, 80px);
+  }
+
+  /* ── Brand name: poster scale, loudest element ── */
+  .brand {
+    font-family: var(--serif);
+    font-size: clamp(3.4rem, 11vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    color: #F4F0E8;
+    margin-bottom: clamp(14px, 2vw, 22px);
+    opacity: 0;
+    transform: translateY(36px);
+    animation: riseUp 1s var(--ease-out) 0.2s forwards;
+  }
+
+  /* ── Role line: subordinate ── */
+  .role {
+    font-family: var(--sans);
+    font-size: clamp(0.82rem, 1.3vw, 1rem);
+    font-weight: 500;
+    color: rgba(244,240,232,0.55);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: clamp(16px, 2.5vw, 28px);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: riseUp 0.85s var(--ease-out) 0.45s forwards;
+  }
+
+  /* ── One supporting sentence ── */
+  .hero-body {
+    font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+    color: rgba(244,240,232,0.7);
+    line-height: 1.6;
+    max-width: 440px;
+    margin-bottom: clamp(28px, 3.5vw, 40px);
+    opacity: 0;
+    transform: translateY(16px);
+    animation: riseUp 0.8s var(--ease-out) 0.6s forwards;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #F4F0E8;
+    padding: 14px 34px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    transition: background 0.25s, transform 0.25s var(--ease-out);
+    opacity: 0;
+    animation: fadeIn 0.7s var(--ease-out) 0.85s forwards;
+  }
+
+  .cta:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .cta-arrow {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+
+  /* ════════════════════════════════════════════════
+     SERVICES — support section, one job: the offer
+     Ruled list, no cards.
+     ════════════════════════════════════════════════ */
+  .services {
+    padding: clamp(56px, 8vw, 96px) clamp(28px, 5vw, 64px);
+  }
+
+  .services-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .sh {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1.15;
+  }
+
+  .ss {
+    color: var(--ink-secondary);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    max-width: 400px;
+    margin-bottom: clamp(32px, 4.5vw, 52px);
+  }
+
+  .svc {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: clamp(18px, 2.2vw, 26px) 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .svc:last-child { border-bottom: 1px solid var(--rule); }
+
+  .svc-name {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .svc-desc {
+    font-size: 0.84rem;
+    color: var(--ink-muted);
+    line-height: 1.55;
+    margin-top: 3px;
+    max-width: 480px;
+  }
+
+  .svc-price {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* Scroll-stagger animation */
+  .svc {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  }
+
+  .svc.vis {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
+  /* ════════════════════════════════════════════════
+     FINAL CTA — convert
+     ════════════════════════════════════════════════ */
+  .final-cta {
+    padding: clamp(56px, 8vw, 88px) clamp(28px, 5vw, 64px);
+    text-align: center;
+    border-top: 1px solid var(--rule);
+  }
+
+  .final-cta .sh {
+    max-width: 500px;
+    margin: 0 auto 10px;
+  }
+
+  .final-cta .ss {
+    max-width: 380px;
+    margin: 0 auto clamp(28px, 3.5vw, 40px);
+  }
+
+  .cta-warm {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px 34px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.25s, transform 0.25s var(--ease-out);
+  }
+
+  .cta-warm:hover {
+    background: #2E2A24;
+    transform: translateY(-1px);
+  }
+
+  .cta-warm .cta-arrow { transition: transform 0.25s var(--ease-out); }
+  .cta-warm:hover .cta-arrow { transform: translateX(4px); }
+
+
+  /* ════════════════════════════════════════════════
+     FOOTER — subtle text links, nothing more
+     ════════════════════════════════════════════════ */
+  .foot {
+    padding: clamp(28px, 3vw, 40px) clamp(28px, 5vw, 64px);
+    border-top: 1px solid var(--rule);
+  }
+
+  .foot-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .foot-links {
+    display: flex;
+    gap: clamp(16px, 2.5vw, 28px);
+    flex-wrap: wrap;
+  }
+
+  .foot-links a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .foot-links a:hover { color: var(--ink-secondary); }
+
+  .foot-meta {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+
+
+  /* ════════════════════════════════════════════════
+     SUB-PAGES — plain typeset pages, no decoration
+     ════════════════════════════════════════════════ */
+  .subpage {
+    display: none;
+    min-height: 100vh;
+    min-height: 100svh;
+    background: var(--bg);
+    padding: 0 clamp(28px, 5vw, 64px);
+  }
+
+  .subpage.on { display: block; }
+
+  .sp-inner {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 80px) 0 60px;
+  }
+
+  .sp-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+    transition: color 0.2s;
+  }
+
+  .sp-back:hover { color: var(--ink-secondary); }
+
+  .sp-title {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    margin-bottom: 40px;
+  }
+
+  /* Work entries */
+  .we { padding: 24px 0; border-top: 1px solid var(--rule); }
+  .we:last-child { border-bottom: 1px solid var(--rule); }
+
+  .we-num {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+
+  .we-name {
+    font-weight: 600;
+    font-size: 0.98rem;
+    margin: 5px 0 3px;
+  }
+
+  .we-desc {
+    font-size: 0.84rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* Experience entries */
+  .ee { padding: 22px 0; border-top: 1px solid var(--rule); }
+  .ee:last-child { border-bottom: 1px solid var(--rule); }
+
+  .ee-when {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+  }
+
+  .ee-role {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    font-weight: 600;
+  }
+
+  .ee-co {
+    color: var(--ink-secondary);
+    font-size: 0.87rem;
+    margin-bottom: 5px;
+  }
+
+  .ee-desc {
+    color: var(--ink-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  /* Stack groups */
+  .sg { margin-bottom: 24px; }
+
+  .sg-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .sg-items {
+    font-size: 0.9rem;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+  }
+
+
+  /* ════════════════════════════════════════════════
+     MOTION KEYFRAMES
+     ════════════════════════════════════════════════ */
+  @keyframes riseUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+
+  /* ════════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════════ */
+  @media (max-width: 600px) {
+    .svc {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .svc-price { text-align: left; }
+    .foot-inner { flex-direction: column; gap: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LANDING ═══════════ -->
+<div id="landing">
+
+  <!-- ─── HERO: full-bleed, image-led, brand dominant ─── -->
+  <section class="hero">
+    <div class="hero-image" role="img" aria-label="Warm architectural photography"></div>
+    <div class="hero-inner">
+      <h1 class="brand">Mohit<br>Tater</h1>
+      <p class="role">AI Product Consultant · Design Engineer</p>
+      <p class="hero-body">I design, build, and ship production software at the intersection of UX, frontend engineering, and AI.</p>
+      <a href="mailto:mohittater.iiita@gmail.com" class="cta">Start a conversation <span class="cta-arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES: one job — the offer ─── -->
+  <section class="services">
+    <div class="services-inner">
+      <h2 class="sh">What I do</h2>
+      <p class="ss">Project-based engagements scoped around outcomes, delivered in 2–6 weeks.</p>
+      <div class="svc">
+        <div>
+          <div class="svc-name">AI Product Evaluation & Strategy</div>
+          <div class="svc-desc">Audit AI features, surface failure modes, build an evaluation framework your team can own.</div>
+        </div>
+        <div class="svc-price">from $4K</div>
+      </div>
+      <div class="svc">
+        <div>
+          <div class="svc-name">Rapid AI-Powered MVP</div>
+          <div class="svc-desc">Concept to working product in two weeks — full-stack, AI-integrated, ready for validation.</div>
+        </div>
+        <div class="svc-price">from $6K</div>
+      </div>
+      <div class="svc">
+        <div>
+          <div class="svc-name">AI Workflow Automation</div>
+          <div class="svc-desc">Map manual processes, design agentic workflows that eliminate up to 70% of repetitive work.</div>
+        </div>
+        <div class="svc-price">from $3K</div>
+      </div>
+      <div class="svc">
+        <div>
+          <div class="svc-name">Product & UX Design</div>
+          <div class="svc-desc">Research, information architecture, wireframes, and interactive Figma prototypes.</div>
+        </div>
+        <div class="svc-price">from $4K</div>
+      </div>
+      <div class="svc">
+        <div>
+          <div class="svc-name">Fullstack Development</div>
+          <div class="svc-desc">Production web apps with React, Next.js, TypeScript, and modern infrastructure.</div>
+        </div>
+        <div class="svc-price">contact</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FINAL CTA: convert ─── -->
+  <section class="final-cta">
+    <h2 class="sh">Let's build something worth&nbsp;shipping</h2>
+    <p class="ss">Whether you need an AI strategy, a working prototype, or a design-engineering partner.</p>
+    <a href="mailto:mohittater.iiita@gmail.com" class="cta-warm">mohittater.iiita@gmail.com <span class="cta-arrow">→</span></a>
+  </section>
+
+  <!-- ─── FOOTER: subtle links ─── -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <nav class="foot-links">
+        <a href="#" onclick="go('work');return false">Work</a>
+        <a href="#" onclick="go('background');return false">Background</a>
+        <a href="#" onclick="go('stack');return false">Stack</a>
+        <a href="https://twitter.com/tatermohit" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://linkedin.com/in/tatermohit" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/mnttnm" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <span class="foot-meta">Bengaluru, India</span>
+    </div>
+  </footer>
+
+</div>
+
+
+<!-- ═══════════ SUB-PAGES ═══════════ -->
+
+<div class="subpage" id="p-work">
+  <div class="sp-inner">
+    <a href="#" class="sp-back" onclick="back();return false">← Back</a>
+    <h2 class="sp-title">Shipped & proven</h2>
+    <div class="we">
+      <div class="we-num">5,000+</div>
+      <div class="we-name">Figma Variable Explorer Plugin</div>
+      <p class="we-desc">Explore and manage design tokens and variables in Figma. Used by thousands of designers across the community.</p>
+    </div>
+    <div class="we">
+      <div class="we-num">250+</div>
+      <div class="we-name">Raycast Notes Extension</div>
+      <p class="we-desc">Keyboard-first note-taking for Raycast. Capture thoughts without leaving your workflow.</p>
+    </div>
+    <div class="we">
+      <div class="we-num">→</div>
+      <div class="we-name">Client Engagements</div>
+      <p class="we-desc">React/Next.js migrations, AI content extraction tools, DAM interface design, SDR automation systems, and agentic workflow consulting.</p>
+    </div>
+    <div class="we">
+      <div class="we-num">→</div>
+      <div class="we-name">Hackathon Projects</div>
+      <p class="we-desc">Claude Code Observatory (Tableau), ComplyKit (Atlassian), MarkDiff — semantic markdown comparison for LLM prompt engineering.</p>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="p-background">
+  <div class="sp-inner">
+    <a href="#" class="sp-back" onclick="back();return false">← Back</a>
+    <h2 class="sp-title">Where I've been</h2>
+    <div class="ee">
+      <div class="ee-when">2024 — Present</div>
+      <div class="ee-role">Freelance Consultant</div>
+      <div class="ee-co">AI Product & Design Engineering</div>
+      <p class="ee-desc">UX design, frontend development, and AI product consulting for startups and growth-stage companies. Project-based and retainer engagements.</p>
+    </div>
+    <div class="ee">
+      <div class="ee-when">Previously</div>
+      <div class="ee-role">Senior Software Developer</div>
+      <div class="ee-co">BlueJeans by Verizon</div>
+      <p class="ee-desc">Frontend engineering on enterprise video conferencing products at scale.</p>
+    </div>
+    <div class="ee">
+      <div class="ee-when">Previously</div>
+      <div class="ee-role">PM + Developer</div>
+      <div class="ee-co">Query.ai</div>
+      <p class="ee-desc">Dual role spanning product management and hands-on development for a security product.</p>
+    </div>
+    <div class="ee">
+      <div class="ee-when">Previously</div>
+      <div class="ee-role">UX Engineer</div>
+      <div class="ee-co">GoodCode</div>
+      <p class="ee-desc">Client-facing discovery with CPOs and CTOs. Translating business needs into product experiences.</p>
+    </div>
+  </div>
+</div>
+
+<div class="subpage" id="p-stack">
+  <div class="sp-inner">
+    <a href="#" class="sp-back" onclick="back();return false">← Back</a>
+    <h2 class="sp-title">What I work with</h2>
+    <div class="sg">
+      <div class="sg-label">Design</div>
+      <p class="sg-items">Figma, Prototyping, Design Systems, User Research, Information Architecture</p>
+    </div>
+    <div class="sg">
+      <div class="sg-label">Engineering</div>
+      <p class="sg-items">React, Next.js, TypeScript, Tailwind CSS, Vercel, Supabase, Node.js, FastAPI</p>
+    </div>
+    <div class="sg">
+      <div class="sg-label">AI & Automation</div>
+      <p class="sg-items">Claude, Claude Code, Vercel AI SDK, Agentic Workflows, n8n, Prompt Engineering, LLM Evaluation, MCP Servers</p>
+    </div>
+    <div class="sg">
+      <div class="sg-label">Methodology</div>
+      <p class="sg-items">Compound Engineering, Skill Files, CLAUDE.md, Build in Public</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Navigation
+  function go(id) {
+    document.getElementById('landing').style.display = 'none';
+    document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('on'); });
+    document.getElementById('p-' + id).classList.add('on');
+    window.scrollTo(0, 0);
+  }
+
+  function back() {
+    document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('on'); });
+    document.getElementById('landing').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  // Motion 2: scroll-stagger on service rows
+  var svcObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var rows = document.querySelectorAll('.svc');
+        var i = Array.prototype.indexOf.call(rows, entry.target);
+        setTimeout(function() { entry.target.classList.add('vis'); }, i * 90);
+        svcObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.svc').forEach(function(el) { svcObs.observe(el); });
+</script>
+
+</body>
+</html>

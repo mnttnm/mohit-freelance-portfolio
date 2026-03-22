@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohit Tater — AI Product Consultant & Design Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0C0C0E;
+    --bg-elevated: #141418;
+    --bg-card: #1A1A1F;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.12);
+    --text-primary: #F0EDE6;
+    --text-secondary: #8A8A8E;
+    --text-muted: #5A5A5E;
+    --accent: #C8F56E;
+    --accent-dim: rgba(200,245,110,0.08);
+    --accent-mid: rgba(200,245,110,0.15);
+    --warm: #E8C4A0;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Instrument Sans', -apple-system, sans-serif;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* ─── Noise Overlay ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── Layout ─── */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  section { padding: 100px 0; }
+
+  /* ─── Navigation ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    background: rgba(12,12,14,0.8);
+    backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.4s var(--ease-out);
+  }
+
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-cta {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(200,245,110,0.25);
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    padding: 180px 0 120px;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 80px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,245,110,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.1s forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.35s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.5s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.3s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(200,245,110,0.2);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    padding: 14px 24px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  /* ─── Stats Bar ─── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.6s forwards;
+  }
+
+  .stat-item {
+    background: var(--bg-elevated);
+    padding: 32px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  /* ─── Section Headers ─── */
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ─── Services Grid ─── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--bg-elevated);
+    padding: 40px 36px;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .service-card:hover { background: var(--bg-card); }
+
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 1.2rem;
+  }
+
+  .service-card h3 {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .service-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .service-price {
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--warm);
+  }
+
+  /* ─── Proof Section ─── */
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .proof-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    background: var(--bg-elevated);
+    transition: border-color 0.3s, transform 0.3s var(--ease-out);
+  }
+
+  .proof-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .proof-metric {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .proof-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 8px 0 8px;
+  }
+
+  .proof-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ─── Background Section ─── */
+  .experience-track {
+    position: relative;
+    padding-left: 36px;
+    border-left: 1px solid var(--border);
+  }
+
+  .exp-item {
+    position: relative;
+    padding-bottom: 48px;
+  }
+
+  .exp-item:last-child { padding-bottom: 0; }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .exp-period {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .exp-role {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+
+  .exp-company {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .exp-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* ─── Stack ─── */
+  .stack-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .stack-chip {
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .stack-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* ─── CTA Section ─── */
+  .cta-section {
+    text-align: center;
+    padding: 120px 0;
+    position: relative;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(200,245,110,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title {
+    max-width: 600px;
+    margin: 0 auto 16px;
+  }
+
+  .cta-section .section-desc {
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .social-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .social-links a:hover { color: var(--text-primary); }
+
+  /* ─── Footer ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* ─── Two Column Layout ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* ─── Divider ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ─── Animations ─── */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── Mobile ─── */
+  @media (max-width: 768px) {
+    section { padding: 72px 0; }
+
+    .hero { padding: 140px 0 80px; }
+
+    .stats-bar {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .proof-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .nav-links { display: none; }
+
+    .service-price {
+      position: static;
+      display: block;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 0 20px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <a href="#" class="nav-brand">Mohit Tater</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Available for Q2 2026</div>
+    <h1>I help teams build <em>smarter products</em> with AI&nbsp;&&nbsp;design</h1>
+    <p class="hero-desc">AI Product Consultant & Design Engineer with 10+ years bridging UX, frontend development, and AI integration. I don't just advise — I design, build, and ship.</p>
+    <div class="hero-actions">
+      <a href="mailto:mohittater.iiita@gmail.com" class="btn-primary">Start a conversation →</a>
+      <a href="#services" class="btn-secondary">See services</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section style="padding-top: 0; padding-bottom: 100px;">
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5,000+</div>
+        <div class="stat-label">Plugin Users</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">UX × Dev</div>
+        <div class="stat-label">Hybrid Practice</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">AI-Native</div>
+        <div class="stat-label">Workflow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <div class="section-label reveal">What I do</div>
+    <h2 class="section-title reveal">Services built around outcomes, not hours</h2>
+    <p class="section-desc reveal">Project-based engagements designed to move fast. Each service is scoped to deliver measurable value in 2–6 weeks.</p>
+    <div class="services-grid reveal">
+
+      <div class="service-card">
+        <div class="service-price">From $4K</div>
+        <div class="service-icon">🔍</div>
+        <h3>AI Product Evaluation & Strategy</h3>
+        <p>Audit your AI features, identify failure modes, and build an evaluation framework. You'll know exactly what's working, what's not, and what to fix first.</p>
+        <div class="service-tags">
+          <span class="tag">AI Audit</span>
+          <span class="tag">Eval Framework</span>
+          <span class="tag">Product Strategy</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-price">From $6K</div>
+        <div class="service-icon">⚡</div>
+        <h3>Rapid AI-Powered MVP</h3>
+        <p>From concept to clickable product in two weeks. Full-stack development with AI integration, designed for validation and investor demos.</p>
+        <div class="service-tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">React</span>
+          <span class="tag">AI Integration</span>
+          <span class="tag">Vercel</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-price">From $3K</div>
+        <div class="service-icon">🤖</div>
+        <h3>AI Workflow Automation</h3>
+        <p>Map your manual processes, identify automation opportunities, and build AI-powered workflows that cut repetitive work by up to 70%.</p>
+        <div class="service-tags">
+          <span class="tag">Claude</span>
+          <span class="tag">Automation</span>
+          <span class="tag">Agents</span>
+          <span class="tag">n8n</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <div class="service-price">From $4K</div>
+        <h3>Product & UX Design</h3>
+        <p>User research, information architecture, wireframes, and interactive Figma prototypes — ready for stakeholder demos, usability testing, and dev handoff.</p>
+        <div class="service-tags">
+          <span class="tag">Figma</span>
+          <span class="tag">Prototyping</span>
+          <span class="tag">UX Research</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🛠️</div>
+        <div class="service-price">Contact</div>
+        <h3>Fullstack Development</h3>
+        <p>Production-grade web applications built with React, Next.js, and TypeScript. Clean architecture, responsive design, and deployment on Vercel or your stack.</p>
+        <div class="service-tags">
+          <span class="tag">TypeScript</span>
+          <span class="tag">React</span>
+          <span class="tag">Tailwind</span>
+          <span class="tag">Supabase</span>
+        </div>
+      </div>
+
+      <div class="service-card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height: 260px;">
+        <h3 style="color: var(--text-secondary); font-size: 1.1rem;">Need something custom?</h3>
+        <p style="margin-bottom: 24px; font-size: 0.88rem;">Retainers, advisory, or compound engagements.</p>
+        <a href="mailto:mohittater.iiita@gmail.com" class="btn-primary" style="font-size: 0.85rem; padding: 10px 24px;">Let's scope it →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Proof -->
+<section id="work">
+  <div class="container">
+    <div class="section-label reveal">Shipped & proven</div>
+    <h2 class="section-title reveal">Tools people actually use</h2>
+    <p class="section-desc reveal">I build things and put them in front of real users. Here's what's out in the world.</p>
+    <div class="proof-grid reveal">
+      <div class="proof-card">
+        <div class="proof-metric">5K+</div>
+        <div class="proof-title">Figma Variable Explorer</div>
+        <p class="proof-desc">A Figma plugin for exploring and managing design tokens and variables. Used by thousands of designers across the Figma community.</p>
+      </div>
+      <div class="proof-card">
+        <div class="proof-metric">250+</div>
+        <div class="proof-title">Raycast Notes Extension</div>
+        <p class="proof-desc">A keyboard-first note-taking extension for Raycast. Built for speed — capture thoughts without leaving your workflow.</p>
+      </div>
+      <div class="proof-card">
+        <div class="proof-metric">∞</div>
+        <div class="proof-title">Client Work</div>
+        <p class="proof-desc">React/Next.js migrations, AI-powered content tools, DAM interface design, SDR automation systems, and agentic workflow consulting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Background + Stack -->
+<section id="background">
+  <div class="container">
+    <div class="two-col reveal">
+      <div>
+        <div class="section-label">Background</div>
+        <h2 class="section-title">Where I've been</h2>
+        <div class="experience-track" style="margin-top: 40px;">
+          <div class="exp-item">
+            <div class="exp-period">2024 — Present</div>
+            <div class="exp-role">Freelance Consultant</div>
+            <div class="exp-company">AI Product & Design Engineering</div>
+            <div class="exp-desc">UX design, frontend development, and AI product consulting for startups and growth-stage companies. Project-based and retainer engagements.</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-period">Previously</div>
+            <div class="exp-role">Senior Software Developer</div>
+            <div class="exp-company">BlueJeans by Verizon</div>
+            <div class="exp-desc">Frontend engineering on enterprise video conferencing products at scale.</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-period">Previously</div>
+            <div class="exp-role">PM + Developer (Dual Role)</div>
+            <div class="exp-company">Query.ai</div>
+            <div class="exp-desc">Rare hybrid role spanning product management and hands-on development for a security product.</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-period">Previously</div>
+            <div class="exp-role">UX Engineer</div>
+            <div class="exp-company">GoodCode</div>
+            <div class="exp-desc">Client-facing discovery with CPOs and CTOs. Translating business needs into product experiences.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Toolkit</div>
+        <h2 class="section-title" style="margin-bottom: 32px;">What I work with</h2>
+        <div style="margin-bottom: 36px;">
+          <p style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600;">Design</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">Figma</span>
+            <span class="stack-chip">Prototyping</span>
+            <span class="stack-chip">Design Systems</span>
+            <span class="stack-chip">User Research</span>
+            <span class="stack-chip">Information Architecture</span>
+          </div>
+        </div>
+        <div style="margin-bottom: 36px;">
+          <p style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600;">Engineering</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">Next.js</span>
+            <span class="stack-chip">TypeScript</span>
+            <span class="stack-chip">Tailwind CSS</span>
+            <span class="stack-chip">Vercel</span>
+            <span class="stack-chip">Supabase</span>
+            <span class="stack-chip">Node.js</span>
+          </div>
+        </div>
+        <div style="margin-bottom: 36px;">
+          <p style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600;">AI & Automation</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">Claude</span>
+            <span class="stack-chip">Vercel AI SDK</span>
+            <span class="stack-chip">Agentic Workflows</span>
+            <span class="stack-chip">n8n</span>
+            <span class="stack-chip">Prompt Engineering</span>
+            <span class="stack-chip">LLM Evaluation</span>
+          </div>
+        </div>
+        <div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 600;">Methodology</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">Compound Engineering</span>
+            <span class="stack-chip">Skill Files</span>
+            <span class="stack-chip">CLAUDE.md</span>
+            <span class="stack-chip">Build in Public</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="section-label reveal">Get in touch</div>
+    <h2 class="section-title reveal">Let's build something <br>worth shipping</h2>
+    <p class="section-desc reveal">Whether you need an AI strategy, a working prototype, or a design-engineering partner — I'd love to hear what you're working on.</p>
+    <div class="reveal">
+      <a href="mailto:mohittater.iiita@gmail.com" class="btn-primary" style="font-size: 1.05rem; padding: 16px 40px;">mohittater.iiita@gmail.com →</a>
+    </div>
+    <div class="social-links reveal">
+      <a href="https://twitter.com/tatermohit" target="_blank">↗ Twitter/X</a>
+      <a href="https://linkedin.com/in/tatermohit" target="_blank">↗ LinkedIn</a>
+      <a href="https://github.com/mnttnm" target="_blank">↗ GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>© 2026 Mohit Tater · Bengaluru, India · IIIT-Allahabad</p>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -60px 0px'
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth nav scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
