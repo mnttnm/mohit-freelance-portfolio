@@ -127,10 +127,10 @@ Each iteration follows this exact sequence:
 
 ### Phase 2: Wrap-Up
 
-- [ ] **2.1** Print the full improvement log showing all iterations
-- [ ] **2.2** Show the total improvement: `final_score - original_baseline`
-- [ ] **2.3** Commit final state: `git commit -am "autoresearch loop complete: score X → Y"`
-- [ ] **2.4** Create `docs/solutions/ui/autoresearch-loop-learnings.md` documenting:
+- [x] **2.1** Print the full improvement log showing all iterations
+- [x] **2.2** Show the total improvement: `final_score - original_baseline`
+- [x] **2.3** Commit final state: `git commit -am "autoresearch loop complete: score X → Y"`
+- [x] **2.4** Create `docs/solutions/ui/autoresearch-loop-learnings.md` documenting:
   - Which criteria improved most
   - Which fixes were reverted and why
   - Patterns that emerged (what types of changes reliably improve scores)
@@ -139,7 +139,7 @@ Each iteration follows this exact sequence:
 
 ## Acceptance Criteria
 
-- [ ] Git repo initialized with clean history
+- [x] Git repo initialized with clean history
 - [ ] Baseline grade captured before any changes
 - [ ] Each iteration: one fix, one re-grade, one keep/revert decision
 - [ ] Git commits at each checkpoint for rollback safety
