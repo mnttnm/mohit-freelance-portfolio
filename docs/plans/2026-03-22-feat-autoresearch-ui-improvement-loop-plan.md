@@ -52,12 +52,12 @@ A manually-orchestrated loop within a Claude Code session, executed in phases:
 
 **Goal:** Establish git safety net and capture the starting point.
 
-- [ ] **0.1** Initialize git repo: `git init` in project root
-- [ ] **0.2** Create `.gitignore` (if needed — exclude `.DS_Store`, `.vscode/`)
-- [ ] **0.3** Stage and commit all existing files: `git add -A && git commit -m "Initial commit: existing site versions"`
-- [ ] **0.4** Create a working branch: `git checkout -b autoresearch-v2-improvements`
-- [ ] **0.5** Run `/interface-grader` on `freelance-site-v2.html` — this is the **baseline grade**
-- [ ] **0.6** Record baseline scores in a log structure:
+- [x] **0.1** Initialize git repo: `git init` in project root
+- [x] **0.2** Create `.gitignore` (if needed — exclude `.DS_Store`, `.vscode/`)
+- [x] **0.3** Stage and commit all existing files: `git add -A && git commit -m "Initial commit: existing site versions"`
+- [x] **0.4** Create a working branch: `git checkout -b autoresearch-v2-improvements`
+- [x] **0.5** Run `/interface-grader` on `freelance-site-v2.html` — this is the **baseline grade**
+- [x] **0.6** Record baseline scores in a log structure:
 
 ```
 # Improvement Log
