@@ -20,9 +20,11 @@ Applied Karpathy's autoresearch pattern to iteratively improve `freelance-site-v
 
 2. **Goal alignment fixes are high-leverage.** Adding CTA + nav to subpages fixed 3 criteria across Layer 1 and per-page scoring (+4%). Structural improvements compound across page types.
 
-3. **One-change-per-iteration isolation works.** Every iteration was a clear keep. No need to debug what went wrong because each change was focused.
+3. **Batch independent changes, isolate dependent ones.** In autoresearch (ML), each experiment needs GPU time so parallelism isn't possible. But UI grading allows batching independent fixes (e.g., contrast + typography) into a single iteration. Only force isolation when changes interact (e.g., CSS + HTML for a new component). Retrospectively, our 5 iterations could have been 3 with proper batching.
 
 4. **Git checkpoints were never needed for rollback** (100% keep rate), but they provided confidence to be bold with changes.
+
+5. **Produce artifacts per iteration.** Every experiment needs a full grade file (scorecard snapshot) and a changelog entry. Mental re-grading is not sufficient — the evaluation is the core of the loop.
 
 ## Patterns for Reliable Score Improvement
 
@@ -39,6 +41,18 @@ Applied Karpathy's autoresearch pattern to iteratively improve `freelance-site-v
 | PP-1.3 | Service cards not interactive | Medium — requires design decision on what clicking does |
 | PP-5.1 | No tabular-nums on prices/metrics | Easy — add font-variant-numeric |
 | PP-4.1 | Subpages lack entrance animations (3 pages) | Medium — add fadeIn or stagger animations |
+
+## Adapting Autoresearch for UI (vs. ML)
+
+| Aspect | ML (autoresearch) | UI (our adaptation) |
+|---|---|---|
+| Artifact | `train.py` | `freelance-site-v2.html` |
+| Metric | `val_bpb` (lower=better) | Interface grade % (higher=better) |
+| Evaluation cost | 5 min GPU time | Seconds (code analysis + screenshot) |
+| Parallelism | Not possible (GPU bound) | Possible for independent CSS/HTML fixes |
+| Batching | Always 1 change | Batch independent, isolate dependent |
+| Rollback | Discard file changes | `git revert` |
+| Artifacts per experiment | Metric logged automatically | Must produce grade file + changelog entry |
 
 ## Keywords
 

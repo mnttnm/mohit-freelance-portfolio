@@ -1,8 +1,8 @@
 INTERFACE GRADE — Mohit Tater Freelance Portfolio (v2)
-Pass: COMBINED (CODE + VISUAL) — Post-Iteration 1
+Pass: COMBINED (CODE + VISUAL) — Post-Iteration 3
 Date: 2026-03-22
 Graded by: SELF-GRADED
-Screenshots: iteration1-desktop-landing.png, iteration1-mobile-landing.png
+Screenshots: iteration3-desktop-landing.png, iteration3-typography-check.png
 Context: CONFIRMED
 
 SITE CONTEXT CARD
@@ -43,20 +43,17 @@ LAYER 1: GOAL ALIGNMENT                    4/6    67%
 
 LAYER 2: CRAFT QUALITY — SITE-WIDE
 
-TYPOGRAPHY SYSTEM                          4/6    67%
+TYPOGRAPHY SYSTEM                          6/6    100%
   ✓ SW-1.1  No more than two typeface families                    C
   ✓ SW-1.2  Body text uses rem or em units                        C
-  ✗ SW-1.3  Body text >=16px equivalent                           C
-             → .desc is 0.95rem = 15.2px; .svc-sub is 0.78rem = 12.5px
-  ✗ SW-1.4  Line length <=75ch for body text                      C
-             → .subpage-inner max-width: 720px ≈ 90ch at body size
+  ✓ SW-1.3  Body text >=16px equivalent                           C
+  ✓ SW-1.4  Line length <=75ch for body text                      C
   ✓ SW-1.5  Font choice is distinctive                            C
   ✓ SW-1.6  Type hierarchy clear                                  C+V
 
-COLOR & SURFACE SYSTEM                    6/7    86%
+COLOR & SURFACE SYSTEM                    7/7    100%
   ✓ SW-2.1  No pure black or pure white on large surfaces         C
-  ✗ SW-2.2  Text-to-background contrast WCAG AA                   C+V
-             → --text-muted (#505054) on --bg (#0A0A0C) ≈ 2.5:1, fails 4.5:1
+  ✓ SW-2.2  Text-to-background contrast WCAG AA                   C+V
   ✓ SW-2.3  Accent color <=10% of visible surface                 V
   ✓ SW-2.4  Neutrals tinted toward brand hue                      C+V
   ✓ SW-2.5  Color consistent across all page types                V
@@ -80,7 +77,7 @@ RESPONSIVENESS & ACCESS                   4/6    67%
   ✓ SW-4.5  Focus ring visible on keyboard navigation             C+V
   ✓ SW-4.6  Viewport meta tag with viewport-fit=cover             C
 
-SITE-WIDE SUBTOTAL                        19/24   79%
+SITE-WIDE SUBTOTAL                        22/24   92%
 
 ═══════════════════════════════════════════════════
 
@@ -171,51 +168,46 @@ PAGE: Stack (#page-stack)
 SUMMARY
 ═══════════════════════════════════════════════════
 LAYER 1 (Goal Alignment):                67%
-LAYER 2 SITE-WIDE (Craft):               79%
+LAYER 2 SITE-WIDE (Craft):               92%
 LAYER 2 PER-PAGE (Craft):
   Landing:                                85%
   Work:                                   73%
   Background:                             89%
   Stack:                                  88%
-OVERALL:                                  80%
+OVERALL:                                  85%
 
 INTENTIONAL EXCEPTIONS:  2
 DEFERRED:                0
 WEAKEST PAGE:            Work (73%)
 STRONGEST PAGE:          Background (89%)
 WEAKEST CATEGORY:        Responsiveness & Access (67%)
-STRONGEST CATEGORY:      Copy (100% across all pages), Motion & Interaction (100%)
+STRONGEST CATEGORY:      Typography (100%), Color & Surface (100%), Motion & Interaction (100%), Copy (100% across all pages)
 ═══════════════════════════════════════════════════
 
 FAILURES RANKED BY IMPACT (for improvement loop targeting):
 
-1. SW-2.2  --text-muted contrast fails WCAG AA (Accessibility)
-2. SW-4.1  Touch targets >=44px — several elements too small (Accessibility)
-3. SW-4.4  Not all display text uses fluid scaling (Responsiveness)
-4. SW-1.3  Body text below 16px (Typography)
-5. SW-1.4  Subpage line length exceeds 75ch (Typography)
-6. G.2     Subpages lack CTA (Goal Alignment)
-7. G.4     Navigation inconsistent between landing and subpages (Goal Alignment)
-8. PP-1.3  Service items styled as cards but not interactive (Composition)
-9. PP-5.1  No tabular-nums for number alignment (Content-Type)
-10. PP-4.1 Subpages lack motion/animation (Motion — 3 pages)
+1. SW-4.1  Touch targets >=44px — several elements too small (Accessibility)
+2. SW-4.4  Not all display text uses fluid scaling (Responsiveness)
+3. G.2     Subpages lack CTA (Goal Alignment)
+4. G.4     Navigation inconsistent between landing and subpages (Goal Alignment)
+5. PP-1.3  Service items styled as cards but not interactive (Composition)
+6. PP-5.1  No tabular-nums for number alignment (Content-Type)
+7. PP-4.1  Subpages lack motion/animation (Motion — 3 pages)
 
-DELTA FROM GRADE #001 → #002
+DELTA FROM GRADE #003 → #004
 ═══════════════════════════════════════════════════
 
-OVERALL                    72% → 80%  (+8)
+OVERALL                    82% → 85%  (+3)
 
 LAYER 1                    67% → 67%   (0)    ─
 
-SITE-WIDE                  63% → 79%  (+16)  ▲
-  Typography               67% → 67%   (0)    ─
-  Color & Surface          86% → 86%   (0)    ─
-  Motion & Interaction     60% → 100%  (+40)  ▲
-    FIXED: SW-3.4  Added prefers-reduced-motion query
-    FIXED: SW-3.5  Added :focus-visible states to all interactive elements
-  Responsiveness           33% → 67%   (+34)  ▲
-    FIXED: SW-4.5  Added :focus-visible outline styles
-    FIXED: SW-4.6  Added viewport-fit=cover to meta tag
+SITE-WIDE                  83% → 92%  (+9)   ▲
+  Typography               67% → 100%  (+33)  ▲
+    FIXED: SW-1.3  Bumped body text to 1rem (16px)
+    FIXED: SW-1.4  Constrained subpage max-width to 65ch
+  Color & Surface          100% → 100% (0)    ─
+  Motion & Interaction     100% → 100% (0)    ─
+  Responsiveness           67% → 67%   (0)    ─
 
 PER-PAGE
   Landing                  85% → 85%   (0)    ─
@@ -223,9 +215,9 @@ PER-PAGE
   Background               89% → 89%   (0)    ─
   Stack                    88% → 88%   (0)    ─
 
-FIXES:       4
+FIXES:       2
 REGRESSIONS: 0
 OVERRIDES:   0
 EXCEPTIONS:  0 added, 0 removed
-NET:         +8
+NET:         +3
 ═══════════════════════════════════════════════════
