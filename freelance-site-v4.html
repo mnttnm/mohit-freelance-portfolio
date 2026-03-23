@@ -422,6 +422,76 @@
 
 
   /* ════════════════════════════════════════════════
+     MORPH STATE — body.work-mode toggles everything
+     ════════════════════════════════════════════════ */
+
+  /* Container for services + projects to share the same space */
+  .content-swap {
+    position: relative;
+  }
+
+  /* Header: brand visible in work mode */
+  body.work-mode .morph-brand {
+    opacity: 1;
+  }
+
+  /* Hero: collapse in work mode using max-height for smooth animation */
+  body.work-mode .hero {
+    max-height: 0;
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  /* Services: hidden in work mode */
+  body.work-mode .services {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+
+  /* Projects: visible in work mode */
+  body.work-mode .projects {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+  }
+
+  /* Final CTA: hidden in work mode */
+  body.work-mode .final-cta {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    border: none;
+    transition: opacity 0.3s var(--ease-out);
+  }
+
+  /* Transition timing for About state elements */
+  .hero {
+    max-height: 100vh;
+    transition: opacity 0.4s var(--ease-out), max-height 0.6s var(--ease-out), min-height 0.6s var(--ease-out);
+  }
+
+  .services {
+    transition: opacity 0.4s var(--ease-out);
+  }
+
+  .final-cta {
+    transition: opacity 0.3s var(--ease-out), height 0.5s var(--ease-out), padding 0.5s var(--ease-out);
+  }
+
+  /* Header: always revealed + opaque background in work mode */
+  body.work-mode .morph-header {
+    opacity: 1;
+    transform: translateY(0);
+    background: rgba(244, 240, 232, 0.97);
+  }
+
+
+  /* ════════════════════════════════════════════════
      FINAL CTA — convert
      ════════════════════════════════════════════════ */
   .final-cta {
@@ -682,6 +752,9 @@
     </div>
   </section>
 
+  <!-- ─── SERVICES + PROJECTS: shared content-swap container ─── -->
+  <div class="content-swap">
+
   <!-- ─── SERVICES: one job — the offer ─── -->
   <section class="services">
     <div class="services-inner">
@@ -805,6 +878,8 @@
     </div>
   </section>
 
+  </div><!-- /.content-swap -->
+
   <!-- ─── FINAL CTA: convert ─── -->
   <section class="final-cta">
     <h2 class="sh">Let's build something worth&nbsp;shipping</h2>
@@ -915,9 +990,65 @@
 
 
 <script>
-  // Navigation
+  // ═══════════ STATE ═══════════
+  var isWorkMode = false;
+  var isMorphing = false;
+  var morphCooldown = false;
+
+  // ═══════════ MORPH TOGGLE ═══════════
+  function morphTo(mode) {
+    if (isMorphing) return;
+    if (mode === 'work' && isWorkMode) return;
+    if (mode === 'about' && !isWorkMode) return;
+
+    isMorphing = true;
+    isWorkMode = mode === 'work';
+
+    // Update body class
+    document.body.classList.toggle('work-mode', isWorkMode);
+
+    // Update split label
+    document.querySelectorAll('.morph-label-item').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    // Scroll to top
+    window.scrollTo(0, 0);
+
+    // Trigger project stagger animation in work mode
+    if (isWorkMode) {
+      setTimeout(function() {
+        var prjs = document.querySelectorAll('.prj');
+        prjs.forEach(function(el, i) {
+          setTimeout(function() { el.classList.add('vis'); }, i * 80);
+        });
+      }, 300);
+    } else {
+      // Reset project visibility for next morph
+      document.querySelectorAll('.prj').forEach(function(el) {
+        el.classList.remove('vis');
+      });
+    }
+
+    // Reveal header in work mode, or let hero observer control it in about mode
+    if (isWorkMode) {
+      document.querySelector('.morph-header').classList.add('revealed');
+    }
+
+    // Release morph lock after transitions complete
+    setTimeout(function() {
+      isMorphing = false;
+    }, 700);
+  }
+
+  // ═══════════ SUBPAGE NAVIGATION (Background, Stack) ═══════════
+  // Track morph state before entering subpage so we can restore it
+  var preSubpageWorkMode = false;
+
   function go(id) {
+    preSubpageWorkMode = isWorkMode;
     document.getElementById('landing').style.display = 'none';
+    document.querySelector('.morph-header').style.display = 'none';
     document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('on'); });
     document.getElementById('p-' + id).classList.add('on');
     window.scrollTo(0, 0);
@@ -926,10 +1057,20 @@
   function back() {
     document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('on'); });
     document.getElementById('landing').style.display = 'block';
+    document.querySelector('.morph-header').style.display = 'flex';
+    // Restore morph state (About or Work) from before entering subpage
+    document.body.classList.toggle('work-mode', preSubpageWorkMode);
+    if (preSubpageWorkMode) {
+      document.querySelector('.morph-header').classList.add('revealed');
+      // Re-trigger project stagger
+      document.querySelectorAll('.prj').forEach(function(el, i) {
+        setTimeout(function() { el.classList.add('vis'); }, i * 80);
+      });
+    }
     window.scrollTo(0, 0);
   }
 
-  // Motion 2: scroll-stagger on service rows
+  // ═══════════ SCROLL STAGGER — services ═══════════
   var svcObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -942,6 +1083,22 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
 
   document.querySelectorAll('.svc').forEach(function(el) { svcObs.observe(el); });
+
+  // ═══════════ HEADER SCROLL-REVEAL (About state only) ═══════════
+  // In About state, reveal header when user scrolls past the hero
+  var heroEl = document.querySelector('.hero');
+  var headerEl = document.querySelector('.morph-header');
+  var heroObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      // When hero is NOT intersecting (scrolled past), reveal header
+      // In work mode, header is always revealed (handled in morphTo)
+      if (!isWorkMode) {
+        headerEl.classList.toggle('revealed', !entry.isIntersecting);
+      }
+    });
+  }, { threshold: 0 });
+
+  if (heroEl) heroObs.observe(heroEl);
 </script>
 
 </body>
