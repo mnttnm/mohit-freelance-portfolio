@@ -268,6 +268,189 @@
     letter-spacing: 0.02em;
   }
 
+  /* ─── Project List (Work state) ─── */
+  .projects-col {
+    display: none;
+    grid-column: 1 / -1;
+  }
+
+  .projects-header {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .prj {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    background: var(--bg-elevated);
+    padding: 20px 24px;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out), background 0.25s;
+  }
+
+  .prj:hover {
+    background: var(--bg-card);
+  }
+
+  .prj.vis {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .prj-type {
+    font-size: 0.62rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .prj-type.accent {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .prj-name {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+
+  .prj:hover .prj-name {
+    color: var(--accent);
+  }
+
+  .prj-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  .prj-stat {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--accent);
+    white-space: nowrap;
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .prj:hover .prj-stat {
+    transform: translateX(4px);
+  }
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  /* ─── Morph Label ─── */
+  .morph-label {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .morph-label-item {
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+  }
+
+  .morph-label-item.active {
+    color: var(--text-primary);
+  }
+
+  .morph-label-item:not(.active) {
+    color: var(--text-muted);
+  }
+
+  .morph-label-item:not(.active):hover {
+    color: var(--text-secondary);
+  }
+
+  .morph-label-sep {
+    color: rgba(255,255,255,0.15);
+    user-select: none;
+  }
+
+  /* ─── Morph State ─── */
+  body.work-mode .identity-col,
+  body.work-mode .services-col {
+    display: none;
+  }
+
+  body.work-mode .projects-col {
+    display: block;
+  }
+
+  body.work-mode .main-content {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  body.work-mode .landing {
+    min-height: auto;
+  }
+
+  /* ─── Scroll Hint ─── */
+  .scroll-hint {
+    text-align: center;
+    padding: 16px 0 0;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+
+  .scroll-hint:hover { opacity: 0.5; }
+
+  .scroll-hint-text {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .scroll-hint-arrow {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    animation: bobDown 2s var(--ease-out) infinite;
+  }
+
+  @keyframes bobDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
   /* ─── Bottom Bar ─── */
   .bottom-bar {
     display: flex;
@@ -544,6 +727,7 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+    .scroll-hint-arrow { animation: none; }
   }
 
   /* ─── Responsive ─── */
@@ -568,11 +752,14 @@
       gap: 12px;
       align-items: flex-start;
     }
+
+    .prj { padding: 16px 20px; }
   }
 
   @media (max-width: 480px) {
     .proof-row { flex-wrap: wrap; gap: 16px; }
     .svc { padding: 14px 16px; }
+    .prj { padding: 14px 16px; }
   }
 
   @media (min-height: 900px) {
@@ -591,6 +778,11 @@
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="brand">Mohit Tater</div>
+    <nav class="morph-label">
+      <button class="morph-label-item active" data-mode="about" onclick="morphTo('about')">About</button>
+      <span class="morph-label-sep">/</span>
+      <button class="morph-label-item" data-mode="work" onclick="morphTo('work')">Work</button>
+    </nav>
     <a href="mailto:mohittater.iiita@gmail.com" class="top-cta">Let's talk →</a>
   </div>
 
@@ -691,12 +883,99 @@
       </div>
     </div>
 
+    <!-- Work: Project List -->
+    <div class="projects-col">
+      <div class="projects-header">Shipped & proven</div>
+      <div class="project-list">
+
+        <a href="https://mohit.stream" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type accent">webapp</div>
+            <div class="prj-name">learning.log</div>
+            <p class="prj-desc">Public work journal documenting AI dev experiments and agentic patterns.</p>
+          </div>
+          <div class="prj-stat">★</div>
+        </a>
+
+        <a href="https://www.figma.com/community/plugin/1310888112326715990/figma-variable-explorer" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">plugin</div>
+            <div class="prj-name">Figma Variable Explorer</div>
+            <p class="prj-desc">Centralized viewer for design variables — list, JSON, and CSS formats.</p>
+          </div>
+          <div class="prj-stat">8K+</div>
+        </a>
+
+        <a href="https://www.raycast.com/tatermohit/note-in-google-doc" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">extension</div>
+            <div class="prj-name">Notes in Google Docs</div>
+            <p class="prj-desc">Capture quick notes from Raycast straight into Google Docs.</p>
+          </div>
+          <div class="prj-stat">1K+</div>
+        </a>
+
+        <a href="https://chromewebstore.google.com/detail/tab-triage/lldlagjikfofnnidnoegcmkolaibndof" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">extension</div>
+            <div class="prj-name">Tab Triage</div>
+            <p class="prj-desc">Chrome extension for tab management and organization.</p>
+          </div>
+          <div class="prj-stat">→</div>
+        </a>
+
+        <a href="https://medium.com/@tatermohit/i-built-a-business-co-pilot-using-claude-code-heres-the-exact-system-cfe32ee59558" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">blog</div>
+            <div class="prj-name">Business Co-Pilot System</div>
+            <p class="prj-desc">Step-by-step system for a personal business co-pilot with Claude Code.</p>
+          </div>
+          <div class="prj-stat">→</div>
+        </a>
+
+        <a href="https://btech-cs-career-guide-india-qq40xiy9w-tatermohit.vercel.app/" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">webapp</div>
+            <div class="prj-name">BTech CS Career Guide</div>
+            <p class="prj-desc">Career guide for Indian CS undergrads — built with deep research + Claude Code.</p>
+          </div>
+          <div class="prj-stat">→</div>
+        </a>
+
+        <a href="https://greetwood.myshopify.com/" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">ecommerce</div>
+            <div class="prj-name">Greetwood</div>
+            <p class="prj-desc">WordPress to Shopify migration using Shopify MCP/CLI and Claude Code.</p>
+          </div>
+          <div class="prj-stat">→</div>
+        </a>
+
+        <a href="https://getitright-ux.notion.site/featured-ux-audit" target="_blank" rel="noopener" class="prj">
+          <div>
+            <div class="prj-type">agency website</div>
+            <div class="prj-name">GetItRight</div>
+            <p class="prj-desc">UX audit agency — 20+ audits for 10+ SaaS startups, 3-5 day turnaround.</p>
+          </div>
+          <div class="prj-stat">→</div>
+        </a>
+
+      </div>
+    </div>
+
   </div>
+
+  <!-- Scroll Hint + Sentinel -->
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">keep scrolling</span>
+    <span class="scroll-hint-arrow">↓</span>
+  </div>
+  <div id="morph-sentinel" style="height:1px;"></div>
 
   <!-- Bottom Bar -->
   <div class="bottom-bar">
     <div class="bottom-links">
-      <a href="#" onclick="showPage('work'); return false;">Work</a>
+      <a href="#" onclick="morphTo('work'); return false;">Work</a>
       <a href="#" onclick="showPage('background'); return false;">Background</a>
       <a href="#" onclick="showPage('stack'); return false;">Stack</a>
       <a href="https://twitter.com/tatermohit" target="_blank">Twitter</a>
@@ -712,42 +991,6 @@
 <!-- ═══════════════════════════════════════ -->
 <!-- SUB-PAGES — hidden by default          -->
 <!-- ═══════════════════════════════════════ -->
-
-<!-- Work -->
-<div class="subpage" id="page-work">
-  <div class="subpage-inner">
-    <a href="#" class="subpage-back" onclick="showLanding(); return false;">← Back</a>
-    <h2 class="subpage-title">Shipped & proven</h2>
-    <div class="work-item">
-      <div class="work-metric">5,000+</div>
-      <div class="work-name">Figma Variable Explorer Plugin</div>
-      <p class="work-desc">A plugin for exploring and managing design tokens and variables in Figma. Used by thousands of designers across the community.</p>
-    </div>
-    <div class="work-item">
-      <div class="work-metric">250+</div>
-      <div class="work-name">Raycast Notes Extension</div>
-      <p class="work-desc">Keyboard-first note-taking for Raycast. Capture thoughts without leaving your workflow.</p>
-    </div>
-    <div class="work-item">
-      <div class="work-metric">→</div>
-      <div class="work-name">Client Engagements</div>
-      <p class="work-desc">React/Next.js frontend migrations, AI-powered content extraction tools, DAM interface design, SDR automation systems, agentic workflow consulting, and UX memory extraction pipelines for AI coding tools.</p>
-    </div>
-    <div class="work-item">
-      <div class="work-metric">→</div>
-      <div class="work-name">Hackathon Projects</div>
-      <p class="work-desc">Claude Code Observatory (Tableau Hackathon — enterprise analytics for AI coding tools), ComplyKit (Atlassian Hackathon — AI brand compliance for Jira), MarkDiff (semantic markdown comparison for LLM prompts).</p>
-    </div>
-    <div class="subpage-footer">
-      <div class="subpage-nav">
-        <a href="#" onclick="showLanding(); return false;">Home</a>
-        <a href="#" onclick="showPage('background'); return false;">Background</a>
-        <a href="#" onclick="showPage('stack'); return false;">Stack</a>
-      </div>
-      <a href="mailto:mohittater.iiita@gmail.com" class="subpage-cta">Let's talk →</a>
-    </div>
-  </div>
-</div>
 
 <!-- Background -->
 <div class="subpage" id="page-background">
@@ -781,7 +1024,7 @@
     <div class="subpage-footer">
       <div class="subpage-nav">
         <a href="#" onclick="showLanding(); return false;">Home</a>
-        <a href="#" onclick="showPage('work'); return false;">Work</a>
+        <a href="#" onclick="showLanding(); morphTo('work'); return false;">Work</a>
         <a href="#" onclick="showPage('stack'); return false;">Stack</a>
       </div>
       <a href="mailto:mohittater.iiita@gmail.com" class="subpage-cta">Let's talk →</a>
@@ -843,7 +1086,7 @@
     <div class="subpage-footer">
       <div class="subpage-nav">
         <a href="#" onclick="showLanding(); return false;">Home</a>
-        <a href="#" onclick="showPage('work'); return false;">Work</a>
+        <a href="#" onclick="showLanding(); morphTo('work'); return false;">Work</a>
         <a href="#" onclick="showPage('background'); return false;">Background</a>
       </div>
       <a href="mailto:mohittater.iiita@gmail.com" class="subpage-cta">Let's talk →</a>
@@ -853,19 +1096,80 @@
 
 
 <script>
+  // State
+  var isWorkMode = false;
+  var isMorphing = false;
+  var morphCooldown = false;
+
+  // Morph Toggle
+  function morphTo(mode) {
+    if (isMorphing) return;
+    if (mode === 'work' && isWorkMode) return;
+    if (mode === 'about' && !isWorkMode) return;
+
+    isMorphing = true;
+    isWorkMode = mode === 'work';
+
+    document.body.classList.toggle('work-mode', isWorkMode);
+
+    document.querySelectorAll('.morph-label-item').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    window.scrollTo(0, 0);
+
+    if (isWorkMode) {
+      setTimeout(function() {
+        document.querySelectorAll('.prj').forEach(function(el, i) {
+          setTimeout(function() { el.classList.add('vis'); }, i * 80);
+        });
+      }, 150);
+    } else {
+      document.querySelectorAll('.prj').forEach(function(el) {
+        el.classList.remove('vis');
+      });
+    }
+
+    setTimeout(function() { isMorphing = false; }, 500);
+  }
+
+  // Subpage Navigation (Background, Stack)
+  var preSubpageWorkMode = false;
+
   function showPage(id) {
+    preSubpageWorkMode = isWorkMode;
     document.getElementById('landing').style.display = 'none';
-    document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
-    const page = document.getElementById('page-' + id);
-    page.classList.add('active');
+    document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('page-' + id).classList.add('active');
     window.scrollTo(0, 0);
   }
 
   function showLanding() {
-    document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('active'); });
     document.getElementById('landing').style.display = 'grid';
+    document.body.classList.toggle('work-mode', preSubpageWorkMode);
+    if (preSubpageWorkMode) {
+      document.querySelectorAll('.prj').forEach(function(el, i) {
+        setTimeout(function() { el.classList.add('vis'); }, i * 80);
+      });
+    }
     window.scrollTo(0, 0);
   }
+
+  // Scroll-to-Morph
+  var sentinel = document.getElementById('morph-sentinel');
+  var scrollMorphObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var isScrollingDown = entry.boundingClientRect.top < window.innerHeight;
+      if (entry.isIntersecting && isScrollingDown && !isMorphing && !morphCooldown) {
+        morphCooldown = true;
+        morphTo(isWorkMode ? 'about' : 'work');
+        setTimeout(function() { morphCooldown = false; }, 1500);
+      }
+    });
+  }, { threshold: 1.0 });
+
+  if (sentinel) scrollMorphObs.observe(sentinel);
 </script>
 
 </body>
