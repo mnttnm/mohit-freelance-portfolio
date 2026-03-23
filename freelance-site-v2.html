@@ -1130,7 +1130,7 @@
       });
     }
 
-    setTimeout(function() { isMorphing = false; }, 500);
+    setTimeout(function() { isMorphing = false; }, 800);
   }
 
   // Subpage Navigation (Background, Stack)
@@ -1157,14 +1157,32 @@
   }
 
   // Scroll-to-Morph
+  // Track actual scroll direction to prevent false triggers
   var sentinel = document.getElementById('morph-sentinel');
+  var prevScrollY = window.scrollY;
+  var scrollDirection = 'down';
+
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > prevScrollY) {
+      scrollDirection = 'down';
+    } else if (window.scrollY < prevScrollY) {
+      scrollDirection = 'up';
+    }
+    prevScrollY = window.scrollY;
+  }, { passive: true });
+
+  // Only trigger when user has actively scrolled down past the sentinel
+  // (not when sentinel is already visible on page load or after a morph)
   var scrollMorphObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      var isScrollingDown = entry.boundingClientRect.top < window.innerHeight;
-      if (entry.isIntersecting && isScrollingDown && !isMorphing && !morphCooldown) {
+      if (entry.isIntersecting && scrollDirection === 'down' && !isMorphing && !morphCooldown) {
+        // Extra guard: only trigger if user has scrolled at least 100px
+        // This prevents firing on page load when sentinel is already visible
+        if (window.scrollY < 100) return;
+
         morphCooldown = true;
         morphTo(isWorkMode ? 'about' : 'work');
-        setTimeout(function() { morphCooldown = false; }, 1500);
+        setTimeout(function() { morphCooldown = false; }, 2000);
       }
     });
   }, { threshold: 1.0 });
