@@ -44,6 +44,81 @@
   }
 
   /* ════════════════════════════════════════════════
+     STICKY HEADER — split label toggle
+     ════════════════════════════════════════════════ */
+  .morph-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(28px, 5vw, 64px);
+    background: rgba(244, 240, 232, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out), background 0.4s var(--ease-out);
+  }
+
+  /* Header revealed when scrolled past hero OR in work mode */
+  .morph-header.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .morph-brand {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+  }
+
+  .morph-label {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .morph-label-item {
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  .morph-label-item.active {
+    color: var(--ink);
+  }
+
+  .morph-label-item:not(.active) {
+    color: var(--ink-muted);
+  }
+
+  .morph-label-item:not(.active):hover {
+    color: var(--ink-secondary);
+  }
+
+  .morph-label-sep {
+    color: var(--ink-faint);
+    user-select: none;
+  }
+
+  /* ════════════════════════════════════════════════
      HERO — full-bleed, image-led, brand dominant
      No inherited page gutters on the hero itself.
      Only the inner text column is constrained.
@@ -484,6 +559,16 @@
 </style>
 </head>
 <body>
+
+<!-- ─── STICKY HEADER: morph toggle ─── -->
+<header class="morph-header">
+  <span class="morph-brand">Mohit Tater</span>
+  <nav class="morph-label">
+    <button class="morph-label-item active" data-mode="about" onclick="morphTo('about')">About</button>
+    <span class="morph-label-sep">/</span>
+    <button class="morph-label-item" data-mode="work" onclick="morphTo('work')">Work</button>
+  </nav>
+</header>
 
 <!-- ═══════════ LANDING ═══════════ -->
 <div id="landing">
