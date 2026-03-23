@@ -492,6 +492,41 @@
 
 
   /* ════════════════════════════════════════════════
+     SCROLL HINT — "keep scrolling" near footer
+     ════════════════════════════════════════════════ */
+  .scroll-hint {
+    text-align: center;
+    padding: 20px 0 0;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+  }
+
+  .scroll-hint:hover {
+    opacity: 0.6;
+  }
+
+  .scroll-hint-text {
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .scroll-hint-arrow {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+    margin-top: 2px;
+    animation: bobDown 2s var(--ease-out) infinite;
+  }
+
+  @keyframes bobDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+
+  /* ════════════════════════════════════════════════
      FINAL CTA — convert
      ════════════════════════════════════════════════ */
   .final-cta {
@@ -887,6 +922,13 @@
     <a href="mailto:mohittater.iiita@gmail.com" class="cta-warm">mohittater.iiita@gmail.com <span class="cta-arrow">→</span></a>
   </section>
 
+  <!-- ─── SCROLL HINT + SENTINEL ─── -->
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">keep scrolling</span>
+    <span class="scroll-hint-arrow">↓</span>
+  </div>
+  <div id="morph-sentinel" style="height:1px;"></div>
+
   <!-- ─── FOOTER: subtle links ─── -->
   <footer class="foot">
     <div class="foot-inner">
@@ -1101,6 +1143,29 @@
   }, { threshold: 0 });
 
   if (heroEl) heroObs.observe(heroEl);
+
+  // ═══════════ SCROLL-TO-MORPH ═══════════
+  var sentinel = document.getElementById('morph-sentinel');
+  var lastScrollY = window.scrollY;
+
+  // Track scroll direction
+  window.addEventListener('scroll', function() {
+    lastScrollY = window.scrollY;
+  }, { passive: true });
+
+  var scrollMorphObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      // Only trigger when sentinel enters from above (user scrolling down)
+      var isScrollingDown = entry.boundingClientRect.top < window.innerHeight;
+      if (entry.isIntersecting && isScrollingDown && !isMorphing && !morphCooldown) {
+        morphCooldown = true;
+        morphTo(isWorkMode ? 'about' : 'work');
+        setTimeout(function() { morphCooldown = false; }, 1500);
+      }
+    });
+  }, { threshold: 1.0 });
+
+  if (sentinel) scrollMorphObs.observe(sentinel);
 </script>
 
 </body>
