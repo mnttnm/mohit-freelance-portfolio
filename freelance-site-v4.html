@@ -44,81 +44,6 @@
   }
 
   /* ════════════════════════════════════════════════
-     STICKY HEADER — split label toggle
-     ════════════════════════════════════════════════ */
-  .morph-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 clamp(28px, 5vw, 64px);
-    background: rgba(244, 240, 232, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--rule);
-    opacity: 0;
-    transform: translateY(-100%);
-    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out), background 0.4s var(--ease-out);
-  }
-
-  /* Header revealed when scrolled past hero OR in work mode */
-  .morph-header.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .morph-brand {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-    text-decoration: none;
-    opacity: 0;
-    transition: opacity 0.4s var(--ease-out);
-  }
-
-  .morph-label {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    font-family: var(--sans);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-  }
-
-  .morph-label-item {
-    cursor: pointer;
-    padding: 4px 0;
-    transition: color 0.3s;
-    background: none;
-    border: none;
-    font: inherit;
-    letter-spacing: inherit;
-  }
-
-  .morph-label-item.active {
-    color: var(--ink);
-  }
-
-  .morph-label-item:not(.active) {
-    color: var(--ink-muted);
-  }
-
-  .morph-label-item:not(.active):hover {
-    color: var(--ink-secondary);
-  }
-
-  .morph-label-sep {
-    color: var(--ink-faint);
-    user-select: none;
-  }
-
-  /* ════════════════════════════════════════════════
      HERO — full-bleed, image-led, brand dominant
      No inherited page gutters on the hero itself.
      Only the inner text column is constrained.
@@ -329,15 +254,11 @@
 
 
   /* ════════════════════════════════════════════════
-     PROJECT LIST — Work state content
+     PROJECT LIST — inline scroll section
      ════════════════════════════════════════════════ */
   .projects {
     padding: clamp(56px, 8vw, 96px) clamp(28px, 5vw, 64px);
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-    transition: opacity 0.45s var(--ease-out);
+    border-top: 1px solid var(--rule);
   }
 
   .projects-inner {
@@ -418,111 +339,6 @@
 
   .prj:hover .prj-stat {
     transform: translateX(4px);
-  }
-
-
-  /* ════════════════════════════════════════════════
-     MORPH STATE — body.work-mode toggles everything
-     ════════════════════════════════════════════════ */
-
-  /* Container for services + projects to share the same space */
-  .content-swap {
-    position: relative;
-  }
-
-  /* Header: brand visible in work mode */
-  body.work-mode .morph-brand {
-    opacity: 1;
-  }
-
-  /* Hero: collapse in work mode using max-height for smooth animation */
-  body.work-mode .hero {
-    max-height: 0;
-    min-height: 0;
-    overflow: hidden;
-    opacity: 0;
-  }
-
-  /* Services: hidden in work mode */
-  body.work-mode .services {
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-  }
-
-  /* Projects: visible in work mode */
-  body.work-mode .projects {
-    opacity: 1;
-    pointer-events: auto;
-    position: relative;
-  }
-
-  /* Final CTA: hidden in work mode */
-  body.work-mode .final-cta {
-    opacity: 0;
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
-    padding: 0;
-    border: none;
-    transition: opacity 0.3s var(--ease-out);
-  }
-
-  /* Transition timing for About state elements */
-  .hero {
-    max-height: 100vh;
-    transition: opacity 0.4s var(--ease-out), max-height 0.6s var(--ease-out), min-height 0.6s var(--ease-out);
-  }
-
-  .services {
-    transition: opacity 0.4s var(--ease-out);
-  }
-
-  .final-cta {
-    transition: opacity 0.3s var(--ease-out), height 0.5s var(--ease-out), padding 0.5s var(--ease-out);
-  }
-
-  /* Header: always revealed + opaque background in work mode */
-  body.work-mode .morph-header {
-    opacity: 1;
-    transform: translateY(0);
-    background: rgba(244, 240, 232, 0.97);
-  }
-
-
-  /* ════════════════════════════════════════════════
-     SCROLL HINT — "keep scrolling" near footer
-     ════════════════════════════════════════════════ */
-  .scroll-hint {
-    text-align: center;
-    padding: 20px 0 0;
-    opacity: 0.4;
-    transition: opacity 0.3s;
-  }
-
-  .scroll-hint:hover {
-    opacity: 0.6;
-  }
-
-  .scroll-hint-text {
-    font-size: 0.72rem;
-    color: var(--ink-muted);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-
-  .scroll-hint-arrow {
-    display: block;
-    font-size: 0.9rem;
-    color: var(--ink-faint);
-    margin-top: 2px;
-    animation: bobDown 2s var(--ease-out) infinite;
-  }
-
-  @keyframes bobDown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(4px); }
   }
 
 
@@ -758,23 +574,10 @@
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
     }
-    .scroll-hint-arrow {
-      animation: none;
-    }
   }
 </style>
 </head>
 <body>
-
-<!-- ─── STICKY HEADER: morph toggle ─── -->
-<header class="morph-header">
-  <span class="morph-brand">Mohit Tater</span>
-  <nav class="morph-label">
-    <button class="morph-label-item active" data-mode="about" onclick="morphTo('about')">About</button>
-    <span class="morph-label-sep">/</span>
-    <button class="morph-label-item" data-mode="work" onclick="morphTo('work')">Work</button>
-  </nav>
-</header>
 
 <!-- ═══════════ LANDING ═══════════ -->
 <div id="landing">
@@ -789,9 +592,6 @@
       <a href="mailto:mohittater.iiita@gmail.com" class="cta">Start a conversation <span class="cta-arrow">→</span></a>
     </div>
   </section>
-
-  <!-- ─── SERVICES + PROJECTS: shared content-swap container ─── -->
-  <div class="content-swap">
 
   <!-- ─── SERVICES: one job — the offer ─── -->
   <section class="services">
@@ -836,8 +636,8 @@
     </div>
   </section>
 
-  <!-- ─── PROJECTS: Work state content ─── -->
-  <section class="projects">
+  <!-- ─── PROJECTS: inline scroll section ─── -->
+  <section class="projects" id="projects-section">
     <div class="projects-inner">
       <h2 class="sh">Shipped & proven</h2>
       <p class="ss">Products, tools, and client work — built and launched.</p>
@@ -916,8 +716,6 @@
     </div>
   </section>
 
-  </div><!-- /.content-swap -->
-
   <!-- ─── FINAL CTA: convert ─── -->
   <section class="final-cta">
     <h2 class="sh">Let's build something worth&nbsp;shipping</h2>
@@ -925,18 +723,11 @@
     <a href="mailto:mohittater.iiita@gmail.com" class="cta-warm">mohittater.iiita@gmail.com <span class="cta-arrow">→</span></a>
   </section>
 
-  <!-- ─── SCROLL HINT + SENTINEL ─── -->
-  <div class="scroll-hint">
-    <span class="scroll-hint-text">keep scrolling</span>
-    <span class="scroll-hint-arrow">↓</span>
-  </div>
-  <div id="morph-sentinel" style="height:1px;"></div>
-
   <!-- ─── FOOTER: subtle links ─── -->
   <footer class="foot">
     <div class="foot-inner">
       <nav class="foot-links">
-        <a href="#" onclick="morphTo('work');return false">Work</a>
+        <a href="#projects-section">Work</a>
         <a href="#" onclick="go('background');return false">Background</a>
         <a href="#" onclick="go('stack');return false">Stack</a>
         <a href="https://twitter.com/tatermohit" target="_blank" rel="noopener">Twitter</a>
@@ -1009,67 +800,9 @@
 
 
 <script>
-  // ═══════════ STATE ═══════════
-  var isWorkMode = false;
-  var isMorphing = false;
-  var morphCooldown = false;
-
-  // ═══════════ MORPH TOGGLE ═══════════
-  function morphTo(mode) {
-    if (isMorphing) return;
-    if (mode === 'work' && isWorkMode) return;
-    if (mode === 'about' && !isWorkMode) return;
-
-    isMorphing = true;
-    isWorkMode = mode === 'work';
-
-    // Update body class
-    document.body.classList.toggle('work-mode', isWorkMode);
-
-    // Update split label
-    document.querySelectorAll('.morph-label-item').forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.mode === mode);
-    });
-
-    // Scroll to top
-    window.scrollTo(0, 0);
-
-    // Trigger project stagger animation in work mode
-    if (isWorkMode) {
-      setTimeout(function() {
-        var prjs = document.querySelectorAll('.prj');
-        prjs.forEach(function(el, i) {
-          setTimeout(function() { el.classList.add('vis'); }, i * 80);
-        });
-      }, 300);
-    } else {
-      // Reset project visibility for next morph
-      document.querySelectorAll('.prj').forEach(function(el) {
-        el.classList.remove('vis');
-      });
-    }
-
-    // Reveal header in work mode, remove in about mode (hero observer takes over on scroll)
-    if (isWorkMode) {
-      document.querySelector('.morph-header').classList.add('revealed');
-    } else {
-      document.querySelector('.morph-header').classList.remove('revealed');
-    }
-
-    // Release morph lock after transitions complete
-    setTimeout(function() {
-      isMorphing = false;
-    }, 700);
-  }
-
   // ═══════════ SUBPAGE NAVIGATION (Background, Stack) ═══════════
-  // Track morph state before entering subpage so we can restore it
-  var preSubpageWorkMode = false;
-
   function go(id) {
-    preSubpageWorkMode = isWorkMode;
     document.getElementById('landing').style.display = 'none';
-    document.querySelector('.morph-header').style.display = 'none';
     document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('on'); });
     document.getElementById('p-' + id).classList.add('on');
     window.scrollTo(0, 0);
@@ -1078,16 +811,6 @@
   function back() {
     document.querySelectorAll('.subpage').forEach(function(p) { p.classList.remove('on'); });
     document.getElementById('landing').style.display = 'block';
-    document.querySelector('.morph-header').style.display = 'flex';
-    // Restore morph state (About or Work) from before entering subpage
-    document.body.classList.toggle('work-mode', preSubpageWorkMode);
-    if (preSubpageWorkMode) {
-      document.querySelector('.morph-header').classList.add('revealed');
-      // Re-trigger project stagger
-      document.querySelectorAll('.prj').forEach(function(el, i) {
-        setTimeout(function() { el.classList.add('vis'); }, i * 80);
-      });
-    }
     window.scrollTo(0, 0);
   }
 
@@ -1105,44 +828,19 @@
 
   document.querySelectorAll('.svc').forEach(function(el) { svcObs.observe(el); });
 
-  // ═══════════ HEADER SCROLL-REVEAL (About state only) ═══════════
-  // In About state, reveal header when user scrolls past the hero
-  var heroEl = document.querySelector('.hero');
-  var headerEl = document.querySelector('.morph-header');
-  var heroObs = new IntersectionObserver(function(entries) {
+  // ═══════════ SCROLL STAGGER — projects ═══════════
+  var prjObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      // When hero is NOT intersecting (scrolled past), reveal header
-      // In work mode, header is always revealed (handled in morphTo)
-      if (!isWorkMode) {
-        headerEl.classList.toggle('revealed', !entry.isIntersecting);
+      if (entry.isIntersecting) {
+        var rows = document.querySelectorAll('.prj');
+        var i = Array.prototype.indexOf.call(rows, entry.target);
+        setTimeout(function() { entry.target.classList.add('vis'); }, i * 80);
+        prjObs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0 });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
 
-  if (heroEl) heroObs.observe(heroEl);
-
-  // ═══════════ SCROLL-TO-MORPH ═══════════
-  var sentinel = document.getElementById('morph-sentinel');
-  var lastScrollY = window.scrollY;
-
-  // Track scroll direction
-  window.addEventListener('scroll', function() {
-    lastScrollY = window.scrollY;
-  }, { passive: true });
-
-  var scrollMorphObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      // Only trigger when sentinel enters from above (user scrolling down)
-      var isScrollingDown = entry.boundingClientRect.top < window.innerHeight;
-      if (entry.isIntersecting && isScrollingDown && !isMorphing && !morphCooldown) {
-        morphCooldown = true;
-        morphTo(isWorkMode ? 'about' : 'work');
-        setTimeout(function() { morphCooldown = false; }, 1500);
-      }
-    });
-  }, { threshold: 1.0 });
-
-  if (sentinel) scrollMorphObs.observe(sentinel);
+  document.querySelectorAll('.prj').forEach(function(el) { prjObs.observe(el); });
 </script>
 
 </body>
