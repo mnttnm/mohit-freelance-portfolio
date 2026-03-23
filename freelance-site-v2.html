@@ -421,36 +421,6 @@
     min-height: auto;
   }
 
-  /* ─── Scroll Hint ─── */
-  .scroll-hint {
-    text-align: center;
-    padding: 16px 0 0;
-    opacity: 0.3;
-    transition: opacity 0.3s;
-  }
-
-  .scroll-hint:hover { opacity: 0.5; }
-
-  .scroll-hint-text {
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-
-  .scroll-hint-arrow {
-    display: block;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-top: 2px;
-    animation: bobDown 2s var(--ease-out) infinite;
-  }
-
-  @keyframes bobDown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(4px); }
-  }
-
   /* ─── Bottom Bar ─── */
   .bottom-bar {
     display: flex;
@@ -727,7 +697,6 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-    .scroll-hint-arrow { animation: none; }
   }
 
   /* ─── Responsive ─── */
@@ -965,12 +934,6 @@
 
   </div>
 
-  <!-- Scroll Hint + Sentinel -->
-  <div class="scroll-hint">
-    <span class="scroll-hint-text">keep scrolling</span>
-    <span class="scroll-hint-arrow">↓</span>
-  </div>
-  <div id="morph-sentinel" style="height:1px;"></div>
 
   <!-- Bottom Bar -->
   <div class="bottom-bar">
@@ -1099,7 +1062,6 @@
   // State
   var isWorkMode = false;
   var isMorphing = false;
-  var morphCooldown = false;
 
   // Morph Toggle
   function morphTo(mode) {
@@ -1156,38 +1118,6 @@
     window.scrollTo(0, 0);
   }
 
-  // Scroll-to-Morph
-  // Track actual scroll direction to prevent false triggers
-  var sentinel = document.getElementById('morph-sentinel');
-  var prevScrollY = window.scrollY;
-  var scrollDirection = 'down';
-
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > prevScrollY) {
-      scrollDirection = 'down';
-    } else if (window.scrollY < prevScrollY) {
-      scrollDirection = 'up';
-    }
-    prevScrollY = window.scrollY;
-  }, { passive: true });
-
-  // Only trigger when user has actively scrolled down past the sentinel
-  // (not when sentinel is already visible on page load or after a morph)
-  var scrollMorphObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting && scrollDirection === 'down' && !isMorphing && !morphCooldown) {
-        // Extra guard: only trigger if user has scrolled at least 100px
-        // This prevents firing on page load when sentinel is already visible
-        if (window.scrollY < 100) return;
-
-        morphCooldown = true;
-        morphTo(isWorkMode ? 'about' : 'work');
-        setTimeout(function() { morphCooldown = false; }, 2000);
-      }
-    });
-  }, { threshold: 1.0 });
-
-  if (sentinel) scrollMorphObs.observe(sentinel);
 </script>
 
 </body>
