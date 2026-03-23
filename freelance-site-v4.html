@@ -329,6 +329,99 @@
 
 
   /* ════════════════════════════════════════════════
+     PROJECT LIST — Work state content
+     ════════════════════════════════════════════════ */
+  .projects {
+    padding: clamp(56px, 8vw, 96px) clamp(28px, 5vw, 64px);
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    transition: opacity 0.45s var(--ease-out);
+  }
+
+  .projects-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .projects .sh {
+    margin-bottom: 8px;
+  }
+
+  .projects .ss {
+    margin-bottom: clamp(32px, 4.5vw, 52px);
+  }
+
+  .prj {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: clamp(18px, 2.2vw, 26px) 0;
+    border-top: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  }
+
+  .prj:last-child { border-bottom: 1px solid var(--rule); }
+
+  .prj.vis {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .prj-type {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 3px;
+  }
+
+  .prj-type.accent {
+    color: var(--accent);
+  }
+
+  .prj-name {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+
+  .prj:hover .prj-name {
+    color: var(--accent);
+  }
+
+  .prj-desc {
+    font-size: 0.84rem;
+    color: var(--ink-muted);
+    line-height: 1.55;
+    margin-top: 3px;
+    max-width: 480px;
+  }
+
+  .prj-stat {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .prj:hover .prj-stat {
+    transform: translateX(4px);
+  }
+
+
+  /* ════════════════════════════════════════════════
      FINAL CTA — convert
      ════════════════════════════════════════════════ */
   .final-cta {
@@ -547,6 +640,11 @@
       gap: 4px;
     }
     .svc-price { text-align: left; }
+    .prj {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .prj-stat { text-align: left; }
     .foot-inner { flex-direction: column; gap: 10px; }
   }
 
@@ -624,6 +722,86 @@
         </div>
         <div class="svc-price">contact</div>
       </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS: Work state content ─── -->
+  <section class="projects">
+    <div class="projects-inner">
+      <h2 class="sh">Shipped & proven</h2>
+      <p class="ss">Products, tools, and client work — built and launched.</p>
+
+      <a href="https://mohit.stream" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type accent">webapp</div>
+          <div class="prj-name">learning.log</div>
+          <p class="prj-desc">Public work journal documenting AI dev experiments and agentic patterns.</p>
+        </div>
+        <div class="prj-stat">★</div>
+      </a>
+
+      <a href="https://www.figma.com/community/plugin/1310888112326715990/figma-variable-explorer" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">plugin</div>
+          <div class="prj-name">Figma Variable Explorer</div>
+          <p class="prj-desc">Centralized viewer for design variables — list, JSON, and CSS formats.</p>
+        </div>
+        <div class="prj-stat">8K+</div>
+      </a>
+
+      <a href="https://www.raycast.com/tatermohit/note-in-google-doc" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">extension</div>
+          <div class="prj-name">Notes in Google Docs</div>
+          <p class="prj-desc">Capture quick notes from Raycast straight into Google Docs.</p>
+        </div>
+        <div class="prj-stat">1K+</div>
+      </a>
+
+      <a href="https://chromewebstore.google.com/detail/tab-triage/lldlagjikfofnnidnoegcmkolaibndof" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">extension</div>
+          <div class="prj-name">Tab Triage</div>
+          <p class="prj-desc">Chrome extension for tab management and organization.</p>
+        </div>
+        <div class="prj-stat">→</div>
+      </a>
+
+      <a href="https://medium.com/@tatermohit/i-built-a-business-co-pilot-using-claude-code-heres-the-exact-system-cfe32ee59558" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">blog</div>
+          <div class="prj-name">Business Co-Pilot System</div>
+          <p class="prj-desc">Step-by-step system for a personal business co-pilot with Claude Code.</p>
+        </div>
+        <div class="prj-stat">→</div>
+      </a>
+
+      <a href="https://btech-cs-career-guide-india-qq40xiy9w-tatermohit.vercel.app/" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">webapp</div>
+          <div class="prj-name">BTech CS Career Guide</div>
+          <p class="prj-desc">Career guide for Indian CS undergrads — built with deep research + Claude Code.</p>
+        </div>
+        <div class="prj-stat">→</div>
+      </a>
+
+      <a href="https://greetwood.myshopify.com/" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">ecommerce</div>
+          <div class="prj-name">Greetwood</div>
+          <p class="prj-desc">WordPress to Shopify migration using Shopify MCP/CLI and Claude Code.</p>
+        </div>
+        <div class="prj-stat">→</div>
+      </a>
+
+      <a href="https://getitright-ux.notion.site/featured-ux-audit" target="_blank" rel="noopener" class="prj">
+        <div>
+          <div class="prj-type">agency website</div>
+          <div class="prj-name">GetItRight</div>
+          <p class="prj-desc">UX audit agency — 20+ audits for 10+ SaaS startups, 3-5 day turnaround.</p>
+        </div>
+        <div class="prj-stat">→</div>
+      </a>
     </div>
   </section>
 
