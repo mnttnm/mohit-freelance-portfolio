@@ -1030,9 +1030,11 @@
       });
     }
 
-    // Reveal header in work mode, or let hero observer control it in about mode
+    // Reveal header in work mode, remove in about mode (hero observer takes over on scroll)
     if (isWorkMode) {
       document.querySelector('.morph-header').classList.add('revealed');
+    } else {
+      document.querySelector('.morph-header').classList.remove('revealed');
     }
 
     // Release morph lock after transitions complete
