@@ -122,13 +122,6 @@ section { padding: 100px 0; }
   margin-bottom: 56px;
 }
 
-/* Divider */
-.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0;
-}
-
 /* Animations */
 @keyframes fadeUp {
   from {
