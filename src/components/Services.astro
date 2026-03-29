@@ -1,101 +1,57 @@
 <section id="services">
   <div class="container">
-    <div class="section-label reveal">What I do</div>
+    <div class="section-label reveal">What I can help with</div>
     <h2 class="section-title reveal">
-      Services built around outcomes, not hours
+      Here's what I usually get asked to do
     </h2>
     <p class="section-desc reveal">
-      Project-based engagements designed to move fast. Each service is scoped to
-      deliver measurable value in 2–6 weeks.
+      Most of my work is project-based — usually 2 to 6 weeks.
     </p>
     <div class="services-grid reveal">
       <div class="service-card">
-        <div class="service-price">From $4K</div>
         <div class="service-icon">🔍</div>
-        <h3>AI Product Evaluation & Strategy</h3>
+        <h3>Figure out what's not working</h3>
         <p>
-          Audit your AI features, identify failure modes, and build an evaluation
-          framework. You'll know exactly what's working, what's not, and what to
-          fix first.
+          You've built something but it's not landing the way you hoped. I'll
+          dig in, talk to your users, look at the product with fresh eyes, and
+          give you a clear picture of what to fix first.
         </p>
         <div class="service-tags">
-          <span class="tag">AI Audit</span>
-          <span class="tag">Eval Framework</span>
-          <span class="tag">Product Strategy</span>
+          <span class="tag">Product Audit</span>
+          <span class="tag">UX Review</span>
+          <span class="tag">Strategy</span>
         </div>
       </div>
 
       <div class="service-card">
-        <div class="service-price">From $6K</div>
         <div class="service-icon">⚡</div>
-        <h3>Rapid AI-Powered MVP</h3>
+        <h3>Build you a working prototype</h3>
         <p>
-          From concept to clickable product in two weeks. Full-stack development
-          with AI integration, designed for validation and investor demos.
+          You have an idea and need something real to show people — investors,
+          users, your team. I'll design and build it into a working product
+          in a couple of weeks.
         </p>
         <div class="service-tags">
+          <span class="tag">Design</span>
+          <span class="tag">React</span>
           <span class="tag">Next.js</span>
-          <span class="tag">React</span>
-          <span class="tag">AI Integration</span>
-          <span class="tag">Vercel</span>
+          <span class="tag">Full-stack</span>
         </div>
       </div>
 
       <div class="service-card">
-        <div class="service-price">From $3K</div>
         <div class="service-icon">🤖</div>
-        <h3>AI Workflow Automation</h3>
+        <h3>Simplify and automate your workflows</h3>
         <p>
-          Map your manual processes, identify automation opportunities, and build
-          AI-powered workflows that cut repetitive work by up to 70%.
+          If your team is doing the same thing over and over, there's usually
+          a better way. I'll find those spots and build workflows that handle
+          the repetitive parts — with AI where it helps, without it where it doesn't.
         </p>
         <div class="service-tags">
-          <span class="tag">Claude</span>
           <span class="tag">Automation</span>
-          <span class="tag">Agents</span>
-          <span class="tag">n8n</span>
+          <span class="tag">Workflows</span>
+          <span class="tag">AI where it fits</span>
         </div>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🎨</div>
-        <div class="service-price">From $4K</div>
-        <h3>Product & UX Design</h3>
-        <p>
-          User research, information architecture, wireframes, and interactive
-          Figma prototypes — ready for stakeholder demos, usability testing, and
-          dev handoff.
-        </p>
-        <div class="service-tags">
-          <span class="tag">Figma</span>
-          <span class="tag">Prototyping</span>
-          <span class="tag">UX Research</span>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🛠️</div>
-        <div class="service-price">Contact</div>
-        <h3>Fullstack Development</h3>
-        <p>
-          Production-grade web applications built with React, Next.js, and
-          TypeScript. Clean architecture, responsive design, and deployment on
-          Vercel or your stack.
-        </p>
-        <div class="service-tags">
-          <span class="tag">TypeScript</span>
-          <span class="tag">React</span>
-          <span class="tag">Tailwind</span>
-          <span class="tag">Supabase</span>
-        </div>
-      </div>
-
-      <div class="service-card service-card--custom">
-        <h3>Need something custom?</h3>
-        <p>Retainers, advisory, or compound engagements.</p>
-        <a href="mailto:mohittater.iiita@gmail.com" class="btn-primary btn-primary--sm"
-          >Let's scope it →</a
-        >
       </div>
     </div>
   </div>
@@ -104,47 +60,21 @@
 <style>
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 
   .service-card {
-    background: var(--bg-elevated);
     padding: 40px 36px;
-    transition: background 0.3s;
-    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-elevated);
+    transition: border-color 0.3s, background 0.3s;
   }
 
   .service-card:hover {
+    border-color: var(--border-hover);
     background: var(--bg-card);
-  }
-
-  .service-card--custom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 260px;
-  }
-
-  .service-card--custom h3 {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-  }
-
-  .service-card--custom p {
-    margin-bottom: 24px;
-    font-size: 0.88rem;
-  }
-
-  .btn-primary--sm {
-    font-size: 0.85rem;
-    padding: 10px 24px;
   }
 
   .service-icon {
@@ -189,24 +119,9 @@
     letter-spacing: 0.02em;
   }
 
-  .service-price {
-    position: absolute;
-    top: 36px;
-    right: 36px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--warm);
-  }
-
   @media (max-width: 768px) {
     .services-grid {
       grid-template-columns: 1fr;
-    }
-
-    .service-price {
-      position: static;
-      display: block;
-      margin-bottom: 16px;
     }
   }
 </style>
