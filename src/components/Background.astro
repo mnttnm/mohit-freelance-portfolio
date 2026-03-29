@@ -1,0 +1,209 @@
+<section id="background">
+  <div class="container">
+    <div class="two-col reveal">
+      <div>
+        <div class="section-label">Background</div>
+        <h2 class="section-title">Where I've been</h2>
+        <div class="experience-track">
+          <div class="exp-item">
+            <div class="exp-period">2024 — Present</div>
+            <div class="exp-role">Freelance Consultant</div>
+            <div class="exp-company">AI Product & Design Engineering</div>
+            <div class="exp-desc">
+              UX design, frontend development, and AI product consulting for
+              startups and growth-stage companies. Project-based and retainer
+              engagements.
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-period">Previously</div>
+            <div class="exp-role">Senior Software Developer</div>
+            <div class="exp-company">BlueJeans by Verizon</div>
+            <div class="exp-desc">
+              Frontend engineering on enterprise video conferencing products at
+              scale.
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-period">Previously</div>
+            <div class="exp-role">PM + Developer (Dual Role)</div>
+            <div class="exp-company">Query.ai</div>
+            <div class="exp-desc">
+              Rare hybrid role spanning product management and hands-on
+              development for a security product.
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-period">Previously</div>
+            <div class="exp-role">UX Engineer</div>
+            <div class="exp-company">GoodCode</div>
+            <div class="exp-desc">
+              Client-facing discovery with CPOs and CTOs. Translating business
+              needs into product experiences.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Toolkit</div>
+        <h2 class="section-title" style="margin-bottom: 32px;">
+          What I work with
+        </h2>
+        <div class="stack-group">
+          <p class="stack-category">Design</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">Figma</span>
+            <span class="stack-chip">Prototyping</span>
+            <span class="stack-chip">Design Systems</span>
+            <span class="stack-chip">User Research</span>
+            <span class="stack-chip">Information Architecture</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <p class="stack-category">Engineering</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">Next.js</span>
+            <span class="stack-chip">TypeScript</span>
+            <span class="stack-chip">Tailwind CSS</span>
+            <span class="stack-chip">Vercel</span>
+            <span class="stack-chip">Supabase</span>
+            <span class="stack-chip">Node.js</span>
+          </div>
+        </div>
+        <div class="stack-group">
+          <p class="stack-category">AI & Automation</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">Claude</span>
+            <span class="stack-chip">Vercel AI SDK</span>
+            <span class="stack-chip">Agentic Workflows</span>
+            <span class="stack-chip">n8n</span>
+            <span class="stack-chip">Prompt Engineering</span>
+            <span class="stack-chip">LLM Evaluation</span>
+          </div>
+        </div>
+        <div class="stack-group stack-group--last">
+          <p class="stack-category">Methodology</p>
+          <div class="stack-cloud">
+            <span class="stack-chip">Compound Engineering</span>
+            <span class="stack-chip">Skill Files</span>
+            <span class="stack-chip">CLAUDE.md</span>
+            <span class="stack-chip">Build in Public</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .experience-track {
+    position: relative;
+    padding-left: 36px;
+    border-left: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .exp-item {
+    position: relative;
+    padding-bottom: 48px;
+  }
+
+  .exp-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .exp-period {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .exp-role {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+
+  .exp-company {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .exp-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  .stack-group {
+    margin-bottom: 36px;
+  }
+
+  .stack-group--last {
+    margin-bottom: 0;
+  }
+
+  .stack-category {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .stack-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .stack-chip {
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .stack-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  @media (max-width: 768px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+</style>
