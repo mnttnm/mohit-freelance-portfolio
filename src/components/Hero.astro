@@ -1,0 +1,101 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Available for Q2 2026</div>
+    <h1>I help teams build <em>smarter products</em> with AI&nbsp;&&nbsp;design</h1>
+    <p class="hero-desc">
+      AI Product Consultant & Design Engineer with 10+ years bridging UX,
+      frontend development, and AI integration. I don't just advise — I design,
+      build, and ship.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:mohittater.iiita@gmail.com" class="btn-primary"
+        >Start a conversation →</a
+      >
+      <a href="#services" class="btn-secondary">See services</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 180px 0 120px;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 80px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+      circle,
+      rgba(200, 245, 110, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.1s forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.35s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-out) 0.5s forwards;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 140px 0 80px;
+    }
+  }
+</style>
