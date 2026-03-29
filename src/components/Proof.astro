@@ -1,0 +1,82 @@
+<section id="work">
+  <div class="container">
+    <div class="section-label reveal">Shipped & proven</div>
+    <h2 class="section-title reveal">Tools people actually use</h2>
+    <p class="section-desc reveal">
+      I build things and put them in front of real users. Here's what's out in
+      the world.
+    </p>
+    <div class="proof-grid reveal">
+      <div class="proof-card">
+        <div class="proof-metric">5K+</div>
+        <div class="proof-title">Figma Variable Explorer</div>
+        <p class="proof-desc">
+          A Figma plugin for exploring and managing design tokens and variables.
+          Used by thousands of designers across the Figma community.
+        </p>
+      </div>
+      <div class="proof-card">
+        <div class="proof-metric">250+</div>
+        <div class="proof-title">Raycast Notes Extension</div>
+        <p class="proof-desc">
+          A keyboard-first note-taking extension for Raycast. Built for speed —
+          capture thoughts without leaving your workflow.
+        </p>
+      </div>
+      <div class="proof-card">
+        <div class="proof-metric">∞</div>
+        <div class="proof-title">Client Work</div>
+        <p class="proof-desc">
+          React/Next.js migrations, AI-powered content tools, DAM interface
+          design, SDR automation systems, and agentic workflow consulting.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .proof-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    background: var(--bg-elevated);
+    transition: border-color 0.3s, transform 0.3s var(--ease-out);
+  }
+
+  .proof-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .proof-metric {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .proof-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 8px 0 8px;
+  }
+
+  .proof-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .proof-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
