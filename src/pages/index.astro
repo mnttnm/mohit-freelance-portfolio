@@ -1,20 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import Proof from '../components/Proof.astro';
-import Background from '../components/Background.astro';
-import CTA from '../components/CTA.astro';
-import Footer from '../components/Footer.astro';
+import VariationToggle from '../components/VariationToggle.astro';
+import StudioVariation from '../components/variations/StudioVariation.astro';
+import OperatorVariation from '../components/variations/OperatorVariation.astro';
+import ConversationalVariation from '../components/variations/ConversationalVariation.astro';
+import MinimalVariation from '../components/variations/MinimalVariation.astro';
 ---
 
 <Layout title="Mohit Tater — Product Consultant & Design Engineer">
-  <Header />
-  <Hero />
-  <Services />
-  <Proof />
-  <Background />
-  <CTA />
-  <Footer />
+  <VariationToggle />
+  <StudioVariation />
+  <OperatorVariation />
+  <ConversationalVariation />
+  <MinimalVariation />
 </Layout>

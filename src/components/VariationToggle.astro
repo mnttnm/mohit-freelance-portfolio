@@ -1,0 +1,139 @@
+<!-- Floating toggle for switching between portfolio variations -->
+<div class="variation-toggle" id="variation-toggle">
+  <div class="toggle-inner">
+    <button class="toggle-btn active" data-variation="studio">Studio</button>
+    <button class="toggle-btn" data-variation="operator">Operator</button>
+    <button class="toggle-btn" data-variation="conversational">Personal</button>
+    <button class="toggle-btn" data-variation="minimal">Minimal</button>
+    <div class="toggle-indicator" id="toggle-indicator"></div>
+  </div>
+</div>
+
+<style>
+  .variation-toggle {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9998;
+    padding: 4px;
+    background: rgba(30, 30, 34, 0.85);
+    backdrop-filter: blur(16px) saturate(1.5);
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .toggle-inner {
+    display: flex;
+    position: relative;
+    gap: 2px;
+  }
+
+  .toggle-btn {
+    position: relative;
+    z-index: 2;
+    padding: 8px 20px;
+    border: none;
+    background: none;
+    color: rgba(255,255,255,0.5);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .toggle-btn:hover {
+    color: rgba(255,255,255,0.8);
+  }
+
+  .toggle-btn.active {
+    color: #fff;
+  }
+
+  .toggle-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255,255,255,0.12);
+    border-radius: 100px;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('variation-toggle');
+  const indicator = document.getElementById('toggle-indicator');
+  const buttons = toggle?.querySelectorAll('.toggle-btn') as NodeListOf<HTMLButtonElement>;
+  const variations = document.querySelectorAll('[data-variation-content]') as NodeListOf<HTMLElement>;
+
+  function setVariation(name: string) {
+    // Update buttons
+    buttons.forEach(btn => btn.classList.remove('active'));
+    const activeBtn = toggle?.querySelector(`[data-variation="${name}"]`) as HTMLButtonElement;
+    activeBtn?.classList.add('active');
+
+    // Move indicator
+    if (indicator && activeBtn) {
+      indicator.style.width = `${activeBtn.offsetWidth}px`;
+      indicator.style.transform = `translateX(${activeBtn.offsetLeft}px)`;
+    }
+
+    // Show/hide variations
+    variations.forEach(v => {
+      if (v.dataset.variationContent === name) {
+        v.style.display = 'block';
+        v.classList.add('variation-active');
+      } else {
+        v.style.display = 'none';
+        v.classList.remove('variation-active');
+      }
+    });
+
+    // Update body class for variation-specific global styles
+    document.body.className = `variation-${name}`;
+
+    // Re-trigger IntersectionObserver-based animations for the now-visible variation
+    // When elements are display:none, observers don't fire. Re-observe after showing.
+    requestAnimationFrame(() => {
+      const activeVariation = document.querySelector(`[data-variation-content="${name}"]`);
+      if (!activeVariation) return;
+
+      // Conversational variation uses IntersectionObserver with .conv-fade-in → .conv-visible
+      const convFadeIns = activeVariation.querySelectorAll('.conv-fade-in:not(.conv-visible)');
+      if (convFadeIns.length) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('conv-visible');
+              obs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        convFadeIns.forEach(el => obs.observe(el));
+      }
+    });
+
+    // Save preference
+    localStorage.setItem('portfolio-variation', name);
+  }
+
+  // Initialize
+  const saved = localStorage.getItem('portfolio-variation') || 'studio';
+  setVariation(saved);
+
+  // Handle clicks
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const variation = btn.dataset.variation || 'studio';
+      setVariation(variation);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  });
+</script>
