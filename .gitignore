@@ -8,3 +8,5 @@ dist/
 .superpowers/
 moodboard/
 .impeccable.md
+*.pdf
+reference-materials/
