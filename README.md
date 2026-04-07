@@ -1,4 +1,4 @@
-# mohittater.com
+# mohittater.in
 
 Personal portfolio and freelance services site for Mohit Tater — Product Engineer & Consultant.
 
