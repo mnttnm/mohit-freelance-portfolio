@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About — Mohit Tater">
+<Layout title="About — Mohit Tater" description="A decade shipping products across design, engineering, and product strategy — from enterprise platforms to helping founders ship their first product.">
   <div data-variation-content="studio">
     <!-- Header -->
     <header class="studio-header">
@@ -542,20 +542,36 @@ import Layout from "../layouts/Layout.astro";
     const toggle = root.querySelector(".studio-menu-toggle");
     const nav = root.querySelector(".studio-nav");
     if (toggle && nav) {
-      toggle.addEventListener("click", () => {
-        const isOpen = nav.style.display === "flex";
-        nav.style.display = isOpen ? "none" : "flex";
+      const openMenu = () => {
+        nav.style.display = "flex";
         nav.style.flexDirection = "column";
         nav.style.position = "absolute";
         nav.style.top = "64px";
         nav.style.left = "0";
         nav.style.right = "0";
         nav.style.background = "var(--studio-bg)";
-        nav.style.padding = isOpen ? "0" : "24px";
-        nav.style.borderBottom = isOpen
-          ? "none"
-          : "1px solid var(--studio-border)";
+        nav.style.padding = "24px";
+        nav.style.borderBottom = "1px solid var(--studio-border)";
         nav.style.gap = "16px";
+      };
+      const closeMenu = () => {
+        nav.style.display = "";
+        nav.style.flexDirection = "";
+        nav.style.position = "";
+        nav.style.top = "";
+        nav.style.left = "";
+        nav.style.right = "";
+        nav.style.background = "";
+        nav.style.padding = "";
+        nav.style.borderBottom = "";
+        nav.style.gap = "";
+      };
+      toggle.addEventListener("click", () => {
+        const isOpen = nav.style.display === "flex";
+        isOpen ? closeMenu() : openMenu();
+      });
+      nav.querySelectorAll(".studio-nav-link").forEach((link) => {
+        link.addEventListener("click", closeMenu);
       });
     }
   });

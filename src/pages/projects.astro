@@ -1,0 +1,840 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const projects = [
+  {
+    title: "learning.log",
+    description:
+      "A capture-and-publish platform that turns quick notes into a public learning stream — with a Raycast-powered input pipeline, Redis-backed queue, and automated GitHub publishing.",
+    tech: ["Astro", "Upstash Redis", "GitHub API", "Vercel", "Raycast"],
+    liveUrl: "https://mohit.stream",
+    sourceUrl: "https://github.com/mnttnm/digital-garden",
+    image: "/projects/learning-log.png",
+    type: "Web App",
+  },
+  {
+    title: "Figma Variable Explorer",
+    description:
+      "Browse, inspect, and export Figma design variables in List, JSON, and CSS formats. Supports both design and development modes — making it easy to hand off tokens and keep design systems in sync.",
+    tech: ["React", "Figma Plugin API"],
+    liveUrl:
+      "https://www.figma.com/community/plugin/1310888112326715990/figma-variable-explorer",
+    sourceUrl: "https://github.com/mnttnm/figma-variable-explorer",
+    image: "/projects/figma-variable-explorer.png",
+    type: "Figma Plugin",
+    highlight: "8,000+ users",
+  },
+  {
+    title: "Tech Career Guide for CS Students",
+    description:
+      "An interactive career exploration tool covering 45+ tech career paths with salary benchmarks, personality-based matching, and structured learning roadmaps — built for Indian CS students navigating their first career decisions.",
+    tech: ["Next.js", "React", "Tailwind CSS", "Zustand", "Framer Motion"],
+    liveUrl: "https://tech-career-guide.vercel.app/",
+    sourceUrl: "https://github.com/mnttnm/btech-cs-career-guide-india",
+    image: "/projects/career-guide.png",
+    type: "Web App",
+  },
+  {
+    title: "Building a Business Co-Pilot with Claude Code",
+    description:
+      "An AI-powered business management system that handles daily planning, revenue tracking, and weekly reviews — built with Claude Code acting as an autonomous co-pilot across an Obsidian-based workspace.",
+    tech: ["Claude Code", "Obsidian", "Markdown"],
+    liveUrl:
+      "https://medium.com/@tatermohit/i-built-a-business-co-pilot-using-claude-code-heres-the-exact-system-cfe32ee59558",
+    image: "/projects/business-copilot.png",
+    type: "Article",
+  },
+  {
+    title: "Notes in Google Docs",
+    description:
+      "Capture notes from anywhere on your Mac and store them directly in Google Docs — create new documents, switch between them, and manage everything without leaving Raycast.",
+    tech: ["Raycast", "Google Docs API"],
+    liveUrl: "https://www.raycast.com/tatermohit/note-in-google-doc",
+    sourceUrl: "https://github.com/mnttnm/raycast-note-in-doc",
+    image: "/projects/notes-in-gdocs.png",
+    type: "Raycast Extension",
+    highlight: "1,000+ installs",
+  },
+  // {
+  //   title: "GetItRight",
+  //   description:
+  //     "Marketing site for a UX audit and design consultancy — positioning the brand, communicating service offerings, and converting SaaS founders into consulting clients.",
+  //   tech: ["Astro", "Vercel"],
+  //   liveUrl: "https://getitright-mnttnms-projects.vercel.app/",
+  //   sourceUrl: "https://github.com/mnttnm/getitright",
+  //   image: "/projects/getitright.png",
+  //   type: "Website",
+  // },
+  // {
+  //   title: "Tab Triage",
+  //   description:
+  //     "A Chrome extension to quickly sort, close, and organize your browser tabs — triage your tab clutter in seconds.",
+  //   tech: ["Chrome Extension API", "JavaScript"],
+  //   liveUrl:
+  //     "https://chromewebstore.google.com/detail/tab-triage/lldlagjikfofnnidnoegcmkolaibndof",
+  //   image: "/projects/tab-triage.png",
+  //   type: "Chrome Extension",
+  // },
+];
+---
+
+<Layout title="Projects — Mohit Tater" description="Side projects, explorations, and open-source tools — from Figma plugins used by 8K+ designers to AI-powered business systems.">
+  <div data-variation-content="studio">
+    <!-- Header -->
+    <header class="studio-header">
+      <div class="studio-header-inner">
+        <a href="/" class="studio-logo">Mohit Tater</a>
+        <nav class="studio-nav">
+          <a href="/#studio-services" class="studio-nav-link">Services</a>
+          <a href="/projects" class="studio-nav-link studio-nav-link-active"
+            >Work</a
+          >
+          <a href="/about" class="studio-nav-link">About</a>
+          <a
+            href="https://cal.com/tatermohit/call-with-mohit-tater"
+            class="studio-nav-link studio-nav-cta">Let's Talk</a
+          >
+        </nav>
+        <button class="studio-menu-toggle" aria-label="Toggle menu">
+          <span class="studio-menu-bar"></span>
+          <span class="studio-menu-bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="projects-hero">
+      <div class="studio-container">
+        <p class="studio-section-label studio-reveal">Work</p>
+        <h1 class="projects-headline studio-reveal">
+          Things I've built <em>and shipped.</em>
+        </h1>
+        <p class="projects-subtext studio-reveal">
+          Most of my client work is confidential. What you see here are side projects, explorations, and open-source tools I build in my own time — they reflect how I think and what I care about.
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects List -->
+    <section class="projects-list-section">
+      <div class="studio-container">
+        {
+          projects.map((project, i) => (
+            <article class="project-item studio-reveal">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener"
+                class="project-image-link"
+              >
+                <div class="project-image-wrap">
+                  <img
+                    src={project.image}
+                    alt={`Screenshot of ${project.title}`}
+                    class="project-image"
+                    loading={i < 2 ? "eager" : "lazy"}
+                  />
+                </div>
+                <span class="corner-mark corner-tl" />
+                <span class="corner-mark corner-tr" />
+                <span class="corner-mark corner-bl" />
+                <span class="corner-mark corner-br" />
+              </a>
+              <div class="project-info">
+                <div class="project-meta">
+                  <span class="project-type">{project.type}</span>
+                  {project.highlight && (
+                    <span class="project-highlight">{project.highlight}</span>
+                  )}
+                </div>
+                <h2 class="project-title">
+                  <a href={project.liveUrl} target="_blank" rel="noopener">{project.title}</a>
+                </h2>
+                <p class="project-desc">{project.description}</p>
+                <div class="project-footer">
+                  {project.tech && (
+                    <div class="project-tech">
+                      {project.tech.map((t) => (
+                        <span class="project-tech-tag">{t}</span>
+                      ))}
+                    </div>
+                  )}
+                  <div class="project-links">
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener"
+                      class="project-link-primary"
+                    >
+                      View live &rarr;
+                    </a>
+                    {project.sourceUrl && (
+                      <a
+                        href={project.sourceUrl}
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link-secondary"
+                      >
+                        Source
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="studio-cta">
+      <div class="studio-container">
+        <h2 class="studio-cta-headline studio-reveal">
+          Got a project in mind?
+        </h2>
+        <p class="studio-cta-body studio-reveal">
+          I'm taking on 1-2 new projects. No pitch decks needed — let's just
+          talk about what you're building.
+        </p>
+        <div class="studio-cta-actions studio-reveal">
+          <a
+            href="https://cal.com/tatermohit/call-with-mohit-tater"
+            class="studio-btn-primary">Book a call &rarr;</a
+          >
+          <a href="mailto:mohittater.iiita@gmail.com" class="studio-btn-text"
+            >mohittater.iiita@gmail.com</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="studio-footer">
+      <div class="studio-container">
+        <p class="studio-footer-text">
+          &copy; 2026 Mohit Tater &middot; Bengaluru, India
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  /* ===== Studio Variation Palette (shared) ===== */
+  [data-variation-content="studio"] {
+    --studio-bg: #faf8f5;
+    --studio-bg-header: rgba(250, 248, 245, 0.95);
+    --studio-text: #1a1a1a;
+    --studio-text-body: #4a4a4a;
+    --studio-text-muted: #8a8a8a;
+    --studio-accent: #2d5a3d;
+    --studio-accent-light: rgba(45, 90, 61, 0.08);
+    --studio-border: #e5e0da;
+    --studio-serif: "DM Serif Display", Georgia, serif;
+    --studio-sans:
+      "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  [data-variation-content="studio"] {
+    background: var(--studio-bg);
+    color: var(--studio-text);
+    font-family: var(--studio-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Container ===== */
+  .studio-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== Reveal Animation ===== */
+  .studio-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  .studio-reveal:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .studio-reveal:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .studio-reveal:nth-child(3) {
+    animation-delay: 0.19s;
+  }
+  .studio-reveal:nth-child(4) {
+    animation-delay: 0.26s;
+  }
+
+  @keyframes studioReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Section Label ===== */
+  .studio-section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--studio-text-muted);
+    margin-bottom: 24px;
+  }
+
+  /* ===== Header ===== */
+  .studio-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--studio-bg-header);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--studio-border);
+  }
+
+  .studio-header-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .studio-logo {
+    font-family: var(--studio-serif);
+    font-size: 1.15rem;
+    color: var(--studio-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .studio-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .studio-nav-link {
+    font-size: 0.85rem;
+    color: var(--studio-text-body);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .studio-nav-link:hover {
+    color: var(--studio-text);
+  }
+
+  .studio-nav-link-active {
+    color: var(--studio-text);
+    font-weight: 600;
+  }
+
+  .studio-nav-cta {
+    color: var(--studio-accent);
+    font-weight: 600;
+  }
+
+  .studio-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .studio-menu-bar {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--studio-text);
+    transition: transform 0.3s;
+  }
+
+  /* ===== Projects Hero ===== */
+  .projects-hero {
+    padding: 160px 0 100px;
+  }
+
+  .projects-headline {
+    font-family: var(--studio-serif);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--studio-text);
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+
+  .projects-headline em {
+    font-style: italic;
+    color: var(--studio-accent);
+  }
+
+  .projects-subtext {
+    font-size: 1.05rem;
+    color: var(--studio-text-body);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  /* ===== Projects List ===== */
+  .projects-list-section {
+    padding: 0 0 120px;
+  }
+
+  .project-item {
+    padding: 60px 0;
+  }
+
+  .project-item:first-child {
+    padding-top: 0;
+  }
+
+  /* Image */
+  .project-image-link {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 32px;
+    position: relative;
+    padding: 16px;
+  }
+
+  .project-image-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #f0ede8;
+    overflow: hidden;
+  }
+
+  .project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .project-item:hover .project-image {
+    transform: scale(1.02);
+  }
+
+  /* Corner marks */
+  .corner-mark {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .corner-mark::before,
+  .corner-mark::after {
+    content: '';
+    position: absolute;
+    background: var(--studio-border);
+    transition: background 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Horizontal line */
+  .corner-mark::before {
+    height: 1.5px;
+    width: 100%;
+  }
+
+  /* Vertical line */
+  .corner-mark::after {
+    width: 1.5px;
+    height: 100%;
+  }
+
+  .corner-tl {
+    top: 0;
+    left: 0;
+  }
+  .corner-tl::before { top: 0; left: 0; }
+  .corner-tl::after { top: 0; left: 0; }
+
+  .corner-tr {
+    top: 0;
+    right: 0;
+  }
+  .corner-tr::before { top: 0; right: 0; }
+  .corner-tr::after { top: 0; right: 0; }
+
+  .corner-bl {
+    bottom: 0;
+    left: 0;
+  }
+  .corner-bl::before { bottom: 0; left: 0; }
+  .corner-bl::after { bottom: 0; left: 0; }
+
+  .corner-br {
+    bottom: 0;
+    right: 0;
+  }
+  .corner-br::before { bottom: 0; right: 0; }
+  .corner-br::after { bottom: 0; right: 0; }
+
+  /* Hover: fill corners with accent color */
+  .project-item:hover .corner-mark::before,
+  .project-item:hover .corner-mark::after {
+    background: var(--studio-accent);
+  }
+
+  /* Animate corner size on hover for extra delight */
+  .corner-mark::before,
+  .corner-mark::after {
+    transition:
+      background 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .project-item:hover .corner-mark::before {
+    width: 36px;
+  }
+
+  .project-item:hover .corner-mark::after {
+    height: 36px;
+  }
+
+  /* Info */
+  .project-info {
+    max-width: 620px;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .project-type {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--studio-text-muted);
+  }
+
+  .project-highlight {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--studio-accent);
+    background: var(--studio-accent-light);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  .project-title {
+    font-family: var(--studio-serif);
+    font-size: 1.4rem;
+    color: var(--studio-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .project-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .project-title a:hover {
+    color: var(--studio-accent);
+  }
+
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--studio-text-body);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* Tech Tags */
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .project-tech-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--studio-text-muted);
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .project-tech-tag:not(:last-child)::after {
+    content: '\00b7';
+    margin-left: 6px;
+    color: var(--studio-border);
+  }
+
+  /* Links */
+  .project-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+
+  .project-link-primary {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--studio-accent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .project-link-primary:hover {
+    color: #234a31;
+  }
+
+  .project-link-secondary {
+    font-size: 0.85rem;
+    color: var(--studio-text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .project-link-secondary:hover {
+    color: var(--studio-text-body);
+  }
+
+  /* ===== CTA ===== */
+  .studio-cta {
+    padding: 120px 0;
+    border-top: 1px solid var(--studio-border);
+    text-align: center;
+  }
+
+  .studio-cta-headline {
+    font-family: var(--studio-serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--studio-text);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .studio-cta-body {
+    font-size: 1.05rem;
+    color: var(--studio-text-body);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 40px;
+  }
+
+  .studio-cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .studio-btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--studio-accent);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition:
+      background 0.25s,
+      transform 0.2s;
+  }
+
+  .studio-btn-primary:hover {
+    background: #234a31;
+    transform: translateY(-1px);
+  }
+
+  .studio-btn-text {
+    font-size: 0.9rem;
+    color: var(--studio-text-body);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .studio-btn-text:hover {
+    color: var(--studio-accent);
+  }
+
+  /* ===== Footer ===== */
+  .studio-footer {
+    padding: 48px 0;
+    text-align: center;
+  }
+
+  .studio-footer-text {
+    font-size: 0.8rem;
+    color: var(--studio-text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .studio-nav {
+      display: none;
+    }
+
+    .studio-menu-toggle {
+      display: flex;
+    }
+
+    .projects-hero {
+      padding: 120px 0 56px;
+    }
+
+    .projects-list-section {
+      padding: 0 0 80px;
+    }
+
+    .project-item {
+      padding: 40px 0;
+    }
+
+    .project-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .project-links {
+      margin-left: 0;
+    }
+
+    .studio-cta {
+      padding: 80px 0;
+    }
+
+    .studio-cta-actions {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .corner-mark {
+      width: 22px;
+      height: 22px;
+    }
+
+    .project-image-link {
+      padding: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .projects-headline {
+      font-size: 2rem;
+    }
+
+    .studio-container {
+      padding: 0 20px;
+    }
+
+    .studio-header-inner {
+      padding: 0 20px;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector('[data-variation-content="studio"]');
+    if (!root) return;
+
+    const reveals = root.querySelectorAll(".studio-reveal");
+
+    reveals.forEach((el) => {
+      el.style.animationPlayState = "paused";
+      el.style.opacity = "0";
+      el.style.transform = "translateY(16px)";
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            el.style.animationPlayState = "running";
+            el.style.opacity = "";
+            el.style.transform = "";
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    reveals.forEach((el) => observer.observe(el));
+
+    // Mobile menu toggle
+    const toggle = root.querySelector(".studio-menu-toggle");
+    const nav = root.querySelector(".studio-nav");
+    if (toggle && nav) {
+      const openMenu = () => {
+        nav.style.display = "flex";
+        nav.style.flexDirection = "column";
+        nav.style.position = "absolute";
+        nav.style.top = "64px";
+        nav.style.left = "0";
+        nav.style.right = "0";
+        nav.style.background = "var(--studio-bg)";
+        nav.style.padding = "24px";
+        nav.style.borderBottom = "1px solid var(--studio-border)";
+        nav.style.gap = "16px";
+      };
+      const closeMenu = () => {
+        nav.style.display = "";
+        nav.style.flexDirection = "";
+        nav.style.position = "";
+        nav.style.top = "";
+        nav.style.left = "";
+        nav.style.right = "";
+        nav.style.background = "";
+        nav.style.padding = "";
+        nav.style.borderBottom = "";
+        nav.style.gap = "";
+      };
+      toggle.addEventListener("click", () => {
+        const isOpen = nav.style.display === "flex";
+        isOpen ? closeMenu() : openMenu();
+      });
+      nav.querySelectorAll(".studio-nav-link").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+    }
+  });
+</script>
