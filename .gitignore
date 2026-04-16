@@ -11,3 +11,6 @@ moodboard/
 *.pdf
 reference-materials/
 .vercel
+.env
+.env.local
+.env.*.local
