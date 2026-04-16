@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import StudioFooter from "../components/StudioFooter.astro";
 
 const projects = [
   {
@@ -90,8 +91,9 @@ const projects = [
             >Work</a
           >
           <a href="/about" class="studio-nav-link">About</a>
+          <a href="https://mohit.stream" class="studio-nav-link" target="_blank" rel="noopener noreferrer">Blog</a>
           <a
-            href="https://cal.com/tatermohit/call-with-mohit-tater"
+            href="#studio-footer"
             class="studio-nav-link studio-nav-cta">Let's Talk</a
           >
         </nav>
@@ -187,36 +189,7 @@ const projects = [
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="studio-cta">
-      <div class="studio-container">
-        <h2 class="studio-cta-headline studio-reveal">
-          Got a project in mind?
-        </h2>
-        <p class="studio-cta-body studio-reveal">
-          I'm taking on 1-2 new projects. No pitch decks needed — let's just
-          talk about what you're building.
-        </p>
-        <div class="studio-cta-actions studio-reveal">
-          <a
-            href="https://cal.com/tatermohit/call-with-mohit-tater"
-            class="studio-btn-primary">Book a call &rarr;</a
-          >
-          <a href="mailto:mohittater.iiita@gmail.com" class="studio-btn-text"
-            >mohittater.iiita@gmail.com</a
-          >
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="studio-footer">
-      <div class="studio-container">
-        <p class="studio-footer-text">
-          &copy; 2026 Mohit Tater &middot; Bengaluru, India
-        </p>
-      </div>
-    </footer>
+    <StudioFooter />
   </div>
 </Layout>
 
@@ -627,80 +600,6 @@ const projects = [
     color: var(--studio-text-body);
   }
 
-  /* ===== CTA ===== */
-  .studio-cta {
-    padding: 120px 0;
-    border-top: 1px solid var(--studio-border);
-    text-align: center;
-  }
-
-  .studio-cta-headline {
-    font-family: var(--studio-serif);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    color: var(--studio-text);
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-  }
-
-  .studio-cta-body {
-    font-size: 1.05rem;
-    color: var(--studio-text-body);
-    line-height: 1.7;
-    max-width: 480px;
-    margin: 0 auto 40px;
-  }
-
-  .studio-cta-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .studio-btn-primary {
-    display: inline-block;
-    padding: 14px 32px;
-    background: var(--studio-accent);
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 6px;
-    transition:
-      background 0.25s,
-      transform 0.2s;
-  }
-
-  .studio-btn-primary:hover {
-    background: #234a31;
-    transform: translateY(-1px);
-  }
-
-  .studio-btn-text {
-    font-size: 0.9rem;
-    color: var(--studio-text-body);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-
-  .studio-btn-text:hover {
-    color: var(--studio-accent);
-  }
-
-  /* ===== Footer ===== */
-  .studio-footer {
-    padding: 48px 0;
-    text-align: center;
-  }
-
-  .studio-footer-text {
-    font-size: 0.8rem;
-    color: var(--studio-text-muted);
-    letter-spacing: 0.02em;
-  }
-
   /* ===== Responsive ===== */
   @media (max-width: 768px) {
     .studio-nav {
@@ -730,15 +629,6 @@ const projects = [
 
     .project-links {
       margin-left: 0;
-    }
-
-    .studio-cta {
-      padding: 80px 0;
-    }
-
-    .studio-cta-actions {
-      flex-direction: column;
-      gap: 16px;
     }
 
     .corner-mark {
