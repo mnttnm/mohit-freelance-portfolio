@@ -3,11 +3,21 @@ import { z } from 'astro:schema';
 import { Resend } from 'resend';
 import validator from 'validator';
 
-const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
+let _resend: Resend | null = null;
+
+function getResend(): Resend {
+  if (!_resend) {
+    const key = import.meta.env.RESEND_API_KEY;
+    if (!key) {
+      throw new Error('RESEND_API_KEY environment variable is not set');
+    }
+    _resend = new Resend(key);
+  }
+  return _resend;
+}
+
 const CONTACT_FROM_EMAIL = import.meta.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
 const CONTACT_TO_EMAIL = import.meta.env.CONTACT_TO_EMAIL || 'mohittater.iiita@gmail.com';
-
-const resend = new Resend(RESEND_API_KEY);
 
 class RateLimiter {
   private store = new Map<string, { count: number; resetTime: number }>();
@@ -87,7 +97,7 @@ export const server = {
         });
       }
 
-      const { error } = await resend.emails.send({
+      const { error } = await getResend().emails.send({
         from: CONTACT_FROM_EMAIL,
         to: [CONTACT_TO_EMAIL],
         replyTo: email,
