@@ -4,6 +4,7 @@ import deanImage from '../../assets/dean-teffer.webp';
 import austinImage from '../../assets/austin-mcdaniel.webp';
 import alperImage from '../../assets/alper-ortac.webp';
 import kyleImage from '../../assets/kyle-prinsloo.webp';
+import fredImage from '../../assets/fred-wilmot.webp';
 ---
 
 <div data-variation-content="studio">
@@ -95,8 +96,29 @@ import kyleImage from '../../assets/kyle-prinsloo.webp';
         <p class="studio-section-label studio-reveal">What clients say</p>
         <div class="studio-testimonial-stack studio-reveal">
 
-          <!-- Card 1: Dean Teffer (active by default) -->
+          <!-- Card 1: Fred Wilmot (active by default) -->
           <div class="studio-tcard studio-tcard-active" data-testimonial="0">
+            <div class="studio-tcard-header">
+              <div class="studio-avatar">
+                <Image src={fredImage} alt="Fred Wilmot" width={48} height={48} class="studio-avatar-img" />
+              </div>
+              <div class="studio-tcard-author">
+                <span class="studio-author-name">
+                  <a href="https://www.linkedin.com/in/fredwilmot/" target="_blank" rel="noopener noreferrer" class="studio-profile-link">Fred Wilmot <span class="studio-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="studio-author-role">Founder & 3x CISO</span>
+              </div>
+            </div>
+            <div class="studio-tcard-body">
+              <blockquote class="studio-quote">
+                Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements &mdash; I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.
+              </blockquote>
+            </div>
+            <p class="studio-tcard-preview">&ldquo;Mohit effectively translated complex product requirements into&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 2: Dean Teffer -->
+          <div class="studio-tcard" data-testimonial="1">
             <div class="studio-tcard-header">
               <div class="studio-avatar">
                 <Image src={deanImage} alt="Dean Teffer" width={48} height={48} class="studio-avatar-img" />
@@ -110,14 +132,14 @@ import kyleImage from '../../assets/kyle-prinsloo.webp';
             </div>
             <div class="studio-tcard-body">
               <blockquote class="studio-quote">
-                Mohit is a highly talented designer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking &mdash; and then recommended paths forward. This really accelerated our work and led to a much better UI.
+                Mohit is a highly talented product engineer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking &mdash; and then recommended paths forward. This really accelerated our work and led to a much better UI.
               </blockquote>
             </div>
-            <p class="studio-tcard-preview">&ldquo;Mohit is a highly talented designer and a pleasure to work with&hellip;&rdquo;</p>
+            <p class="studio-tcard-preview">&ldquo;Mohit is a highly talented product engineer and a pleasure to work with&hellip;&rdquo;</p>
           </div>
 
-          <!-- Card 2: Austin Mcdaniel -->
-          <div class="studio-tcard" data-testimonial="1">
+          <!-- Card 3: Austin Mcdaniel -->
+          <div class="studio-tcard" data-testimonial="2">
             <div class="studio-tcard-header">
               <div class="studio-avatar">
                 <Image src={austinImage} alt="Austin Mcdaniel" width={48} height={48} class="studio-avatar-img" />
@@ -137,8 +159,8 @@ import kyleImage from '../../assets/kyle-prinsloo.webp';
             <p class="studio-tcard-preview">&ldquo;Right off the bat, his fresh ideas and knack for nailing user needs&hellip;&rdquo;</p>
           </div>
 
-          <!-- Card 3: Alper Ortac (NEW from getitright) -->
-          <div class="studio-tcard" data-testimonial="2">
+          <!-- Card 4: Alper Ortac -->
+          <div class="studio-tcard" data-testimonial="3">
             <div class="studio-tcard-header">
               <div class="studio-avatar">
                 <Image src={alperImage} alt="Alper Ortac" width={48} height={48} class="studio-avatar-img" />
@@ -158,8 +180,8 @@ import kyleImage from '../../assets/kyle-prinsloo.webp';
             <p class="studio-tcard-preview">&ldquo;The UX audit was incredibly insightful and exceeded my expectations&hellip;&rdquo;</p>
           </div>
 
-          <!-- Card 4: Kyle Prinsloo (NEW from getitright) -->
-          <div class="studio-tcard" data-testimonial="3">
+          <!-- Card 5: Kyle Prinsloo -->
+          <div class="studio-tcard" data-testimonial="4">
             <div class="studio-tcard-header">
               <div class="studio-avatar">
                 <Image src={kyleImage} alt="Kyle Prinsloo" width={48} height={48} class="studio-avatar-img" />
@@ -177,24 +199,6 @@ import kyleImage from '../../assets/kyle-prinsloo.webp';
               </blockquote>
             </div>
             <p class="studio-tcard-preview">&ldquo;Mohit gives exceptionally good UX advice and I love how he structures&hellip;&rdquo;</p>
-          </div>
-
-          <!-- Card 5: Fred Wilmot -->
-          <div class="studio-tcard" data-testimonial="4">
-            <div class="studio-tcard-header">
-              <div class="studio-avatar studio-avatar-initials" data-initials="FW">
-              </div>
-              <div class="studio-tcard-author">
-                <span class="studio-author-name">Fred Wilmot</span>
-                <span class="studio-author-role">Founder & 3x CISO</span>
-              </div>
-            </div>
-            <div class="studio-tcard-body">
-              <blockquote class="studio-quote">
-                Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements &mdash; I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.
-              </blockquote>
-            </div>
-            <p class="studio-tcard-preview">&ldquo;Mohit effectively translated complex product requirements into&hellip;&rdquo;</p>
           </div>
 
         </div>
