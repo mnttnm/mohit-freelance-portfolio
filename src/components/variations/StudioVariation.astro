@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import deanImage from '../../assets/dean-teffer.webp';
 import austinImage from '../../assets/austin-mcdaniel.webp';
+import alperImage from '../../assets/alper-ortac.webp';
+import kyleImage from '../../assets/kyle-prinsloo.webp';
 ---
 
 <div data-variation-content="studio">
@@ -91,53 +93,110 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
     <div class="studio-container">
       <div class="studio-testimonials-section">
         <p class="studio-section-label studio-reveal">What clients say</p>
-        <div class="studio-testimonials">
-          <div class="studio-testimonial studio-reveal">
-            <blockquote class="studio-quote">
-              <span class="studio-quote-mark">&ldquo;</span>
-              Mohit is a highly talented designer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking — and then recommended paths forward. This really accelerated our work and led to a much better UI.
-            </blockquote>
-            <div class="studio-attribution">
+        <div class="studio-testimonial-stack studio-reveal">
+
+          <!-- Card 1: Dean Teffer (active by default) -->
+          <div class="studio-tcard studio-tcard-active" data-testimonial="0">
+            <div class="studio-tcard-header">
               <div class="studio-avatar">
                 <Image src={deanImage} alt="Dean Teffer" width={48} height={48} class="studio-avatar-img" />
               </div>
-              <div class="studio-attribution-text">
-                <span class="studio-author-name">Dean Teffer</span>
+              <div class="studio-tcard-author">
+                <span class="studio-author-name">
+                  <a href="https://www.linkedin.com/in/deanteffer" target="_blank" rel="noopener noreferrer" class="studio-profile-link">Dean Teffer <span class="studio-link-arrow">&nearr;</span></a>
+                </span>
                 <span class="studio-author-role">VP of AI, Arctic Wolf</span>
               </div>
             </div>
+            <div class="studio-tcard-body">
+              <blockquote class="studio-quote">
+                Mohit is a highly talented designer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking &mdash; and then recommended paths forward. This really accelerated our work and led to a much better UI.
+              </blockquote>
+            </div>
+            <p class="studio-tcard-preview">&ldquo;Mohit is a highly talented designer and a pleasure to work with&hellip;&rdquo;</p>
           </div>
 
-          <div class="studio-testimonial studio-reveal">
-            <blockquote class="studio-quote">
-              <span class="studio-quote-mark">&ldquo;</span>
-              Right off the bat, his fresh ideas and knack for nailing user needs made him stand out. Mohit isn't just talented; he's the kind of guy who's always eager to dig deeper and push the boundaries of design.
-            </blockquote>
-            <div class="studio-attribution">
+          <!-- Card 2: Austin Mcdaniel -->
+          <div class="studio-tcard" data-testimonial="1">
+            <div class="studio-tcard-header">
               <div class="studio-avatar">
                 <Image src={austinImage} alt="Austin Mcdaniel" width={48} height={48} class="studio-avatar-img" />
               </div>
-              <div class="studio-attribution-text">
-                <span class="studio-author-name">Austin Mcdaniel</span>
+              <div class="studio-tcard-author">
+                <span class="studio-author-name">
+                  <a href="https://www.linkedin.com/in/amcdnl" target="_blank" rel="noopener noreferrer" class="studio-profile-link">Austin Mcdaniel <span class="studio-link-arrow">&nearr;</span></a>
+                </span>
                 <span class="studio-author-role">CEO/Founder, GoodCode</span>
               </div>
             </div>
+            <div class="studio-tcard-body">
+              <blockquote class="studio-quote">
+                Right off the bat, his fresh ideas and knack for nailing user needs made him stand out. Mohit isn't just talented; he's the kind of guy who's always eager to dig deeper and push the boundaries of design.
+              </blockquote>
+            </div>
+            <p class="studio-tcard-preview">&ldquo;Right off the bat, his fresh ideas and knack for nailing user needs&hellip;&rdquo;</p>
           </div>
 
-          <div class="studio-testimonial studio-reveal">
-            <blockquote class="studio-quote">
-              <span class="studio-quote-mark">&ldquo;</span>
-              Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements — I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.
-            </blockquote>
-            <div class="studio-attribution">
+          <!-- Card 3: Alper Ortac (NEW from getitright) -->
+          <div class="studio-tcard" data-testimonial="2">
+            <div class="studio-tcard-header">
+              <div class="studio-avatar">
+                <Image src={alperImage} alt="Alper Ortac" width={48} height={48} class="studio-avatar-img" />
+              </div>
+              <div class="studio-tcard-author">
+                <span class="studio-author-name">
+                  <a href="https://x.com/alperortac" target="_blank" rel="noopener noreferrer" class="studio-profile-link">Alper Ortac <span class="studio-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="studio-author-role">Founder/CEO, GoodWatch</span>
+              </div>
+            </div>
+            <div class="studio-tcard-body">
+              <blockquote class="studio-quote">
+                The UX audit was incredibly insightful and exceeded my expectations. Mohit not only provided detailed findings but also suggested alternative approaches to address issues. Half of the suggestions validated my own roadmap, while the other half introduced fresh, brilliant ideas&mdash;especially for improving user engagement.
+              </blockquote>
+            </div>
+            <p class="studio-tcard-preview">&ldquo;The UX audit was incredibly insightful and exceeded my expectations&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 4: Kyle Prinsloo (NEW from getitright) -->
+          <div class="studio-tcard" data-testimonial="3">
+            <div class="studio-tcard-header">
+              <div class="studio-avatar">
+                <Image src={kyleImage} alt="Kyle Prinsloo" width={48} height={48} class="studio-avatar-img" />
+              </div>
+              <div class="studio-tcard-author">
+                <span class="studio-author-name">
+                  <a href="https://www.kyleprinsloo.com/" target="_blank" rel="noopener noreferrer" class="studio-profile-link">Kyle Prinsloo <span class="studio-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="studio-author-role">Founder/CEO, ClientManager</span>
+              </div>
+            </div>
+            <div class="studio-tcard-body">
+              <blockquote class="studio-quote">
+                Mohit gives exceptionally good UX advice and I love how he structures it based on importance. I highly recommend working with him.
+              </blockquote>
+            </div>
+            <p class="studio-tcard-preview">&ldquo;Mohit gives exceptionally good UX advice and I love how he structures&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 5: Fred Wilmot -->
+          <div class="studio-tcard" data-testimonial="4">
+            <div class="studio-tcard-header">
               <div class="studio-avatar studio-avatar-initials" data-initials="FW">
               </div>
-              <div class="studio-attribution-text">
+              <div class="studio-tcard-author">
                 <span class="studio-author-name">Fred Wilmot</span>
                 <span class="studio-author-role">Founder & 3x CISO</span>
               </div>
             </div>
+            <div class="studio-tcard-body">
+              <blockquote class="studio-quote">
+                Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements &mdash; I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.
+              </blockquote>
+            </div>
+            <p class="studio-tcard-preview">&ldquo;Mohit effectively translated complex product requirements into&hellip;&rdquo;</p>
           </div>
+
         </div>
       </div>
     </div>
@@ -519,7 +578,7 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
     margin: 0;
   }
 
-  /* ===== Testimonials ===== */
+  /* ===== Testimonials — Stacked Cards ===== */
   .studio-work {
     padding: 120px 0;
   }
@@ -540,54 +599,58 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
     z-index: -1;
   }
 
-  .studio-testimonials {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
+  .studio-testimonial-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
-  .studio-testimonial {
-    padding: 32px 32px 32px 36px;
-    border-left: 3px solid var(--studio-accent);
-    position: relative;
+  /* --- Card base --- */
+  .studio-tcard {
     background: rgba(255, 255, 255, 0.5);
-    border-radius: 0 12px 12px 0;
-  }
-
-  .studio-quote {
-    font-family: var(--studio-serif);
-    font-size: 1.05rem;
-    color: var(--studio-text-body);
-    line-height: 1.75;
-    font-style: italic;
-    margin-bottom: 20px;
+    border: 1px solid var(--studio-border);
+    border-bottom: none;
+    padding: 20px 28px;
+    cursor: pointer;
+    transition: background 0.25s, padding 0.35s ease;
     position: relative;
+    overflow: hidden;
   }
 
-  .studio-quote-mark {
-    font-family: var(--studio-serif);
-    font-size: 3rem;
-    color: var(--studio-accent);
-    line-height: 1;
-    position: absolute;
-    top: -12px;
-    left: -36px;
-    opacity: 0.4;
+  .studio-tcard:first-child {
+    border-radius: 12px 12px 0 0;
   }
 
-  .studio-attribution {
+  .studio-tcard:last-child {
+    border-bottom: 1px solid var(--studio-border);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .studio-tcard:only-child {
+    border-radius: 12px;
+    border-bottom: 1px solid var(--studio-border);
+  }
+
+  /* --- Card header (always visible) --- */
+  .studio-tcard-header {
     display: flex;
     align-items: center;
     gap: 14px;
   }
 
   .studio-avatar {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
     border: 2px solid var(--studio-border);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  .studio-tcard-active .studio-avatar {
+    width: 48px;
+    height: 48px;
   }
 
   .studio-avatar-img {
@@ -608,16 +671,18 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
   .studio-avatar-initials::after {
     content: attr(data-initials);
     font-family: var(--studio-sans);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--studio-accent);
     letter-spacing: 0.02em;
   }
 
-  .studio-attribution-text {
+  .studio-tcard-author {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 1;
+    min-width: 0;
   }
 
   .studio-author-name {
@@ -627,8 +692,105 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
   }
 
   .studio-author-role {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--studio-text-muted);
+  }
+
+  .studio-profile-link {
+    color: var(--studio-text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .studio-profile-link:hover {
+    color: var(--studio-accent);
+  }
+
+  .studio-link-arrow {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+
+  .studio-profile-link:hover .studio-link-arrow {
+    opacity: 1;
+  }
+
+  /* --- Active card body (full quote) --- */
+  .studio-tcard-body {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+
+  .studio-tcard-active .studio-tcard-body {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 20px;
+  }
+
+  .studio-tcard-active {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 28px 28px;
+    border-left: 3px solid var(--studio-accent);
+    cursor: default;
+  }
+
+  .studio-quote {
+    font-family: var(--studio-serif);
+    font-size: 1.02rem;
+    font-weight: 300;
+    color: var(--studio-text-body);
+    line-height: 1.8;
+    font-style: italic;
+  }
+
+  /* --- Collapsed card preview (truncated first line) --- */
+  .studio-tcard-preview {
+    display: none;
+    font-family: var(--studio-serif);
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--studio-text-muted);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Show preview only on collapsed cards */
+  .studio-tcard:not(.studio-tcard-active) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 0 16px;
+  }
+
+  .studio-tcard:not(.studio-tcard-active) .studio-tcard-header {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .studio-tcard:not(.studio-tcard-active) .studio-tcard-preview {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-left: 58px;
+    margin-top: 4px;
+  }
+
+  .studio-tcard:not(.studio-tcard-active) .studio-author-role {
+    display: none;
+  }
+
+  .studio-tcard:not(.studio-tcard-active):hover {
+    background: rgba(255, 255, 255, 0.7);
   }
 
   /* ===== About ===== */
@@ -1036,6 +1198,21 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
         link.addEventListener('click', closeMenu);
       });
     }
+
+    // Testimonial stacked cards — click to expand
+    const tcards = studioRoot.querySelectorAll('.studio-tcard');
+    tcards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        // Don't collapse if clicking a link inside the active card
+        if ((e.target as HTMLElement).closest('a')) return;
+        if (card.classList.contains('studio-tcard-active')) return;
+
+        // Remove active from all
+        tcards.forEach((c) => c.classList.remove('studio-tcard-active'));
+        // Activate clicked card
+        card.classList.add('studio-tcard-active');
+      });
+    });
 
     // Contact form handling
     const contactForm = document.getElementById('studio-contact-form') as HTMLFormElement | null;
