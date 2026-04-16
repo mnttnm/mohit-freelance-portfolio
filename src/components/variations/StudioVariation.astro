@@ -1,3 +1,9 @@
+---
+import { Image } from 'astro:assets';
+import deanImage from '../../assets/dean-teffer.webp';
+import austinImage from '../../assets/austin-mcdaniel.webp';
+---
+
 <div data-variation-content="studio">
 
   <!-- Header -->
@@ -8,6 +14,7 @@
         <a href="#studio-services" class="studio-nav-link">Services</a>
         <a href="/projects" class="studio-nav-link">Work</a>
         <a href="/about" class="studio-nav-link">About</a>
+        <a href="#studio-contact" class="studio-nav-link">Contact</a>
         <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="studio-nav-link studio-nav-cta">Let's Talk</a>
       </nav>
       <button class="studio-menu-toggle" aria-label="Toggle menu">
@@ -91,8 +98,13 @@
               Mohit is a highly talented designer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking — and then recommended paths forward. This really accelerated our work and led to a much better UI.
             </blockquote>
             <div class="studio-attribution">
-              <span class="studio-author-name">Dean Teffer</span>
-              <span class="studio-author-role">VP of AI, Arctic Wolf</span>
+              <div class="studio-avatar">
+                <Image src={deanImage} alt="Dean Teffer" width={48} height={48} class="studio-avatar-img" />
+              </div>
+              <div class="studio-attribution-text">
+                <span class="studio-author-name">Dean Teffer</span>
+                <span class="studio-author-role">VP of AI, Arctic Wolf</span>
+              </div>
             </div>
           </div>
 
@@ -102,8 +114,13 @@
               Right off the bat, his fresh ideas and knack for nailing user needs made him stand out. Mohit isn't just talented; he's the kind of guy who's always eager to dig deeper and push the boundaries of design.
             </blockquote>
             <div class="studio-attribution">
-              <span class="studio-author-name">Austin Mcdaniel</span>
-              <span class="studio-author-role">CEO/Founder, GoodCode</span>
+              <div class="studio-avatar">
+                <Image src={austinImage} alt="Austin Mcdaniel" width={48} height={48} class="studio-avatar-img" />
+              </div>
+              <div class="studio-attribution-text">
+                <span class="studio-author-name">Austin Mcdaniel</span>
+                <span class="studio-author-role">CEO/Founder, GoodCode</span>
+              </div>
             </div>
           </div>
 
@@ -113,8 +130,12 @@
               Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements — I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.
             </blockquote>
             <div class="studio-attribution">
-              <span class="studio-author-name">Fred Wilmot</span>
-              <span class="studio-author-role">Founder & 3x CISO</span>
+              <div class="studio-avatar studio-avatar-initials" data-initials="FW">
+              </div>
+              <div class="studio-attribution-text">
+                <span class="studio-author-name">Fred Wilmot</span>
+                <span class="studio-author-role">Founder & 3x CISO</span>
+              </div>
             </div>
           </div>
         </div>
@@ -136,21 +157,62 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="studio-cta">
+  <!-- Contact -->
+  <section id="studio-contact" class="studio-contact">
     <div class="studio-container">
-      <h2 class="studio-cta-headline studio-reveal">Got a project in mind?</h2>
-      <p class="studio-cta-body studio-reveal">I'm taking on 1-2 new projects. No pitch decks needed — let's just talk about what you're building.</p>
-      <div class="studio-cta-actions studio-reveal">
-        <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="studio-btn-primary">Book a call &rarr;</a>
-        <a href="mailto:mohittater.iiita@gmail.com" class="studio-btn-text">mohittater.iiita@gmail.com</a>
-      </div>
-      <div class="studio-social studio-reveal">
-        <a href="https://twitter.com/tatermohit" class="studio-social-link" target="_blank" rel="noopener noreferrer">Twitter</a>
-        <span class="studio-social-sep">/</span>
-        <a href="https://www.linkedin.com/in/tatermohit/" class="studio-social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <span class="studio-social-sep">/</span>
-        <a href="https://github.com/mnttnm" class="studio-social-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <p class="studio-section-label studio-reveal">Get in touch</p>
+      <div class="studio-contact-grid">
+        <div class="studio-contact-form-wrapper studio-reveal">
+          <h3 class="studio-contact-heading">Send me a message</h3>
+          <p class="studio-contact-subtext">Drop a message and I'll get back to you to schedule a free consultation call.</p>
+          <form id="studio-contact-form" class="studio-contact-form">
+            <div id="studio-form-success" class="studio-form-success" role="alert">
+              <p>Thank you! Your message has been sent successfully.</p>
+              <button type="button" class="studio-form-success-close" aria-label="Close message">&times;</button>
+            </div>
+
+            <!-- Honeypot -->
+            <div class="studio-honeypot" aria-hidden="true">
+              <input type="text" name="website" id="studio-hp" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="studio-form-group">
+              <label for="studio-name">Name</label>
+              <input type="text" id="studio-name" name="name" required placeholder="Your name" minlength="2" maxlength="50" />
+            </div>
+
+            <div class="studio-form-group">
+              <label for="studio-email">Email</label>
+              <input type="email" id="studio-email" name="email" required placeholder="your@email.com" />
+            </div>
+
+            <div class="studio-form-group">
+              <label for="studio-message">Message</label>
+              <textarea id="studio-message" name="message" rows="4" required minlength="10" maxlength="1000" placeholder="What can I help you with..."></textarea>
+            </div>
+
+            <button type="submit" class="studio-btn-primary studio-form-submit">Send Message &rarr;</button>
+
+            <div id="studio-form-error" class="studio-form-error" role="alert"></div>
+          </form>
+        </div>
+
+        <div class="studio-contact-cta studio-reveal">
+          <h3 class="studio-contact-heading">Prefer a call?</h3>
+          <p class="studio-contact-subtext">I'm taking on 1-2 new projects. No pitch decks needed — let's just talk about what you're building.</p>
+          <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="studio-btn-primary">Book a call &rarr;</a>
+          <div class="studio-contact-alt">
+            <span class="studio-contact-alt-label">Or reach out directly</span>
+            <a href="mailto:mohittater.iiita@gmail.com" class="studio-btn-text">mohittater.iiita@gmail.com</a>
+          </div>
+          <div class="studio-social studio-reveal">
+            <a href="https://twitter.com/tatermohit" class="studio-social-link" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <span class="studio-social-sep">/</span>
+            <a href="https://www.linkedin.com/in/tatermohit/" class="studio-social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <span class="studio-social-sep">/</span>
+            <a href="https://github.com/mnttnm" class="studio-social-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -515,6 +577,45 @@
 
   .studio-attribution {
     display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .studio-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--studio-border);
+  }
+
+  .studio-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .studio-avatar-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--studio-accent-light);
+    border-color: var(--studio-accent);
+  }
+
+  .studio-avatar-initials::after {
+    content: attr(data-initials);
+    font-family: var(--studio-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--studio-accent);
+    letter-spacing: 0.02em;
+  }
+
+  .studio-attribution-text {
+    display: flex;
     flex-direction: column;
     gap: 2px;
   }
@@ -598,36 +699,174 @@
     gap: 24px;
   }
 
-  /* ===== CTA ===== */
-  .studio-cta {
+  /* ===== Contact ===== */
+  .studio-contact {
     padding: 120px 0;
     border-top: 1px solid var(--studio-border);
-    text-align: center;
   }
 
-  .studio-cta-headline {
+  .studio-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .studio-contact-form-wrapper {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--studio-border);
+    border-radius: 12px;
+    padding: 36px;
+  }
+
+  .studio-contact-heading {
     font-family: var(--studio-serif);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-size: 1.35rem;
     color: var(--studio-text);
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
   }
 
-  .studio-cta-body {
-    font-size: 1.05rem;
+  .studio-contact-subtext {
+    font-size: 0.92rem;
     color: var(--studio-text-body);
-    line-height: 1.7;
-    max-width: 480px;
-    margin: 0 auto 40px;
+    line-height: 1.65;
+    margin-bottom: 28px;
   }
 
-  .studio-cta-actions {
+  .studio-contact-form {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .studio-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .studio-form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--studio-text);
+    letter-spacing: 0.02em;
+  }
+
+  .studio-form-group input,
+  .studio-form-group textarea {
+    padding: 12px 14px;
+    border: 1px solid var(--studio-border);
+    border-radius: 6px;
+    background: var(--studio-bg);
+    color: var(--studio-text);
+    font-family: var(--studio-sans);
+    font-size: 0.92rem;
+    transition: border-color 0.2s;
+  }
+
+  .studio-form-group input:focus,
+  .studio-form-group textarea:focus {
+    outline: none;
+    border-color: var(--studio-accent);
+  }
+
+  .studio-form-group input::placeholder,
+  .studio-form-group textarea::placeholder {
+    color: var(--studio-text-muted);
+  }
+
+  .studio-form-submit {
+    align-self: flex-start;
+    border: none;
+    cursor: pointer;
+    font-family: var(--studio-sans);
+  }
+
+  .studio-honeypot {
+    display: none;
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+  }
+
+  .studio-form-success {
+    display: none;
+    padding: 14px 16px;
+    background: #2D5A3D;
+    color: #fff;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .studio-form-success.show {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
+    gap: 12px;
+  }
+
+  .studio-form-success p {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  .studio-form-success-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .studio-form-success-close:hover {
+    opacity: 0.7;
+  }
+
+  .studio-form-error {
+    color: #c0392b;
+    font-size: 0.85rem;
+    display: none;
+  }
+
+  .studio-form-error.show {
+    display: block;
+  }
+
+  .studio-contact-cta {
+    padding: 36px;
+    border: 1px solid var(--studio-border);
+    border-radius: 12px;
+    background: var(--studio-accent-light);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .studio-contact-alt {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .studio-contact-alt-label {
+    font-size: 0.78rem;
+    color: var(--studio-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  .studio-contact-cta .studio-btn-primary {
+    align-self: flex-start;
+  }
+
+  .studio-contact-cta .studio-social {
+    margin-top: 12px;
+    justify-content: flex-start;
   }
 
   .studio-social {
@@ -686,19 +925,19 @@
       padding: 80px 0;
     }
 
-    .studio-cta {
+    .studio-contact {
       padding: 80px 0;
+    }
+
+    .studio-contact-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
     }
 
     .studio-service {
       flex-direction: column;
       gap: 8px;
       padding: 28px 0;
-    }
-
-    .studio-cta-actions {
-      flex-direction: column;
-      gap: 16px;
     }
   }
 
@@ -795,6 +1034,86 @@
       });
       nav.querySelectorAll('.studio-nav-link').forEach((link) => {
         link.addEventListener('click', closeMenu);
+      });
+    }
+
+    // Contact form handling
+    const contactForm = document.getElementById('studio-contact-form') as HTMLFormElement | null;
+    const formError = document.getElementById('studio-form-error');
+    const formSuccess = document.getElementById('studio-form-success');
+
+    function showFormError(msg: string) {
+      if (formError) {
+        formError.textContent = msg;
+        formError.classList.add('show');
+      }
+    }
+
+    function hideFormError() {
+      if (formError) {
+        formError.textContent = '';
+        formError.classList.remove('show');
+      }
+    }
+
+    function showFormSuccess() {
+      if (formSuccess) {
+        formSuccess.classList.add('show');
+      }
+    }
+
+    function hideFormSuccess() {
+      if (formSuccess) {
+        formSuccess.classList.remove('show');
+      }
+    }
+
+    // Close success message
+    const successClose = studioRoot.querySelector('.studio-form-success-close');
+    if (successClose) {
+      successClose.addEventListener('click', hideFormSuccess);
+    }
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e: Event) => {
+        e.preventDefault();
+        hideFormError();
+        hideFormSuccess();
+
+        const form = e.target as HTMLFormElement;
+        const honeypot = form.querySelector('#studio-hp') as HTMLInputElement;
+        if (honeypot && honeypot.value) {
+          showFormError('Form submission failed.');
+          return;
+        }
+
+        const submitBtn = form.querySelector('.studio-form-submit') as HTMLButtonElement;
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Sending\u2026';
+
+        const formData = new FormData(form);
+        // Remove honeypot from submission
+        formData.delete('website');
+
+        try {
+          const response = await fetch('https://formsubmit.co/ajax/mohittater.iiita@gmail.com', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (response.ok) {
+            showFormSuccess();
+            form.reset();
+          } else {
+            showFormError('Something went wrong. Please try again or email me directly.');
+          }
+        } catch {
+          showFormError('Network error. Please try again or email me directly.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       });
     }
   });
