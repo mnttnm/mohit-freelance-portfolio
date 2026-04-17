@@ -1,0 +1,1091 @@
+---
+import { Image } from 'astro:assets';
+import deanImage from '../../assets/dean-teffer.webp';
+import austinImage from '../../assets/austin-mcdaniel.webp';
+import alperImage from '../../assets/alper-ortac.webp';
+import kyleImage from '../../assets/kyle-prinsloo.webp';
+import fredImage from '../../assets/fred-wilmot.webp';
+import StudioFooter from '../StudioFooter.astro';
+---
+
+<div data-variation-content="v2">
+
+  <!-- Header -->
+  <header class="v2-header">
+    <div class="v2-header-inner">
+      <a href="/" class="v2-logo">Mohit Tater</a>
+      <nav class="v2-nav">
+        <a href="#v2-services" class="v2-nav-link">Services</a>
+        <a href="#v2-process" class="v2-nav-link">How I work</a>
+        <a href="/projects" class="v2-nav-link">Work</a>
+        <a href="/about" class="v2-nav-link">About</a>
+        <a href="#studio-footer" class="v2-nav-link v2-nav-cta">Let's talk</a>
+      </nav>
+      <button class="v2-menu-toggle" aria-label="Toggle menu">
+        <span class="v2-menu-bar"></span>
+        <span class="v2-menu-bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="v2-hero">
+    <div class="v2-container">
+      <p class="v2-eyebrow v2-reveal">Product Engineer &amp; Consultant</p>
+      <h1 class="v2-headline v2-reveal">I build complete products, <em>end to end.</em></h1>
+      <p class="v2-subtext v2-reveal">
+        For founders, operators, and technical teams building something new. One person across design, engineering, and QA/automation, with AI for speed and judgment for the parts that matter.
+      </p>
+      <div class="v2-hero-actions v2-reveal">
+        <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="v2-btn-primary">Book a call &rarr;</a>
+        <a href="/projects" class="v2-btn-text">See my work &rarr;</a>
+      </div>
+      <div class="v2-trust-bar v2-reveal">
+        <span class="v2-trust-item">10+ years shipping</span>
+        <span class="v2-trust-sep">&middot;</span>
+        <span class="v2-trust-item">8K+ designers use my tools</span>
+        <span class="v2-trust-sep">&middot;</span>
+        <span class="v2-trust-item">Verizon, Arctic Wolf, funded startups</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who I work with -->
+  <section class="v2-audience">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">Who I work with</p>
+      <h2 class="v2-audience-headline v2-reveal">Different people, <em>same need:</em> someone who can actually finish the job.</h2>
+
+      <div class="v2-audience-grid">
+        <div class="v2-audience-card v2-reveal">
+          <h3 class="v2-audience-title">Founders</h3>
+          <p class="v2-audience-desc">You have an idea, maybe a rough prototype, and you want someone who can go from whiteboard to shipped without handing you back a half-finished codebase.</p>
+        </div>
+        <div class="v2-audience-card v2-reveal">
+          <h3 class="v2-audience-title">Business builders</h3>
+          <p class="v2-audience-desc">You know the domain and the customer. You need a product partner who'll turn that knowledge into software without wasting weeks on the wrong thing.</p>
+        </div>
+        <div class="v2-audience-card v2-reveal">
+          <h3 class="v2-audience-title">Technical founders &amp; devs</h3>
+          <p class="v2-audience-desc">You can ship code on your own, but UI/UX isn't your strong suit. You want a product that looks and feels like someone who cared built it, without getting pulled away from the engineering you actually enjoy.</p>
+        </div>
+        <div class="v2-audience-card v2-reveal">
+          <h3 class="v2-audience-title">AI-curious builders</h3>
+          <p class="v2-audience-desc">You want AI working for you, not just playing with it. Maybe you're automating your day-to-day, running a side-project while your team ships core, or trying to get agents past the demo stage. I'll help you skip the trial-and-error and get to what actually works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="v2-services" class="v2-services">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">What I do</p>
+
+      <div class="v2-services-list">
+        <div class="v2-service v2-reveal">
+          <div class="v2-service-meta">
+            <span class="v2-service-number">01</span>
+            <span class="v2-service-duration">1&ndash;2 weeks</span>
+          </div>
+          <div class="v2-service-content">
+            <h3 class="v2-service-title">Product Shaping &amp; Strategy</h3>
+            <p class="v2-service-desc">For people with an idea who aren't yet sure what to build. I'll audit what exists, brainstorm with you, and hand back a clear plan for the interface, scope, and sequence, so the next person who writes code (me, you, or someone else) isn't guessing.</p>
+          </div>
+        </div>
+
+        <hr class="v2-divider" />
+
+        <div class="v2-service v2-reveal">
+          <div class="v2-service-meta">
+            <span class="v2-service-number">02</span>
+            <span class="v2-service-duration">2&ndash;8 weeks</span>
+          </div>
+          <div class="v2-service-content">
+            <h3 class="v2-service-title">End-to-End Product Development</h3>
+            <p class="v2-service-desc">From first prototype to a polished, production-ready product. Design, frontend, backend, infra, polish. One person, one engagement, whether you need a tight MVP to validate an idea, or a finished tool your customers can use today.</p>
+          </div>
+        </div>
+
+        <hr class="v2-divider" />
+
+        <div class="v2-service v2-reveal">
+          <div class="v2-service-meta">
+            <span class="v2-service-number">03</span>
+            <span class="v2-service-duration">1&ndash;2 weeks</span>
+          </div>
+          <div class="v2-service-content">
+            <h3 class="v2-service-title">AI Workflows &amp; Automation</h3>
+            <p class="v2-service-desc">For founders, operators, and small teams who want AI actually working for them. Automate your day-to-day, build personalized agents, run an ambitious AI side-project while your team focuses on the core product, or bring modern AI-powered dev practices into your stack. You don't need to be an AI expert. I'll help you stay ahead without getting buried under it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How I Work -->
+  <section id="v2-process" class="v2-process">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">How I work</p>
+      <h2 class="v2-process-headline v2-reveal">Built for <em>how software actually gets made</em> in 2026.</h2>
+
+      <div class="v2-process-grid">
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">Weeks, not months</h3>
+          <p class="v2-process-desc">Short engagements with a clear deliverable. I'd rather ship three useful things in a quarter than one bloated one.</p>
+        </div>
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">AI where it helps, judgment where it matters</h3>
+          <p class="v2-process-desc">I use Claude Code, Cursor, and custom agents to move fast. I don't ship code I wouldn't have written myself, and I'll tell you when AI is leading us somewhere we shouldn't go.</p>
+        </div>
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">End to end, one person</h3>
+          <p class="v2-process-desc">Design, engineering, QA, and automation. The work that usually takes three specialists, done by one. No vendor stack, no roster of juniors, no hand-offs between disciplines.</p>
+        </div>
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">You talk to me</h3>
+          <p class="v2-process-desc">No account managers, no hand-offs, no "let me check with the team." If you have a question at 11pm, the person who can answer it is the one who wrote the code.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section class="v2-projects">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">Work</p>
+      <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
+      <p class="v2-work-body v2-reveal">Production software at Verizon and Arctic Wolf, Figma plugins used by 8K+ designers, and AI-powered systems for founders and operators. Most client work is under NDA. The public side of my portfolio is side projects, open-source tools, and explorations I've shipped on my own time.</p>
+      <div class="v2-work-actions v2-reveal">
+        <a href="/projects" class="v2-btn-primary">See all projects &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="v2-testimonials" class="v2-work">
+    <div class="v2-container">
+      <div class="v2-testimonials-section">
+        <p class="v2-section-label v2-reveal">What clients say</p>
+        <div class="v2-testimonial-stack v2-reveal">
+
+          <!-- Card 1: Fred Wilmot -->
+          <div class="v2-tcard v2-tcard-active" data-testimonial="0">
+            <div class="v2-tcard-header">
+              <div class="v2-avatar">
+                <Image src={fredImage} alt="Fred Wilmot" width={48} height={48} class="v2-avatar-img" />
+              </div>
+              <div class="v2-tcard-author">
+                <span class="v2-author-name">
+                  <a href="https://www.linkedin.com/in/fredwilmot/" target="_blank" rel="noopener noreferrer" class="v2-profile-link">Fred Wilmot <span class="v2-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="v2-author-role">Founder &amp; 3x CISO</span>
+              </div>
+            </div>
+            <div class="v2-tcard-body">
+              <blockquote class="v2-quote">
+                Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements. I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.
+              </blockquote>
+            </div>
+            <p class="v2-tcard-preview">&ldquo;Mohit effectively translated complex product requirements into&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 2: Dean Teffer -->
+          <div class="v2-tcard" data-testimonial="1">
+            <div class="v2-tcard-header">
+              <div class="v2-avatar">
+                <Image src={deanImage} alt="Dean Teffer" width={48} height={48} class="v2-avatar-img" />
+              </div>
+              <div class="v2-tcard-author">
+                <span class="v2-author-name">
+                  <a href="https://www.linkedin.com/in/deanteffer" target="_blank" rel="noopener noreferrer" class="v2-profile-link">Dean Teffer <span class="v2-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="v2-author-role">VP of AI, Arctic Wolf</span>
+              </div>
+            </div>
+            <div class="v2-tcard-body">
+              <blockquote class="v2-quote">
+                Mohit is a highly talented product engineer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking, and then recommended paths forward. This really accelerated our work and led to a much better UI.
+              </blockquote>
+            </div>
+            <p class="v2-tcard-preview">&ldquo;Mohit is a highly talented product engineer and a pleasure to work with&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 3: Austin Mcdaniel -->
+          <div class="v2-tcard" data-testimonial="2">
+            <div class="v2-tcard-header">
+              <div class="v2-avatar">
+                <Image src={austinImage} alt="Austin Mcdaniel" width={48} height={48} class="v2-avatar-img" />
+              </div>
+              <div class="v2-tcard-author">
+                <span class="v2-author-name">
+                  <a href="https://www.linkedin.com/in/amcdnl" target="_blank" rel="noopener noreferrer" class="v2-profile-link">Austin Mcdaniel <span class="v2-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="v2-author-role">CEO/Founder, GoodCode</span>
+              </div>
+            </div>
+            <div class="v2-tcard-body">
+              <blockquote class="v2-quote">
+                Right off the bat, his fresh ideas and knack for nailing user needs made him stand out. Mohit isn't just talented; he's the kind of guy who's always eager to dig deeper and push the boundaries of design.
+              </blockquote>
+            </div>
+            <p class="v2-tcard-preview">&ldquo;Right off the bat, his fresh ideas and knack for nailing user needs&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 4: Alper Ortac -->
+          <div class="v2-tcard" data-testimonial="3">
+            <div class="v2-tcard-header">
+              <div class="v2-avatar">
+                <Image src={alperImage} alt="Alper Ortac" width={48} height={48} class="v2-avatar-img" />
+              </div>
+              <div class="v2-tcard-author">
+                <span class="v2-author-name">
+                  <a href="https://x.com/alperortac" target="_blank" rel="noopener noreferrer" class="v2-profile-link">Alper Ortac <span class="v2-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="v2-author-role">Founder/CEO, GoodWatch</span>
+              </div>
+            </div>
+            <div class="v2-tcard-body">
+              <blockquote class="v2-quote">
+                The UX audit was incredibly insightful and exceeded my expectations. Mohit not only provided detailed findings but also suggested alternative approaches to address issues. Half of the suggestions validated my own roadmap, while the other half introduced fresh, brilliant ideas, especially for improving user engagement.
+              </blockquote>
+            </div>
+            <p class="v2-tcard-preview">&ldquo;The UX audit was incredibly insightful and exceeded my expectations&hellip;&rdquo;</p>
+          </div>
+
+          <!-- Card 5: Kyle Prinsloo -->
+          <div class="v2-tcard" data-testimonial="4">
+            <div class="v2-tcard-header">
+              <div class="v2-avatar">
+                <Image src={kyleImage} alt="Kyle Prinsloo" width={48} height={48} class="v2-avatar-img" />
+              </div>
+              <div class="v2-tcard-author">
+                <span class="v2-author-name">
+                  <a href="https://www.kyleprinsloo.com/" target="_blank" rel="noopener noreferrer" class="v2-profile-link">Kyle Prinsloo <span class="v2-link-arrow">&nearr;</span></a>
+                </span>
+                <span class="v2-author-role">Founder/CEO, ClientManager</span>
+              </div>
+            </div>
+            <div class="v2-tcard-body">
+              <blockquote class="v2-quote">
+                Mohit gives exceptionally good UX advice and I love how he structures it based on importance. I highly recommend working with him.
+              </blockquote>
+            </div>
+            <p class="v2-tcard-preview">&ldquo;Mohit gives exceptionally good UX advice and I love how he structures&hellip;&rdquo;</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="v2-about" class="v2-about">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">About</p>
+      <h2 class="v2-about-headline v2-reveal">A decade of shipping products, <em>and counting.</em></h2>
+      <p class="v2-about-body v2-reveal">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. Shipped at Verizon and Arctic Wolf, built tools used by 8K+ designers, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, building at the edge of AI-native product development.</p>
+      <div class="v2-about-actions v2-reveal">
+        <a href="/about" class="v2-btn-primary">More about me &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <StudioFooter />
+
+</div>
+
+<style>
+  /* ===== V2 Palette (shares Studio tokens so StudioFooter reuses cleanly) ===== */
+  [data-variation-content="v2"] {
+    --studio-bg: #FAF8F5;
+    --studio-bg-header: rgba(250, 248, 245, 0.95);
+    --studio-text: #1A1A1A;
+    --studio-text-body: #4A4A4A;
+    --studio-text-muted: #8A8A8A;
+    --studio-accent: #2D5A3D;
+    --studio-accent-light: rgba(45, 90, 61, 0.08);
+    --studio-border: #E5E0DA;
+    --studio-serif: 'DM Serif Display', Georgia, serif;
+    --studio-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* V2-scoped aliases (so rules below stay readable) */
+    --v2-bg: var(--studio-bg);
+    --v2-bg-header: var(--studio-bg-header);
+    --v2-text: var(--studio-text);
+    --v2-text-body: var(--studio-text-body);
+    --v2-text-muted: var(--studio-text-muted);
+    --v2-accent: var(--studio-accent);
+    --v2-accent-light: var(--studio-accent-light);
+    --v2-border: var(--studio-border);
+    --v2-serif: var(--studio-serif);
+    --v2-sans: var(--studio-sans);
+
+    background: var(--v2-bg);
+    color: var(--v2-text);
+    font-family: var(--v2-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Container ===== */
+  .v2-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== Reveal Animation ===== */
+  .v2-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: v2Reveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  .v2-reveal:nth-child(1) { animation-delay: 0.05s; }
+  .v2-reveal:nth-child(2) { animation-delay: 0.12s; }
+  .v2-reveal:nth-child(3) { animation-delay: 0.19s; }
+  .v2-reveal:nth-child(4) { animation-delay: 0.26s; }
+
+  @keyframes v2Reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Section Label ===== */
+  .v2-section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--v2-text-muted);
+    margin-bottom: 48px;
+  }
+
+  /* ===== Header ===== */
+  .v2-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--v2-bg-header);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--v2-border);
+  }
+
+  .v2-header-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .v2-logo {
+    font-family: var(--v2-serif);
+    font-size: 1.15rem;
+    color: var(--v2-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .v2-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .v2-nav-link {
+    font-size: 0.85rem;
+    color: var(--v2-text-body);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .v2-nav-link:hover {
+    color: var(--v2-text);
+  }
+
+  .v2-nav-cta {
+    color: var(--v2-accent);
+    font-weight: 600;
+  }
+
+  .v2-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .v2-menu-bar {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--v2-text);
+    transition: transform 0.3s;
+  }
+
+  /* ===== Hero ===== */
+  .v2-hero {
+    padding: 160px 0 120px;
+  }
+
+  .v2-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--v2-accent);
+    margin-bottom: 28px;
+  }
+
+  .v2-headline {
+    font-family: var(--v2-serif);
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--v2-text);
+    margin-bottom: 28px;
+    max-width: 720px;
+  }
+
+  .v2-headline em {
+    font-style: italic;
+    color: var(--v2-accent);
+  }
+
+  .v2-subtext {
+    font-size: 1.1rem;
+    color: var(--v2-text-body);
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+
+  .v2-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .v2-trust-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--v2-text-muted);
+  }
+
+  .v2-trust-item {
+    letter-spacing: 0.01em;
+  }
+
+  .v2-trust-sep {
+    color: var(--v2-border);
+  }
+
+  /* ===== Buttons ===== */
+  .v2-btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--v2-accent);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.25s, transform 0.2s;
+  }
+
+  .v2-btn-primary:hover {
+    background: #234a31;
+    transform: translateY(-1px);
+  }
+
+  .v2-btn-text {
+    font-size: 0.9rem;
+    color: var(--v2-text-body);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .v2-btn-text:hover {
+    color: var(--v2-accent);
+  }
+
+  /* ===== Audience ===== */
+  .v2-audience {
+    padding: 40px 0 120px;
+  }
+
+  .v2-audience-headline {
+    font-family: var(--v2-serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: var(--v2-text);
+    margin-bottom: 48px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    max-width: 640px;
+  }
+
+  .v2-audience-headline em {
+    font-style: italic;
+    color: var(--v2-accent);
+  }
+
+  .v2-audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .v2-audience-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--v2-border);
+    border-radius: 10px;
+    padding: 24px 22px;
+  }
+
+  .v2-audience-title {
+    font-family: var(--v2-serif);
+    font-size: 1.1rem;
+    color: var(--v2-text);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .v2-audience-desc {
+    font-size: 0.9rem;
+    color: var(--v2-text-body);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ===== Services ===== */
+  .v2-services {
+    padding: 40px 0 120px;
+  }
+
+  .v2-services-list {
+    max-width: 760px;
+  }
+
+  .v2-service {
+    display: flex;
+    gap: 32px;
+    padding: 40px 0;
+  }
+
+  .v2-service-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 92px;
+    padding-top: 2px;
+  }
+
+  .v2-service-number {
+    font-family: var(--v2-serif);
+    font-size: 1rem;
+    color: var(--v2-text-muted);
+  }
+
+  .v2-service-duration {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--v2-accent);
+  }
+
+  .v2-service-content {
+    flex: 1;
+  }
+
+  .v2-service-title {
+    font-family: var(--v2-serif);
+    font-size: 1.35rem;
+    color: var(--v2-text);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .v2-service-desc {
+    font-size: 0.95rem;
+    color: var(--v2-text-body);
+    line-height: 1.7;
+  }
+
+  .v2-divider {
+    border: none;
+    border-top: 1px solid var(--v2-border);
+    margin: 0;
+  }
+
+  /* ===== Process / How I Work ===== */
+  .v2-process {
+    padding: 40px 0 120px;
+  }
+
+  .v2-process-headline {
+    font-family: var(--v2-serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: var(--v2-text);
+    margin-bottom: 48px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    max-width: 640px;
+  }
+
+  .v2-process-headline em {
+    font-style: italic;
+    color: var(--v2-accent);
+  }
+
+  .v2-process-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 48px;
+  }
+
+  .v2-process-item {
+    padding-top: 4px;
+    border-top: 1px solid var(--v2-border);
+    padding-top: 20px;
+  }
+
+  .v2-process-title {
+    font-family: var(--v2-serif);
+    font-size: 1.1rem;
+    color: var(--v2-text);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .v2-process-desc {
+    font-size: 0.92rem;
+    color: var(--v2-text-body);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ===== Testimonials (stacked cards — same pattern as Studio) ===== */
+  .v2-work {
+    padding: 120px 0;
+  }
+
+  .v2-testimonials-section {
+    position: relative;
+  }
+
+  .v2-testimonials-section::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -200px;
+    right: -200px;
+    bottom: -40px;
+    background: radial-gradient(ellipse at center, var(--v2-accent-light) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .v2-testimonial-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .v2-tcard {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--v2-border);
+    border-bottom: none;
+    padding: 20px 28px;
+    cursor: pointer;
+    transition: background 0.25s, padding 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .v2-tcard:first-child {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .v2-tcard:last-child {
+    border-bottom: 1px solid var(--v2-border);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .v2-tcard:only-child {
+    border-radius: 12px;
+    border-bottom: 1px solid var(--v2-border);
+  }
+
+  .v2-tcard-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .v2-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid var(--v2-border);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  .v2-tcard-active .v2-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .v2-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .v2-tcard-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .v2-author-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--v2-text);
+  }
+
+  .v2-author-role {
+    font-size: 0.78rem;
+    color: var(--v2-text-muted);
+  }
+
+  .v2-profile-link {
+    color: var(--v2-text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .v2-profile-link:hover {
+    color: var(--v2-accent);
+  }
+
+  .v2-link-arrow {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+
+  .v2-profile-link:hover .v2-link-arrow {
+    opacity: 1;
+  }
+
+  .v2-tcard-body {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+
+  .v2-tcard-active .v2-tcard-body {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 20px;
+  }
+
+  .v2-tcard-active {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 28px 28px;
+    border-left: 3px solid var(--v2-accent);
+    cursor: default;
+  }
+
+  .v2-quote {
+    font-family: var(--v2-serif);
+    font-size: 1.02rem;
+    font-weight: 300;
+    color: var(--v2-text-body);
+    line-height: 1.8;
+    font-style: italic;
+  }
+
+  .v2-tcard-preview {
+    display: none;
+    font-family: var(--v2-serif);
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--v2-text-muted);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .v2-tcard:not(.v2-tcard-active) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 0 16px;
+  }
+
+  .v2-tcard:not(.v2-tcard-active) .v2-tcard-header {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .v2-tcard:not(.v2-tcard-active) .v2-tcard-preview {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-left: 58px;
+    margin-top: 4px;
+  }
+
+  .v2-tcard:not(.v2-tcard-active) .v2-author-role {
+    display: none;
+  }
+
+  .v2-tcard:not(.v2-tcard-active):hover {
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  /* ===== About ===== */
+  .v2-about {
+    padding: 120px 0;
+  }
+
+  .v2-about-headline {
+    font-family: var(--v2-serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: var(--v2-text);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    max-width: 560px;
+  }
+
+  .v2-about-headline em {
+    font-style: italic;
+    color: var(--v2-accent);
+  }
+
+  .v2-about-body {
+    font-size: 1.05rem;
+    color: var(--v2-text-body);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 36px;
+  }
+
+  .v2-about-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* ===== Work ===== */
+  .v2-projects {
+    padding: 120px 0;
+  }
+
+  .v2-work-headline {
+    font-family: var(--v2-serif);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: var(--v2-text);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    max-width: 560px;
+  }
+
+  .v2-work-headline em {
+    font-style: italic;
+    color: var(--v2-accent);
+  }
+
+  .v2-work-body {
+    font-size: 1.05rem;
+    color: var(--v2-text-body);
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 36px;
+  }
+
+  .v2-work-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .v2-nav {
+      display: none;
+    }
+
+    .v2-menu-toggle {
+      display: flex;
+    }
+
+    .v2-hero {
+      padding: 120px 0 80px;
+    }
+
+    .v2-audience,
+    .v2-services,
+    .v2-process,
+    .v2-work,
+    .v2-projects,
+    .v2-about {
+      padding: 60px 0 80px;
+    }
+
+    .v2-audience-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .v2-process-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .v2-service {
+      flex-direction: column;
+      gap: 10px;
+      padding: 28px 0;
+    }
+
+    .v2-service-meta {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .v2-headline {
+      font-size: 2rem;
+    }
+
+    .v2-container {
+      padding: 0 20px;
+    }
+
+    .v2-header-inner {
+      padding: 0 20px;
+    }
+
+    .v2-trust-bar {
+      font-size: 0.78rem;
+      gap: 8px;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll-triggered reveals + testimonial stack interaction
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.querySelector('[data-variation-content="v2"]');
+    if (!root) return;
+
+    const reveals = root.querySelectorAll('.v2-reveal');
+
+    reveals.forEach((el) => {
+      (el as HTMLElement).style.animationPlayState = 'paused';
+      (el as HTMLElement).style.opacity = '0';
+      (el as HTMLElement).style.transform = 'translateY(16px)';
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.style.animationPlayState = 'running';
+            el.style.opacity = '';
+            el.style.transform = '';
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    reveals.forEach((el) => observer.observe(el));
+
+    // Mobile menu toggle
+    const toggle = root.querySelector('.v2-menu-toggle');
+    const nav = root.querySelector('.v2-nav') as HTMLElement | null;
+    if (toggle && nav) {
+      const openMenu = () => {
+        nav.style.display = 'flex';
+        nav.style.flexDirection = 'column';
+        nav.style.position = 'absolute';
+        nav.style.top = '64px';
+        nav.style.left = '0';
+        nav.style.right = '0';
+        nav.style.background = 'var(--v2-bg)';
+        nav.style.padding = '24px';
+        nav.style.borderBottom = '1px solid var(--v2-border)';
+        nav.style.gap = '16px';
+      };
+      const closeMenu = () => {
+        nav.style.display = '';
+        nav.style.flexDirection = '';
+        nav.style.position = '';
+        nav.style.top = '';
+        nav.style.left = '';
+        nav.style.right = '';
+        nav.style.background = '';
+        nav.style.padding = '';
+        nav.style.borderBottom = '';
+        nav.style.gap = '';
+      };
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.style.display === 'flex';
+        isOpen ? closeMenu() : openMenu();
+      });
+      nav.querySelectorAll('.v2-nav-link').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+    }
+
+    // Testimonial stacked cards — click to expand
+    const tcards = root.querySelectorAll('.v2-tcard');
+    tcards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a')) return;
+        if (card.classList.contains('v2-tcard-active')) return;
+
+        tcards.forEach((c) => c.classList.remove('v2-tcard-active'));
+        card.classList.add('v2-tcard-active');
+      });
+    });
+  });
+</script>
