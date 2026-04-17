@@ -54,26 +54,14 @@ import StudioFooter from '../StudioFooter.astro';
   <section class="v2-audience">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">Who I work with</p>
-      <h2 class="v2-audience-headline v2-reveal">Different people, <em>same need:</em> a partner who finishes the job.</h2>
+      <h2 class="v2-audience-headline v2-reveal">You're probably a fit <em>if any of these sound like you.</em></h2>
 
-      <div class="v2-audience-grid">
-        <div class="v2-audience-card v2-reveal">
-          <h3 class="v2-audience-title">Founders</h3>
-          <p class="v2-audience-desc">You have an idea, maybe a rough prototype, and you want someone who can go from whiteboard to shipped without handing you back a half-finished codebase.</p>
-        </div>
-        <div class="v2-audience-card v2-reveal">
-          <h3 class="v2-audience-title">Business builders</h3>
-          <p class="v2-audience-desc">You know the domain and the customer. You need a product partner who'll turn that knowledge into software without wasting weeks on the wrong thing.</p>
-        </div>
-        <div class="v2-audience-card v2-reveal">
-          <h3 class="v2-audience-title">Technical founders &amp; devs</h3>
-          <p class="v2-audience-desc">You can ship code on your own, but UI/UX isn't your strong suit. You want a product that looks and feels like someone who cared built it, without getting pulled away from the engineering you actually enjoy.</p>
-        </div>
-        <div class="v2-audience-card v2-reveal">
-          <h3 class="v2-audience-title">AI-curious builders</h3>
-          <p class="v2-audience-desc">You want AI working for you, not just playing with it. Maybe you're automating your day-to-day, running a side-project while your team ships core, or trying to get agents past the demo stage. I'll help you skip the trial-and-error and get to what actually works.</p>
-        </div>
-      </div>
+      <ul class="v2-audience-list">
+        <li class="v2-audience-item v2-reveal">You know what to build, but not how to build it &mdash; and you'd rather have one partner than three freelancers.</li>
+        <li class="v2-audience-item v2-reveal">You have a rough prototype &mdash; Bolt, Lovable, v0, a weekend hack &mdash; and you want it turned into something professional, tested, and ready for real customers.</li>
+        <li class="v2-audience-item v2-reveal">You're too early for specialists. You need one person to carry product, design, and code while you focus on the business.</li>
+        <li class="v2-audience-item v2-reveal">You want AI actually working for you &mdash; automating your day-to-day, shipping an agent side-project, or bringing modern AI-dev practices into your stack.</li>
+      </ul>
     </div>
   </section>
 
@@ -546,32 +534,49 @@ import StudioFooter from '../StudioFooter.astro';
     color: var(--v2-accent);
   }
 
-  .v2-audience-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .v2-audience-card {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid var(--v2-border);
-    border-radius: 10px;
-    padding: 24px 22px;
-  }
-
-  .v2-audience-title {
-    font-family: var(--v2-serif);
-    font-size: 1.1rem;
-    color: var(--v2-text);
-    margin: 0 0 10px;
-    letter-spacing: -0.01em;
-  }
-
-  .v2-audience-desc {
-    font-size: 0.95rem;
-    color: var(--v2-text-body);
-    line-height: 1.65;
+  .v2-audience-list {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    max-width: 760px;
+    counter-reset: audience;
+  }
+
+  .v2-audience-item {
+    counter-increment: audience;
+    position: relative;
+    padding: 28px 0 28px 64px;
+    font-family: var(--v2-serif);
+    font-size: clamp(1.05rem, 1.55vw, 1.2rem);
+    color: var(--v2-text);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    border-bottom: 1px solid var(--v2-border);
+  }
+
+  .v2-audience-item:first-child {
+    padding-top: 8px;
+  }
+
+  .v2-audience-item:last-child {
+    border-bottom: none;
+    padding-bottom: 8px;
+  }
+
+  .v2-audience-item::before {
+    content: counter(audience, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 32px;
+    font-family: var(--v2-sans);
+    font-size: 0.75rem;
+    color: var(--v2-accent);
+    letter-spacing: 0.12em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .v2-audience-item:first-child::before {
+    top: 12px;
   }
 
   /* ===== Services ===== */
@@ -967,8 +972,17 @@ import StudioFooter from '../StudioFooter.astro';
       padding: 60px 0 80px;
     }
 
-    .v2-audience-grid {
-      grid-template-columns: 1fr;
+    .v2-audience-item {
+      padding-left: 48px;
+      font-size: 1.05rem;
+    }
+
+    .v2-audience-item::before {
+      top: 28px;
+    }
+
+    .v2-audience-item:first-child::before {
+      top: 8px;
     }
 
     .v2-process-grid {
