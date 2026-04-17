@@ -19,7 +19,7 @@ import { actions } from 'astro:actions';
 
         <form id="studio-contact-form" class="studio-contact-form" method="POST" action={actions.contact}>
           <div id="studio-form-success" class="studio-form-success" role="alert">
-            <p>Thanks! Your message has been sent.</p>
+            <p>Thanks! I got your message and I'll reply within a day.</p>
             <button type="button" class="studio-form-success-close" aria-label="Close message">&times;</button>
           </div>
 
@@ -39,7 +39,7 @@ import { actions } from 'astro:actions';
 
           <div class="studio-form-group studio-form-group--grow">
             <label for="studio-message">Message</label>
-            <textarea id="studio-message" name="message" required minlength="10" maxlength="1000" placeholder="What can I help you with..."></textarea>
+            <textarea id="studio-message" name="message" required minlength="10" maxlength="1000" placeholder="Tell me what you're working on."></textarea>
           </div>
 
           <button type="submit" class="studio-btn-primary studio-form-submit">Send message &rarr;</button>
