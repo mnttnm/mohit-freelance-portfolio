@@ -12,6 +12,7 @@ const {
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://mohittater.com');
 import '../styles/global.css';
+import AgentationWidget from '../components/dev/AgentationWidget';
 ---
 
 <!doctype html>
@@ -45,6 +46,8 @@ import '../styles/global.css';
   </head>
   <body>
     <slot />
+
+    <AgentationWidget client:only="react" />
 
     <script>
       // Intersection Observer for reveal animations
