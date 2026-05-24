@@ -1,0 +1,189 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+
+const directions = [
+  {
+    name: 'Founder Lab Dossier',
+    tag: 'Chosen',
+    body: 'A tactile product lab: dark workbench, oversized type, artifact cards, and service rows as lab protocols.',
+  },
+  {
+    name: 'Signal Console',
+    tag: 'Option 02',
+    body: 'A dense AI-operator interface with telemetry, timelines, and automation language.',
+  },
+  {
+    name: 'Cork Archive',
+    tag: 'Option 03',
+    body: 'An editorial dark archive with big screenshots, warm cork surfaces, and quotes as archival slips.',
+  },
+];
+---
+
+<Layout title="AI Website Direction Reel Board" description="A local recording board for showing the AI website direction workflow.">
+  <main class="reel-board" data-variation-content="reel-board">
+    <section class="reel-stage" aria-label="Recording board">
+      <div class="reel-meta">
+        <span>AI website direction workflow</span>
+        <span>Use arrows / space</span>
+      </div>
+
+      <article class="reel-slide is-active" data-slide="0">
+        <p class="reel-kicker">Concept demo</p>
+        <h1>Exploring website directions with AI</h1>
+        <p class="reel-lede">
+          Reference, constraints, and iteration turned an existing portfolio into a working visual concept.
+        </p>
+        <div class="reel-flow">
+          <span>Existing site</span>
+          <span>design.md</span>
+          <span>3 directions</span>
+          <span>Working concept</span>
+        </div>
+      </article>
+
+      <article class="reel-slide" data-slide="1">
+        <p class="reel-kicker">Input</p>
+        <h2>Start with an existing site</h2>
+        <div class="reel-browser-card">
+          <div class="reel-browser-bar">
+            <span></span><span></span><span></span>
+            <strong>mohittater.in</strong>
+          </div>
+          <div class="reel-browser-body">
+            <p>Homepage</p>
+            <p>Work archive</p>
+            <p>About page</p>
+            <p>Real content</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="reel-slide" data-slide="2">
+        <p class="reel-kicker">Reference</p>
+        <h2>Add a design.md file</h2>
+        <div class="reel-code-card">
+          <span># ORYZO AI — Style Reference</span>
+          <span>&gt; Cork-textured midnight laboratory</span>
+          <span>colors: pitch darkness, cork dust, rust accent</span>
+          <span>layout: full-bleed, dark, product-focused</span>
+          <span>texture: cork, grain, engineered precision</span>
+        </div>
+      </article>
+
+      <article class="reel-slide" data-slide="3">
+        <p class="reel-kicker">Prompt</p>
+        <h2>Do not copy. Translate the vibe.</h2>
+        <div class="reel-prompt-card">
+          <p>Understand the concept first.</p>
+          <p>Generate 3 different ideas inspired by it.</p>
+          <p>Use content from my website.</p>
+          <p>Pick one direction and rebuild around it.</p>
+          <p>Optimize for newness, polish, and creative final artefacts.</p>
+        </div>
+      </article>
+
+      <article class="reel-slide" data-slide="4">
+        <p class="reel-kicker">Concepts</p>
+        <h2>Three directions</h2>
+        <div class="reel-direction-grid">
+          {directions.map((direction) => (
+            <section class:list={['reel-direction-card', direction.tag === 'Chosen' && 'is-chosen']}>
+              <span>{direction.tag}</span>
+              <h3>{direction.name}</h3>
+              <p>{direction.body}</p>
+            </section>
+          ))}
+        </div>
+      </article>
+
+      <article class="reel-slide reel-slide-image" data-slide="5">
+        <div class="reel-image-copy">
+          <p class="reel-kicker">Generated artifact</p>
+          <h2>Founder Lab Dossier</h2>
+          <p>A concept image became the alignment artifact before building the actual Astro pages.</p>
+        </div>
+        <div class="reel-image-frame">
+          <img src="/reel/founder-lab-concept.png" alt="Generated Founder Lab Dossier concept image" />
+        </div>
+      </article>
+
+      <article class="reel-slide" data-slide="6">
+        <p class="reel-kicker">Second pass</p>
+        <h2>One more prompt</h2>
+        <div class="reel-quote-card">
+          <p>“Make it feel alive.”</p>
+        </div>
+        <div class="reel-flow reel-flow-tight">
+          <span>Subtle hovers</span>
+          <span>Scroll reveals</span>
+          <span>Cursor glow</span>
+          <span>Motion polish</span>
+        </div>
+      </article>
+
+      <article class="reel-slide" data-slide="7">
+        <p class="reel-kicker">Output</p>
+        <h2>A working website concept</h2>
+        <p class="reel-lede">
+          Not just a static mockup: real pages, real content, and a clear visual system.
+        </p>
+        <div class="reel-flow">
+          <span>Homepage</span>
+          <span>Projects</span>
+          <span>About</span>
+          <span>Contact</span>
+        </div>
+      </article>
+
+      <nav class="reel-controls" aria-label="Slide controls">
+        <button type="button" data-prev aria-label="Previous slide">Prev</button>
+        <div class="reel-dots" aria-label="Slides">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <button type="button" data-dot={index} aria-label={`Go to slide ${index + 1}`}></button>
+          ))}
+        </div>
+        <button type="button" data-next aria-label="Next slide">Next</button>
+      </nav>
+    </section>
+  </main>
+
+  <script>
+    const root = document.querySelector('.reel-stage');
+    const slides = Array.from(document.querySelectorAll('.reel-slide'));
+    const dots = Array.from(document.querySelectorAll('[data-dot]'));
+    const params = new URLSearchParams(window.location.search);
+    const clean = params.get('clean') === '1';
+    let active = 0;
+
+    const setSlide = (next) => {
+      active = (next + slides.length) % slides.length;
+      slides.forEach((slide, index) => slide.classList.toggle('is-active', index === active));
+      dots.forEach((dot, index) => dot.classList.toggle('is-active', index === active));
+      root?.style.setProperty('--slide-progress', String(active / (slides.length - 1)));
+    };
+
+    document.querySelector('[data-next]')?.addEventListener('click', () => setSlide(active + 1));
+    document.querySelector('[data-prev]')?.addEventListener('click', () => setSlide(active - 1));
+    dots.forEach((dot, index) => dot.addEventListener('click', () => setSlide(index)));
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === ' ') {
+        event.preventDefault();
+        setSlide(active + 1);
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        setSlide(active - 1);
+      }
+    });
+
+    if (clean) {
+      root?.classList.add('is-clean');
+      document.querySelector('.reel-meta')?.classList.add('is-hidden');
+    }
+    setSlide(0);
+  </script>
+</Layout>

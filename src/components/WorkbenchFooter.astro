@@ -1,0 +1,120 @@
+---
+import { actions } from 'astro:actions';
+---
+
+<footer id="contact" class="lab-footer">
+  <div class="lab-container lab-footer-grid">
+    <div class="lab-footer-intro">
+      <p class="lab-section-kicker">Contact</p>
+      <h2>Tell me what you're building.</h2>
+      <p>
+        I'm happy to talk even if the brief is still rough. Send a note, book a call, or
+        email directly.
+      </p>
+      <div class="lab-footer-actions">
+        <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="lab-btn lab-btn-primary">Book a call</a>
+        <a href="mailto:mohittater.iiita@gmail.com" class="lab-btn lab-btn-secondary">Email me</a>
+      </div>
+    </div>
+
+    <div class="lab-contact-panel">
+      <div id="lab-form-success" class="lab-form-success" role="alert">
+        <p>Message received. I'll reply within a day.</p>
+        <button type="button" class="lab-form-success-close" aria-label="Close message">&times;</button>
+      </div>
+
+      <form id="lab-contact-form" class="lab-contact-form" method="POST" action={actions.contact}>
+        <div class="lab-honeypot" aria-hidden="true">
+          <input type="text" name="website" id="lab-hp" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" required placeholder="Your name" minlength="2" maxlength="50" />
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" required placeholder="you@example.com" />
+        </label>
+
+        <label>
+          <span>Message</span>
+          <textarea name="message" required minlength="10" maxlength="1000" placeholder="A few lines about the product, workflow, or idea."></textarea>
+        </label>
+
+        <button type="submit" class="lab-btn lab-btn-primary lab-form-submit">Send message</button>
+        <div id="lab-form-error" class="lab-form-error" role="alert"></div>
+      </form>
+    </div>
+
+    <div class="lab-footer-meta">
+      <span>2026 Mohit Tater</span>
+      <span>Bengaluru, India</span>
+      <a href="https://twitter.com/tatermohit" target="_blank" rel="noopener noreferrer">X/Twitter</a>
+      <a href="https://www.linkedin.com/in/tatermohit/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/mnttnm" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://mohit.stream" target="_blank" rel="noopener noreferrer">mohit.stream</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import { actions, isInputError } from 'astro:actions';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('lab-contact-form') as HTMLFormElement | null;
+    if (!form) return;
+
+    const formError = document.getElementById('lab-form-error');
+    const formSuccess = document.getElementById('lab-form-success');
+    const successClose = document.querySelector('.lab-form-success-close');
+
+    const setError = (message: string) => {
+      if (!formError) return;
+      formError.textContent = message;
+      formError.classList.add('show');
+    };
+
+    const clearError = () => {
+      if (!formError) return;
+      formError.textContent = '';
+      formError.classList.remove('show');
+    };
+
+    const showSuccess = () => formSuccess?.classList.add('show');
+    const hideSuccess = () => formSuccess?.classList.remove('show');
+
+    successClose?.addEventListener('click', hideSuccess);
+
+    form.addEventListener('submit', async (event: Event) => {
+      event.preventDefault();
+      clearError();
+      hideSuccess();
+
+      const submitButton = form.querySelector('.lab-form-submit') as HTMLButtonElement | null;
+      const originalText = submitButton?.textContent ?? 'Send message';
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+      }
+
+      const { error } = await actions.contact(new FormData(form));
+
+      if (!error) {
+        showSuccess();
+        form.reset();
+      } else if (isInputError(error)) {
+        const firstField = Object.keys(error.fields)[0];
+        setError(error.fields[firstField]?.[0] ?? 'Please check the form and try again.');
+      } else {
+        setError(error.message || 'Something went wrong. Please email me directly.');
+      }
+
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+  });
+</script>

@@ -11,6 +11,7 @@ const {
   ogImage = "/og-image.png"
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://mohittater.com');
+const showAgentationWidget = import.meta.env.DEV && import.meta.env.PUBLIC_SHOW_AGENTATION === 'true';
 import '../styles/global.css';
 import AgentationWidget from '../components/dev/AgentationWidget';
 ---
@@ -40,14 +41,14 @@ import AgentationWidget from '../components/dev/AgentationWidget';
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <slot />
 
-    <AgentationWidget client:only="react" />
+    {showAgentationWidget && <AgentationWidget client:only="react" />}
 
     <script>
       // Intersection Observer for reveal animations

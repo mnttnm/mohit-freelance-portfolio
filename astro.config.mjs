@@ -5,5 +5,6 @@ import react from '@astrojs/react';
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
+  devToolbar: { enabled: false },
   integrations: [react()],
 });

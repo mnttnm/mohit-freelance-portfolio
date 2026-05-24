@@ -7,7 +7,7 @@ const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
 const CONTACT_FROM_EMAIL = import.meta.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
 const CONTACT_TO_EMAIL = import.meta.env.CONTACT_TO_EMAIL || 'mohittater.iiita@gmail.com';
 
-const resend = new Resend(RESEND_API_KEY);
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 class RateLimiter {
   private store = new Map<string, { count: number; resetTime: number }>();
@@ -84,6 +84,14 @@ export const server = {
         throw new ActionError({
           code: 'UNPROCESSABLE_CONTENT',
           message: 'Message must be between 10 and 1000 characters.',
+        });
+      }
+
+      if (!resend) {
+        console.error('Missing RESEND_API_KEY for contact form submission.');
+        throw new ActionError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Message sending is not configured. Please email me directly.',
         });
       }
 
