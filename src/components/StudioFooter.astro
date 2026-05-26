@@ -94,9 +94,9 @@ import { actions } from 'astro:actions';
 <style>
   /* ----- Shared primitives (scoped copies for StudioFooter) ----- */
   .studio-footer-unified .studio-container {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
   }
 
   .studio-footer-unified .studio-reveal {
@@ -392,6 +392,10 @@ import { actions } from 'astro:actions';
   }
 
   @media (max-width: 480px) {
+    .studio-footer-unified .studio-container {
+      padding: 0 var(--site-container-padding-mobile);
+    }
+
     .studio-footer-unified {
       padding: 72px 0 32px;
     }

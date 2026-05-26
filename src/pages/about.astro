@@ -12,12 +12,11 @@ import StudioFooter from "../components/StudioFooter.astro";
       <div class="studio-header-inner">
         <a href="/" class="studio-logo">Mohit Tater</a>
         <nav class="studio-nav">
-          <a href="/#studio-services" class="studio-nav-link">Services</a>
           <a href="/projects" class="studio-nav-link">Work</a>
           <a href="/about" class="studio-nav-link studio-nav-link-active">About</a>
           <a
             href="#studio-footer"
-            class="studio-nav-link studio-nav-cta">Let's Talk</a
+            class="studio-nav-link studio-nav-cta">Let's talk</a
           >
         </nav>
         <button class="studio-menu-toggle" aria-label="Toggle menu">
@@ -111,9 +110,9 @@ import StudioFooter from "../components/StudioFooter.astro";
 
   /* ===== Container ===== */
   .studio-container {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
   }
 
   /* ===== Reveal Animation ===== */
@@ -158,9 +157,9 @@ import StudioFooter from "../components/StudioFooter.astro";
   }
 
   .studio-header-inner {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
     height: 64px;
     display: flex;
     align-items: center;
@@ -326,6 +325,7 @@ import StudioFooter from "../components/StudioFooter.astro";
     font-size: 0.95rem;
     color: var(--studio-text-body);
     line-height: 1.9;
+    max-width: 760px;
   }
 
   .about-toolkit strong {
@@ -364,11 +364,11 @@ import StudioFooter from "../components/StudioFooter.astro";
     }
 
     .studio-container {
-      padding: 0 20px;
+      padding: 0 var(--site-container-padding-mobile);
     }
 
     .studio-header-inner {
-      padding: 0 20px;
+      padding: 0 var(--site-container-padding-mobile);
     }
   }
 </style>

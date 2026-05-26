@@ -6,53 +6,63 @@ import StudioFooter from "../components/StudioFooter.astro";
 
 const projects = [
   {
+    id: "business-copilot",
     title: "Building a Business Co-Pilot with Claude Code",
     description:
       "An AI-powered business management system that handles daily planning, revenue tracking, and weekly reviews, built with Claude Code acting as an autonomous co-pilot across an Obsidian-based workspace.",
     tech: ["Claude Code", "Obsidian", "Markdown"],
     liveUrl:
       "https://medium.com/@tatermohit/i-built-a-business-co-pilot-using-claude-code-heres-the-exact-system-cfe32ee59558",
+    liveLabel: "Read article",
     image: "/projects/business-copilot.png",
     type: "Article",
   },
   {
+    id: "learning-log",
     title: "learning.log",
     description:
       "A capture-and-publish platform that turns quick notes into a public learning stream, with a Raycast-powered input pipeline, Redis-backed queue, and automated GitHub publishing.",
     tech: ["Astro", "Upstash Redis", "GitHub API", "Vercel", "Raycast"],
     liveUrl: "https://mohit.stream",
+    liveLabel: "Live app",
     sourceUrl: "https://github.com/mnttnm/digital-garden",
     image: "/projects/learning-log.png",
     type: "Web App",
   },
   {
+    id: "figma-variable-explorer",
     title: "Figma Variable Explorer",
     description:
       "Browse, inspect, and export Figma design variables in List, JSON, and CSS formats. Supports both design and development modes, making it easy to hand off tokens and keep design systems in sync.",
     tech: ["React", "Figma Plugin API"],
     liveUrl:
       "https://www.figma.com/community/plugin/1310888112326715990/figma-variable-explorer",
+    liveLabel: "Open plugin",
     sourceUrl: "https://github.com/mnttnm/figma-variable-explorer",
     image: "/projects/figma-variable-explorer.png",
     type: "Figma Plugin",
     highlight: "8,000+ users",
   },
   {
+    id: "career-guide",
     title: "Tech Career Guide for CS Students",
     description:
       "An interactive career exploration tool covering 45+ tech career paths with salary benchmarks, personality-based matching, and structured learning roadmaps, built for Indian CS students navigating their first career decisions.",
     tech: ["Next.js", "React", "Tailwind CSS", "Zustand", "Framer Motion"],
     liveUrl: "https://tech-career-guide.vercel.app/",
+    liveLabel: "Live app",
     sourceUrl: "https://github.com/mnttnm/btech-cs-career-guide-india",
     image: "/projects/career-guide.png",
     type: "Web App",
   },
   {
+    id: "notes-in-gdocs",
     title: "Notes in Google Docs",
     description:
       "Capture notes from anywhere on your Mac and store them directly in Google Docs. Create new documents, switch between them, and manage everything without leaving Raycast.",
     tech: ["Raycast", "Google Docs API"],
     liveUrl: "https://www.raycast.com/tatermohit/note-in-google-doc",
+    liveLabel: "Install extension",
     sourceUrl: "https://github.com/mnttnm/raycast-note-in-doc",
     image: "/projects/notes-in-gdocs.png",
     type: "Raycast Extension",
@@ -79,6 +89,8 @@ const projects = [
   //   type: "Chrome Extension",
   // },
 ];
+
+const projectTotalLabel = String(projects.length).padStart(2, "0");
 ---
 
 <Layout title="Projects | Mohit Tater" description="Side projects, explorations, and open-source tools, from Figma plugins used by 8K+ designers to AI-powered business systems.">
@@ -88,14 +100,13 @@ const projects = [
       <div class="studio-header-inner">
         <a href="/" class="studio-logo">Mohit Tater</a>
         <nav class="studio-nav">
-          <a href="/#studio-services" class="studio-nav-link">Services</a>
           <a href="/projects" class="studio-nav-link studio-nav-link-active"
             >Work</a
           >
           <a href="/about" class="studio-nav-link">About</a>
           <a
             href="#studio-footer"
-            class="studio-nav-link studio-nav-cta">Let's Talk</a
+            class="studio-nav-link studio-nav-cta">Let's talk</a
           >
         </nav>
         <button class="studio-menu-toggle" aria-label="Toggle menu">
@@ -118,75 +129,136 @@ const projects = [
       </div>
     </section>
 
-    <!-- Projects List -->
-    <section class="projects-list-section">
+    <!-- Selected Work Browser -->
+    <section class="projects-browser-section" aria-labelledby="selected-work-heading">
       <div class="studio-container">
-        {
-          projects.map((project, i) => (
-            <article class="project-item studio-reveal">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener"
-                class="project-image-link"
-              >
-                <div class="project-image-wrap">
-                  <img
-                    src={project.image}
-                    alt={`Screenshot of ${project.title}`}
-                    class="project-image"
-                    loading={i < 2 ? "eager" : "lazy"}
-                  />
-                </div>
-                <span class="corner-mark corner-tl" />
-                <span class="corner-mark corner-tr" />
-                <span class="corner-mark corner-bl" />
-                <span class="corner-mark corner-br" />
-              </a>
-              <div class="project-info">
-                <div class="project-meta">
-                  <span class="project-type">{project.type}</span>
-                  {project.highlight && (
-                    <span class="project-highlight">{project.highlight}</span>
-                  )}
-                </div>
-                <h2 class="project-title">
-                  <a href={project.liveUrl} target="_blank" rel="noopener">{project.title}</a>
-                </h2>
-                <p class="project-desc">{project.description}</p>
-                <div class="project-footer">
-                  {project.tech && (
-                    <div class="project-tech">
-                      {project.tech.map((t) => (
-                        <span class="project-tech-tag">{t}</span>
-                      ))}
-                    </div>
-                  )}
-                  <div class="project-links">
+        <div class="work-browser studio-reveal" data-project-showcase>
+          <div class="work-browser-topline">
+            <p id="selected-work-heading" class="work-browser-kicker">
+              Selected work
+            </p>
+            <div class="work-browser-count" aria-live="polite">
+              <span data-project-current>01</span>
+              <span class="work-browser-count-divider">/</span>
+              <span>{projectTotalLabel}</span>
+            </div>
+          </div>
+
+          <div class="work-browser-shell">
+            <div class="work-visual-panel">
+              <div class="work-visual-stage" aria-live="polite">
+                {
+                  projects.map((project, i) => (
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener"
-                      class="project-link-primary"
+                      class={`work-visual ${i === 0 ? "is-active" : ""}`}
+                      data-project-visual
+                      data-project-index={i}
+                      aria-label={`Open ${project.title}`}
                     >
-                      View live &rarr;
+                      <img
+                        src={project.image}
+                        alt={`Screenshot of ${project.title}`}
+                        loading={i === 0 ? "eager" : "lazy"}
+                      />
                     </a>
-                    {project.sourceUrl && (
+                  ))
+                }
+              </div>
+
+              <div class="work-thumb-row" aria-label="Choose a project">
+                {
+                  projects.map((project, i) => (
+                    <button
+                      type="button"
+                      class={`work-thumb ${i === 0 ? "is-active" : ""}`}
+                      data-project-tab
+                      data-project-index={i}
+                      aria-pressed={i === 0 ? "true" : "false"}
+                      aria-label={`Show ${project.title}`}
+                    >
+                      <span class="work-thumb-number">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span class="work-thumb-title">{project.title}</span>
+                    </button>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="work-detail-panel">
+              {
+                projects.map((project, i) => (
+                  <article
+                    class={`work-project ${i === 0 ? "is-active" : ""}`}
+                    data-project-detail
+                    data-project-index={i}
+                    aria-hidden={i === 0 ? "false" : "true"}
+                  >
+                    <div class="work-project-meta">
+                      <span>{project.type}</span>
+                      {project.highlight && (
+                        <>
+                          <span class="work-project-meta-separator">/</span>
+                          <strong>{project.highlight}</strong>
+                        </>
+                      )}
+                    </div>
+
+                    <h2 class="work-project-title">{project.title}</h2>
+                    <p class="work-project-description">
+                      {project.description}
+                    </p>
+
+                    <div class="work-project-section">
+                      <h3>Technology</h3>
+                      <ul class="work-tech-list">
+                        {project.tech.map((t) => (
+                          <li>{t}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div class="work-actions">
                       <a
-                        href={project.sourceUrl}
+                        href={project.liveUrl}
                         target="_blank"
                         rel="noopener"
-                        class="project-link-secondary"
+                        class="work-action work-action-primary"
                       >
-                        Source
+                        {project.liveLabel}
+                        <span aria-hidden="true">&rarr;</span>
                       </a>
-                    )}
-                  </div>
-                </div>
+                      {project.sourceUrl && (
+                        <a
+                          href={project.sourceUrl}
+                          target="_blank"
+                          rel="noopener"
+                          class="work-action"
+                        >
+                          GitHub
+                          <span aria-hidden="true">&rarr;</span>
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                ))
+              }
+
+              <div class="work-controls" aria-label="Project navigation">
+                <button type="button" class="work-control" data-project-prev aria-label="Previous project">
+                  &larr;
+                </button>
+                <button type="button" class="work-control" data-project-next aria-label="Next project">
+                  &rarr;
+                </button>
               </div>
-            </article>
-          ))
-        }
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -220,9 +292,9 @@ const projects = [
 
   /* ===== Container ===== */
   .studio-container {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
   }
 
   /* ===== Reveal Animation ===== */
@@ -256,7 +328,7 @@ const projects = [
   .studio-section-label {
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
     text-transform: uppercase;
     color: var(--studio-text-muted);
     margin-bottom: 24px;
@@ -275,9 +347,9 @@ const projects = [
   }
 
   .studio-header-inner {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
     height: 64px;
     display: flex;
     align-items: center;
@@ -289,7 +361,7 @@ const projects = [
     font-size: 1.15rem;
     color: var(--studio-text);
     text-decoration: none;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   .studio-nav {
@@ -339,17 +411,17 @@ const projects = [
 
   /* ===== Projects Hero ===== */
   .projects-hero {
-    padding: 160px 0 100px;
+    padding: 144px 0 72px;
   }
 
   .projects-headline {
     font-family: var(--studio-serif);
     font-size: clamp(2.2rem, 5vw, 3.5rem);
     line-height: 1.1;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     color: var(--studio-text);
     margin-bottom: 20px;
-    max-width: 600px;
+    max-width: 680px;
   }
 
   .projects-headline em {
@@ -361,247 +433,391 @@ const projects = [
     font-size: 1.05rem;
     color: var(--studio-text-body);
     line-height: 1.7;
-    max-width: 480px;
+    max-width: 560px;
   }
 
-  /* ===== Projects List ===== */
-  .projects-list-section {
+  /* ===== Selected Work Browser ===== */
+  .projects-browser-section {
     padding: 0 0 120px;
   }
 
-  .project-item {
-    padding: 60px 0;
+  .work-browser {
+    display: grid;
+    gap: 18px;
   }
 
-  .project-item:first-child {
-    padding-top: 0;
-  }
-
-  /* Image */
-  .project-image-link {
-    display: block;
-    text-decoration: none;
-    margin-bottom: 32px;
-    position: relative;
-    padding: 16px;
-  }
-
-  .project-image-wrap {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    background: #f0ede8;
-    overflow: hidden;
-  }
-
-  .project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .project-item:hover .project-image {
-    transform: scale(1.02);
-  }
-
-  /* Corner marks */
-  .corner-mark {
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .corner-mark::before,
-  .corner-mark::after {
-    content: '';
-    position: absolute;
-    background: var(--studio-border);
-    transition: background 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  /* Horizontal line */
-  .corner-mark::before {
-    height: 1.5px;
-    width: 100%;
-  }
-
-  /* Vertical line */
-  .corner-mark::after {
-    width: 1.5px;
-    height: 100%;
-  }
-
-  .corner-tl {
-    top: 0;
-    left: 0;
-  }
-  .corner-tl::before { top: 0; left: 0; }
-  .corner-tl::after { top: 0; left: 0; }
-
-  .corner-tr {
-    top: 0;
-    right: 0;
-  }
-  .corner-tr::before { top: 0; right: 0; }
-  .corner-tr::after { top: 0; right: 0; }
-
-  .corner-bl {
-    bottom: 0;
-    left: 0;
-  }
-  .corner-bl::before { bottom: 0; left: 0; }
-  .corner-bl::after { bottom: 0; left: 0; }
-
-  .corner-br {
-    bottom: 0;
-    right: 0;
-  }
-  .corner-br::before { bottom: 0; right: 0; }
-  .corner-br::after { bottom: 0; right: 0; }
-
-  /* Hover: fill corners with accent color */
-  .project-item:hover .corner-mark::before,
-  .project-item:hover .corner-mark::after {
-    background: var(--studio-accent);
-  }
-
-  /* Animate corner size on hover for extra delight */
-  .corner-mark::before,
-  .corner-mark::after {
-    transition:
-      background 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-      width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-      height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .project-item:hover .corner-mark::before {
-    width: 36px;
-  }
-
-  .project-item:hover .corner-mark::after {
-    height: 36px;
-  }
-
-  /* Info */
-  .project-info {
-    max-width: 620px;
-  }
-
-  .project-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .project-type {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--studio-text-muted);
-  }
-
-  .project-highlight {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--studio-accent);
-    background: var(--studio-accent-light);
-    padding: 3px 10px;
-    border-radius: 100px;
-  }
-
-  .project-title {
-    font-family: var(--studio-serif);
-    font-size: 1.4rem;
-    color: var(--studio-text);
-    letter-spacing: -0.01em;
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-
-  .project-title a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .project-title a:hover {
-    color: var(--studio-accent);
-  }
-
-  .project-desc {
-    font-size: 0.95rem;
-    color: var(--studio-text-body);
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
-
-  .project-footer {
+  .work-browser-topline {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    flex-wrap: wrap;
   }
 
-  /* Tech Tags */
-  .project-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+  .work-browser-kicker {
+    color: var(--studio-text-body);
+    font-size: 0.92rem;
+    font-weight: 600;
   }
 
-  .project-tech-tag {
-    font-size: 0.72rem;
-    font-weight: 500;
+  .work-browser-count {
     color: var(--studio-text-muted);
-    padding: 0;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .work-browser-count [data-project-current] {
+    color: var(--studio-text);
+    font-weight: 600;
+  }
+
+  .work-browser-count-divider {
+    color: var(--studio-border);
+    padding: 0 4px;
+  }
+
+  .work-browser-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+    min-height: 620px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 10%, rgba(45, 90, 61, 0.08), transparent 30%),
+      rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--studio-border);
+    border-radius: 8px;
+    box-shadow: 0 24px 70px rgba(30, 45, 36, 0.08);
+  }
+
+  .work-visual-panel {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 18px;
+    padding: 38px;
+    background: #eef1ed;
+    border-right: 1px solid var(--studio-border);
+  }
+
+  .work-visual-stage {
+    position: relative;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .work-visual {
+    display: none;
+    width: 100%;
+    max-width: 720px;
+    color: inherit;
+    text-decoration: none;
+    outline-offset: 8px;
+  }
+
+  .work-visual.is-active {
+    display: block;
+    animation: workImageReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .work-visual img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    border-radius: 6px;
+    box-shadow: 0 22px 52px rgba(30, 45, 36, 0.18);
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .work-visual:hover img {
+    transform: translateY(-3px);
+  }
+
+  .work-thumb-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .work-thumb {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+    padding: 10px;
+    color: var(--studio-text-muted);
+    background: rgba(250, 248, 245, 0.72);
+    border: 1px solid rgba(26, 26, 26, 0.08);
+    border-radius: 6px;
+    font-family: var(--studio-sans);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s;
+  }
+
+  .work-thumb:hover,
+  .work-thumb.is-active {
+    color: var(--studio-text);
+    background: #fff;
+    border-color: rgba(45, 90, 61, 0.32);
+  }
+
+  .work-thumb:active {
+    transform: translateY(1px);
+  }
+
+  .work-thumb-number {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .work-thumb-title {
+    overflow: hidden;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .project-tech-tag:not(:last-child)::after {
-    content: '\00b7';
-    margin-left: 6px;
+  .work-detail-panel {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 56px;
+  }
+
+  .work-project {
+    display: none;
+  }
+
+  .work-project.is-active {
+    display: block;
+    animation: workCopyReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .work-project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 18px;
+    color: var(--studio-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .work-project-meta strong {
+    color: var(--studio-accent);
+    font: inherit;
+  }
+
+  .work-project-meta-separator {
     color: var(--studio-border);
   }
 
-  /* Links */
-  .project-links {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-left: auto;
+  .work-project-title {
+    max-width: 460px;
+    margin-bottom: 18px;
+    color: var(--studio-text);
+    font-family: var(--studio-serif);
+    font-size: clamp(2rem, 4.1vw, 3.45rem);
+    font-weight: 400;
+    line-height: 0.98;
+    text-wrap: balance;
   }
 
-  .project-link-primary {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--studio-accent);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .project-link-primary:hover {
-    color: #234a31;
-  }
-
-  .project-link-secondary {
-    font-size: 0.85rem;
-    color: var(--studio-text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .project-link-secondary:hover {
+  .work-project-description {
+    max-width: 470px;
+    margin-bottom: 34px;
     color: var(--studio-text-body);
+    font-size: 1rem;
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  .work-project-section {
+    margin-bottom: 34px;
+  }
+
+  .work-project-section h3 {
+    margin-bottom: 12px;
+    color: var(--studio-text);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .work-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .work-tech-list li {
+    padding: 7px 10px;
+    color: var(--studio-text-body);
+    background: var(--studio-accent-light);
+    border: 1px solid rgba(45, 90, 61, 0.13);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .work-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .work-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 12px 16px;
+    color: var(--studio-text);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--studio-border);
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s;
+  }
+
+  .work-action:hover {
+    color: var(--studio-accent);
+    border-color: rgba(45, 90, 61, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .work-action:active {
+    transform: translateY(0);
+  }
+
+  .work-action-primary {
+    color: #fff;
+    background: var(--studio-accent);
+    border-color: var(--studio-accent);
+  }
+
+  .work-action-primary:hover {
+    color: #fff;
+    background: #234a31;
+    border-color: #234a31;
+  }
+
+  .work-controls {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .work-control {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    color: var(--studio-text);
+    background: #fff;
+    border: 1px solid var(--studio-border);
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: var(--studio-sans);
+    font-size: 1rem;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s;
+  }
+
+  .work-control:hover {
+    color: #fff;
+    background: var(--studio-accent);
+    border-color: var(--studio-accent);
+  }
+
+  .work-control:active {
+    transform: translateY(1px);
+  }
+
+  .work-thumb:focus-visible,
+  .work-control:focus-visible,
+  .work-action:focus-visible,
+  .work-visual:focus-visible {
+    outline: 2px solid var(--studio-accent);
+    outline-offset: 3px;
+  }
+
+  @keyframes workImageReveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes workCopyReveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* ===== Responsive ===== */
+  @media (max-width: 980px) {
+    .work-browser-shell {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .work-visual-panel {
+      min-height: 420px;
+      padding: 28px;
+      border-right: 0;
+      border-bottom: 1px solid var(--studio-border);
+    }
+
+    .work-detail-panel {
+      padding: 40px 32px 88px;
+    }
+
+    .work-project-title {
+      max-width: 620px;
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .work-project-description {
+      max-width: 620px;
+    }
+  }
+
   @media (max-width: 768px) {
     .studio-nav {
       display: none;
@@ -615,30 +831,53 @@ const projects = [
       padding: 120px 0 56px;
     }
 
-    .projects-list-section {
+    .projects-browser-section {
       padding: 0 0 80px;
     }
 
-    .project-item {
-      padding: 40px 0;
+    .work-browser {
+      gap: 14px;
     }
 
-    .project-footer {
-      flex-direction: column;
+    .work-browser-topline {
       align-items: flex-start;
     }
 
-    .project-links {
-      margin-left: 0;
+    .work-visual-panel {
+      min-height: 360px;
+      padding: 18px;
     }
 
-    .corner-mark {
-      width: 22px;
-      height: 22px;
+    .work-thumb-row {
+      display: flex;
+      gap: 8px;
+      margin: 0 -18px;
+      padding: 0 18px 2px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
     }
 
-    .project-image-link {
-      padding: 12px;
+    .work-thumb {
+      min-width: 150px;
+      scroll-snap-align: start;
+    }
+
+    .work-detail-panel {
+      padding: 32px 24px 82px;
+    }
+
+    .work-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .work-action {
+      width: 100%;
+    }
+
+    .work-controls {
+      right: 24px;
+      bottom: 24px;
     }
   }
 
@@ -648,15 +887,37 @@ const projects = [
     }
 
     .studio-container {
-      padding: 0 20px;
+      padding: 0 var(--site-container-padding-mobile);
     }
 
     .studio-header-inner {
-      padding: 0 20px;
+      padding: 0 var(--site-container-padding-mobile);
     }
 
-    .project-title {
-      font-size: 1.2rem;
+    .work-browser-shell {
+      border-radius: 8px;
+    }
+
+    .work-visual-panel {
+      min-height: 300px;
+      padding: 14px;
+    }
+
+    .work-thumb-row {
+      margin: 0 -14px;
+      padding: 0 14px 2px;
+    }
+
+    .work-detail-panel {
+      padding: 28px 20px 78px;
+    }
+
+    .work-project-description {
+      font-size: 0.95rem;
+    }
+
+    .work-tech-list li {
+      font-size: 0.74rem;
     }
   }
 </style>
@@ -690,6 +951,63 @@ const projects = [
     );
 
     reveals.forEach((el) => observer.observe(el));
+
+    const showcase = root.querySelector("[data-project-showcase]");
+    if (showcase) {
+      const visuals = Array.from(showcase.querySelectorAll("[data-project-visual]"));
+      const details = Array.from(showcase.querySelectorAll("[data-project-detail]"));
+      const tabs = Array.from(showcase.querySelectorAll("[data-project-tab]"));
+      const current = showcase.querySelector("[data-project-current]");
+      const previous = showcase.querySelector("[data-project-prev]");
+      const next = showcase.querySelector("[data-project-next]");
+      let activeIndex = 0;
+
+      const updateProject = (nextIndex) => {
+        activeIndex = (nextIndex + visuals.length) % visuals.length;
+        const label = String(activeIndex + 1).padStart(2, "0");
+
+        if (current) current.textContent = label;
+
+        visuals.forEach((visual, index) => {
+          visual.classList.toggle("is-active", index === activeIndex);
+          visual.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+          visual.tabIndex = index === activeIndex ? 0 : -1;
+        });
+
+        details.forEach((detail, index) => {
+          detail.classList.toggle("is-active", index === activeIndex);
+          detail.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+        });
+
+        tabs.forEach((tab, index) => {
+          tab.classList.toggle("is-active", index === activeIndex);
+          tab.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+        });
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          updateProject(Number(tab.dataset.projectIndex || 0));
+        });
+      });
+
+      previous?.addEventListener("click", () => updateProject(activeIndex - 1));
+      next?.addEventListener("click", () => updateProject(activeIndex + 1));
+
+      showcase.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          updateProject(activeIndex - 1);
+        }
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          updateProject(activeIndex + 1);
+        }
+      });
+
+      updateProject(0);
+    }
 
     // Mobile menu toggle
     const toggle = root.querySelector(".studio-menu-toggle");

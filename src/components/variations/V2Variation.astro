@@ -15,8 +15,6 @@ import StudioFooter from '../StudioFooter.astro';
     <div class="v2-header-inner">
       <a href="/" class="v2-logo">Mohit Tater</a>
       <nav class="v2-nav">
-        <a href="#v2-services" class="v2-nav-link">Services</a>
-        <a href="#v2-process" class="v2-nav-link">How I work</a>
         <a href="/projects" class="v2-nav-link">Work</a>
         <a href="/about" class="v2-nav-link">About</a>
         <a href="#studio-footer" class="v2-nav-link v2-nav-cta">Let's talk</a>
@@ -318,9 +316,9 @@ import StudioFooter from '../StudioFooter.astro';
 
   /* ===== Container ===== */
   .v2-container {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
   }
 
   /* ===== Reveal Animation ===== */
@@ -365,9 +363,9 @@ import StudioFooter from '../StudioFooter.astro';
   }
 
   .v2-header-inner {
-    max-width: 920px;
+    max-width: var(--site-container-max);
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 var(--site-container-padding);
     height: 64px;
     display: flex;
     align-items: center;
@@ -538,7 +536,7 @@ import StudioFooter from '../StudioFooter.astro';
     list-style: none;
     padding: 0;
     margin: 0;
-    max-width: 760px;
+    max-width: 100%;
     counter-reset: audience;
   }
 
@@ -585,7 +583,7 @@ import StudioFooter from '../StudioFooter.astro';
   }
 
   .v2-services-list {
-    max-width: 760px;
+    max-width: 100%;
     background: var(--v2-accent-light);
     border: 1px solid var(--v2-border);
     border-radius: 12px;
@@ -636,6 +634,7 @@ import StudioFooter from '../StudioFooter.astro';
     font-size: 1rem;
     color: var(--v2-text-body);
     line-height: 1.7;
+    max-width: 760px;
   }
 
   .v2-divider {
@@ -698,6 +697,7 @@ import StudioFooter from '../StudioFooter.astro';
 
   .v2-testimonials-section {
     position: relative;
+    overflow: clip;
   }
 
   .v2-testimonials-section::before {
@@ -1017,11 +1017,11 @@ import StudioFooter from '../StudioFooter.astro';
     }
 
     .v2-container {
-      padding: 0 20px;
+      padding: 0 var(--site-container-padding-mobile);
     }
 
     .v2-header-inner {
-      padding: 0 20px;
+      padding: 0 var(--site-container-padding-mobile);
     }
 
     .v2-trust-bar {
