@@ -15,6 +15,7 @@ import StudioFooter from '../StudioFooter.astro';
     <div class="v2-header-inner">
       <a href="/" class="v2-logo">Mohit Tater</a>
       <nav class="v2-nav">
+        <a href="/" class="v2-nav-link v2-nav-link-active">Home</a>
         <a href="/projects" class="v2-nav-link">Work</a>
         <a href="/about" class="v2-nav-link">About</a>
         <a href="#studio-footer" class="v2-nav-link v2-nav-cta">Let's talk</a>
@@ -397,6 +398,11 @@ import StudioFooter from '../StudioFooter.astro';
     color: var(--v2-text);
   }
 
+  .v2-nav-link-active {
+    color: var(--v2-text);
+    font-weight: 600;
+  }
+
   .v2-nav-cta {
     color: var(--v2-accent);
     font-weight: 600;
@@ -536,7 +542,7 @@ import StudioFooter from '../StudioFooter.astro';
     list-style: none;
     padding: 0;
     margin: 0;
-    max-width: 100%;
+    max-width: 920px;
     counter-reset: audience;
   }
 

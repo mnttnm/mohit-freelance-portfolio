@@ -2,7 +2,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --site-container-max: 1120px;
+  --site-container-max: 1200px;
   --site-container-padding: 24px;
   --site-container-padding-mobile: 20px;
 }
