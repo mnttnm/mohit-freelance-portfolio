@@ -4,110 +4,263 @@ export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import StudioFooter from "../components/StudioFooter.astro";
 
-const projects = [
+const spotlightProjects = [
   {
-    id: "business-copilot",
+    id: "ops-workspace",
+    type: "Enterprise App",
+    title: "Enterprise Ops Workspace",
+    outcome: "Complex internal tool, delivered end-to-end",
+    description:
+      "An internal web app that supports a sales team's day-to-day operations. It includes multi-step onboarding forms, filterable tables and grids, template detail views, and an in-app help system, with a UI designed to keep complex enterprise workflows easy to navigate.",
+    tech: ["Next.js 16", "Tailwind v4", "shadcn/ui", "Supabase", "NextAuth"],
+    images: [
+      "/images/SCR-20260526-posx.png",
+      "/images/SCR-20260526-porc.png",
+      "/images/SCR-20260526-povd.png",
+    ],
+    gradient: "ops-workspace",
+    sourceUrl: "https://github.com/mnttnm/client-onboarding",
+    liveUrl: "https://advanse-operations-preview-advanse.vercel.app/",
+    liveLabel: "Live demo",
+    back: {
+      title: "How the app is put together",
+      sections: [
+        {
+          heading: "Three connected modules",
+          body: "Client capture wizard, template library admin, and reporting. Each module has its own role but shares a common data model, so a change to a template ripples cleanly into how it's used in onboarding and how it shows up in reports.",
+        },
+        {
+          heading: "Data model",
+          body: "Clients, templates, submissions, and audit records. Designed so historical onboarding records stay intact and readable even as templates evolve over time — the kind of detail that only matters once you're months into using it.",
+        },
+        {
+          heading: "Auth and deployment",
+          body: "NextAuth v5 against the company's OIDC server for SSO, Supabase service-role on the server side for trusted operations, and a CodeBuild → ECS pipeline for deploys.",
+        },
+      ],
+    },
+  },
+  {
+    id: "slicely",
+    type: "SaaS Product",
+    title: "Slicely",
+    outcome: "Turn any PDF into structured data",
+    description:
+      "A web app for extracting structured data from PDFs using reusable recipes. Users annotate the relevant pages of a PDF, define their extraction rules once, and view results rendered as a number, table, chart, or plain text — no per-document configuration needed.",
+    tech: ["Next.js", "Supabase", "Tailwind CSS", "LLM Integration"],
+    images: [
+      "/images/SCR-20260526-poif.png",
+      "/images/SCR-20260526-pokt.png",
+    ],
+    gradient: "slicely",
+    sourceUrl: "https://github.com/mnttnm/slicely",
+    liveUrl: "https://slicely-ai.vercel.app/",
+    liveLabel: "Live demo",
+    back: {
+      title: "What's inside",
+      sections: [
+        {
+          heading: "Annotation module",
+          body: "A focused interface for marking up source PDFs — the part you spend the most time in if you're configuring a new slicer. Designed so the heavy work of pointing at the right regions of a PDF feels lightweight.",
+        },
+        {
+          heading: "Dynamic response renderer",
+          body: "Each slicer can return very different shapes of data. The renderer picks the right view automatically — a single number, a chart, a table, or a formatted text block — so the dashboard reads cleanly across slicers without per-slicer UI work.",
+        },
+        {
+          heading: "Bulk processing & webhooks",
+          body: "Designed to chew through batches and notify other systems when results are ready, so it fits into a larger pipeline rather than being a standalone tool.",
+        },
+      ],
+    },
+  },
+  {
+    id: "reviewhub",
+    type: "Agentic Workflow",
+    title: "ReviewHub",
+    outcome: "Agent-powered feedback loop, end-to-end",
+    description:
+      "A feedback pipeline that connects three tools: in-browser annotations on a live prototype, a communication channel (Slack or Confluence), and a coding agent. Feedback captured in the browser flows to the chosen channel, gets picked up by an agent, and the task status is updated automatically once the work is done.",
+    tech: ["Agentation", "Slack", "Confluence", "Devin", "Next.js"],
+    images: [
+      "/images/SCR-20260526-ppcv.png",
+      "/images/SCR-20260526-ppfp.jpeg",
+    ],
+    gradient: "reviewhub",
+    sourceUrl: "https://github.com/mnttnm/reviewhub",
+    liveUrl: "https://reviewhub-weld.vercel.app/",
+    liveLabel: "Live demo",
+    back: {
+      title: "How the loop closes",
+      sections: [
+        {
+          heading: "Live prototype review",
+          body: "An Agentation widget overlays the running app so anyone — PM, designer, client — can drop pixel-accurate annotations without leaving the browser. Feedback is captured against what the reviewer is actually seeing, not a static screenshot.",
+        },
+        {
+          heading: "Feedback, where your team already lives",
+          body: "Slack is the default destination, but Confluence is now wired in for teams that work out of Atlassian. Pick the destination per project; the rest of the pipeline doesn't change.",
+        },
+        {
+          heading: "Agent handoff and status sync",
+          body: "Coding agents pick tasks up from the feed and execute. Once a fix lands, the Confluence page or Slack thread updates itself — the loop closes without anyone playing telephone between QA, design, and engineering.",
+        },
+      ],
+    },
+  },
+  {
+    id: "ai-toolkit",
+    type: "Developer Tool",
+    title: "AI Toolkit",
+    outcome: "AI workflows I actually use daily",
+    description:
+      "A collection of reusable agent skills and Codex automation templates for Claude Code and Codex. Skills cover product UI, dashboards, interface grading, UX patterns, interaction design, and workflow automation, and can be installed with a single command. I use it to keep my agentic-engineering practice current.",
+    tech: ["Claude Code", "Codex", "Agent Skills", "Automations"],
+    images: [
+      "/images/mohit-ai-toolkit.png",
+    ],
+    gradient: "ai-toolkit",
+    sourceUrl: "https://github.com/mnttnm/mohit-ai-toolkit",
+    back: {
+      title: "Skills in the toolkit",
+      sections: [
+        {
+          heading: "product-ui",
+          body: "Production-grade product interface work — the invisible craft that makes software feel premium.",
+        },
+        {
+          heading: "dashboard",
+          body: "Modern, actionable dashboards through a structured requirements → strategy → design workflow.",
+        },
+        {
+          heading: "interface-grader",
+          body: "Quantitative grading of any frontend interface against a craft rubric, with iteration-over-iteration deltas.",
+        },
+        {
+          heading: "ux-patterns & interaction-design",
+          body: "Frictionless UX patterns and the microinteractions, motion, and state-handling that go on top.",
+        },
+        {
+          heading: "ui-design-system",
+          body: "React + Tailwind + Radix + shadcn/ui systems — accessible components, theming, dark mode.",
+        },
+        {
+          heading: "harvest-feed",
+          body: "Mine a working session for publishable posts and turn quiet wins into content.",
+        },
+        {
+          heading: "Codex automations",
+          body: "Templates for daily digests, weekly journals, content mining, and session-log backups.",
+        },
+      ],
+    },
+  },
+  {
+    id: "greetwood",
+    type: "Shopify Store",
+    title: "Greetwood",
+    outcome: "A Shopify store, set up as code",
+    description:
+      "A Shopify store implementation for a D2C furniture brand. The theme, content, and store configuration were built entirely through code using AI agents (Claude Code and Codex Cloud) and the Shopify CLI, instead of Shopify's web-based admin.",
+    tech: ["Shopify", "Liquid", "Shopify CLI", "Custom Theme"],
+    images: [
+      "/images/SCR-20260526-poxa.jpeg",
+      "/images/SCR-20260526-ppam.jpeg",
+    ],
+    gradient: "greetwood",
+    liveUrl: "https://greetwood.myshopify.com",
+    liveLabel: "Visit store",
+    sourceUrl: "https://github.com/mnttnm/greetwood-shopify",
+    back: {
+      title: "How it came together",
+      sections: [
+        {
+          heading: "Built largely with my AI toolkit",
+          body: "A good chunk of the work — theme customization, content scripts, store setup automation — was driven by the same agent skills I share in my AI toolkit. A nice loop: a tool I built for myself paid for itself on a real client engagement.",
+        },
+        {
+          heading: "Theme that doesn't feel default",
+          body: "Cream, charcoal, wood-brown, and gold against Jost as a single type family. Custom Liquid sections for collection storytelling and product cards, tuned to feel closer to a premium paid theme than a stock Craft layout.",
+        },
+        {
+          heading: "Store-as-code",
+          body: "Collections, navigation, pages, and tags configured through API scripts in the repo. Easy to redo on a new dev store, easy to review, and history lives in git instead of an admin screen.",
+        },
+      ],
+    },
+  },
+];
+
+const moreProjects = [
+  {
     title: "Building a Business Co-Pilot with Claude Code",
     description:
       "An AI-powered business management system that handles daily planning, revenue tracking, and weekly reviews, built with Claude Code acting as an autonomous co-pilot across an Obsidian-based workspace.",
-    tech: ["Claude Code", "Obsidian", "Markdown"],
+    image: "/projects/business-copilot.png",
     liveUrl:
       "https://medium.com/@tatermohit/i-built-a-business-co-pilot-using-claude-code-heres-the-exact-system-cfe32ee59558",
     liveLabel: "Read article",
-    image: "/projects/business-copilot.png",
     type: "Article",
   },
   {
-    id: "learning-log",
     title: "learning.log",
     description:
       "A capture-and-publish platform that turns quick notes into a public learning stream, with a Raycast-powered input pipeline, Redis-backed queue, and automated GitHub publishing.",
-    tech: ["Astro", "Upstash Redis", "GitHub API", "Vercel", "Raycast"],
+    image: "/projects/learning-log.png",
     liveUrl: "https://mohit.stream",
     liveLabel: "Live app",
     sourceUrl: "https://github.com/mnttnm/digital-garden",
-    image: "/projects/learning-log.png",
     type: "Web App",
   },
   {
-    id: "figma-variable-explorer",
     title: "Figma Variable Explorer",
     description:
-      "Browse, inspect, and export Figma design variables in List, JSON, and CSS formats. Supports both design and development modes, making it easy to hand off tokens and keep design systems in sync.",
-    tech: ["React", "Figma Plugin API"],
+      "Browse, inspect, and export Figma design variables in List, JSON, and CSS formats. Supports both design and development modes, used by 8,000+ designers.",
+    image: "/projects/figma-variable-explorer.png",
     liveUrl:
       "https://www.figma.com/community/plugin/1310888112326715990/figma-variable-explorer",
     liveLabel: "Open plugin",
     sourceUrl: "https://github.com/mnttnm/figma-variable-explorer",
-    image: "/projects/figma-variable-explorer.png",
     type: "Figma Plugin",
     highlight: "8,000+ users",
   },
   {
-    id: "career-guide",
     title: "Tech Career Guide for CS Students",
     description:
-      "An interactive career exploration tool covering 45+ tech career paths with salary benchmarks, personality-based matching, and structured learning roadmaps, built for Indian CS students navigating their first career decisions.",
-    tech: ["Next.js", "React", "Tailwind CSS", "Zustand", "Framer Motion"],
+      "An interactive career exploration tool covering 45+ tech career paths with salary benchmarks, personality-based matching, and structured learning roadmaps for Indian CS students.",
+    image: "/projects/career-guide.png",
     liveUrl: "https://tech-career-guide.vercel.app/",
     liveLabel: "Live app",
     sourceUrl: "https://github.com/mnttnm/btech-cs-career-guide-india",
-    image: "/projects/career-guide.png",
     type: "Web App",
   },
   {
-    id: "notes-in-gdocs",
     title: "Notes in Google Docs",
     description:
       "Capture notes from anywhere on your Mac and store them directly in Google Docs. Create new documents, switch between them, and manage everything without leaving Raycast.",
-    tech: ["Raycast", "Google Docs API"],
+    image: "/projects/notes-in-gdocs.png",
     liveUrl: "https://www.raycast.com/tatermohit/note-in-google-doc",
     liveLabel: "Install extension",
     sourceUrl: "https://github.com/mnttnm/raycast-note-in-doc",
-    image: "/projects/notes-in-gdocs.png",
     type: "Raycast Extension",
     highlight: "1,000+ installs",
   },
-  // {
-  //   title: "GetItRight",
-  //   description:
-  //     "Marketing site for a UX audit and design consultancy — positioning the brand, communicating service offerings, and converting SaaS founders into consulting clients.",
-  //   tech: ["Astro", "Vercel"],
-  //   liveUrl: "https://getitright-mnttnms-projects.vercel.app/",
-  //   sourceUrl: "https://github.com/mnttnm/getitright",
-  //   image: "/projects/getitright.png",
-  //   type: "Website",
-  // },
-  // {
-  //   title: "Tab Triage",
-  //   description:
-  //     "A Chrome extension to quickly sort, close, and organize your browser tabs — triage your tab clutter in seconds.",
-  //   tech: ["Chrome Extension API", "JavaScript"],
-  //   liveUrl:
-  //     "https://chromewebstore.google.com/detail/tab-triage/lldlagjikfofnnidnoegcmkolaibndof",
-  //   image: "/projects/tab-triage.png",
-  //   type: "Chrome Extension",
-  // },
 ];
 
-const projectTotalLabel = String(projects.length).padStart(2, "0");
+const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
 ---
 
-<Layout title="Projects | Mohit Tater" description="Side projects, explorations, and open-source tools, from Figma plugins used by 8K+ designers to AI-powered business systems.">
+<Layout title="Projects | Mohit Tater" description="Client work, side projects, and tools I've shipped — from AI-powered SaaS and enterprise apps to Shopify migrations and agent skills.">
   <div data-variation-content="studio">
     <!-- Header -->
     <header class="studio-header">
       <div class="studio-header-inner">
         <a href="/" class="studio-logo">Mohit Tater</a>
         <nav class="studio-nav">
-          <a href="/projects" class="studio-nav-link studio-nav-link-active"
-            >Work</a
-          >
+          <a href="/" class="studio-nav-link">Home</a>
+          <a href="/projects" class="studio-nav-link studio-nav-link-active">Work</a>
           <a href="/about" class="studio-nav-link">About</a>
-          <a
-            href="#studio-footer"
-            class="studio-nav-link studio-nav-cta">Let's talk</a
-          >
+          <a href="#studio-footer" class="studio-nav-link studio-nav-cta">Let's talk</a>
         </nav>
         <button class="studio-menu-toggle" aria-label="Toggle menu">
           <span class="studio-menu-bar"></span>
@@ -124,7 +277,7 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
           Things I've built <em>and shipped.</em>
         </h1>
         <p class="projects-subtext studio-reveal">
-          Most of my client work is confidential. What you see here are side projects, explorations, and open-source tools I build in my own time. They reflect how I think and what I care about.
+          A mix of client work and personal projects.
         </p>
       </div>
     </section>
@@ -145,122 +298,275 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
           </div>
 
           <div class="work-browser-shell">
+            <!-- Visual panel -->
             <div class="work-visual-panel">
               <div class="work-visual-stage" aria-live="polite">
                 {
-                  projects.map((project, i) => (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener"
-                      class={`work-visual ${i === 0 ? "is-active" : ""}`}
-                      data-project-visual
-                      data-project-index={i}
-                      aria-label={`Open ${project.title}`}
-                    >
-                      <img
-                        src={project.image}
-                        alt={`Screenshot of ${project.title}`}
-                        loading={i === 0 ? "eager" : "lazy"}
-                      />
-                    </a>
-                  ))
+                  spotlightProjects.map((project, i) => {
+                    const hasImages = project.images && project.images.length > 0;
+                    return (
+                      <div
+                        class={`work-visual-set ${i === 0 ? "is-active" : ""}`}
+                        data-project-visual
+                        data-project-index={i}
+                        aria-hidden={i === 0 ? "false" : "true"}
+                      >
+                        {hasImages ? (
+                          project.images.map((img, j) => (
+                            <button
+                              type="button"
+                              class={`work-visual-img ${j === 0 ? "is-active" : ""}`}
+                              data-screenshot-index={j}
+                              data-lightbox-open
+                              aria-label={`View screenshot ${j + 1} of ${project.title} full-size`}
+                            >
+                              <img src={img} alt={`Screenshot ${j + 1} of ${project.title}`} loading={i === 0 && j === 0 ? "eager" : "lazy"} />
+                            </button>
+                          ))
+                        ) : (
+                          <div class={`work-visual-img work-visual-placeholder grad-${project.gradient} is-active`} data-screenshot-index="0">
+                            <span class="work-visual-placeholder-label">{project.title}</span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
                 }
               </div>
 
-              <div class="work-thumb-row" aria-label="Choose a project">
+              <!-- Screenshot thumbs (only show when project has 2+ images) -->
+              <div class="work-screenshot-thumbs" data-screenshot-thumbs aria-label="Choose a screenshot">
                 {
-                  projects.map((project, i) => (
-                    <button
-                      type="button"
-                      class={`work-thumb ${i === 0 ? "is-active" : ""}`}
-                      data-project-tab
-                      data-project-index={i}
-                      aria-pressed={i === 0 ? "true" : "false"}
-                      aria-label={`Show ${project.title}`}
-                    >
-                      <span class="work-thumb-number">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span class="work-thumb-title">{project.title}</span>
-                    </button>
-                  ))
+                  spotlightProjects.map((project, i) => {
+                    const imageCount = project.images?.length || 0;
+                    return (
+                      <div
+                        class={`work-thumb-set ${i === 0 ? "is-active" : ""}`}
+                        data-thumb-set
+                        data-project-index={i}
+                        data-image-count={imageCount}
+                      >
+                        {imageCount >= 2 &&
+                          project.images.map((img, j) => (
+                            <button
+                              type="button"
+                              class={`work-screenshot-thumb ${j === 0 ? "is-active" : ""}`}
+                              data-screenshot-thumb
+                              data-screenshot-index={j}
+                              aria-label={`Screenshot ${j + 1}`}
+                            >
+                              <img src={img} alt="" loading="lazy" />
+                            </button>
+                          ))}
+                      </div>
+                    );
+                  })
                 }
               </div>
             </div>
 
-            <div class="work-detail-panel">
-              {
-                projects.map((project, i) => (
-                  <article
-                    class={`work-project ${i === 0 ? "is-active" : ""}`}
-                    data-project-detail
-                    data-project-index={i}
-                    aria-hidden={i === 0 ? "false" : "true"}
-                  >
-                    <div class="work-project-meta">
-                      <span>{project.type}</span>
-                      {project.highlight && (
-                        <>
-                          <span class="work-project-meta-separator">/</span>
-                          <strong>{project.highlight}</strong>
-                        </>
-                      )}
-                    </div>
-
-                    <h2 class="work-project-title">{project.title}</h2>
-                    <p class="work-project-description">
-                      {project.description}
-                    </p>
-
-                    <div class="work-project-section">
-                      <h3>Technology</h3>
-                      <ul class="work-tech-list">
-                        {project.tech.map((t) => (
-                          <li>{t}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div class="work-actions">
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener"
-                        class="work-action work-action-primary"
-                      >
-                        {project.liveLabel}
-                        <span aria-hidden="true">&rarr;</span>
-                      </a>
-                      {project.sourceUrl && (
-                        <a
-                          href={project.sourceUrl}
-                          target="_blank"
-                          rel="noopener"
-                          class="work-action"
+            <!-- Detail panel (with flip card) -->
+            <div class="work-detail-panel" data-detail-panel>
+              <div class="work-detail-flipper" data-flipper>
+                <!-- FRONT -->
+                <div class="work-detail-face work-detail-face-front">
+                  {
+                    spotlightProjects.map((project, i) => {
+                      const hasLive = !!project.liveUrl && project.liveUrl !== project.sourceUrl;
+                      return (
+                        <article
+                          class={`work-project ${i === 0 ? "is-active" : ""}`}
+                          data-project-detail
+                          data-project-index={i}
+                          aria-hidden={i === 0 ? "false" : "true"}
                         >
-                          GitHub
-                          <span aria-hidden="true">&rarr;</span>
-                        </a>
-                      )}
-                    </div>
-                  </article>
-                ))
-              }
+                          <div class="work-project-header">
+                            <span class="work-project-type">{project.type}</span>
+                            <button type="button" class="work-flip-top" data-flip-button data-flip-target="back" aria-label={`See more details about ${project.title}`}>
+                              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                                <path d="M3 5h6M3 9h4M11 3v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                              </svg>
+                              <span>More details</span>
+                            </button>
+                          </div>
 
-              <div class="work-controls" aria-label="Project navigation">
-                <button type="button" class="work-control" data-project-prev aria-label="Previous project">
-                  &larr;
-                </button>
-                <button type="button" class="work-control" data-project-next aria-label="Next project">
-                  &rarr;
-                </button>
+                          <h2 class="work-project-title">{project.title}</h2>
+
+                          <div class="work-outcome">
+                            <span class="work-outcome-icon" aria-hidden="true">
+                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M3 7L6 10L11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                            </span>
+                            <span>{project.outcome}</span>
+                          </div>
+
+                          <p class="work-project-description">
+                            {project.description}
+                          </p>
+
+                          <div class="work-tech-list">
+                            {project.tech.map((t) => (
+                              <span class="work-tech-pill">{t}</span>
+                            ))}
+                          </div>
+
+                          <div class="work-actions">
+                            {hasLive && (
+                              <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener"
+                                class="work-action work-action-primary"
+                              >
+                                {project.liveLabel}
+                                <span aria-hidden="true">&rarr;</span>
+                              </a>
+                            )}
+                            {project.sourceUrl && (
+                              <a
+                                href={project.sourceUrl}
+                                target="_blank"
+                                rel="noopener"
+                                class={`work-action ${hasLive ? "" : "work-action-primary"}`}
+                              >
+                                {hasLive ? "GitHub" : "View on GitHub"}
+                                <span aria-hidden="true">&rarr;</span>
+                              </a>
+                            )}
+                          </div>
+                        </article>
+                      );
+                    })
+                  }
+                </div>
+
+                <!-- BACK -->
+                <div class="work-detail-face work-detail-face-back">
+                  {
+                    spotlightProjects.map((project, i) => (
+                      <article
+                        class={`work-project-back ${i === 0 ? "is-active" : ""}`}
+                        data-project-back
+                        data-project-index={i}
+                        aria-hidden="true"
+                      >
+                        <div class="work-back-header">
+                          <span class="work-back-eyebrow">{project.title}</span>
+                          <button type="button" class="work-back-close" data-flip-button data-flip-target="front" aria-label="Back to project overview">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>Back</span>
+                          </button>
+                        </div>
+
+                        <h3 class="work-back-title">{project.back.title}</h3>
+
+                        <div class="work-back-sections">
+                          {project.back.sections.map((section) => (
+                            <div class="work-back-section">
+                              <h4>{section.heading}</h4>
+                              <p>{section.body}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </article>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <!-- Project navigation (bottom of detail panel) -->
+              <div class="work-project-nav" aria-label="Project navigation">
+                <div class="work-dots" data-dots>
+                  {
+                    spotlightProjects.map((project, i) => (
+                      <button
+                        type="button"
+                        class={`work-dot ${i === 0 ? "is-active" : ""}`}
+                        data-project-dot
+                        data-project-index={i}
+                        aria-pressed={i === 0 ? "true" : "false"}
+                        aria-label={`Show ${project.title}`}
+                      >
+                        <span class="visually-hidden">{i + 1}</span>
+                      </button>
+                    ))
+                  }
+                </div>
+                <div class="work-arrows">
+                  <button type="button" class="work-arrow" data-project-prev aria-label="Previous project">&larr;</button>
+                  <button type="button" class="work-arrow" data-project-next aria-label="Next project">&rarr;</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- More projects -->
+    <section class="more-projects-section" aria-labelledby="more-projects-heading">
+      <div class="studio-container">
+        <div class="more-projects-header studio-reveal">
+          <h2 id="more-projects-heading" class="more-projects-heading">More projects</h2>
+          <p class="more-projects-subtext">
+            Side projects, explorations, and open-source tools built in my own time.
+          </p>
+        </div>
+
+        <div class="more-projects-grid">
+          {
+            moreProjects.map((project) => (
+              <a href={project.liveUrl} target="_blank" rel="noopener" class="more-project studio-reveal">
+                <div class="more-project-image">
+                  <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" />
+                </div>
+                <div class="more-project-body">
+                  <div class="more-project-meta">
+                    <span>{project.type}</span>
+                    {project.highlight && (
+                      <>
+                        <span class="more-project-meta-separator">/</span>
+                        <strong>{project.highlight}</strong>
+                      </>
+                    )}
+                  </div>
+                  <h3 class="more-project-title">{project.title}</h3>
+                  <p class="more-project-description">{project.description}</p>
+                  <span class="more-project-cta">
+                    {project.liveLabel}
+                    <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+      <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close viewer">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button type="button" class="lightbox-arrow lightbox-arrow-prev" data-lightbox-prev aria-label="Previous screenshot">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M14 4L7 11l7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="lightbox-stage">
+        <img data-lightbox-img alt="" />
+        <p class="lightbox-caption" data-lightbox-caption></p>
+      </div>
+      <button type="button" class="lightbox-arrow lightbox-arrow-next" data-lightbox-next aria-label="Next screenshot">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M8 4l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
 
     <StudioFooter />
   </div>
@@ -297,6 +603,19 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     padding: 0 var(--site-container-padding);
   }
 
+  /* ===== Visually hidden ===== */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   /* ===== Reveal Animation ===== */
   .studio-reveal {
     opacity: 0;
@@ -304,24 +623,13 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
 
-  .studio-reveal:nth-child(1) {
-    animation-delay: 0.05s;
-  }
-  .studio-reveal:nth-child(2) {
-    animation-delay: 0.12s;
-  }
-  .studio-reveal:nth-child(3) {
-    animation-delay: 0.19s;
-  }
-  .studio-reveal:nth-child(4) {
-    animation-delay: 0.26s;
-  }
+  .studio-reveal:nth-child(1) { animation-delay: 0.05s; }
+  .studio-reveal:nth-child(2) { animation-delay: 0.12s; }
+  .studio-reveal:nth-child(3) { animation-delay: 0.19s; }
+  .studio-reveal:nth-child(4) { animation-delay: 0.26s; }
 
   @keyframes studioReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   /* ===== Section Label ===== */
@@ -364,11 +672,7 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     letter-spacing: 0;
   }
 
-  .studio-nav {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
+  .studio-nav { display: flex; align-items: center; gap: 32px; }
 
   .studio-nav-link {
     font-size: 0.85rem;
@@ -377,19 +681,9 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     transition: color 0.2s;
   }
 
-  .studio-nav-link:hover {
-    color: var(--studio-text);
-  }
-
-  .studio-nav-link-active {
-    color: var(--studio-text);
-    font-weight: 600;
-  }
-
-  .studio-nav-cta {
-    color: var(--studio-accent);
-    font-weight: 600;
-  }
+  .studio-nav-link:hover { color: var(--studio-text); }
+  .studio-nav-link-active { color: var(--studio-text); font-weight: 600; }
+  .studio-nav-cta { color: var(--studio-accent); font-weight: 600; }
 
   .studio-menu-toggle {
     display: none;
@@ -410,40 +704,42 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
   }
 
   /* ===== Projects Hero ===== */
-  .projects-hero {
-    padding: 144px 0 72px;
-  }
+  .projects-hero { padding: 144px 0 64px; }
 
   .projects-headline {
     font-family: var(--studio-serif);
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-size: clamp(2.2rem, 4.6vw, 3.25rem);
     line-height: 1.1;
     letter-spacing: 0;
     color: var(--studio-text);
     margin-bottom: 20px;
-    max-width: 680px;
+    max-width: 920px;
+    text-wrap: balance;
   }
 
-  .projects-headline em {
-    font-style: italic;
-    color: var(--studio-accent);
-  }
+  .projects-headline em { font-style: italic; color: var(--studio-accent); }
 
   .projects-subtext {
     font-size: 1.05rem;
     color: var(--studio-text-body);
     line-height: 1.7;
-    max-width: 560px;
+    max-width: 600px;
   }
 
   /* ===== Selected Work Browser ===== */
-  .projects-browser-section {
-    padding: 0 0 120px;
-  }
+  .projects-browser-section { padding: 24px 0 96px; }
 
   .work-browser {
     display: grid;
-    gap: 18px;
+    gap: 16px;
+    transform-origin: center top;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Anticipation: the whole unit lifts AND slightly scales — combining spatial
+     and depth cues so the motion reads even without a relative reference. */
+  .work-browser.is-anticipating {
+    transform: translateY(-12px) scale(1.008);
   }
 
   .work-browser-topline {
@@ -471,31 +767,57 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     font-weight: 600;
   }
 
-  .work-browser-count-divider {
-    color: var(--studio-border);
-    padding: 0 4px;
-  }
+  .work-browser-count-divider { color: var(--studio-border); padding: 0 4px; }
 
+  /* Fixed-dimension shell — no layout shift on switch */
   .work-browser-shell {
     display: grid;
-    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-    min-height: 620px;
+    grid-template-columns: 58fr 42fr;
+    min-height: clamp(620px, 82vh, 860px);
     overflow: hidden;
     background:
       radial-gradient(circle at 12% 10%, rgba(45, 90, 61, 0.08), transparent 30%),
       rgba(255, 255, 255, 0.55);
     border: 1px solid var(--studio-border);
-    border-radius: 8px;
+    border-radius: 0;
     box-shadow: 0 24px 70px rgba(30, 45, 36, 0.08);
+    transition: box-shadow 0.45s cubic-bezier(0.34, 1.2, 0.64, 1),
+                border-color 0.45s ease,
+                background 0.45s ease;
   }
 
+  /* Non-spatial cues during anticipation:
+     - shadow grows dramatically (high-contrast, very readable)
+     - border gains an accent green hint
+     - the inner radial gradient brightens — the panel "warms up" */
+  .work-browser.is-anticipating .work-browser-shell {
+    box-shadow: 0 54px 130px rgba(45, 90, 61, 0.26);
+    border-color: rgba(45, 90, 61, 0.4);
+    background:
+      radial-gradient(circle at 12% 10%, rgba(45, 90, 61, 0.22), transparent 38%),
+      rgba(255, 255, 255, 0.6);
+  }
+
+  /* The active project dot pulses — gives the eye a small, contained
+     reference point of motion inside the panel itself. */
+  @keyframes dotPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(45, 90, 61, 0.45); }
+    100% { box-shadow: 0 0 0 10px rgba(45, 90, 61, 0); }
+  }
+
+  .work-browser.is-anticipating .work-dot.is-active {
+    animation: dotPulse 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ===== Visual panel (left) ===== */
   .work-visual-panel {
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto;
     gap: 18px;
-    padding: 38px;
+    padding: 48px;
     background: #eef1ed;
     border-right: 1px solid var(--studio-border);
+    min-height: 0;
   }
 
   .work-visual-stage {
@@ -505,170 +827,254 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     place-items: center;
   }
 
-  .work-visual {
+  .work-visual-set { display: none; width: 100%; height: 100%; }
+  .work-visual-set.is-active {
+    display: grid;
+    place-items: center;
+    animation: workReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .work-visual-img {
     display: none;
     width: 100%;
     max-width: 720px;
+    aspect-ratio: 16 / 10;
+    padding: 0;
     color: inherit;
     text-decoration: none;
-    outline-offset: 8px;
-  }
-
-  .work-visual.is-active {
-    display: block;
-    animation: workImageReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .work-visual img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
+    background: #f6f7f4;
     border: 1px solid rgba(26, 26, 26, 0.1);
-    border-radius: 6px;
+    border-radius: 4px;
     box-shadow: 0 22px 52px rgba(30, 45, 36, 0.18);
+    overflow: hidden;
+    outline-offset: 8px;
+    cursor: zoom-in;
+    font-family: inherit;
     transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  .work-visual:hover img {
-    transform: translateY(-3px);
+  .work-visual-img.is-active { display: block; }
+
+  .work-visual-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
   }
 
-  .work-thumb-row {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
+  .work-visual-img:hover { transform: translateY(-3px); }
+
+  /* Placeholder when project has no images yet */
+  .work-visual-placeholder {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    border-radius: 4px;
+    box-shadow: 0 22px 52px rgba(30, 45, 36, 0.18);
+    color: rgba(26, 26, 26, 0.35);
+    font-family: var(--studio-serif);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    letter-spacing: 0.02em;
   }
 
-  .work-thumb {
-    display: grid;
-    gap: 6px;
-    min-width: 0;
-    padding: 10px;
-    color: var(--studio-text-muted);
-    background: rgba(250, 248, 245, 0.72);
-    border: 1px solid rgba(26, 26, 26, 0.08);
+  .work-visual-placeholder.is-active { display: flex; }
+
+  .grad-slicely { background: linear-gradient(135deg, #c8d6c1 0%, #a8bfa0 50%, #8aab7e 100%); }
+  .grad-ops-workspace { background: linear-gradient(135deg, #d4c5b0 0%, #bfad96 50%, #a89578 100%); }
+  .grad-greetwood { background: linear-gradient(135deg, #c2cfd4 0%, #9fb3bc 50%, #7d9aa6 100%); }
+  .grad-ai-toolkit { background: linear-gradient(135deg, #d1c4d8 0%, #b5a3bf 50%, #9a83a8 100%); }
+  .grad-reviewhub { background: linear-gradient(135deg, #d6c0c1 0%, #c09a9d 50%, #a87478 100%); }
+
+  /* Screenshot thumbs — only shown when 2+ images per project */
+  .work-screenshot-thumbs { min-height: 0; }
+
+  .work-thumb-set { display: none; gap: 8px; }
+  .work-thumb-set.is-active { display: flex; }
+  .work-thumb-set[data-image-count="0"],
+  .work-thumb-set[data-image-count="1"] {
+    display: none !important;
+  }
+
+  .work-screenshot-thumb {
+    flex: 1;
+    max-width: 180px;
+    aspect-ratio: 16 / 10;
+    padding: 0;
+    border: 2px solid transparent;
     border-radius: 6px;
-    font-family: var(--studio-sans);
-    text-align: left;
-    cursor: pointer;
-    transition:
-      background 0.2s,
-      border-color 0.2s,
-      color 0.2s,
-      transform 0.2s;
-  }
-
-  .work-thumb:hover,
-  .work-thumb.is-active {
-    color: var(--studio-text);
-    background: #fff;
-    border-color: rgba(45, 90, 61, 0.32);
-  }
-
-  .work-thumb:active {
-    transform: translateY(1px);
-  }
-
-  .work-thumb-number {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 0.68rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .work-thumb-title {
+    background: rgba(250, 248, 245, 0.6);
+    cursor: zoom-in;
     overflow: hidden;
-    font-size: 0.72rem;
-    font-weight: 600;
-    line-height: 1.25;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
   }
 
+  .work-screenshot-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .work-screenshot-thumb:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .work-screenshot-thumb.is-active {
+    opacity: 1;
+    border-color: var(--studio-accent);
+  }
+
+  /* ===== Detail panel (right) with flip ===== */
   .work-detail-panel {
     position: relative;
-    display: flex;
+    perspective: 1600px;
     min-width: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .work-detail-flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.65s cubic-bezier(0.6, 0.05, 0.25, 1);
+  }
+
+  .work-detail-panel.is-flipped .work-detail-flipper {
+    transform: rotateY(180deg);
+  }
+
+  .work-detail-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    padding: 64px 60px 96px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 64px 56px;
+    overflow-y: auto;
   }
 
-  .work-project {
-    display: none;
+  .work-detail-face-back {
+    transform: rotateY(180deg);
+    justify-content: flex-start;
+    padding-top: 52px;
   }
 
+  /* Front face content */
+  .work-project { display: none; }
   .work-project.is-active {
     display: block;
-    animation: workCopyReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+    animation: workReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  .work-project-meta {
+  .work-project-header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
     align-items: center;
-    margin-bottom: 18px;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .work-project-type {
     color: var(--studio-text-muted);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  .work-project-meta strong {
-    color: var(--studio-accent);
-    font: inherit;
+  .work-flip-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    color: var(--studio-text-body);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--studio-border);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+    font-family: inherit;
   }
 
-  .work-project-meta-separator {
-    color: var(--studio-border);
+  .work-flip-top:hover {
+    color: var(--studio-accent);
+    border-color: rgba(45, 90, 61, 0.32);
+    transform: translateY(-1px);
   }
+
+  .work-flip-top svg { opacity: 0.7; }
 
   .work-project-title {
-    max-width: 460px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     color: var(--studio-text);
     font-family: var(--studio-serif);
-    font-size: clamp(2rem, 4.1vw, 3.45rem);
+    font-size: 31px;
     font-weight: 400;
-    line-height: 0.98;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
     text-wrap: balance;
   }
 
-  .work-project-description {
-    max-width: 470px;
-    margin-bottom: 34px;
-    color: var(--studio-text-body);
-    font-size: 1rem;
-    line-height: 1.75;
-    text-wrap: pretty;
-  }
-
-  .work-project-section {
-    margin-bottom: 34px;
-  }
-
-  .work-project-section h3 {
-    margin-bottom: 12px;
-    color: var(--studio-text);
+  .work-outcome {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 7px 12px;
+    background: var(--studio-accent-light);
+    border: 1px solid rgba(45, 90, 61, 0.15);
+    border-radius: 999px;
+    color: var(--studio-accent);
     font-size: 0.82rem;
-    font-weight: 700;
+    font-weight: 600;
+  }
+
+  .work-outcome-icon {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    color: var(--studio-accent);
+  }
+
+  .work-project-description {
+    max-width: 460px;
+    margin-bottom: 22px;
+    color: var(--studio-text-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-wrap: pretty;
   }
 
   .work-tech-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 26px;
     list-style: none;
   }
 
-  .work-tech-list li {
-    padding: 7px 10px;
+  .work-tech-pill {
+    padding: 5px 9px;
     color: var(--studio-text-body);
-    background: var(--studio-accent-light);
-    border: 1px solid rgba(45, 90, 61, 0.13);
-    border-radius: 6px;
-    font-size: 0.78rem;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--studio-border);
+    border-radius: 4px;
+    font-size: 0.72rem;
     font-weight: 600;
     line-height: 1;
   }
@@ -676,7 +1082,7 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
   .work-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
   }
 
   .work-action {
@@ -684,31 +1090,25 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 44px;
-    padding: 12px 16px;
+    min-height: 40px;
+    padding: 10px 16px;
     color: var(--studio-text);
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid var(--studio-border);
-    border-radius: 6px;
-    font-size: 0.88rem;
-    font-weight: 700;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
     line-height: 1;
     text-decoration: none;
-    transition:
-      background 0.2s,
-      border-color 0.2s,
-      color 0.2s,
-      transform 0.2s;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    font-family: inherit;
   }
 
   .work-action:hover {
     color: var(--studio-accent);
     border-color: rgba(45, 90, 61, 0.35);
     transform: translateY(-1px);
-  }
-
-  .work-action:active {
-    transform: translateY(0);
   }
 
   .work-action-primary {
@@ -723,18 +1123,125 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     border-color: #234a31;
   }
 
-  .work-controls {
-    position: absolute;
-    right: 24px;
-    bottom: 24px;
-    display: flex;
-    gap: 8px;
+  .work-action-flip svg { transition: transform 0.2s; }
+  .work-action-flip:hover svg { transform: translateX(2px); }
+
+  /* Back face content */
+  .work-project-back { display: none; }
+  .work-project-back.is-active {
+    display: block;
+    animation: workReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  .work-control {
+  .work-back-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .work-back-eyebrow {
+    color: var(--studio-text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .work-back-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    color: var(--studio-text-body);
+    background: transparent;
+    border: 1px solid var(--studio-border);
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    font-family: inherit;
+  }
+
+  .work-back-close:hover {
+    color: var(--studio-accent);
+    border-color: rgba(45, 90, 61, 0.35);
+  }
+
+  .work-back-title {
+    margin-bottom: 22px;
+    color: var(--studio-text);
+    font-family: var(--studio-serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .work-back-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .work-back-section h4 {
+    margin-bottom: 6px;
+    color: var(--studio-text);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .work-back-section p {
+    color: var(--studio-text-body);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  /* Project nav (dots + arrows) */
+  .work-project-nav {
+    position: absolute;
+    left: 60px;
+    right: 60px;
+    bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 5;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  /* Hide project nav when viewing back face — back face has its own "Back" button */
+  .work-detail-panel.is-flipped .work-project-nav {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .work-dots { display: flex; gap: 8px; }
+
+  .work-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    background: var(--studio-border);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: width 0.25s, background 0.25s, border-radius 0.25s;
+  }
+
+  .work-dot.is-active {
+    width: 22px;
+    background: var(--studio-accent);
+    border-radius: 4px;
+  }
+
+  .work-arrows { display: flex; gap: 6px; }
+
+  .work-arrow {
     display: grid;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     place-items: center;
     color: var(--studio-text);
     background: #fff;
@@ -742,183 +1249,314 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     border-radius: 999px;
     cursor: pointer;
     font-family: var(--studio-sans);
-    font-size: 1rem;
-    transition:
-      background 0.2s,
-      border-color 0.2s,
-      color 0.2s,
-      transform 0.2s;
+    font-size: 0.95rem;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
   }
 
-  .work-control:hover {
+  .work-arrow:hover {
     color: #fff;
     background: var(--studio-accent);
     border-color: var(--studio-accent);
   }
 
-  .work-control:active {
-    transform: translateY(1px);
-  }
+  .work-arrow:active { transform: translateY(1px); }
 
-  .work-thumb:focus-visible,
-  .work-control:focus-visible,
+  /* Focus styles */
+  .work-screenshot-thumb:focus-visible,
+  .work-arrow:focus-visible,
   .work-action:focus-visible,
-  .work-visual:focus-visible {
+  .work-visual-img:focus-visible,
+  .work-back-close:focus-visible,
+  .work-dot:focus-visible {
     outline: 2px solid var(--studio-accent);
     outline-offset: 3px;
   }
 
-  @keyframes workImageReveal {
-    from {
-      opacity: 0;
-      transform: translateY(10px) scale(0.985);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+  @keyframes workReveal {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes workCopyReveal {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* ===== More Projects ===== */
+  .more-projects-section { padding: 24px 0 120px; }
+
+  .more-projects-header {
+    margin-bottom: 36px;
+    max-width: 580px;
   }
+
+  .more-projects-heading {
+    margin-bottom: 10px;
+    color: var(--studio-text);
+    font-family: var(--studio-serif);
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .more-projects-subtext {
+    color: var(--studio-text-body);
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .more-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .more-project {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--studio-border);
+    border-radius: 6px;
+    transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+                border-color 0.25s;
+  }
+
+  .more-project:hover {
+    transform: translateY(-3px);
+    border-color: rgba(45, 90, 61, 0.32);
+    box-shadow: 0 18px 40px rgba(30, 45, 36, 0.1);
+  }
+
+  .more-project-image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #eef1ed;
+    border-bottom: 1px solid var(--studio-border);
+  }
+
+  .more-project-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .more-project:hover .more-project-image img { transform: scale(1.03); }
+
+  .more-project-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 22px 22px;
+  }
+
+  .more-project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    color: var(--studio-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .more-project-meta strong {
+    color: var(--studio-accent);
+    font: inherit;
+  }
+
+  .more-project-meta-separator { color: var(--studio-border); }
+
+  .more-project-title {
+    color: var(--studio-text);
+    font-family: var(--studio-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .more-project-description {
+    color: var(--studio-text-body);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .more-project-cta {
+    margin-top: 8px;
+    color: var(--studio-accent);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* ===== Lightbox ===== */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 48px;
+    background: rgba(15, 20, 18, 0.88);
+    backdrop-filter: blur(6px);
+    animation: lightboxFadeIn 0.2s ease;
+  }
+
+  .lightbox[hidden] { display: none; }
+
+  .lightbox-stage {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .lightbox-stage img {
+    display: block;
+    max-width: 100%;
+    max-height: 86vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    animation: lightboxImgIn 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .lightbox-caption {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.82rem;
+    font-family: ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lightbox-close,
+  .lightbox-arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .lightbox-arrow { flex-shrink: 0; }
+
+  .lightbox-close:hover,
+  .lightbox-arrow:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .lightbox-arrow:active { transform: scale(0.94); }
+
+  .lightbox-close:focus-visible,
+  .lightbox-arrow:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  @keyframes lightboxFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes lightboxImgIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* Hide page scroll when lightbox open */
+  body.lightbox-open { overflow: hidden; }
 
   /* ===== Responsive ===== */
-  @media (max-width: 980px) {
+  @media (max-width: 1080px) {
+    .work-browser-shell {
+      grid-template-columns: 60fr 40fr;
+    }
+
+    .work-visual-panel { padding: 36px; }
+
+    .work-detail-face {
+      padding: 56px 44px 88px;
+    }
+
+    .work-project-nav { left: 44px; right: 44px; }
+  }
+
+  @media (max-width: 900px) {
     .work-browser-shell {
       grid-template-columns: 1fr;
       min-height: 0;
     }
 
     .work-visual-panel {
-      min-height: 420px;
-      padding: 28px;
+      min-height: 400px;
+      padding: 26px;
       border-right: 0;
       border-bottom: 1px solid var(--studio-border);
     }
 
-    .work-detail-panel {
-      padding: 40px 32px 88px;
+    .work-detail-flipper { min-height: 540px; }
+
+    .work-detail-face {
+      padding: 40px 32px 92px;
     }
 
-    .work-project-title {
-      max-width: 620px;
-      font-size: clamp(2rem, 8vw, 3rem);
-    }
-
-    .work-project-description {
-      max-width: 620px;
-    }
+    .work-project-nav { left: 32px; right: 32px; }
   }
 
   @media (max-width: 768px) {
-    .studio-nav {
-      display: none;
-    }
+    .lightbox { padding: 16px; gap: 8px; }
+    .lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; }
+    .lightbox-arrow { width: 38px; height: 38px; }
 
-    .studio-menu-toggle {
-      display: flex;
-    }
+    .studio-nav { display: none; }
+    .studio-menu-toggle { display: flex; }
 
-    .projects-hero {
-      padding: 120px 0 56px;
-    }
+    .projects-hero { padding: 120px 0 48px; }
+    .projects-browser-section { padding: 16px 0 64px; }
+    .more-projects-section { padding: 24px 0 80px; }
 
-    .projects-browser-section {
-      padding: 0 0 80px;
-    }
+    .work-visual-panel { min-height: 340px; padding: 18px; }
+    .work-detail-flipper { min-height: 580px; }
+    .work-detail-face { padding: 32px 24px 96px; }
 
-    .work-browser {
-      gap: 14px;
-    }
+    .work-project-title { font-size: 28px; }
 
-    .work-browser-topline {
-      align-items: flex-start;
-    }
+    .work-actions { flex-direction: column; align-items: stretch; }
+    .work-action { width: 100%; }
 
-    .work-visual-panel {
-      min-height: 360px;
-      padding: 18px;
-    }
+    .work-project-nav { left: 24px; right: 24px; bottom: 22px; }
 
-    .work-thumb-row {
-      display: flex;
-      gap: 8px;
-      margin: 0 -18px;
-      padding: 0 18px 2px;
-      overflow-x: auto;
-      scroll-snap-type: x proximity;
-    }
-
-    .work-thumb {
-      min-width: 150px;
-      scroll-snap-align: start;
-    }
-
-    .work-detail-panel {
-      padding: 32px 24px 82px;
-    }
-
-    .work-actions {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .work-action {
-      width: 100%;
-    }
-
-    .work-controls {
-      right: 24px;
-      bottom: 24px;
+    .more-projects-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
     }
   }
 
   @media (max-width: 480px) {
-    .projects-headline {
-      font-size: 2rem;
-    }
+    .projects-headline { font-size: 2rem; }
 
-    .studio-container {
-      padding: 0 var(--site-container-padding-mobile);
-    }
+    .studio-container { padding: 0 var(--site-container-padding-mobile); }
+    .studio-header-inner { padding: 0 var(--site-container-padding-mobile); }
 
-    .studio-header-inner {
-      padding: 0 var(--site-container-padding-mobile);
-    }
-
-    .work-browser-shell {
-      border-radius: 8px;
-    }
-
-    .work-visual-panel {
-      min-height: 300px;
-      padding: 14px;
-    }
-
-    .work-thumb-row {
-      margin: 0 -14px;
-      padding: 0 14px 2px;
-    }
-
-    .work-detail-panel {
-      padding: 28px 20px 78px;
-    }
-
-    .work-project-description {
-      font-size: 0.95rem;
-    }
-
-    .work-tech-list li {
-      font-size: 0.74rem;
-    }
+    .work-visual-panel { min-height: 280px; padding: 14px; }
+    .work-detail-face { padding: 28px 20px 90px; }
+    .work-project-description { font-size: 0.92rem; }
   }
 </style>
 
@@ -927,19 +1565,20 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
     const root = document.querySelector('[data-variation-content="studio"]');
     if (!root) return;
 
+    // Reveal animations
     const reveals = root.querySelectorAll(".studio-reveal");
 
     reveals.forEach((el) => {
-      el.style.animationPlayState = "paused";
-      el.style.opacity = "0";
-      el.style.transform = "translateY(16px)";
+      (el as HTMLElement).style.animationPlayState = "paused";
+      (el as HTMLElement).style.opacity = "0";
+      (el as HTMLElement).style.transform = "translateY(16px)";
     });
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const el = entry.target;
+            const el = entry.target as HTMLElement;
             el.style.animationPlayState = "running";
             el.style.opacity = "";
             el.style.transform = "";
@@ -947,71 +1586,289 @@ const projectTotalLabel = String(projects.length).padStart(2, "0");
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
     );
 
     reveals.forEach((el) => observer.observe(el));
 
+    // Project showcase
     const showcase = root.querySelector("[data-project-showcase]");
     if (showcase) {
-      const visuals = Array.from(showcase.querySelectorAll("[data-project-visual]"));
-      const details = Array.from(showcase.querySelectorAll("[data-project-detail]"));
-      const tabs = Array.from(showcase.querySelectorAll("[data-project-tab]"));
+      const visualSets = Array.from(showcase.querySelectorAll("[data-project-visual]")) as HTMLElement[];
+      const details = Array.from(showcase.querySelectorAll("[data-project-detail]")) as HTMLElement[];
+      const backs = Array.from(showcase.querySelectorAll("[data-project-back]")) as HTMLElement[];
+      const thumbSets = Array.from(showcase.querySelectorAll("[data-thumb-set]")) as HTMLElement[];
+      const dots = Array.from(showcase.querySelectorAll("[data-project-dot]")) as HTMLButtonElement[];
       const current = showcase.querySelector("[data-project-current]");
       const previous = showcase.querySelector("[data-project-prev]");
       const next = showcase.querySelector("[data-project-next]");
+      const detailPanel = showcase.querySelector("[data-detail-panel]") as HTMLElement | null;
+      const flipButtons = Array.from(showcase.querySelectorAll("[data-flip-button]")) as HTMLButtonElement[];
+
       let activeIndex = 0;
 
-      const updateProject = (nextIndex) => {
-        activeIndex = (nextIndex + visuals.length) % visuals.length;
+      const setFlipped = (flipped: boolean) => {
+        detailPanel?.classList.toggle("is-flipped", flipped);
+      };
+
+      const updateProject = (nextIndex: number) => {
+        activeIndex = (nextIndex + visualSets.length) % visualSets.length;
         const label = String(activeIndex + 1).padStart(2, "0");
 
         if (current) current.textContent = label;
 
-        visuals.forEach((visual, index) => {
-          visual.classList.toggle("is-active", index === activeIndex);
-          visual.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
-          visual.tabIndex = index === activeIndex ? 0 : -1;
+        // Always reset to front when switching projects
+        setFlipped(false);
+
+        visualSets.forEach((set, index) => {
+          const isActive = index === activeIndex;
+          set.classList.toggle("is-active", isActive);
+          set.setAttribute("aria-hidden", isActive ? "false" : "true");
+
+          // Also reset to first screenshot when switching
+          const imgs = set.querySelectorAll(".work-visual-img");
+          imgs.forEach((img, j) => img.classList.toggle("is-active", j === 0));
+        });
+
+        thumbSets.forEach((set, index) => {
+          set.classList.toggle("is-active", index === activeIndex);
+          const thumbs = set.querySelectorAll(".work-screenshot-thumb");
+          thumbs.forEach((t, j) => t.classList.toggle("is-active", j === 0));
         });
 
         details.forEach((detail, index) => {
-          detail.classList.toggle("is-active", index === activeIndex);
-          detail.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+          const isActive = index === activeIndex;
+          detail.classList.toggle("is-active", isActive);
+          detail.setAttribute("aria-hidden", isActive ? "false" : "true");
         });
 
-        tabs.forEach((tab, index) => {
-          tab.classList.toggle("is-active", index === activeIndex);
-          tab.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+        backs.forEach((back, index) => {
+          const isActive = index === activeIndex;
+          back.classList.toggle("is-active", isActive);
+          back.setAttribute("aria-hidden", "true");
+        });
+
+        dots.forEach((dot, index) => {
+          const isActive = index === activeIndex;
+          dot.classList.toggle("is-active", isActive);
+          dot.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
       };
 
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          updateProject(Number(tab.dataset.projectIndex || 0));
+      // Screenshot thumb clicks — switch the active screenshot AND open the lightbox
+      thumbSets.forEach((set) => {
+        const projectIndex = Number(set.dataset.projectIndex || 0);
+        const thumbs = Array.from(set.querySelectorAll(".work-screenshot-thumb")) as HTMLButtonElement[];
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener("click", () => {
+            const j = Number(thumb.dataset.screenshotIndex || 0);
+            thumbs.forEach((t, k) => t.classList.toggle("is-active", k === j));
+            const visualImgs = visualSets[projectIndex]?.querySelectorAll(".work-visual-img");
+            visualImgs?.forEach((img, k) => img.classList.toggle("is-active", k === j));
+            openLightbox(projectIndex, j);
+          });
+        });
+      });
+
+      // Main visual click — open lightbox with the active screenshot for this project
+      const visualButtons = Array.from(showcase.querySelectorAll("[data-lightbox-open]")) as HTMLButtonElement[];
+      visualButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const set = btn.closest("[data-project-visual]") as HTMLElement | null;
+          if (!set) return;
+          const projectIndex = Number(set.dataset.projectIndex || 0);
+          const screenshotIndex = Number(btn.dataset.screenshotIndex || 0);
+          openLightbox(projectIndex, screenshotIndex);
+        });
+      });
+
+      // ===== Lightbox controller =====
+      const lightbox = document.querySelector("[data-lightbox]") as HTMLElement | null;
+      const lightboxImg = lightbox?.querySelector("[data-lightbox-img]") as HTMLImageElement | null;
+      const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]") as HTMLElement | null;
+      const lightboxClose = lightbox?.querySelector("[data-lightbox-close]") as HTMLButtonElement | null;
+      const lightboxPrev = lightbox?.querySelector("[data-lightbox-prev]") as HTMLButtonElement | null;
+      const lightboxNext = lightbox?.querySelector("[data-lightbox-next]") as HTMLButtonElement | null;
+
+      let lightboxProject = 0;
+      let lightboxIdx = 0;
+
+      const projectImages = (projectIndex: number): string[] => {
+        const set = visualSets[projectIndex];
+        if (!set) return [];
+        return Array.from(set.querySelectorAll(".work-visual-img img")).map((el) => (el as HTMLImageElement).src);
+      };
+
+      const renderLightbox = () => {
+        if (!lightbox || !lightboxImg || !lightboxCaption) return;
+        const images = projectImages(lightboxProject);
+        if (images.length === 0) return;
+        lightboxIdx = ((lightboxIdx % images.length) + images.length) % images.length;
+        lightboxImg.src = images[lightboxIdx];
+        lightboxImg.alt = `Screenshot ${lightboxIdx + 1}`;
+        lightboxCaption.textContent = images.length > 1 ? `${lightboxIdx + 1} / ${images.length}` : "";
+
+        // Hide arrows when single image
+        const showArrows = images.length > 1;
+        if (lightboxPrev) lightboxPrev.style.visibility = showArrows ? "visible" : "hidden";
+        if (lightboxNext) lightboxNext.style.visibility = showArrows ? "visible" : "hidden";
+      };
+
+      const openLightbox = (projectIndex: number, screenshotIndex: number) => {
+        if (!lightbox) return;
+        lightboxProject = projectIndex;
+        lightboxIdx = screenshotIndex;
+        renderLightbox();
+        lightbox.hidden = false;
+        document.body.classList.add("lightbox-open");
+        lightboxClose?.focus();
+      };
+
+      const closeLightbox = () => {
+        if (!lightbox) return;
+        lightbox.hidden = true;
+        document.body.classList.remove("lightbox-open");
+      };
+
+      lightboxClose?.addEventListener("click", closeLightbox);
+      lightboxPrev?.addEventListener("click", () => { lightboxIdx -= 1; renderLightbox(); });
+      lightboxNext?.addEventListener("click", () => { lightboxIdx += 1; renderLightbox(); });
+
+      // Click backdrop to close
+      lightbox?.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // Dot clicks
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          updateProject(Number(dot.dataset.projectIndex || 0));
         });
       });
 
       previous?.addEventListener("click", () => updateProject(activeIndex - 1));
       next?.addEventListener("click", () => updateProject(activeIndex + 1));
 
-      showcase.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowLeft") {
-          event.preventDefault();
-          updateProject(activeIndex - 1);
+      // Flip buttons
+      flipButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.flipTarget;
+          // Update aria-hidden on backs to reflect flipped state
+          if (target === "back") {
+            backs.forEach((back, index) => {
+              back.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+            });
+            setFlipped(true);
+          } else {
+            backs.forEach((back) => back.setAttribute("aria-hidden", "true"));
+            setFlipped(false);
+          }
+        });
+      });
+
+      // Global keyboard nav — arrow keys switch projects (or screenshots when lightbox is open)
+      document.addEventListener("keydown", (event: KeyboardEvent) => {
+        // Skip when typing in a form field or contenteditable
+        const target = event.target as HTMLElement | null;
+        if (target) {
+          const tag = target.tagName;
+          if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable) return;
         }
 
-        if (event.key === "ArrowRight") {
+        const isLightboxOpen = lightbox && !lightbox.hidden;
+
+        if (event.key === "Escape") {
+          if (isLightboxOpen) {
+            event.preventDefault();
+            closeLightbox();
+          } else if (detailPanel?.classList.contains("is-flipped")) {
+            event.preventDefault();
+            setFlipped(false);
+          }
+          return;
+        }
+
+        if (event.key === "ArrowLeft") {
           event.preventDefault();
-          updateProject(activeIndex + 1);
+          if (isLightboxOpen) {
+            lightboxIdx -= 1;
+            renderLightbox();
+          } else {
+            updateProject(activeIndex - 1);
+          }
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          if (isLightboxOpen) {
+            lightboxIdx += 1;
+            renderLightbox();
+          } else {
+            updateProject(activeIndex + 1);
+          }
         }
       });
 
       updateProject(0);
+
+      // Auto-scroll into the spotlight after a brief peek at the hero.
+      // Bails if the user already scrolled, has a hash deep-link, or starts interacting.
+      // Sequence: 0ms land → 900ms spotlight lifts (anticipation) → 1500ms page scrolls →
+      // 2100ms panel settles (anticipation released as it enters full view).
+      (() => {
+        if (window.location.hash) return;
+        if (window.scrollY > 4) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const section = document.querySelector(".projects-browser-section") as HTMLElement | null;
+        const browser = document.querySelector(".work-browser") as HTMLElement | null;
+        if (!section || !browser) return;
+
+        let cancelled = false;
+        const timeouts: number[] = [];
+
+        const cancel = () => {
+          if (cancelled) return;
+          cancelled = true;
+          timeouts.forEach((id) => window.clearTimeout(id));
+          browser.classList.remove("is-anticipating");
+          window.removeEventListener("wheel", cancel);
+          window.removeEventListener("touchstart", cancel);
+          window.removeEventListener("keydown", cancel);
+          window.removeEventListener("mousedown", cancel);
+        };
+
+        window.addEventListener("wheel", cancel, { passive: true });
+        window.addEventListener("touchstart", cancel, { passive: true });
+        window.addEventListener("mousedown", cancel);
+        window.addEventListener("keydown", cancel);
+
+        // Anticipation lift — the whole spotlight unit (topline + shell) rises 6px,
+        // shadow deepens, green hint on the border. The kicker and counter move with the panel.
+        timeouts.push(window.setTimeout(() => {
+          if (cancelled) return;
+          browser.classList.add("is-anticipating");
+        }, 900));
+
+        // Begin the scroll. The lift is still in effect, so the scroll reads as
+        // the same motion continuing — the panel that just rose now meets you.
+        timeouts.push(window.setTimeout(() => {
+          if (cancelled) return;
+          const HEADER_OFFSET = 64;
+          const target = section.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET - 12;
+          if (target > window.scrollY + 4) {
+            window.scrollTo({ top: target, behavior: "smooth" });
+          }
+        }, 1500));
+
+        // Release the lift as the panel reaches its resting position in view.
+        timeouts.push(window.setTimeout(() => {
+          browser.classList.remove("is-anticipating");
+        }, 2100));
+      })();
     }
 
     // Mobile menu toggle
     const toggle = root.querySelector(".studio-menu-toggle");
-    const nav = root.querySelector(".studio-nav");
+    const nav = root.querySelector(".studio-nav") as HTMLElement | null;
     if (toggle && nav) {
       const openMenu = () => {
         nav.style.display = "flex";
