@@ -738,6 +738,225 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
               </div>
             </div>
           </div>
+
+          <!-- ===== Mobile stacked list (shown ≤900px) =====
+               The desktop "browser" above is a one-at-a-time carousel that's
+               easy to skip on a phone — the arrows go unnoticed and only one
+               project is ever visible. On mobile we hide it and render every
+               spotlight project as a self-contained, scrollable card instead,
+               so the whole set is discoverable by scrolling. -->
+          <div class="work-mobile-intro">
+            <span class="work-mobile-intro-label"
+              >Selected work</span
+            >
+            <span class="work-mobile-intro-count"
+              >{spotlightProjects.length} featured projects &middot; scroll to
+              browse</span
+            >
+          </div>
+          <div class="work-mobile-list" data-mobile-list>
+            {
+              spotlightProjects.map((project, i) => {
+                const hasImages =
+                  project.images && project.images.length > 0;
+                const multiImage = hasImages && project.images.length > 1;
+                const hasCaseStudy = !!project.caseStudyUrl;
+                const hasLive =
+                  !!project.liveUrl &&
+                  project.liveUrl !== project.sourceUrl;
+                const positionLabel = String(i + 1).padStart(2, "0");
+                return (
+                  <article class="m-project studio-reveal" data-mobile-project>
+                    <div
+                      class={`m-project-gallery ${multiImage ? "" : "is-single"}`}
+                    >
+                      {hasImages ? (
+                        project.images.map((img, j) => (
+                          <button
+                            type="button"
+                            class="m-project-shot"
+                            data-mobile-lightbox
+                            data-project-index={i}
+                            data-screenshot-index={j}
+                            aria-label={`View screenshot ${j + 1} of ${project.title} full-size`}
+                          >
+                            <img
+                              src={img}
+                              alt={`Screenshot ${j + 1} of ${project.title}`}
+                              loading="lazy"
+                            />
+                          </button>
+                        ))
+                      ) : (
+                        <div
+                          class={`m-project-shot m-project-shot-placeholder grad-${project.gradient}`}
+                        >
+                          <span>{project.title}</span>
+                        </div>
+                      )}
+                    </div>
+                    {multiImage && (
+                      <p class="m-project-gallery-hint">
+                        <span aria-hidden="true">&#8646;</span>
+                        Swipe &middot; {project.images.length} screenshots
+                        &middot; tap to enlarge
+                      </p>
+                    )}
+
+                    <div class="m-project-body">
+                      <div class="m-project-meta">
+                        <span class="m-project-type">{project.type}</span>
+                        <span class="m-project-count">
+                          {positionLabel} / {projectTotalLabel}
+                        </span>
+                      </div>
+
+                      <h2 class="m-project-title">{project.title}</h2>
+
+                      <div class="work-outcome m-project-outcome">
+                        <span class="work-outcome-icon" aria-hidden="true">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                          >
+                            <path
+                              d="M3 7L6 10L11 4"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </span>
+                        <span>{project.outcome}</span>
+                      </div>
+
+                      <p class="m-project-description">
+                        {project.description}
+                      </p>
+
+                      <div class="work-tech-list m-project-tech">
+                        {project.tech.map((t) => (
+                          <span class="work-tech-pill">{t}</span>
+                        ))}
+                      </div>
+
+                      <div class="work-actions m-project-actions">
+                        {hasCaseStudy && (
+                          <a
+                            href={project.caseStudyUrl}
+                            class="work-action work-action-primary"
+                            data-ph-action="case_study"
+                            data-ph-project={project.id}
+                          >
+                            {project.caseStudyLabel || "Read the case study"}
+                            <span aria-hidden="true">&rarr;</span>
+                          </a>
+                        )}
+                        {hasLive && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener"
+                            class={`work-action ${hasCaseStudy ? "" : "work-action-primary"}`}
+                            data-ph-action="demo"
+                            data-ph-project={project.id}
+                          >
+                            {project.liveLabel}
+                            <span aria-hidden="true">&rarr;</span>
+                          </a>
+                        )}
+                        {project.sourceUrl && (
+                          <a
+                            href={project.sourceUrl}
+                            target="_blank"
+                            rel="noopener"
+                            class={`work-action ${hasCaseStudy || hasLive ? "" : "work-action-primary"}`}
+                            data-ph-action="github"
+                            data-ph-project={project.id}
+                          >
+                            {hasCaseStudy || hasLive
+                              ? "GitHub"
+                              : "View on GitHub"}
+                            <span aria-hidden="true">&rarr;</span>
+                          </a>
+                        )}
+                        {!hasCaseStudy &&
+                          !hasLive &&
+                          !project.sourceUrl &&
+                          project.note && (
+                            <p class="work-action-note">
+                              <span
+                                class="work-action-note-icon"
+                                aria-hidden="true"
+                              >
+                                <svg
+                                  width="13"
+                                  height="13"
+                                  viewBox="0 0 14 14"
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M7 1.5a3 3 0 0 1 3 3v1.5H4V4.5a3 3 0 0 1 3-3Z"
+                                    stroke="currentColor"
+                                    stroke-width="1.2"
+                                    stroke-linejoin="round"
+                                  />
+                                  <rect
+                                    x="2.75"
+                                    y="6"
+                                    width="8.5"
+                                    height="6"
+                                    rx="1.2"
+                                    stroke="currentColor"
+                                    stroke-width="1.2"
+                                  />
+                                </svg>
+                              </span>
+                              {project.note}
+                            </p>
+                          )}
+                      </div>
+
+                      {project.back && (
+                        <details class="m-project-more">
+                          <summary class="m-project-more-summary">
+                            <span>{project.back.title}</span>
+                            <svg
+                              class="m-project-more-chevron"
+                              width="14"
+                              height="14"
+                              viewBox="0 0 14 14"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M3 5l4 4 4-4"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </summary>
+                          <div class="m-project-more-body">
+                            {project.back.sections.map((section) => (
+                              <div class="m-project-more-section">
+                                <h4>{section.heading}</h4>
+                                <p>{section.body}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </details>
+                      )}
+                    </div>
+                  </article>
+                );
+              })
+            }
+          </div>
         </div>
       </div>
     </section>
@@ -2025,6 +2244,227 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     overflow: hidden;
   }
 
+  /* ===== Mobile spotlight list =====
+     Rendered into the DOM always, but only displayed at <=900px (see the
+     responsive block below). Each spotlight project becomes a full, scrollable
+     card so the whole set is browsable by scrolling — no carousel, no arrows. */
+  .work-mobile-intro {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 22px;
+  }
+
+  .work-mobile-intro-label {
+    color: var(--studio-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .work-mobile-intro-count {
+    color: var(--studio-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .work-mobile-list {
+    display: none;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .m-project {
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--studio-border);
+    border-radius: 10px;
+    box-shadow: 0 12px 34px rgba(30, 45, 36, 0.06);
+  }
+
+  /* Horizontal, swipeable screenshot gallery. The 86% basis lets the next
+     screenshot peek in, signalling "there's more — swipe". */
+  .m-project-gallery {
+    display: flex;
+    gap: 10px;
+    padding: 14px 14px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .m-project-gallery::-webkit-scrollbar {
+    display: none;
+  }
+  .m-project-gallery.is-single {
+    padding-bottom: 14px;
+  }
+
+  .m-project-shot {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+    aspect-ratio: 16 / 10;
+    margin: 0;
+    padding: 0;
+    background: #eef1ed;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: zoom-in;
+    font-family: inherit;
+  }
+  .m-project-gallery.is-single .m-project-shot {
+    flex-basis: 100%;
+  }
+
+  .m-project-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .m-project-shot-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    color: rgba(26, 26, 26, 0.4);
+    font-family: var(--studio-serif);
+    font-size: 1.3rem;
+    text-align: center;
+    cursor: default;
+  }
+
+  .m-project-gallery-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px 0;
+    color: var(--studio-text-muted);
+    font-size: 0.74rem;
+    letter-spacing: 0.01em;
+  }
+  .m-project-gallery-hint span {
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .m-project-body {
+    padding: 18px 18px 20px;
+  }
+
+  .m-project-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .m-project-type {
+    color: var(--studio-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .m-project-count {
+    color: var(--studio-text-muted);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .m-project-title {
+    margin-bottom: 14px;
+    color: var(--studio-text);
+    font-family: var(--studio-serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  .m-project-outcome {
+    margin-bottom: 16px;
+  }
+
+  .m-project-description {
+    margin-bottom: 18px;
+    color: var(--studio-text-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .m-project-tech {
+    margin-bottom: 18px;
+  }
+
+  .m-project-actions {
+    margin-bottom: 4px;
+  }
+  .m-project-actions .work-action {
+    flex: 1 1 auto;
+  }
+
+  /* "More details" disclosure — replaces the desktop 3D flip with a tap-to-
+     expand panel so the deeper write-up is surfaced on demand, not in the way. */
+  .m-project-more {
+    margin-top: 16px;
+    border-top: 1px solid var(--studio-border);
+  }
+
+  .m-project-more-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 2px 2px;
+    color: var(--studio-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+  }
+  .m-project-more-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .m-project-more-chevron {
+    flex-shrink: 0;
+    color: var(--studio-text-muted);
+    transition: transform 0.25s ease;
+  }
+  .m-project-more[open] .m-project-more-chevron {
+    transform: rotate(180deg);
+  }
+
+  .m-project-more-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 14px 2px 4px;
+  }
+
+  .m-project-more-section h4 {
+    margin-bottom: 5px;
+    color: var(--studio-text);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .m-project-more-section p {
+    color: var(--studio-text-body);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
   /* ===== Responsive ===== */
   @media (max-width: 1080px) {
     .work-browser-shell {
@@ -2046,6 +2486,17 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
 
   @media (max-width: 900px) {
+    /* Swap the desktop carousel for the scrollable mobile card list. */
+    .work-browser {
+      display: none;
+    }
+    .work-mobile-intro {
+      display: flex;
+    }
+    .work-mobile-list {
+      display: grid;
+    }
+
     .work-browser-shell {
       grid-template-columns: 1fr;
       min-height: 0;
@@ -2375,6 +2826,22 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
         });
       });
 
+      // Mobile card screenshots reuse the same lightbox. They carry explicit
+      // project/screenshot indices, and openLightbox reads image sources from
+      // the (display:none but still-in-DOM) desktop visual sets.
+      const mobileLightboxButtons = Array.from(
+        root.querySelectorAll("[data-mobile-lightbox]")
+      ) as HTMLButtonElement[];
+      mobileLightboxButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const projectIndex = Number(btn.dataset.projectIndex || 0);
+          const screenshotIndex = Number(
+            btn.dataset.screenshotIndex || 0
+          );
+          openLightbox(projectIndex, screenshotIndex);
+        });
+      });
+
       // ===== Lightbox controller =====
       const lightbox = document.querySelector(
         "[data-lightbox]"
@@ -2575,6 +3042,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
             .matches
         )
           return;
+        // On mobile the desktop browser is hidden and replaced by the scrollable
+        // card list, so there's nothing to lift/anticipate — skip the auto-scroll.
+        if (window.matchMedia("(max-width: 900px)").matches) return;
 
         const section = document.querySelector(
           ".projects-browser-section"
