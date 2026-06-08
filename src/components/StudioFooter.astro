@@ -3,7 +3,7 @@ import { actions } from 'astro:actions';
 ---
 
 <!-- Unified footer: "Got a project in mind?" + send-message form + 3 stacked action cards -->
-<footer id="studio-footer" class="studio-footer-unified">
+<footer id="studio-footer" class="studio-footer-unified" data-ph-section="contact">
   <div class="studio-container">
     <p class="studio-footer-label studio-reveal">Got a project in mind?</p>
     <p class="studio-footer-subtitle studio-reveal">
@@ -436,6 +436,16 @@ import { actions } from 'astro:actions';
 
     successClose?.addEventListener('click', hideSuccess);
 
+    // Analytics: contact_form_started — first interaction with any field.
+    const track = (event: string, props: Record<string, unknown> = {}) =>
+      (window as any).posthog?.capture?.(event, { page: location.pathname, ...props });
+    let formStarted = false;
+    form.addEventListener('focusin', () => {
+      if (formStarted) return;
+      formStarted = true;
+      track('contact_form_started');
+    });
+
     form.addEventListener('submit', async (e: Event) => {
       e.preventDefault();
       clearError();
@@ -449,12 +459,16 @@ import { actions } from 'astro:actions';
       const { error } = await actions.contact(new FormData(form));
 
       if (!error) {
+        track('contact_form_submitted', { success: true });
         showSuccess();
         form.reset();
+        formStarted = false;
       } else if (isInputError(error)) {
+        track('contact_form_submitted', { success: false, reason: 'validation' });
         const firstField = Object.keys(error.fields)[0];
         setError(error.fields[firstField]?.[0] ?? 'Please check the form and try again.');
       } else {
+        track('contact_form_submitted', { success: false, reason: 'server' });
         setError(error.message || 'Something went wrong. Please email me directly.');
       }
 

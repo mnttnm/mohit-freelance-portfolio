@@ -17,7 +17,9 @@ import StudioFooter from "../components/StudioFooter.astro";
           <a href="/about" class="studio-nav-link studio-nav-link-active">About</a>
           <a
             href="#studio-footer"
-            class="studio-nav-link studio-nav-cta">Let's talk</a
+            class="studio-nav-link studio-nav-cta"
+            data-ph-cta="lets_talk"
+            data-ph-location="nav">Let's talk</a
           >
         </nav>
         <button class="studio-menu-toggle" aria-label="Toggle menu">
@@ -28,7 +30,7 @@ import StudioFooter from "../components/StudioFooter.astro";
     </header>
 
     <!-- About Content -->
-    <section class="about-content">
+    <section class="about-content" data-ph-section="about">
       <div class="studio-container">
         <p class="studio-section-label studio-reveal">About</p>
         <h1 class="about-headline studio-reveal">Hey, I'm <em>Mohit.</em></h1>

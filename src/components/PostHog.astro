@@ -1,0 +1,27 @@
+---
+// Client-side PostHog analytics.
+// The script below is processed by Astro/Vite: import.meta.env.PUBLIC_* values
+// are inlined at build time and posthog-js is bundled. Tracking only runs when
+// PUBLIC_POSTHOG_KEY is set, so local/preview builds without it stay clean.
+---
+
+<script>
+  import posthog from 'posthog-js';
+
+  const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+  const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? 'https://us.i.posthog.com';
+
+  if (key) {
+    posthog.init(key, {
+      api_host: host,
+      // ui_host tells PostHog where its app lives, needed when api_host is a
+      // same-origin reverse-proxy path (e.g. "/ingest") so toolbar/replay
+      // links still resolve to the real dashboard.
+      ui_host: 'https://us.posthog.com',
+      defaults: '2025-05-24',
+      person_profiles: 'identified_only',
+    });
+    // Expose globally so per-page scripts can call window.posthog.capture(...).
+    (window as any).posthog = posthog;
+  }
+</script>

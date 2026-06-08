@@ -19,9 +19,11 @@ const spotlightProjects = [
       "/images/SCR-20260526-povd.png",
     ],
     gradient: "ops-workspace",
-    sourceUrl: "https://github.com/mnttnm/client-onboarding",
-    liveUrl: "https://advanse-operations-preview-advanse.vercel.app/",
-    liveLabel: "Live demo",
+    // Source repo is private (client work) — link intentionally hidden.
+    // Live demo also hidden: it's a client app behind a login wall, so it's
+    // showcased via screenshots instead. To add more, drop files in
+    // public/images/ and append their paths to the `images` array above.
+    note: "Private client engagement — shown via screenshots",
     back: {
       title: "How the app is put together",
       sections: [
@@ -53,7 +55,7 @@ const spotlightProjects = [
       "/images/SCR-20260526-pokt.png",
     ],
     gradient: "slicely",
-    sourceUrl: "https://github.com/mnttnm/slicely",
+    // Source repo is private — link intentionally hidden.
     liveUrl: "https://slicely-ai.vercel.app/",
     liveLabel: "Live demo",
     back: {
@@ -159,7 +161,7 @@ const spotlightProjects = [
     id: "greetwood",
     type: "Shopify Store",
     title: "Greetwood",
-    outcome: "A Shopify store, set up as code",
+    outcome: "A Shopify store built by agentic AI",
     description:
       "A Shopify store implementation for a D2C furniture brand. The theme, content, and store configuration were built entirely through code using AI agents (Claude Code and Codex Cloud) and the Shopify CLI, instead of Shopify's web-based admin.",
     tech: ["Shopify", "Liquid", "Shopify CLI", "Custom Theme"],
@@ -170,7 +172,7 @@ const spotlightProjects = [
     gradient: "greetwood",
     liveUrl: "https://greetwood.myshopify.com",
     liveLabel: "Visit store",
-    sourceUrl: "https://github.com/mnttnm/greetwood-shopify",
+    // Source repo is private — link intentionally hidden.
     back: {
       title: "How it came together",
       sections: [
@@ -209,7 +211,6 @@ const moreProjects = [
     image: "/projects/learning-log.png",
     liveUrl: "https://mohit.stream",
     liveLabel: "Live app",
-    sourceUrl: "https://github.com/mnttnm/digital-garden",
     type: "Web App",
   },
   {
@@ -260,7 +261,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
           <a href="/" class="studio-nav-link">Home</a>
           <a href="/projects" class="studio-nav-link studio-nav-link-active">Work</a>
           <a href="/about" class="studio-nav-link">About</a>
-          <a href="#studio-footer" class="studio-nav-link studio-nav-cta">Let's talk</a>
+          <a href="#studio-footer" class="studio-nav-link studio-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
         </nav>
         <button class="studio-menu-toggle" aria-label="Toggle menu">
           <span class="studio-menu-bar"></span>
@@ -270,25 +271,25 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     </header>
 
     <!-- Page Hero -->
-    <section class="projects-hero">
+    <section class="projects-hero" data-ph-section="projects_hero">
       <div class="studio-container">
         <p class="studio-section-label studio-reveal">Work</p>
         <h1 class="projects-headline studio-reveal">
-          Things I've built <em>and shipped.</em>
+          Full-stack apps and AI workflows, <em>shipped to production.</em>
         </h1>
         <p class="projects-subtext studio-reveal">
-          A mix of client work and personal projects.
+          From enterprise internal tools to agent-powered pipelines &mdash; built solo or end-to-end with small teams.
         </p>
       </div>
     </section>
 
     <!-- Selected Work Browser -->
-    <section class="projects-browser-section" aria-labelledby="selected-work-heading">
+    <section class="projects-browser-section" aria-labelledby="selected-work-heading" data-ph-section="selected_work">
       <div class="studio-container">
         <div class="work-browser studio-reveal" data-project-showcase>
           <div class="work-browser-topline">
-            <p id="selected-work-heading" class="work-browser-kicker">
-              Selected work
+            <p id="selected-work-heading" class="work-browser-kicker" data-project-title aria-live="polite">
+              {spotlightProjects[0].title}
             </p>
             <div class="work-browser-count" aria-live="polite">
               <span data-project-current>01</span>
@@ -378,6 +379,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                           class={`work-project ${i === 0 ? "is-active" : ""}`}
                           data-project-detail
                           data-project-index={i}
+                          data-project-id={project.id}
+                          data-project-title={project.title}
                           aria-hidden={i === 0 ? "false" : "true"}
                         >
                           <div class="work-project-header">
@@ -418,6 +421,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                                 target="_blank"
                                 rel="noopener"
                                 class="work-action work-action-primary"
+                                data-ph-action="demo"
+                                data-ph-project={project.id}
                               >
                                 {project.liveLabel}
                                 <span aria-hidden="true">&rarr;</span>
@@ -429,10 +434,23 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                                 target="_blank"
                                 rel="noopener"
                                 class={`work-action ${hasLive ? "" : "work-action-primary"}`}
+                                data-ph-action="github"
+                                data-ph-project={project.id}
                               >
                                 {hasLive ? "GitHub" : "View on GitHub"}
                                 <span aria-hidden="true">&rarr;</span>
                               </a>
+                            )}
+                            {!hasLive && !project.sourceUrl && project.note && (
+                              <p class="work-action-note">
+                                <span class="work-action-note-icon" aria-hidden="true">
+                                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                                    <path d="M7 1.5a3 3 0 0 1 3 3v1.5H4V4.5a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                                    <rect x="2.75" y="6" width="8.5" height="6" rx="1.2" stroke="currentColor" stroke-width="1.2"/>
+                                  </svg>
+                                </span>
+                                {project.note}
+                              </p>
                             )}
                           </div>
                         </article>
@@ -505,7 +523,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     </section>
 
     <!-- More projects -->
-    <section class="more-projects-section" aria-labelledby="more-projects-heading">
+    <section class="more-projects-section" aria-labelledby="more-projects-heading" data-ph-section="more_projects">
       <div class="studio-container">
         <div class="more-projects-header studio-reveal">
           <h2 id="more-projects-heading" class="more-projects-heading">More projects</h2>
@@ -750,9 +768,16 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   .work-browser-kicker {
-    color: var(--studio-text-body);
-    font-size: 0.92rem;
-    font-weight: 600;
+    color: var(--studio-text);
+    font-family: var(--studio-serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    transition: opacity 0.18s ease;
+  }
+
+  .work-browser-kicker.is-swapping {
+    opacity: 0;
   }
 
   .work-browser-count {
@@ -1018,6 +1043,17 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
 
   .work-flip-top svg { opacity: 0.7; }
 
+  /* Late entry — the button fades in slightly after the rest of the project
+     content has revealed, on initial load and on every project switch. */
+  @keyframes flipReveal {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .work-project.is-active .work-flip-top {
+    animation: flipReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1) 0.55s both;
+  }
+
   .work-project-title {
     margin-bottom: 16px;
     color: var(--studio-text);
@@ -1125,6 +1161,30 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
 
   .work-action-flip svg { transition: transform 0.2s; }
   .work-action-flip:hover svg { transform: translateX(2px); }
+
+  /* Shown in place of action buttons when a project has no public links */
+  .work-action-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px 14px;
+    color: var(--studio-text-muted);
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px dashed var(--studio-border);
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .work-action-note-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: var(--studio-text-muted);
+    opacity: 0.75;
+  }
 
   /* Back face content */
   .work-project-back { display: none; }
@@ -1604,11 +1664,35 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       const next = showcase.querySelector("[data-project-next]");
       const detailPanel = showcase.querySelector("[data-detail-panel]") as HTMLElement | null;
       const flipButtons = Array.from(showcase.querySelectorAll("[data-flip-button]")) as HTMLButtonElement[];
+      const titleEl = showcase.querySelector("[data-project-title]") as HTMLElement | null;
 
       let activeIndex = 0;
 
+      // ===== Analytics =====
+      const phTrack = (event: string, props: Record<string, unknown> = {}) =>
+        (window as any).posthog?.capture?.(event, { page: location.pathname, ...props });
+      let lastViewed = -1;
+      const trackProjectView = () => {
+        if (activeIndex === lastViewed) return;
+        lastViewed = activeIndex;
+        const detail = details[activeIndex];
+        phTrack('project_viewed', {
+          project_id: detail?.dataset.projectId ?? null,
+          title: detail?.dataset.projectTitle ?? null,
+        });
+      };
+
       const setFlipped = (flipped: boolean) => {
         detailPanel?.classList.toggle("is-flipped", flipped);
+      };
+
+      const swapTitle = (nextTitle: string) => {
+        if (!titleEl || titleEl.textContent?.trim() === nextTitle) return;
+        titleEl.classList.add("is-swapping");
+        window.setTimeout(() => {
+          titleEl.textContent = nextTitle;
+          titleEl.classList.remove("is-swapping");
+        }, 180);
       };
 
       const updateProject = (nextIndex: number) => {
@@ -1616,6 +1700,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         const label = String(activeIndex + 1).padStart(2, "0");
 
         if (current) current.textContent = label;
+
+        const nextTitle = details[activeIndex]?.querySelector(".work-project-title")?.textContent?.trim();
+        if (nextTitle) swapTitle(nextTitle);
 
         // Always reset to front when switching projects
         setFlipped(false);
@@ -1653,6 +1740,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
           dot.classList.toggle("is-active", isActive);
           dot.setAttribute("aria-pressed", isActive ? "true" : "false");
         });
+
+        trackProjectView();
       };
 
       // Screenshot thumb clicks — switch the active screenshot AND open the lightbox
@@ -1718,6 +1807,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         if (!lightbox) return;
         lightboxProject = projectIndex;
         lightboxIdx = screenshotIndex;
+        phTrack('project_engaged', {
+          project_id: details[projectIndex]?.dataset.projectId ?? null,
+          action: 'screenshot_opened',
+        });
         renderLightbox();
         lightbox.hidden = false;
         document.body.classList.add("lightbox-open");
@@ -1759,6 +1852,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
               back.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
             });
             setFlipped(true);
+            phTrack('project_engaged', {
+              project_id: details[activeIndex]?.dataset.projectId ?? null,
+              action: 'details_expanded',
+            });
           } else {
             backs.forEach((back) => back.setAttribute("aria-hidden", "true"));
             setFlipped(false);
@@ -1809,10 +1906,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
 
       updateProject(0);
 
-      // Auto-scroll into the spotlight after a brief peek at the hero.
-      // Bails if the user already scrolled, has a hash deep-link, or starts interacting.
-      // Sequence: 0ms land → 900ms spotlight lifts (anticipation) → 1500ms page scrolls →
-      // 2100ms panel settles (anticipation released as it enters full view).
+      // Auto-scroll into the spotlight after a longer peek at the hero so the
+      // headline is read before motion. Bails if the user already scrolled,
+      // has a hash deep-link, or starts interacting.
+      // Sequence: 0ms land → 1800ms spotlight lifts (anticipation) → 2700ms page scrolls →
+      // 3300ms panel settles. The "More details" button has its own CSS-driven
+      // late entry tied to .is-active, so it animates in on every project switch.
       (() => {
         if (window.location.hash) return;
         if (window.scrollY > 4) return;
@@ -1841,12 +1940,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         window.addEventListener("mousedown", cancel);
         window.addEventListener("keydown", cancel);
 
-        // Anticipation lift — the whole spotlight unit (topline + shell) rises 6px,
-        // shadow deepens, green hint on the border. The kicker and counter move with the panel.
+        // Anticipation lift — the whole spotlight unit (topline + shell) rises,
+        // shadow deepens, green hint on the border. Held longer so the hero gets read.
         timeouts.push(window.setTimeout(() => {
           if (cancelled) return;
           browser.classList.add("is-anticipating");
-        }, 900));
+        }, 1800));
 
         // Begin the scroll. The lift is still in effect, so the scroll reads as
         // the same motion continuing — the panel that just rose now meets you.
@@ -1857,12 +1956,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
           if (target > window.scrollY + 4) {
             window.scrollTo({ top: target, behavior: "smooth" });
           }
-        }, 1500));
+        }, 2700));
 
         // Release the lift as the panel reaches its resting position in view.
         timeouts.push(window.setTimeout(() => {
           browser.classList.remove("is-anticipating");
-        }, 2100));
+        }, 3300));
       })();
     }
 

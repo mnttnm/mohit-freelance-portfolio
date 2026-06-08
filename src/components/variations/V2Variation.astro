@@ -18,7 +18,7 @@ import StudioFooter from '../StudioFooter.astro';
         <a href="/" class="v2-nav-link v2-nav-link-active">Home</a>
         <a href="/projects" class="v2-nav-link">Work</a>
         <a href="/about" class="v2-nav-link">About</a>
-        <a href="#studio-footer" class="v2-nav-link v2-nav-cta">Let's talk</a>
+        <a href="#studio-footer" class="v2-nav-link v2-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
       </nav>
       <button class="v2-menu-toggle" aria-label="Toggle menu">
         <span class="v2-menu-bar"></span>
@@ -28,7 +28,7 @@ import StudioFooter from '../StudioFooter.astro';
   </header>
 
   <!-- Hero -->
-  <section class="v2-hero">
+  <section class="v2-hero" data-ph-section="hero">
     <div class="v2-container">
       <p class="v2-eyebrow v2-reveal">Product Engineer &amp; Consultant</p>
       <h1 class="v2-headline v2-reveal">I ship products, <em>end to end.</em></h1>
@@ -50,7 +50,7 @@ import StudioFooter from '../StudioFooter.astro';
   </section>
 
   <!-- Who I work with -->
-  <section class="v2-audience">
+  <section class="v2-audience" data-ph-section="audience">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">Who I work with</p>
       <h2 class="v2-audience-headline v2-reveal">You're probably a fit <em>if any of these sound like you.</em></h2>
@@ -65,7 +65,7 @@ import StudioFooter from '../StudioFooter.astro';
   </section>
 
   <!-- Services -->
-  <section id="v2-services" class="v2-services">
+  <section id="v2-services" class="v2-services" data-ph-section="services">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">What I do</p>
 
@@ -111,7 +111,7 @@ import StudioFooter from '../StudioFooter.astro';
   </section>
 
   <!-- How I Work -->
-  <section id="v2-process" class="v2-process">
+  <section id="v2-process" class="v2-process" data-ph-section="process">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">How I work</p>
       <h2 class="v2-process-headline v2-reveal">Less overhead. <em>More shipping.</em></h2>
@@ -138,7 +138,7 @@ import StudioFooter from '../StudioFooter.astro';
   </section>
 
   <!-- Work -->
-  <section class="v2-projects">
+  <section class="v2-projects" data-ph-section="projects_teaser">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">Work</p>
       <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
@@ -150,7 +150,7 @@ import StudioFooter from '../StudioFooter.astro';
   </section>
 
   <!-- Testimonials -->
-  <section id="v2-testimonials" class="v2-work">
+  <section id="v2-testimonials" class="v2-work" data-ph-section="testimonials">
     <div class="v2-container">
       <div class="v2-testimonials-section">
         <p class="v2-section-label v2-reveal">What clients say</p>
@@ -267,7 +267,7 @@ import StudioFooter from '../StudioFooter.astro';
   </section>
 
   <!-- About -->
-  <section id="v2-about" class="v2-about">
+  <section id="v2-about" class="v2-about" data-ph-section="about_teaser">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">About</p>
       <h2 class="v2-about-headline v2-reveal">A decade of shipping products, <em>and counting.</em></h2>
