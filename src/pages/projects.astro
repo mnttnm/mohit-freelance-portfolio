@@ -6,13 +6,61 @@ import StudioFooter from "../components/StudioFooter.astro";
 
 const spotlightProjects = [
   {
+    id: "ai-resizing-studio",
+    type: "AI Image Pipeline",
+    title: "AI Resizing Studio",
+    outcome: "AI handles first-pass QA; humans review only what matters",
+    description:
+      "A bulk image-resizing tool for a marketing team that reformats thousands of event posters into every ad ratio they need. It's built around three interfaces — batch processing, side-by-side review, and an evaluation dashboard — with an AI judge running first-pass QA on every output, so reviewers spend their attention only where it's actually needed.",
+    tech: [
+      "Gemini 3 Image",
+      "OpenAI GPT Image",
+      "Next.js",
+      "Supabase",
+      "AI-as-judge",
+    ],
+    images: [
+      "/images/image-resizing/input-interface.png",
+      "/images/image-resizing/review-interface.jpeg",
+      "/images/image-resizing/eval.png",
+    ],
+    gradient: "image-resizing",
+    // Source repo is private (client work) — link intentionally hidden.
+    // Live app is behind the client's environment, so it's shown via
+    // screenshots instead.
+    note: "Private client engagement — shown via screenshots",
+    back: {
+      title: "How the three interfaces work together",
+      sections: [
+        {
+          heading: "Processing — generate at scale",
+          body: "Drop in images or a CSV and the pipeline fans each asset out into all of its target ratios at once. Every output gets a risk score (none → high) computed from crop loss, aspect-ratio mismatch, and the strategy used — so problem outputs are flagged before a human ever opens them. Smart / AI-only / Force-AI modes trade speed against cost per run.",
+        },
+        {
+          heading: "Review — a keyboard-fast human pass",
+          body: "Source and generated sit side by side with the AI's verdict and score already attached. Reviewers rate Good / Okay / Bad entirely from the keyboard and move through the whole queue without reaching for the mouse — filters rebuild the queue on the fly, so you can burn down just the unreviewed, or just the high-risk outputs.",
+        },
+        {
+          heading: "Evaluation — AI in the loop",
+          body: "An AI visual judge grades every output against the same rubric a human would. Deterministic checks and a retry/escalation policy then decide what to auto-accept, retry with a stronger safe-area prompt, reroute to another model, or send up for manual design work. The dashboard tracks good-rate, bad-rate on high-risk outputs, and cost per good output — and surfaces where the AI and humans disagree, so the rubric keeps sharpening over time.",
+        },
+      ],
+    },
+  },
+  {
     id: "ops-workspace",
     type: "Enterprise App",
     title: "Enterprise Ops Workspace",
     outcome: "Complex internal tool, delivered end-to-end",
     description:
       "An internal web app that supports a sales team's day-to-day operations. It includes multi-step onboarding forms, filterable tables and grids, template detail views, and an in-app help system, with a UI designed to keep complex enterprise workflows easy to navigate.",
-    tech: ["Next.js 16", "Tailwind v4", "shadcn/ui", "Supabase", "NextAuth"],
+    tech: [
+      "Next.js 16",
+      "Tailwind v4",
+      "shadcn/ui",
+      "Supabase",
+      "NextAuth",
+    ],
     images: [
       "/images/SCR-20260526-posx.png",
       "/images/SCR-20260526-porc.png",
@@ -77,6 +125,48 @@ const spotlightProjects = [
     },
   },
   {
+    id: "dashboard-skill",
+    type: "Design Case Study",
+    title: "Designing Dashboards",
+    outcome: "Generic chart-dumps → actionable launchpads",
+    description:
+      "An agent skill that turns the everyday “wall of charts” dashboard into something a person can actually act on. The case study isolates what the skill adds — V1 (Claude with no skill) vs V7 (with it) — and the six grounding principles behind it that hold for any dashboard, any stack, any domain.",
+    tech: [
+      "UI/UX",
+      "Data Viz",
+      "Agent Skill",
+      "Recharts",
+      "Design System",
+    ],
+    images: [
+      "/images/dashboard-skill-project/original.png",
+      "/images/dashboard-skill-project/v7-light.png",
+      "/images/dashboard-skill-project/v7-dark.png",
+    ],
+    gradient: "dashboard-skill",
+    caseStudyUrl: "/work/dashboard-skill",
+    caseStudyLabel: "Read the case study",
+    sourceUrl:
+      "https://github.com/mnttnm/mohit-ai-toolkit/tree/main/skills/designing-dashboards",
+    back: {
+      title: "What's inside the case study",
+      sections: [
+        {
+          heading: "Six grounding principles",
+          body: "Start from the decision not the data, lead with one thing, earn every element, show the insight not just the data, end in a next step, and spend emphasis sparingly — the questions I designed against from the first pass, transferable to any dashboard.",
+        },
+        {
+          heading: "A real redesign, including the wrong turns",
+          body: "Original → V1 → V4 → V7, shown honestly. It overshoots into decoration before settling — the V4 frame is kept in on purpose, because an iteration that mistook richness for clarity is the clearest lesson of the lot.",
+        },
+        {
+          heading: "Validated, not just asserted",
+          body: "To keep it honest, a fresh agent with no memory of the previous version rebuilds the dashboard blind from the same brief. If it lands in the same place, the principles are doing the work — not attachment to a layout.",
+        },
+      ],
+    },
+  },
+  {
     id: "reviewhub",
     type: "Agentic Workflow",
     title: "ReviewHub",
@@ -118,9 +208,7 @@ const spotlightProjects = [
     description:
       "A collection of reusable agent skills and Codex automation templates for Claude Code and Codex. Skills cover product UI, dashboards, interface grading, UX patterns, interaction design, and workflow automation, and can be installed with a single command. I use it to keep my agentic-engineering practice current.",
     tech: ["Claude Code", "Codex", "Agent Skills", "Automations"],
-    images: [
-      "/images/mohit-ai-toolkit.png",
-    ],
+    images: ["/images/mohit-ai-toolkit.png"],
     gradient: "ai-toolkit",
     sourceUrl: "https://github.com/mnttnm/mohit-ai-toolkit",
     back: {
@@ -232,7 +320,8 @@ const moreProjects = [
     image: "/projects/career-guide.png",
     liveUrl: "https://tech-career-guide.vercel.app/",
     liveLabel: "Live app",
-    sourceUrl: "https://github.com/mnttnm/btech-cs-career-guide-india",
+    sourceUrl:
+      "https://github.com/mnttnm/btech-cs-career-guide-india",
     type: "Web App",
   },
   {
@@ -248,10 +337,16 @@ const moreProjects = [
   },
 ];
 
-const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
+const projectTotalLabel = String(spotlightProjects.length).padStart(
+  2,
+  "0"
+);
 ---
 
-<Layout title="Projects | Mohit Tater" description="Client work, side projects, and tools I've shipped — from AI-powered SaaS and enterprise apps to Shopify migrations and agent skills.">
+<Layout
+  title="Projects | Mohit Tater"
+  description="Client work, side projects, and tools I've shipped — from AI-powered SaaS and enterprise apps to Shopify migrations and agent skills."
+>
   <div data-variation-content="studio">
     <!-- Header -->
     <header class="studio-header">
@@ -259,9 +354,17 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         <a href="/" class="studio-logo">Mohit Tater</a>
         <nav class="studio-nav">
           <a href="/" class="studio-nav-link">Home</a>
-          <a href="/projects" class="studio-nav-link studio-nav-link-active">Work</a>
+          <a
+            href="/projects"
+            class="studio-nav-link studio-nav-link-active">Work</a
+          >
           <a href="/about" class="studio-nav-link">About</a>
-          <a href="#studio-footer" class="studio-nav-link studio-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
+          <a
+            href="#studio-footer"
+            class="studio-nav-link studio-nav-cta"
+            data-ph-cta="lets_talk"
+            data-ph-location="nav">Let's talk</a
+          >
         </nav>
         <button class="studio-menu-toggle" aria-label="Toggle menu">
           <span class="studio-menu-bar"></span>
@@ -275,20 +378,32 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       <div class="studio-container">
         <p class="studio-section-label studio-reveal">Work</p>
         <h1 class="projects-headline studio-reveal">
-          Full-stack apps and AI workflows, <em>shipped to production.</em>
+          Full-stack apps and AI workflows, <em
+            >shipped to production.</em
+          >
         </h1>
         <p class="projects-subtext studio-reveal">
-          From enterprise internal tools to agent-powered pipelines &mdash; built solo or end-to-end with small teams.
+          From enterprise internal tools to agent-powered pipelines
+          &mdash; built solo or end-to-end with small teams.
         </p>
       </div>
     </section>
 
     <!-- Selected Work Browser -->
-    <section class="projects-browser-section" aria-labelledby="selected-work-heading" data-ph-section="selected_work">
+    <section
+      class="projects-browser-section"
+      aria-labelledby="selected-work-heading"
+      data-ph-section="selected_work"
+    >
       <div class="studio-container">
         <div class="work-browser studio-reveal" data-project-showcase>
           <div class="work-browser-topline">
-            <p id="selected-work-heading" class="work-browser-kicker" data-project-title aria-live="polite">
+            <p
+              id="selected-work-heading"
+              class="work-browser-kicker"
+              data-project-title
+              aria-live="polite"
+            >
               {spotlightProjects[0].title}
             </p>
             <div class="work-browser-count" aria-live="polite">
@@ -304,7 +419,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
               <div class="work-visual-stage" aria-live="polite">
                 {
                   spotlightProjects.map((project, i) => {
-                    const hasImages = project.images && project.images.length > 0;
+                    const hasImages =
+                      project.images && project.images.length > 0;
                     return (
                       <div
                         class={`work-visual-set ${i === 0 ? "is-active" : ""}`}
@@ -321,12 +437,25 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                               data-lightbox-open
                               aria-label={`View screenshot ${j + 1} of ${project.title} full-size`}
                             >
-                              <img src={img} alt={`Screenshot ${j + 1} of ${project.title}`} loading={i === 0 && j === 0 ? "eager" : "lazy"} />
+                              <img
+                                src={img}
+                                alt={`Screenshot ${j + 1} of ${project.title}`}
+                                loading={
+                                  i === 0 && j === 0
+                                    ? "eager"
+                                    : "lazy"
+                                }
+                              />
                             </button>
                           ))
                         ) : (
-                          <div class={`work-visual-img work-visual-placeholder grad-${project.gradient} is-active`} data-screenshot-index="0">
-                            <span class="work-visual-placeholder-label">{project.title}</span>
+                          <div
+                            class={`work-visual-img work-visual-placeholder grad-${project.gradient} is-active`}
+                            data-screenshot-index="0"
+                          >
+                            <span class="work-visual-placeholder-label">
+                              {project.title}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -336,7 +465,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
               </div>
 
               <!-- Screenshot thumbs (only show when project has 2+ images) -->
-              <div class="work-screenshot-thumbs" data-screenshot-thumbs aria-label="Choose a screenshot">
+              <div
+                class="work-screenshot-thumbs"
+                data-screenshot-thumbs
+                aria-label="Choose a screenshot"
+              >
                 {
                   spotlightProjects.map((project, i) => {
                     const imageCount = project.images?.length || 0;
@@ -373,7 +506,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                 <div class="work-detail-face work-detail-face-front">
                   {
                     spotlightProjects.map((project, i) => {
-                      const hasLive = !!project.liveUrl && project.liveUrl !== project.sourceUrl;
+                      const hasCaseStudy = !!project.caseStudyUrl;
+                      const hasLive =
+                        !!project.liveUrl &&
+                        project.liveUrl !== project.sourceUrl;
                       return (
                         <article
                           class={`work-project ${i === 0 ? "is-active" : ""}`}
@@ -384,21 +520,56 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                           aria-hidden={i === 0 ? "false" : "true"}
                         >
                           <div class="work-project-header">
-                            <span class="work-project-type">{project.type}</span>
-                            <button type="button" class="work-flip-top" data-flip-button data-flip-target="back" aria-label={`See more details about ${project.title}`}>
-                              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                                <path d="M3 5h6M3 9h4M11 3v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                            <span class="work-project-type">
+                              {project.type}
+                            </span>
+                            <button
+                              type="button"
+                              class="work-flip-top"
+                              data-flip-button
+                              data-flip-target="back"
+                              aria-label={`See more details about ${project.title}`}
+                            >
+                              <svg
+                                width="13"
+                                height="13"
+                                viewBox="0 0 14 14"
+                                fill="none"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M3 5h6M3 9h4M11 3v8"
+                                  stroke="currentColor"
+                                  stroke-width="1.4"
+                                  stroke-linecap="round"
+                                />
                               </svg>
                               <span>More details</span>
                             </button>
                           </div>
 
-                          <h2 class="work-project-title">{project.title}</h2>
+                          <h2 class="work-project-title">
+                            {project.title}
+                          </h2>
 
                           <div class="work-outcome">
-                            <span class="work-outcome-icon" aria-hidden="true">
-                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <path d="M3 7L6 10L11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <span
+                              class="work-outcome-icon"
+                              aria-hidden="true"
+                            >
+                              <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 14 14"
+                                fill="none"
+                              >
+                                <path
+                                  d="M3 7L6 10L11 4"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
                               </svg>
                             </span>
                             <span>{project.outcome}</span>
@@ -415,12 +586,24 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                           </div>
 
                           <div class="work-actions">
+                            {hasCaseStudy && (
+                              <a
+                                href={project.caseStudyUrl}
+                                class="work-action work-action-primary"
+                                data-ph-action="case_study"
+                                data-ph-project={project.id}
+                              >
+                                {project.caseStudyLabel ||
+                                  "Read the case study"}
+                                <span aria-hidden="true">&rarr;</span>
+                              </a>
+                            )}
                             {hasLive && (
                               <a
                                 href={project.liveUrl}
                                 target="_blank"
                                 rel="noopener"
-                                class="work-action work-action-primary"
+                                class={`work-action ${hasCaseStudy ? "" : "work-action-primary"}`}
                                 data-ph-action="demo"
                                 data-ph-project={project.id}
                               >
@@ -433,25 +616,51 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                                 href={project.sourceUrl}
                                 target="_blank"
                                 rel="noopener"
-                                class={`work-action ${hasLive ? "" : "work-action-primary"}`}
+                                class={`work-action ${hasCaseStudy || hasLive ? "" : "work-action-primary"}`}
                                 data-ph-action="github"
                                 data-ph-project={project.id}
                               >
-                                {hasLive ? "GitHub" : "View on GitHub"}
+                                {hasCaseStudy || hasLive
+                                  ? "GitHub"
+                                  : "View on GitHub"}
                                 <span aria-hidden="true">&rarr;</span>
                               </a>
                             )}
-                            {!hasLive && !project.sourceUrl && project.note && (
-                              <p class="work-action-note">
-                                <span class="work-action-note-icon" aria-hidden="true">
-                                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-                                    <path d="M7 1.5a3 3 0 0 1 3 3v1.5H4V4.5a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-                                    <rect x="2.75" y="6" width="8.5" height="6" rx="1.2" stroke="currentColor" stroke-width="1.2"/>
-                                  </svg>
-                                </span>
-                                {project.note}
-                              </p>
-                            )}
+                            {!hasCaseStudy &&
+                              !hasLive &&
+                              !project.sourceUrl &&
+                              project.note && (
+                                <p class="work-action-note">
+                                  <span
+                                    class="work-action-note-icon"
+                                    aria-hidden="true"
+                                  >
+                                    <svg
+                                      width="13"
+                                      height="13"
+                                      viewBox="0 0 14 14"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M7 1.5a3 3 0 0 1 3 3v1.5H4V4.5a3 3 0 0 1 3-3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                        stroke-linejoin="round"
+                                      />
+                                      <rect
+                                        x="2.75"
+                                        y="6"
+                                        width="8.5"
+                                        height="6"
+                                        rx="1.2"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                      />
+                                    </svg>
+                                  </span>
+                                  {project.note}
+                                </p>
+                              )}
                           </div>
                         </article>
                       );
@@ -470,14 +679,37 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                         aria-hidden="true"
                       >
                         <div class="work-back-header">
-                          <span class="work-back-eyebrow">{project.title}</span>
-                          <button type="button" class="work-back-close" data-flip-button data-flip-target="front" aria-label="Back to project overview">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M10 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          <span class="work-back-eyebrow">
+                            {project.title}
+                          </span>
+                          <button
+                            type="button"
+                            class="work-back-close"
+                            data-flip-button
+                            data-flip-target="front"
+                            aria-label="Back to project overview"
+                          >
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 14 14"
+                              fill="none"
+                            >
+                              <path
+                                d="M10 7H2M6 3L2 7l4 4"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
                             <span>Back</span>
                           </button>
                         </div>
 
-                        <h3 class="work-back-title">{project.back.title}</h3>
+                        <h3 class="work-back-title">
+                          {project.back.title}
+                        </h3>
 
                         <div class="work-back-sections">
                           {project.back.sections.map((section) => (
@@ -494,7 +726,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
               </div>
 
               <!-- Project navigation (bottom of detail panel) -->
-              <div class="work-project-nav" aria-label="Project navigation">
+              <div
+                class="work-project-nav"
+                aria-label="Project navigation"
+              >
                 <div class="work-dots" data-dots>
                   {
                     spotlightProjects.map((project, i) => (
@@ -512,8 +747,18 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
                   }
                 </div>
                 <div class="work-arrows">
-                  <button type="button" class="work-arrow" data-project-prev aria-label="Previous project">&larr;</button>
-                  <button type="button" class="work-arrow" data-project-next aria-label="Next project">&rarr;</button>
+                  <button
+                    type="button"
+                    class="work-arrow"
+                    data-project-prev
+                    aria-label="Previous project">&larr;</button
+                  >
+                  <button
+                    type="button"
+                    class="work-arrow"
+                    data-project-next
+                    aria-label="Next project">&rarr;</button
+                  >
                 </div>
               </div>
             </div>
@@ -523,34 +768,57 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     </section>
 
     <!-- More projects -->
-    <section class="more-projects-section" aria-labelledby="more-projects-heading" data-ph-section="more_projects">
+    <section
+      class="more-projects-section"
+      aria-labelledby="more-projects-heading"
+      data-ph-section="more_projects"
+    >
       <div class="studio-container">
         <div class="more-projects-header studio-reveal">
-          <h2 id="more-projects-heading" class="more-projects-heading">More projects</h2>
+          <h2
+            id="more-projects-heading"
+            class="more-projects-heading"
+          >
+            More projects
+          </h2>
           <p class="more-projects-subtext">
-            Side projects, explorations, and open-source tools built in my own time.
+            Side projects, explorations, and open-source tools built
+            in my own time.
           </p>
         </div>
 
         <div class="more-projects-grid">
           {
             moreProjects.map((project) => (
-              <a href={project.liveUrl} target="_blank" rel="noopener" class="more-project studio-reveal">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener"
+                class="more-project studio-reveal"
+              >
                 <div class="more-project-image">
-                  <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" />
+                  <img
+                    src={project.image}
+                    alt={`${project.title} screenshot`}
+                    loading="lazy"
+                  />
                 </div>
                 <div class="more-project-body">
                   <div class="more-project-meta">
                     <span>{project.type}</span>
                     {project.highlight && (
                       <>
-                        <span class="more-project-meta-separator">/</span>
+                        <span class="more-project-meta-separator">
+                          /
+                        </span>
                         <strong>{project.highlight}</strong>
                       </>
                     )}
                   </div>
                   <h3 class="more-project-title">{project.title}</h3>
-                  <p class="more-project-description">{project.description}</p>
+                  <p class="more-project-description">
+                    {project.description}
+                  </p>
                   <span class="more-project-cta">
                     {project.liveLabel}
                     <span aria-hidden="true">&rarr;</span>
@@ -564,24 +832,78 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     </section>
 
     <!-- Lightbox -->
-    <div class="lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Screenshot viewer">
-      <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close viewer">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <div
+      class="lightbox"
+      data-lightbox
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="Screenshot viewer"
+    >
+      <button
+        type="button"
+        class="lightbox-close"
+        data-lightbox-close
+        aria-label="Close viewer"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 5l10 10M15 5L5 15"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"></path>
         </svg>
       </button>
-      <button type="button" class="lightbox-arrow lightbox-arrow-prev" data-lightbox-prev aria-label="Previous screenshot">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-          <path d="M14 4L7 11l7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <button
+        type="button"
+        class="lightbox-arrow lightbox-arrow-prev"
+        data-lightbox-prev
+        aria-label="Previous screenshot"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 22 22"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M14 4L7 11l7 7"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
       </button>
       <div class="lightbox-stage">
         <img data-lightbox-img alt="" />
         <p class="lightbox-caption" data-lightbox-caption></p>
       </div>
-      <button type="button" class="lightbox-arrow lightbox-arrow-next" data-lightbox-next aria-label="Next screenshot">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-          <path d="M8 4l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <button
+        type="button"
+        class="lightbox-arrow lightbox-arrow-next"
+        data-lightbox-next
+        aria-label="Next screenshot"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 22 22"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M8 4l7 7-7 7"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
         </svg>
       </button>
     </div>
@@ -602,8 +924,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     --studio-accent-light: rgba(45, 90, 61, 0.08);
     --studio-border: #e5e0da;
     --studio-serif: "DM Serif Display", Georgia, serif;
-    --studio-sans:
-      "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --studio-sans: "Instrument Sans", -apple-system,
+      BlinkMacSystemFont, sans-serif;
   }
 
   [data-variation-content="studio"] {
@@ -638,16 +960,28 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   .studio-reveal {
     opacity: 0;
     transform: translateY(16px);
-    animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1)
+      forwards;
   }
 
-  .studio-reveal:nth-child(1) { animation-delay: 0.05s; }
-  .studio-reveal:nth-child(2) { animation-delay: 0.12s; }
-  .studio-reveal:nth-child(3) { animation-delay: 0.19s; }
-  .studio-reveal:nth-child(4) { animation-delay: 0.26s; }
+  .studio-reveal:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .studio-reveal:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .studio-reveal:nth-child(3) {
+    animation-delay: 0.19s;
+  }
+  .studio-reveal:nth-child(4) {
+    animation-delay: 0.26s;
+  }
 
   @keyframes studioReveal {
-    to { opacity: 1; transform: translateY(0); }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* ===== Section Label ===== */
@@ -690,7 +1024,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     letter-spacing: 0;
   }
 
-  .studio-nav { display: flex; align-items: center; gap: 32px; }
+  .studio-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
 
   .studio-nav-link {
     font-size: 0.85rem;
@@ -699,9 +1037,17 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     transition: color 0.2s;
   }
 
-  .studio-nav-link:hover { color: var(--studio-text); }
-  .studio-nav-link-active { color: var(--studio-text); font-weight: 600; }
-  .studio-nav-cta { color: var(--studio-accent); font-weight: 600; }
+  .studio-nav-link:hover {
+    color: var(--studio-text);
+  }
+  .studio-nav-link-active {
+    color: var(--studio-text);
+    font-weight: 600;
+  }
+  .studio-nav-cta {
+    color: var(--studio-accent);
+    font-weight: 600;
+  }
 
   .studio-menu-toggle {
     display: none;
@@ -722,7 +1068,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   /* ===== Projects Hero ===== */
-  .projects-hero { padding: 144px 0 64px; }
+  .projects-hero {
+    padding: 144px 0 64px;
+  }
 
   .projects-headline {
     font-family: var(--studio-serif);
@@ -735,7 +1083,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     text-wrap: balance;
   }
 
-  .projects-headline em { font-style: italic; color: var(--studio-accent); }
+  .projects-headline em {
+    font-style: italic;
+    color: var(--studio-accent);
+  }
 
   .projects-subtext {
     font-size: 1.05rem;
@@ -745,7 +1096,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   /* ===== Selected Work Browser ===== */
-  .projects-browser-section { padding: 24px 0 96px; }
+  .projects-browser-section {
+    padding: 24px 0 96px;
+  }
 
   .work-browser {
     display: grid;
@@ -792,7 +1145,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     font-weight: 600;
   }
 
-  .work-browser-count-divider { color: var(--studio-border); padding: 0 4px; }
+  .work-browser-count-divider {
+    color: var(--studio-border);
+    padding: 0 4px;
+  }
 
   /* Fixed-dimension shell — no layout shift on switch */
   .work-browser-shell {
@@ -800,15 +1156,19 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     grid-template-columns: 58fr 42fr;
     min-height: clamp(620px, 82vh, 860px);
     overflow: hidden;
-    background:
-      radial-gradient(circle at 12% 10%, rgba(45, 90, 61, 0.08), transparent 30%),
+    background: radial-gradient(
+        circle at 12% 10%,
+        rgba(45, 90, 61, 0.08),
+        transparent 30%
+      ),
       rgba(255, 255, 255, 0.55);
     border: 1px solid var(--studio-border);
     border-radius: 0;
     box-shadow: 0 24px 70px rgba(30, 45, 36, 0.08);
-    transition: box-shadow 0.45s cubic-bezier(0.34, 1.2, 0.64, 1),
-                border-color 0.45s ease,
-                background 0.45s ease;
+    transition:
+      box-shadow 0.45s cubic-bezier(0.34, 1.2, 0.64, 1),
+      border-color 0.45s ease,
+      background 0.45s ease;
   }
 
   /* Non-spatial cues during anticipation:
@@ -818,16 +1178,23 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   .work-browser.is-anticipating .work-browser-shell {
     box-shadow: 0 54px 130px rgba(45, 90, 61, 0.26);
     border-color: rgba(45, 90, 61, 0.4);
-    background:
-      radial-gradient(circle at 12% 10%, rgba(45, 90, 61, 0.22), transparent 38%),
+    background: radial-gradient(
+        circle at 12% 10%,
+        rgba(45, 90, 61, 0.22),
+        transparent 38%
+      ),
       rgba(255, 255, 255, 0.6);
   }
 
   /* The active project dot pulses — gives the eye a small, contained
      reference point of motion inside the panel itself. */
   @keyframes dotPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(45, 90, 61, 0.45); }
-    100% { box-shadow: 0 0 0 10px rgba(45, 90, 61, 0); }
+    0% {
+      box-shadow: 0 0 0 0 rgba(45, 90, 61, 0.45);
+    }
+    100% {
+      box-shadow: 0 0 0 10px rgba(45, 90, 61, 0);
+    }
   }
 
   .work-browser.is-anticipating .work-dot.is-active {
@@ -852,7 +1219,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     place-items: center;
   }
 
-  .work-visual-set { display: none; width: 100%; height: 100%; }
+  .work-visual-set {
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
   .work-visual-set.is-active {
     display: grid;
     place-items: center;
@@ -878,7 +1249,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  .work-visual-img.is-active { display: block; }
+  .work-visual-img.is-active {
+    display: block;
+  }
 
   .work-visual-img img {
     display: block;
@@ -888,7 +1261,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     object-position: center;
   }
 
-  .work-visual-img:hover { transform: translateY(-3px); }
+  .work-visual-img:hover {
+    transform: translateY(-3px);
+  }
 
   /* Placeholder when project has no images yet */
   .work-visual-placeholder {
@@ -907,19 +1282,71 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     letter-spacing: 0.02em;
   }
 
-  .work-visual-placeholder.is-active { display: flex; }
+  .work-visual-placeholder.is-active {
+    display: flex;
+  }
 
-  .grad-slicely { background: linear-gradient(135deg, #c8d6c1 0%, #a8bfa0 50%, #8aab7e 100%); }
-  .grad-ops-workspace { background: linear-gradient(135deg, #d4c5b0 0%, #bfad96 50%, #a89578 100%); }
-  .grad-greetwood { background: linear-gradient(135deg, #c2cfd4 0%, #9fb3bc 50%, #7d9aa6 100%); }
-  .grad-ai-toolkit { background: linear-gradient(135deg, #d1c4d8 0%, #b5a3bf 50%, #9a83a8 100%); }
-  .grad-reviewhub { background: linear-gradient(135deg, #d6c0c1 0%, #c09a9d 50%, #a87478 100%); }
+  .grad-slicely {
+    background: linear-gradient(
+      135deg,
+      #c8d6c1 0%,
+      #a8bfa0 50%,
+      #8aab7e 100%
+    );
+  }
+  .grad-ops-workspace {
+    background: linear-gradient(
+      135deg,
+      #d4c5b0 0%,
+      #bfad96 50%,
+      #a89578 100%
+    );
+  }
+  .grad-greetwood {
+    background: linear-gradient(
+      135deg,
+      #c2cfd4 0%,
+      #9fb3bc 50%,
+      #7d9aa6 100%
+    );
+  }
+  .grad-ai-toolkit {
+    background: linear-gradient(
+      135deg,
+      #d1c4d8 0%,
+      #b5a3bf 50%,
+      #9a83a8 100%
+    );
+  }
+  .grad-reviewhub {
+    background: linear-gradient(
+      135deg,
+      #d6c0c1 0%,
+      #c09a9d 50%,
+      #a87478 100%
+    );
+  }
+  .grad-image-resizing {
+    background: linear-gradient(
+      135deg,
+      #c3cee0 0%,
+      #9fb0d4 50%,
+      #7e92c2 100%
+    );
+  }
 
   /* Screenshot thumbs — only shown when 2+ images per project */
-  .work-screenshot-thumbs { min-height: 0; }
+  .work-screenshot-thumbs {
+    min-height: 0;
+  }
 
-  .work-thumb-set { display: none; gap: 8px; }
-  .work-thumb-set.is-active { display: flex; }
+  .work-thumb-set {
+    display: none;
+    gap: 8px;
+  }
+  .work-thumb-set.is-active {
+    display: flex;
+  }
   .work-thumb-set[data-image-count="0"],
   .work-thumb-set[data-image-count="1"] {
     display: none !important;
@@ -936,7 +1363,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     cursor: zoom-in;
     overflow: hidden;
     opacity: 0.7;
-    transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
+    transition:
+      opacity 0.2s,
+      border-color 0.2s,
+      transform 0.2s;
   }
 
   .work-screenshot-thumb img {
@@ -997,7 +1427,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   /* Front face content */
-  .work-project { display: none; }
+  .work-project {
+    display: none;
+  }
   .work-project.is-active {
     display: block;
     animation: workReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
@@ -1031,7 +1463,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background 0.2s,
+      transform 0.2s;
     font-family: inherit;
   }
 
@@ -1041,17 +1477,26 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     transform: translateY(-1px);
   }
 
-  .work-flip-top svg { opacity: 0.7; }
+  .work-flip-top svg {
+    opacity: 0.7;
+  }
 
   /* Late entry — the button fades in slightly after the rest of the project
      content has revealed, on initial load and on every project switch. */
   @keyframes flipReveal {
-    from { opacity: 0; transform: translateY(-4px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .work-project.is-active .work-flip-top {
-    animation: flipReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1) 0.55s both;
+    animation: flipReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1) 0.55s
+      both;
   }
 
   .work-project-title {
@@ -1137,7 +1582,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     line-height: 1;
     text-decoration: none;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s;
     font-family: inherit;
   }
 
@@ -1159,8 +1608,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     border-color: #234a31;
   }
 
-  .work-action-flip svg { transition: transform 0.2s; }
-  .work-action-flip:hover svg { transform: translateX(2px); }
+  .work-action-flip svg {
+    transition: transform 0.2s;
+  }
+  .work-action-flip:hover svg {
+    transform: translateX(2px);
+  }
 
   /* Shown in place of action buttons when a project has no public links */
   .work-action-note {
@@ -1187,7 +1640,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   /* Back face content */
-  .work-project-back { display: none; }
+  .work-project-back {
+    display: none;
+  }
   .work-project-back.is-active {
     display: block;
     animation: workReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
@@ -1220,7 +1675,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      border-color 0.2s;
     font-family: inherit;
   }
 
@@ -1268,7 +1726,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     align-items: center;
     justify-content: space-between;
     z-index: 5;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
   }
 
   /* Hide project nav when viewing back face — back face has its own "Back" button */
@@ -1277,7 +1737,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     visibility: hidden;
   }
 
-  .work-dots { display: flex; gap: 8px; }
+  .work-dots {
+    display: flex;
+    gap: 8px;
+  }
 
   .work-dot {
     width: 8px;
@@ -1287,7 +1750,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    transition: width 0.25s, background 0.25s, border-radius 0.25s;
+    transition:
+      width 0.25s,
+      background 0.25s,
+      border-radius 0.25s;
   }
 
   .work-dot.is-active {
@@ -1296,7 +1762,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     border-radius: 4px;
   }
 
-  .work-arrows { display: flex; gap: 6px; }
+  .work-arrows {
+    display: flex;
+    gap: 6px;
+  }
 
   .work-arrow {
     display: grid;
@@ -1310,7 +1779,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     cursor: pointer;
     font-family: var(--studio-sans);
     font-size: 0.95rem;
-    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    transition:
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s;
   }
 
   .work-arrow:hover {
@@ -1319,7 +1792,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     border-color: var(--studio-accent);
   }
 
-  .work-arrow:active { transform: translateY(1px); }
+  .work-arrow:active {
+    transform: translateY(1px);
+  }
 
   /* Focus styles */
   .work-screenshot-thumb:focus-visible,
@@ -1333,12 +1808,20 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   @keyframes workReveal {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* ===== More Projects ===== */
-  .more-projects-section { padding: 24px 0 120px; }
+  .more-projects-section {
+    padding: 24px 0 120px;
+  }
 
   .more-projects-header {
     margin-bottom: 36px;
@@ -1375,9 +1858,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--studio-border);
     border-radius: 6px;
-    transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1),
-                box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1),
-                border-color 0.25s;
+    transition:
+      transform 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 0.25s;
   }
 
   .more-project:hover {
@@ -1401,7 +1885,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  .more-project:hover .more-project-image img { transform: scale(1.03); }
+  .more-project:hover .more-project-image img {
+    transform: scale(1.03);
+  }
 
   .more-project-body {
     display: flex;
@@ -1427,7 +1913,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     font: inherit;
   }
 
-  .more-project-meta-separator { color: var(--studio-border); }
+  .more-project-meta-separator {
+    color: var(--studio-border);
+  }
 
   .more-project-title {
     color: var(--studio-text);
@@ -1465,7 +1953,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     animation: lightboxFadeIn 0.2s ease;
   }
 
-  .lightbox[hidden] { display: none; }
+  .lightbox[hidden] {
+    display: none;
+  }
 
   .lightbox-stage {
     flex: 1;
@@ -1505,7 +1995,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition:
+      background 0.2s,
+      transform 0.2s;
   }
 
   .lightbox-close {
@@ -1514,14 +2006,18 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     right: 20px;
   }
 
-  .lightbox-arrow { flex-shrink: 0; }
+  .lightbox-arrow {
+    flex-shrink: 0;
+  }
 
   .lightbox-close:hover,
   .lightbox-arrow:hover {
     background: rgba(255, 255, 255, 0.18);
   }
 
-  .lightbox-arrow:active { transform: scale(0.94); }
+  .lightbox-arrow:active {
+    transform: scale(0.94);
+  }
 
   .lightbox-close:focus-visible,
   .lightbox-arrow:focus-visible {
@@ -1530,17 +2026,29 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   @keyframes lightboxFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes lightboxImgIn {
-    from { opacity: 0; transform: scale(0.96); }
-    to   { opacity: 1; transform: scale(1); }
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   /* Hide page scroll when lightbox open */
-  body.lightbox-open { overflow: hidden; }
+  body.lightbox-open {
+    overflow: hidden;
+  }
 
   /* ===== Responsive ===== */
   @media (max-width: 1080px) {
@@ -1548,13 +2056,18 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       grid-template-columns: 60fr 40fr;
     }
 
-    .work-visual-panel { padding: 36px; }
+    .work-visual-panel {
+      padding: 36px;
+    }
 
     .work-detail-face {
       padding: 56px 44px 88px;
     }
 
-    .work-project-nav { left: 44px; right: 44px; }
+    .work-project-nav {
+      left: 44px;
+      right: 44px;
+    }
   }
 
   @media (max-width: 900px) {
@@ -1570,37 +2083,81 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       border-bottom: 1px solid var(--studio-border);
     }
 
-    .work-detail-flipper { min-height: 540px; }
+    .work-detail-flipper {
+      min-height: 540px;
+    }
 
     .work-detail-face {
       padding: 40px 32px 92px;
     }
 
-    .work-project-nav { left: 32px; right: 32px; }
+    .work-project-nav {
+      left: 32px;
+      right: 32px;
+    }
   }
 
   @media (max-width: 768px) {
-    .lightbox { padding: 16px; gap: 8px; }
-    .lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; }
-    .lightbox-arrow { width: 38px; height: 38px; }
+    .lightbox {
+      padding: 16px;
+      gap: 8px;
+    }
+    .lightbox-close {
+      top: 12px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+    }
+    .lightbox-arrow {
+      width: 38px;
+      height: 38px;
+    }
 
-    .studio-nav { display: none; }
-    .studio-menu-toggle { display: flex; }
+    .studio-nav {
+      display: none;
+    }
+    .studio-menu-toggle {
+      display: flex;
+    }
 
-    .projects-hero { padding: 120px 0 48px; }
-    .projects-browser-section { padding: 16px 0 64px; }
-    .more-projects-section { padding: 24px 0 80px; }
+    .projects-hero {
+      padding: 120px 0 48px;
+    }
+    .projects-browser-section {
+      padding: 16px 0 64px;
+    }
+    .more-projects-section {
+      padding: 24px 0 80px;
+    }
 
-    .work-visual-panel { min-height: 340px; padding: 18px; }
-    .work-detail-flipper { min-height: 580px; }
-    .work-detail-face { padding: 32px 24px 96px; }
+    .work-visual-panel {
+      min-height: 340px;
+      padding: 18px;
+    }
+    .work-detail-flipper {
+      min-height: 580px;
+    }
+    .work-detail-face {
+      padding: 32px 24px 96px;
+    }
 
-    .work-project-title { font-size: 28px; }
+    .work-project-title {
+      font-size: 28px;
+    }
 
-    .work-actions { flex-direction: column; align-items: stretch; }
-    .work-action { width: 100%; }
+    .work-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .work-action {
+      width: 100%;
+    }
 
-    .work-project-nav { left: 24px; right: 24px; bottom: 22px; }
+    .work-project-nav {
+      left: 24px;
+      right: 24px;
+      bottom: 22px;
+    }
 
     .more-projects-grid {
       grid-template-columns: 1fr;
@@ -1609,20 +2166,35 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
   }
 
   @media (max-width: 480px) {
-    .projects-headline { font-size: 2rem; }
+    .projects-headline {
+      font-size: 2rem;
+    }
 
-    .studio-container { padding: 0 var(--site-container-padding-mobile); }
-    .studio-header-inner { padding: 0 var(--site-container-padding-mobile); }
+    .studio-container {
+      padding: 0 var(--site-container-padding-mobile);
+    }
+    .studio-header-inner {
+      padding: 0 var(--site-container-padding-mobile);
+    }
 
-    .work-visual-panel { min-height: 280px; padding: 14px; }
-    .work-detail-face { padding: 28px 20px 90px; }
-    .work-project-description { font-size: 0.92rem; }
+    .work-visual-panel {
+      min-height: 280px;
+      padding: 14px;
+    }
+    .work-detail-face {
+      padding: 28px 20px 90px;
+    }
+    .work-project-description {
+      font-size: 0.92rem;
+    }
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const root = document.querySelector('[data-variation-content="studio"]');
+    const root = document.querySelector(
+      '[data-variation-content="studio"]'
+    );
     if (!root) return;
 
     // Reveal animations
@@ -1654,29 +2226,53 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
     // Project showcase
     const showcase = root.querySelector("[data-project-showcase]");
     if (showcase) {
-      const visualSets = Array.from(showcase.querySelectorAll("[data-project-visual]")) as HTMLElement[];
-      const details = Array.from(showcase.querySelectorAll("[data-project-detail]")) as HTMLElement[];
-      const backs = Array.from(showcase.querySelectorAll("[data-project-back]")) as HTMLElement[];
-      const thumbSets = Array.from(showcase.querySelectorAll("[data-thumb-set]")) as HTMLElement[];
-      const dots = Array.from(showcase.querySelectorAll("[data-project-dot]")) as HTMLButtonElement[];
-      const current = showcase.querySelector("[data-project-current]");
+      const visualSets = Array.from(
+        showcase.querySelectorAll("[data-project-visual]")
+      ) as HTMLElement[];
+      const details = Array.from(
+        showcase.querySelectorAll("[data-project-detail]")
+      ) as HTMLElement[];
+      const backs = Array.from(
+        showcase.querySelectorAll("[data-project-back]")
+      ) as HTMLElement[];
+      const thumbSets = Array.from(
+        showcase.querySelectorAll("[data-thumb-set]")
+      ) as HTMLElement[];
+      const dots = Array.from(
+        showcase.querySelectorAll("[data-project-dot]")
+      ) as HTMLButtonElement[];
+      const current = showcase.querySelector(
+        "[data-project-current]"
+      );
       const previous = showcase.querySelector("[data-project-prev]");
       const next = showcase.querySelector("[data-project-next]");
-      const detailPanel = showcase.querySelector("[data-detail-panel]") as HTMLElement | null;
-      const flipButtons = Array.from(showcase.querySelectorAll("[data-flip-button]")) as HTMLButtonElement[];
-      const titleEl = showcase.querySelector("[data-project-title]") as HTMLElement | null;
+      const detailPanel = showcase.querySelector(
+        "[data-detail-panel]"
+      ) as HTMLElement | null;
+      const flipButtons = Array.from(
+        showcase.querySelectorAll("[data-flip-button]")
+      ) as HTMLButtonElement[];
+      const titleEl = showcase.querySelector(
+        "[data-project-title]"
+      ) as HTMLElement | null;
 
       let activeIndex = 0;
 
       // ===== Analytics =====
-      const phTrack = (event: string, props: Record<string, unknown> = {}) =>
-        (window as any).posthog?.capture?.(event, { page: location.pathname, ...props });
+      const phTrack = (
+        event: string,
+        props: Record<string, unknown> = {}
+      ) =>
+        (window as any).posthog?.capture?.(event, {
+          page: location.pathname,
+          ...props,
+        });
       let lastViewed = -1;
       const trackProjectView = () => {
         if (activeIndex === lastViewed) return;
         lastViewed = activeIndex;
         const detail = details[activeIndex];
-        phTrack('project_viewed', {
+        phTrack("project_viewed", {
           project_id: detail?.dataset.projectId ?? null,
           title: detail?.dataset.projectTitle ?? null,
         });
@@ -1687,7 +2283,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       };
 
       const swapTitle = (nextTitle: string) => {
-        if (!titleEl || titleEl.textContent?.trim() === nextTitle) return;
+        if (!titleEl || titleEl.textContent?.trim() === nextTitle)
+          return;
         titleEl.classList.add("is-swapping");
         window.setTimeout(() => {
           titleEl.textContent = nextTitle;
@@ -1696,12 +2293,15 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       };
 
       const updateProject = (nextIndex: number) => {
-        activeIndex = (nextIndex + visualSets.length) % visualSets.length;
+        activeIndex =
+          (nextIndex + visualSets.length) % visualSets.length;
         const label = String(activeIndex + 1).padStart(2, "0");
 
         if (current) current.textContent = label;
 
-        const nextTitle = details[activeIndex]?.querySelector(".work-project-title")?.textContent?.trim();
+        const nextTitle = details[activeIndex]
+          ?.querySelector(".work-project-title")
+          ?.textContent?.trim();
         if (nextTitle) swapTitle(nextTitle);
 
         // Always reset to front when switching projects
@@ -1710,23 +2310,35 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         visualSets.forEach((set, index) => {
           const isActive = index === activeIndex;
           set.classList.toggle("is-active", isActive);
-          set.setAttribute("aria-hidden", isActive ? "false" : "true");
+          set.setAttribute(
+            "aria-hidden",
+            isActive ? "false" : "true"
+          );
 
           // Also reset to first screenshot when switching
           const imgs = set.querySelectorAll(".work-visual-img");
-          imgs.forEach((img, j) => img.classList.toggle("is-active", j === 0));
+          imgs.forEach((img, j) =>
+            img.classList.toggle("is-active", j === 0)
+          );
         });
 
         thumbSets.forEach((set, index) => {
           set.classList.toggle("is-active", index === activeIndex);
-          const thumbs = set.querySelectorAll(".work-screenshot-thumb");
-          thumbs.forEach((t, j) => t.classList.toggle("is-active", j === 0));
+          const thumbs = set.querySelectorAll(
+            ".work-screenshot-thumb"
+          );
+          thumbs.forEach((t, j) =>
+            t.classList.toggle("is-active", j === 0)
+          );
         });
 
         details.forEach((detail, index) => {
           const isActive = index === activeIndex;
           detail.classList.toggle("is-active", isActive);
-          detail.setAttribute("aria-hidden", isActive ? "false" : "true");
+          detail.setAttribute(
+            "aria-hidden",
+            isActive ? "false" : "true"
+          );
         });
 
         backs.forEach((back, index) => {
@@ -1738,7 +2350,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         dots.forEach((dot, index) => {
           const isActive = index === activeIndex;
           dot.classList.toggle("is-active", isActive);
-          dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+          dot.setAttribute(
+            "aria-pressed",
+            isActive ? "true" : "false"
+          );
         });
 
         trackProjectView();
@@ -1747,37 +2362,63 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       // Screenshot thumb clicks — switch the active screenshot AND open the lightbox
       thumbSets.forEach((set) => {
         const projectIndex = Number(set.dataset.projectIndex || 0);
-        const thumbs = Array.from(set.querySelectorAll(".work-screenshot-thumb")) as HTMLButtonElement[];
+        const thumbs = Array.from(
+          set.querySelectorAll(".work-screenshot-thumb")
+        ) as HTMLButtonElement[];
         thumbs.forEach((thumb) => {
           thumb.addEventListener("click", () => {
             const j = Number(thumb.dataset.screenshotIndex || 0);
-            thumbs.forEach((t, k) => t.classList.toggle("is-active", k === j));
-            const visualImgs = visualSets[projectIndex]?.querySelectorAll(".work-visual-img");
-            visualImgs?.forEach((img, k) => img.classList.toggle("is-active", k === j));
+            thumbs.forEach((t, k) =>
+              t.classList.toggle("is-active", k === j)
+            );
+            const visualImgs = visualSets[
+              projectIndex
+            ]?.querySelectorAll(".work-visual-img");
+            visualImgs?.forEach((img, k) =>
+              img.classList.toggle("is-active", k === j)
+            );
             openLightbox(projectIndex, j);
           });
         });
       });
 
       // Main visual click — open lightbox with the active screenshot for this project
-      const visualButtons = Array.from(showcase.querySelectorAll("[data-lightbox-open]")) as HTMLButtonElement[];
+      const visualButtons = Array.from(
+        showcase.querySelectorAll("[data-lightbox-open]")
+      ) as HTMLButtonElement[];
       visualButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
-          const set = btn.closest("[data-project-visual]") as HTMLElement | null;
+          const set = btn.closest(
+            "[data-project-visual]"
+          ) as HTMLElement | null;
           if (!set) return;
           const projectIndex = Number(set.dataset.projectIndex || 0);
-          const screenshotIndex = Number(btn.dataset.screenshotIndex || 0);
+          const screenshotIndex = Number(
+            btn.dataset.screenshotIndex || 0
+          );
           openLightbox(projectIndex, screenshotIndex);
         });
       });
 
       // ===== Lightbox controller =====
-      const lightbox = document.querySelector("[data-lightbox]") as HTMLElement | null;
-      const lightboxImg = lightbox?.querySelector("[data-lightbox-img]") as HTMLImageElement | null;
-      const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]") as HTMLElement | null;
-      const lightboxClose = lightbox?.querySelector("[data-lightbox-close]") as HTMLButtonElement | null;
-      const lightboxPrev = lightbox?.querySelector("[data-lightbox-prev]") as HTMLButtonElement | null;
-      const lightboxNext = lightbox?.querySelector("[data-lightbox-next]") as HTMLButtonElement | null;
+      const lightbox = document.querySelector(
+        "[data-lightbox]"
+      ) as HTMLElement | null;
+      const lightboxImg = lightbox?.querySelector(
+        "[data-lightbox-img]"
+      ) as HTMLImageElement | null;
+      const lightboxCaption = lightbox?.querySelector(
+        "[data-lightbox-caption]"
+      ) as HTMLElement | null;
+      const lightboxClose = lightbox?.querySelector(
+        "[data-lightbox-close]"
+      ) as HTMLButtonElement | null;
+      const lightboxPrev = lightbox?.querySelector(
+        "[data-lightbox-prev]"
+      ) as HTMLButtonElement | null;
+      const lightboxNext = lightbox?.querySelector(
+        "[data-lightbox-next]"
+      ) as HTMLButtonElement | null;
 
       let lightboxProject = 0;
       let lightboxIdx = 0;
@@ -1785,31 +2426,48 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       const projectImages = (projectIndex: number): string[] => {
         const set = visualSets[projectIndex];
         if (!set) return [];
-        return Array.from(set.querySelectorAll(".work-visual-img img")).map((el) => (el as HTMLImageElement).src);
+        return Array.from(
+          set.querySelectorAll(".work-visual-img img")
+        ).map((el) => (el as HTMLImageElement).src);
       };
 
       const renderLightbox = () => {
         if (!lightbox || !lightboxImg || !lightboxCaption) return;
         const images = projectImages(lightboxProject);
         if (images.length === 0) return;
-        lightboxIdx = ((lightboxIdx % images.length) + images.length) % images.length;
+        lightboxIdx =
+          ((lightboxIdx % images.length) + images.length) %
+          images.length;
         lightboxImg.src = images[lightboxIdx];
         lightboxImg.alt = `Screenshot ${lightboxIdx + 1}`;
-        lightboxCaption.textContent = images.length > 1 ? `${lightboxIdx + 1} / ${images.length}` : "";
+        lightboxCaption.textContent =
+          images.length > 1
+            ? `${lightboxIdx + 1} / ${images.length}`
+            : "";
 
         // Hide arrows when single image
         const showArrows = images.length > 1;
-        if (lightboxPrev) lightboxPrev.style.visibility = showArrows ? "visible" : "hidden";
-        if (lightboxNext) lightboxNext.style.visibility = showArrows ? "visible" : "hidden";
+        if (lightboxPrev)
+          lightboxPrev.style.visibility = showArrows
+            ? "visible"
+            : "hidden";
+        if (lightboxNext)
+          lightboxNext.style.visibility = showArrows
+            ? "visible"
+            : "hidden";
       };
 
-      const openLightbox = (projectIndex: number, screenshotIndex: number) => {
+      const openLightbox = (
+        projectIndex: number,
+        screenshotIndex: number
+      ) => {
         if (!lightbox) return;
         lightboxProject = projectIndex;
         lightboxIdx = screenshotIndex;
-        phTrack('project_engaged', {
-          project_id: details[projectIndex]?.dataset.projectId ?? null,
-          action: 'screenshot_opened',
+        phTrack("project_engaged", {
+          project_id:
+            details[projectIndex]?.dataset.projectId ?? null,
+          action: "screenshot_opened",
         });
         renderLightbox();
         lightbox.hidden = false;
@@ -1824,8 +2482,14 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       };
 
       lightboxClose?.addEventListener("click", closeLightbox);
-      lightboxPrev?.addEventListener("click", () => { lightboxIdx -= 1; renderLightbox(); });
-      lightboxNext?.addEventListener("click", () => { lightboxIdx += 1; renderLightbox(); });
+      lightboxPrev?.addEventListener("click", () => {
+        lightboxIdx -= 1;
+        renderLightbox();
+      });
+      lightboxNext?.addEventListener("click", () => {
+        lightboxIdx += 1;
+        renderLightbox();
+      });
 
       // Click backdrop to close
       lightbox?.addEventListener("click", (e) => {
@@ -1839,8 +2503,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         });
       });
 
-      previous?.addEventListener("click", () => updateProject(activeIndex - 1));
-      next?.addEventListener("click", () => updateProject(activeIndex + 1));
+      previous?.addEventListener("click", () =>
+        updateProject(activeIndex - 1)
+      );
+      next?.addEventListener("click", () =>
+        updateProject(activeIndex + 1)
+      );
 
       // Flip buttons
       flipButtons.forEach((btn) => {
@@ -1849,15 +2517,21 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
           // Update aria-hidden on backs to reflect flipped state
           if (target === "back") {
             backs.forEach((back, index) => {
-              back.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+              back.setAttribute(
+                "aria-hidden",
+                index === activeIndex ? "false" : "true"
+              );
             });
             setFlipped(true);
-            phTrack('project_engaged', {
-              project_id: details[activeIndex]?.dataset.projectId ?? null,
-              action: 'details_expanded',
+            phTrack("project_engaged", {
+              project_id:
+                details[activeIndex]?.dataset.projectId ?? null,
+              action: "details_expanded",
             });
           } else {
-            backs.forEach((back) => back.setAttribute("aria-hidden", "true"));
+            backs.forEach((back) =>
+              back.setAttribute("aria-hidden", "true")
+            );
             setFlipped(false);
           }
         });
@@ -1869,7 +2543,13 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         const target = event.target as HTMLElement | null;
         if (target) {
           const tag = target.tagName;
-          if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable) return;
+          if (
+            tag === "INPUT" ||
+            tag === "TEXTAREA" ||
+            tag === "SELECT" ||
+            target.isContentEditable
+          )
+            return;
         }
 
         const isLightboxOpen = lightbox && !lightbox.hidden;
@@ -1915,10 +2595,18 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
       (() => {
         if (window.location.hash) return;
         if (window.scrollY > 4) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (
+          window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+        )
+          return;
 
-        const section = document.querySelector(".projects-browser-section") as HTMLElement | null;
-        const browser = document.querySelector(".work-browser") as HTMLElement | null;
+        const section = document.querySelector(
+          ".projects-browser-section"
+        ) as HTMLElement | null;
+        const browser = document.querySelector(
+          ".work-browser"
+        ) as HTMLElement | null;
         if (!section || !browser) return;
 
         let cancelled = false;
@@ -1936,38 +2624,52 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(2, "0");
         };
 
         window.addEventListener("wheel", cancel, { passive: true });
-        window.addEventListener("touchstart", cancel, { passive: true });
+        window.addEventListener("touchstart", cancel, {
+          passive: true,
+        });
         window.addEventListener("mousedown", cancel);
         window.addEventListener("keydown", cancel);
 
         // Anticipation lift — the whole spotlight unit (topline + shell) rises,
         // shadow deepens, green hint on the border. Held longer so the hero gets read.
-        timeouts.push(window.setTimeout(() => {
-          if (cancelled) return;
-          browser.classList.add("is-anticipating");
-        }, 1800));
+        timeouts.push(
+          window.setTimeout(() => {
+            if (cancelled) return;
+            browser.classList.add("is-anticipating");
+          }, 1800)
+        );
 
         // Begin the scroll. The lift is still in effect, so the scroll reads as
         // the same motion continuing — the panel that just rose now meets you.
-        timeouts.push(window.setTimeout(() => {
-          if (cancelled) return;
-          const HEADER_OFFSET = 64;
-          const target = section.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET - 12;
-          if (target > window.scrollY + 4) {
-            window.scrollTo({ top: target, behavior: "smooth" });
-          }
-        }, 2700));
+        timeouts.push(
+          window.setTimeout(() => {
+            if (cancelled) return;
+            const HEADER_OFFSET = 64;
+            const target =
+              section.getBoundingClientRect().top +
+              window.scrollY -
+              HEADER_OFFSET -
+              12;
+            if (target > window.scrollY + 4) {
+              window.scrollTo({ top: target, behavior: "smooth" });
+            }
+          }, 2700)
+        );
 
         // Release the lift as the panel reaches its resting position in view.
-        timeouts.push(window.setTimeout(() => {
-          browser.classList.remove("is-anticipating");
-        }, 3300));
+        timeouts.push(
+          window.setTimeout(() => {
+            browser.classList.remove("is-anticipating");
+          }, 3300)
+        );
       })();
     }
 
     // Mobile menu toggle
     const toggle = root.querySelector(".studio-menu-toggle");
-    const nav = root.querySelector(".studio-nav") as HTMLElement | null;
+    const nav = root.querySelector(
+      ".studio-nav"
+    ) as HTMLElement | null;
     if (toggle && nav) {
       const openMenu = () => {
         nav.style.display = "flex";

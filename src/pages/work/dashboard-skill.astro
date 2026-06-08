@@ -1,0 +1,959 @@
+---
+export const prerender = true;
+
+import Layout from "../../layouts/Layout.astro";
+import StudioFooter from "../../components/StudioFooter.astro";
+
+const IMG = "/images/dashboard-skill-project";
+
+// The five things the skill changes, isolated by comparing V1 (Claude's raw
+// design intuition, no skill) against V7 (Claude with the skill). Same model,
+// same data — the delta is the skill.
+const shifts = [
+  {
+    n: "01",
+    title: "From numbers to decisions",
+    v1: "Shows what: 323 quotes, 26% handled — true, but inert.",
+    v7: "Leads with so what: “Biggest leak: Shared → Accepted, 158 lost — but acceptance is climbing +10.5%.” Every widget earns an insight or a next step.",
+  },
+  {
+    n: "02",
+    title: "Data-fit, not default charts",
+    v1: "Recharts defaults for everything — a two-slice pie, bars for every metric.",
+    v7: "The medium fits the values: the leaderboard’s 91 / 91 / 95 / 102 (identical as bars) becomes ranked numbers + gap-to-target; the funnel is a clean stepped funnel, not the pointy default.",
+  },
+  {
+    n: "03",
+    title: "Attention as a budget",
+    v1: "Lots of elements coloured, so nothing stands out.",
+    v7: "A calm zinc baseline; red is spent on the one genuine alert (the leak, Stock’s 100% escalation) — so urgency actually reads.",
+  },
+  {
+    n: "04",
+    title: "Insights, contained and tiered",
+    v1: "No interpretation layer — just charts and captions.",
+    v7: "Non-obvious findings sit in always-on banners; deducible ones hide behind a “Show insights” toggle. Hierarchy comes from containment, not loose coloured sentences.",
+  },
+  {
+    n: "05",
+    title: "Production-complete, not the happy path",
+    v1: "A mockup: one state, light mode only.",
+    v7: "Loading / empty / error states, full dark mode, tabular figures, accessible chart tables, responsive breakpoints — what separates a real dashboard from a screenshot.",
+  },
+];
+
+// Interactive principles. Each carries a bespoke illustration (rendered in the
+// markup by id) so the section shows the idea, not just describes it.
+const principles = [
+  { id: "decide", no: "01", tab: "Decide", title: "Start from the decision, not the data",
+    body: "A dashboard answers one question first — “what needs my attention?” The data serves that question; it isn't the point on its own.",
+    ask: "Can a newcomer tell what matters here in five seconds?" },
+  { id: "focus", no: "02", tab: "Focus", title: "Lead with one thing",
+    body: "One hero metric or question owns the top of the screen. A wall of equal-weight widgets has no priority, so the eye lands nowhere.",
+    ask: "Is there a single, obvious focal point — or eight competing ones?" },
+  { id: "earn", no: "03", tab: "Earn", title: "Every element earns its place",
+    body: "Title, chart, insight, action — each stays only if it supports a decision. Not minimalism; a ban on decoration. Rich widgets are welcome.",
+    ask: "If I removed this, would the reader lose a decision?" },
+  { id: "insight", no: "04", tab: "Insight", title: "Show the insight, not just the data",
+    body: "A chart that only restates its own axis is wasted space. Say the thing a sharp colleague would say out loud — the cause, the anomaly, the implication.",
+    ask: "Does this tell me something the numbers alone don't?" },
+  { id: "act", no: "05", tab: "Act", title: "End in a next step",
+    body: "Every widget answers “so what do I do?” — a real drill-down into the actual segment, not a dead-end figure or a generic “view details”.",
+    ask: "If this is bad, do I know where to go next?" },
+  { id: "calm", no: "06", tab: "Calm", title: "Emphasis is scarce",
+    body: "Calm by default. Colour and alarm are a budget — spend them on the one or two things that are genuinely urgent, or nothing reads as urgent.",
+    ask: "Is red reserved for what's actually on fire?" },
+];
+
+// The visual journey, with explicit version numbers.
+const iterations = [
+  { version: "Base", tag: "the original product", img: `${IMG}/original.png`,
+    alt: "The original product dashboard — a grid of equal-weight metric cards",
+    heading: "A dump of charts",
+    body: "The starting product: 15+ metrics at equal weight, bars all the same height, mismatched time periods, a greeting where a headline should be. It answers no question in particular." },
+  { version: "V1", tag: "raw intuition, no skill", img: `${IMG}/v1.png`,
+    alt: "Claude's first redesign without the skill — a clean but generic KPI grid",
+    heading: "Cleaner, still generic",
+    body: "Claude's raw design instinct with no skill applied: a tidy KPI grid on Recharts defaults — bar, line, two-slice pie. Genuinely better, but it still displays numbers rather than answering a decision." },
+  { version: "V4", tag: "the overshoot", img: `${IMG}/v4.png`,
+    alt: "A richer redesign with large decorative bars running hot on orange",
+    heading: "Rich isn't the same as clear",
+    body: "Big, confident bars — that don't differentiate near-identical numbers. Warm fills make the whole page look urgent, so nothing is. An honest wrong turn, kept in because the mistake is the clearest lesson." },
+  { version: "V7", tag: "with the skill", img: `${IMG}/v7-light.png`,
+    alt: "The final dashboard — a conversion funnel hero with earned insights and drill-downs",
+    heading: "An actionable launchpad",
+    body: "One hero question — where are quotes leaking? — answered by a clean funnel with the leak named in plain words. Every widget carries an insight and a real drill-down. Calm by default; red reserved for the one thing on fire." },
+];
+---
+
+<Layout
+  title="Designing actionable dashboards | Mohit Tater"
+  description="A case study on a skill that turns generic chart-dump dashboards into actionable launchpads — V1 vs V7, the grounding principles, the iterations, and how it's validated."
+  ogImage="/images/dashboard-skill-project/v7-light.png"
+>
+  <div data-variation-content="studio">
+    <!-- Header -->
+    <header class="studio-header">
+      <div class="studio-header-inner">
+        <a href="/" class="studio-logo">Mohit Tater</a>
+        <nav class="studio-nav">
+          <a href="/" class="studio-nav-link">Home</a>
+          <a href="/projects" class="studio-nav-link studio-nav-link-active">Work</a>
+          <a href="/about" class="studio-nav-link">About</a>
+          <a href="#studio-footer" class="studio-nav-link studio-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
+        </nav>
+        <button class="studio-menu-toggle" aria-label="Toggle menu">
+          <span class="studio-menu-bar"></span>
+          <span class="studio-menu-bar"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero — leads with the premise -->
+    <section class="cs-hero" data-ph-section="case_study_hero">
+      <div class="studio-container">
+        <a href="/projects" class="cs-back studio-reveal">
+          <span aria-hidden="true">&larr;</span> Back to work
+        </a>
+        <p class="cs-kicker studio-reveal">Case study &middot; Agent skill</p>
+        <h1 class="cs-headline studio-reveal">
+          A skill that turns dashboards into <em>decisions</em>, not decoration.
+        </h1>
+        <p class="cs-lede studio-reveal">
+          Most dashboards are a wall of charts &mdash; technically full, practically useless.
+          So I built a skill that designs the opposite: it leads with the one decision a
+          dashboard exists for, and puts a next step on every widget. It works like a
+          <em>navigator, not a prescriber</em> &mdash; it pitches options, adapts to your stack
+          and taste, and keeps the rich widgets that earn their place instead of stripping
+          things to look &ldquo;clean&rdquo;.
+        </p>
+      </div>
+    </section>
+
+    <!-- V1 vs V7 — the headline comparison -->
+    <section class="cs-section cs-section-ba" aria-labelledby="ba-heading">
+      <div class="studio-container">
+        <div class="cs-ba-head studio-reveal">
+          <h2 id="ba-heading" class="cs-h2">The same designer, with and without the skill</h2>
+          <p class="cs-ba-sub">
+            <strong>V1</strong> is Claude's raw design intuition &mdash; no skill. <strong>V7</strong>
+            is the same model with the skill applied. Same data, same screen. The gap between them
+            <em>is</em> the skill.
+          </p>
+        </div>
+
+        <div class="cs-ba studio-reveal">
+          <figure class="cs-ba-item">
+            <span class="cs-ba-vtag cs-ba-vtag-before">V1</span>
+            <button type="button" class="cs-ba-frame" data-zoom={`${IMG}/v1.png`} data-zoom-caption="V1 — Claude's raw design intuition, no skill" aria-label="Zoom into the V1 dashboard">
+              <img src={`${IMG}/v1.png`} alt="V1: Claude's raw redesign — a clean but generic KPI grid on Recharts defaults" loading="eager" />
+              <span class="cs-zoom-hint" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <figcaption><strong>Raw intuition.</strong> A clean KPI grid that displays the data.</figcaption>
+          </figure>
+
+          <span class="cs-ba-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M8 4l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+
+          <figure class="cs-ba-item">
+            <span class="cs-ba-vtag cs-ba-vtag-after">V7</span>
+            <button type="button" class="cs-ba-frame" data-zoom={`${IMG}/v7-light.png`} data-zoom-caption="V7 — the same model, with the skill applied" aria-label="Zoom into the V7 dashboard">
+              <img src={`${IMG}/v7-light.png`} alt="V7: the skill-designed dashboard — a conversion funnel hero with earned insights and drill-downs" loading="lazy" />
+              <span class="cs-zoom-hint" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <figcaption><strong>With the skill.</strong> A launchpad that interprets it and points to a next step.</figcaption>
+          </figure>
+        </div>
+
+        <p class="cs-ba-oneliner studio-reveal">
+          V1 visualises the data. <em>V7 interprets it</em> &mdash; it tells the manager where to
+          look and what to do next.
+        </p>
+      </div>
+    </section>
+
+    <!-- What the skill changed — the five shifts -->
+    <section class="cs-section" aria-labelledby="shifts-heading">
+      <div class="studio-container">
+        <p class="studio-section-label studio-reveal">What the skill changed</p>
+        <h2 id="shifts-heading" class="cs-h2 studio-reveal">Five shifts, V1 &rarr; V7</h2>
+        <p class="cs-section-intro studio-reveal">
+          Each is a concrete, demoable change &mdash; the kind you can point at on screen.
+        </p>
+        <div class="cs-shifts">
+          {shifts.map((s) => (
+            <article class="cs-shift studio-reveal">
+              <div class="cs-shift-no">{s.n}</div>
+              <h3 class="cs-shift-title">{s.title}</h3>
+              <div class="cs-shift-cols">
+                <div class="cs-shift-col cs-shift-v1">
+                  <span class="cs-shift-vlabel">V1</span>
+                  <p>{s.v1}</p>
+                </div>
+                <span class="cs-shift-to" aria-hidden="true">&rarr;</span>
+                <div class="cs-shift-col cs-shift-v7">
+                  <span class="cs-shift-vlabel">V7</span>
+                  <p>{s.v7}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Six principles — interactive, illustrated -->
+    <section class="cs-section cs-section-feature" aria-labelledby="principles-heading" data-principles>
+      <div class="studio-container">
+        <p class="studio-section-label studio-reveal">The grounding</p>
+        <h2 id="principles-heading" class="cs-h2 studio-reveal">Six principles, every iteration</h2>
+        <p class="cs-section-intro studio-reveal">
+          The questions I built against from the very first pass &mdash; they hold whatever the
+          stack, the charting library, or the domain. Click through to see each one.
+        </p>
+
+        <div class="cs-pl studio-reveal">
+          <!-- Tabs -->
+          <div class="cs-pl-tabs" role="tablist" aria-label="Design principles">
+            {principles.map((p, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`pl-tab-${p.id}`}
+                aria-controls={`pl-panel-${p.id}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                class={`cs-pl-tab ${i === 0 ? "is-active" : ""}`}
+                data-pl-tab={p.id}
+              >
+                <span class="cs-pl-tab-no">{p.no}</span>
+                <span class="cs-pl-tab-label">{p.tab}</span>
+              </button>
+            ))}
+          </div>
+
+          <!-- Panels -->
+          <div class="cs-pl-stage">
+            {principles.map((p, i) => (
+              <div
+                role="tabpanel"
+                id={`pl-panel-${p.id}`}
+                aria-labelledby={`pl-tab-${p.id}`}
+                class={`cs-pl-panel ${i === 0 ? "is-active" : ""}`}
+                data-pl-panel={p.id}
+                hidden={i !== 0}
+              >
+                <div class="cs-pl-copy">
+                  <div class="cs-pl-no">{p.no} / 06</div>
+                  <h3 class="cs-pl-title">{p.title}</h3>
+                  <p class="cs-pl-body">{p.body}</p>
+                  <p class="cs-pl-ask">
+                    <span class="cs-ask-mark" aria-hidden="true">
+                      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    {p.ask}
+                  </p>
+                </div>
+
+                <!-- Illustration: a before → after micro-demo per principle -->
+                <div class="cs-pl-illo">
+                  {p.id === "decide" && (
+                    <div class="illo-pair">
+                      <div class="illo-card illo-mute">
+                        <div class="illo-tag">V1</div>
+                        <div class="illo-bignum">323</div>
+                        <div class="illo-cap">quotes generated</div>
+                      </div>
+                      <span class="illo-arrow" aria-hidden="true">&rarr;</span>
+                      <div class="illo-card illo-live">
+                        <div class="illo-tag illo-tag-on">V7</div>
+                        <div class="illo-lead">158 lost at Shared&nbsp;&rarr;&nbsp;Accepted</div>
+                        <div class="illo-sub illo-up">acceptance climbing +10.5%</div>
+                        <div class="illo-cta">Diagnose the leak &rarr;</div>
+                      </div>
+                    </div>
+                  )}
+                  {p.id === "focus" && (
+                    <div class="illo-pair">
+                      <div class="illo-card illo-mute">
+                        <div class="illo-tag">V1</div>
+                        <div class="illo-grid6">
+                          <span></span><span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                        <div class="illo-cap">eight equal widgets</div>
+                      </div>
+                      <span class="illo-arrow" aria-hidden="true">&rarr;</span>
+                      <div class="illo-card illo-live">
+                        <div class="illo-tag illo-tag-on">V7</div>
+                        <div class="illo-hero"><span class="illo-hero-num">17%</span><span class="illo-hero-cap">end-to-end</span></div>
+                        <div class="illo-row3"><span></span><span></span><span></span></div>
+                        <div class="illo-cap">one hero, supporting cast</div>
+                      </div>
+                    </div>
+                  )}
+                  {p.id === "earn" && (
+                    <div class="illo-pair">
+                      <div class="illo-card illo-mute">
+                        <div class="illo-tag">V1</div>
+                        <div class="illo-widget illo-busy">
+                          <span class="illo-l illo-l-60"></span>
+                          <span class="illo-l illo-l-90"></span>
+                          <span class="illo-l illo-l-40"></span>
+                          <span class="illo-l illo-l-80"></span>
+                          <span class="illo-l illo-l-50"></span>
+                        </div>
+                        <div class="illo-cap">every element, always</div>
+                      </div>
+                      <span class="illo-arrow" aria-hidden="true">&rarr;</span>
+                      <div class="illo-card illo-live">
+                        <div class="illo-tag illo-tag-on">V7</div>
+                        <div class="illo-widget">
+                          <span class="illo-l illo-l-50"></span>
+                          <span class="illo-bignum illo-bignum-sm">10.3k</span>
+                          <span class="illo-spark" aria-hidden="true"></span>
+                        </div>
+                        <div class="illo-cap">only what earns its place</div>
+                      </div>
+                    </div>
+                  )}
+                  {p.id === "insight" && (
+                    <div class="illo-pair">
+                      <div class="illo-card illo-mute">
+                        <div class="illo-tag">V1</div>
+                        <div class="illo-bars"><span></span><span></span><span></span><span></span><span></span></div>
+                        <div class="illo-cap">a chart, no takeaway</div>
+                      </div>
+                      <span class="illo-arrow" aria-hidden="true">&rarr;</span>
+                      <div class="illo-card illo-live">
+                        <div class="illo-tag illo-tag-on">V7</div>
+                        <div class="illo-banner">Thu leads at 58 &mdash; Mon dips, staff the lull</div>
+                        <div class="illo-bars"><span></span><span></span><span></span><span class="illo-bar-hi"></span><span></span></div>
+                      </div>
+                    </div>
+                  )}
+                  {p.id === "act" && (
+                    <div class="illo-pair">
+                      <div class="illo-card illo-mute">
+                        <div class="illo-tag">V1</div>
+                        <div class="illo-bignum">26%</div>
+                        <div class="illo-cap">inbox auto-handled</div>
+                      </div>
+                      <span class="illo-arrow" aria-hidden="true">&rarr;</span>
+                      <div class="illo-card illo-live">
+                        <div class="illo-tag illo-tag-on">V7</div>
+                        <div class="illo-bignum">26%</div>
+                        <div class="illo-sub">74% still need a human</div>
+                        <div class="illo-cta">Review the unhandled queue &rarr;</div>
+                      </div>
+                    </div>
+                  )}
+                  {p.id === "calm" && (
+                    <div class="illo-pair">
+                      <div class="illo-card illo-mute">
+                        <div class="illo-tag">V1</div>
+                        <div class="illo-dots illo-dots-hot"><span></span><span></span><span></span><span></span><span></span></div>
+                        <div class="illo-cap">everything shouts</div>
+                      </div>
+                      <span class="illo-arrow" aria-hidden="true">&rarr;</span>
+                      <div class="illo-card illo-live">
+                        <div class="illo-tag illo-tag-on">V7</div>
+                        <div class="illo-dots illo-dots-calm"><span></span><span></span><span class="illo-dot-hot"></span><span></span><span></span></div>
+                        <div class="illo-cap">one true alert reads</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The iterations -->
+    <section class="cs-section" aria-labelledby="iterations-heading">
+      <div class="studio-container">
+        <p class="studio-section-label studio-reveal">The iterations</p>
+        <h2 id="iterations-heading" class="cs-h2 studio-reveal">Watching the principles take hold</h2>
+        <p class="cs-section-intro studio-reveal">
+          Progress wasn't a straight line &mdash; it overshot into decoration before it settled.
+          Same six principles, applied a little better each time (and once, worse). Click any frame to zoom.
+        </p>
+        <div class="cs-iterations">
+          {iterations.map((step, i) => (
+            <article class={`cs-iter-step ${i % 2 === 1 ? "is-reverse" : ""} studio-reveal`}>
+              <figure class="cs-iter-figure">
+                <button type="button" class="cs-iter-frame" data-zoom={step.img} data-zoom-caption={`${step.version} — ${step.tag}`} aria-label={`Zoom into ${step.version}`}>
+                  <span class="cs-iter-version">{step.version}</span>
+                  <img src={step.img} alt={step.alt} loading="lazy" />
+                  <span class="cs-zoom-hint" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  </span>
+                </button>
+              </figure>
+              <div class="cs-iter-body">
+                <span class="cs-iter-label">{step.version} &middot; {step.tag}</span>
+                <h3 class="cs-iter-heading">{step.heading}</h3>
+                <p>{step.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- How it stays honest -->
+    <section class="cs-section cs-section-feature" aria-labelledby="proof-heading">
+      <div class="studio-container">
+        <p class="studio-section-label studio-reveal">The honesty check</p>
+        <h2 id="proof-heading" class="cs-h2 studio-reveal">How the skill keeps itself honest</h2>
+        <div class="cs-prose studio-reveal">
+          <p>
+            It's easy to talk yourself into a redesign being better. So the test is
+            adversarial: a <strong>fresh agent with no memory of the previous version</strong>
+            rebuilds the dashboard from scratch, handed only the skill and the original. If the
+            blind rebuild lands in the same place, the <em>principles</em> are doing the work
+            &mdash; not my attachment to a particular layout.
+          </p>
+          <p>
+            The same instinct runs through the skill itself: it doesn't self-attest that a
+            design is good, it <strong>renders and measures</strong> the result &mdash; reading
+            the real bars off the screenshot, checking contrast on the actual palette, testing
+            the breakpoints. A dashboard isn't done because a box is ticked; it's done when the
+            output has been looked at.
+          </p>
+        </div>
+        <div class="cs-links studio-reveal">
+          <a href="https://github.com/mnttnm/mohit-ai-toolkit/tree/main/skills/designing-dashboards" target="_blank" rel="noopener" class="cs-link cs-link-primary" data-ph-action="github" data-ph-project="dashboard-skill">
+            Read the skill on GitHub
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="https://github.com/mnttnm/mohit-ai-toolkit" target="_blank" rel="noopener" class="cs-link" data-ph-action="toolkit" data-ph-project="dashboard-skill">
+            See the full toolkit
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <StudioFooter />
+
+    <!-- Lightbox -->
+    <div class="cs-lightbox" data-lightbox hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button type="button" class="cs-lightbox-close" data-lightbox-close aria-label="Close viewer">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <figure class="cs-lightbox-stage">
+        <img data-lightbox-img alt="" />
+        <figcaption class="cs-lightbox-caption" data-lightbox-caption></figcaption>
+      </figure>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* ===== Studio Variation Palette (shared) ===== */
+  [data-variation-content="studio"] {
+    --studio-bg: #FAF8F5;
+    --studio-bg-header: rgba(250, 248, 245, 0.95);
+    --studio-text: #1A1A1A;
+    --studio-text-body: #4A4A4A;
+    --studio-text-muted: #8A8A8A;
+    --studio-accent: #2D5A3D;
+    --studio-accent-light: rgba(45, 90, 61, 0.08);
+    --studio-border: #E5E0DA;
+    --studio-danger: #B4533C;
+    --studio-serif: 'DM Serif Display', Georgia, serif;
+    --studio-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --studio-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  [data-variation-content="studio"] {
+    background: var(--studio-bg);
+    color: var(--studio-text);
+    font-family: var(--studio-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Container ===== */
+  .studio-container {
+    max-width: var(--site-container-max);
+    margin: 0 auto;
+    padding: 0 var(--site-container-padding);
+  }
+
+  /* ===== Reveal Animation ===== */
+  .studio-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+  .studio-reveal:nth-child(1) { animation-delay: 0.05s; }
+  .studio-reveal:nth-child(2) { animation-delay: 0.12s; }
+  .studio-reveal:nth-child(3) { animation-delay: 0.19s; }
+  .studio-reveal:nth-child(4) { animation-delay: 0.26s; }
+  @keyframes studioReveal { to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== Section Label ===== */
+  .studio-section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--studio-text-muted);
+    margin-bottom: 20px;
+  }
+
+  /* ===== Header ===== */
+  .studio-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--studio-bg-header);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--studio-border);
+  }
+  .studio-header-inner {
+    max-width: var(--site-container-max);
+    margin: 0 auto;
+    padding: 0 var(--site-container-padding);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .studio-logo {
+    font-family: var(--studio-serif);
+    font-size: 1.15rem;
+    color: var(--studio-text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .studio-nav { display: flex; align-items: center; gap: 32px; }
+  .studio-nav-link { font-size: 0.85rem; color: var(--studio-text-body); text-decoration: none; transition: color 0.2s; }
+  .studio-nav-link:hover { color: var(--studio-text); }
+  .studio-nav-link-active { color: var(--studio-text); font-weight: 600; }
+  .studio-nav-cta { color: var(--studio-accent); font-weight: 600; }
+  .studio-menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+  .studio-menu-bar { display: block; width: 22px; height: 1.5px; background: var(--studio-text); transition: transform 0.3s; }
+
+  /* ===== Hero ===== */
+  .cs-hero { padding: 128px 0 56px; }
+  .cs-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.85rem; color: var(--studio-text-muted); text-decoration: none;
+    margin-bottom: 32px; transition: color 0.2s, gap 0.2s;
+  }
+  .cs-back:hover { color: var(--studio-accent); gap: 9px; }
+  .cs-kicker {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--studio-accent); margin-bottom: 20px;
+  }
+  .cs-headline {
+    font-family: var(--studio-serif);
+    font-size: clamp(2.4rem, 5vw, 3.7rem);
+    line-height: 1.08; letter-spacing: -0.025em; color: var(--studio-text);
+    margin-bottom: 28px; max-width: 940px; text-wrap: balance;
+  }
+  .cs-headline em { font-style: italic; color: var(--studio-accent); }
+  .cs-lede { font-size: 1.12rem; color: var(--studio-text-body); line-height: 1.8; max-width: 720px; }
+  .cs-lede em { color: var(--studio-text); font-style: italic; font-weight: 500; }
+
+  /* ===== Sections ===== */
+  .cs-section { padding: 64px 0; }
+  .cs-h2 {
+    font-family: var(--studio-serif);
+    font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    line-height: 1.14; letter-spacing: -0.02em; color: var(--studio-text);
+    margin-bottom: 18px; text-wrap: balance;
+  }
+  .cs-section-intro { font-size: 1.04rem; color: var(--studio-text-body); line-height: 1.75; max-width: 680px; margin-bottom: 48px; }
+  .cs-prose { max-width: 720px; }
+  .cs-prose p { font-size: 1.08rem; color: var(--studio-text-body); line-height: 1.85; margin-bottom: 20px; }
+  .cs-prose p:last-child { margin-bottom: 0; }
+  .cs-prose em { color: var(--studio-text); font-style: italic; }
+  .cs-prose strong { color: var(--studio-text); font-weight: 600; }
+
+  /* ===== V1 vs V7 band ===== */
+  .cs-section-ba { background: #F4F1EC; border-top: 1px solid var(--studio-border); border-bottom: 1px solid var(--studio-border); }
+  .cs-ba-head { max-width: 720px; margin-bottom: 40px; }
+  .cs-ba-sub { font-size: 1.02rem; color: var(--studio-text-body); line-height: 1.7; }
+  .cs-ba-sub strong { color: var(--studio-text); font-weight: 700; }
+  .cs-ba-sub em { color: var(--studio-text); font-style: italic; }
+
+  .cs-ba { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 28px; position: relative; }
+  .cs-ba-item { position: relative; margin: 0; }
+
+  .cs-ba-frame {
+    display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in;
+    aspect-ratio: 16 / 10; overflow: hidden; border-radius: 14px;
+    border: 1px solid var(--studio-border);
+    box-shadow: 0 28px 60px -30px rgba(26, 26, 26, 0.5);
+    background: #fff; position: relative;
+  }
+  .cs-ba-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.4s cubic-bezier(0.23,1,0.32,1); }
+  .cs-ba-frame:hover img { transform: scale(1.03); }
+  .cs-ba-frame:focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 3px; }
+
+  .cs-ba-vtag {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    font-family: var(--studio-mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 5px 11px; border-radius: 7px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); color: #fff;
+  }
+  .cs-ba-vtag-before { background: var(--studio-danger); }
+  .cs-ba-vtag-after { background: var(--studio-accent); }
+
+  .cs-zoom-hint {
+    position: absolute; bottom: 12px; right: 12px; z-index: 2;
+    width: 30px; height: 30px; display: grid; place-items: center;
+    background: rgba(26,26,26,0.62); color: #fff; border-radius: 8px;
+    opacity: 0; transition: opacity 0.2s; backdrop-filter: blur(4px);
+  }
+  .cs-ba-frame:hover .cs-zoom-hint, .cs-iter-frame:hover .cs-zoom-hint,
+  .cs-ba-frame:focus-visible .cs-zoom-hint, .cs-iter-frame:focus-visible .cs-zoom-hint { opacity: 1; }
+
+  .cs-ba-item figcaption { margin-top: 14px; font-size: 0.9rem; color: var(--studio-text-body); line-height: 1.55; }
+  .cs-ba-item figcaption strong { color: var(--studio-text); font-weight: 600; }
+
+  .cs-ba-arrow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3;
+    width: 44px; height: 44px; display: grid; place-items: center;
+    background: var(--studio-accent); color: #fff; border-radius: 50%;
+    box-shadow: 0 6px 18px -4px rgba(45, 90, 61, 0.55);
+  }
+  .cs-ba-oneliner {
+    margin-top: 32px; max-width: 680px;
+    font-family: var(--studio-serif); font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.4; color: var(--studio-text); letter-spacing: -0.01em;
+  }
+  .cs-ba-oneliner em { color: var(--studio-accent); font-style: italic; }
+
+  /* ===== Five shifts ===== */
+  .cs-shifts { display: flex; flex-direction: column; gap: 14px; }
+  .cs-shift {
+    background: var(--studio-bg); border: 1px solid var(--studio-border);
+    border-radius: 14px; padding: 26px 28px; position: relative;
+  }
+  .cs-shift-no {
+    position: absolute; top: 24px; right: 28px;
+    font-family: var(--studio-mono); font-size: 0.82rem; color: var(--studio-text-muted);
+  }
+  .cs-shift-title { font-size: 1.16rem; font-weight: 600; color: var(--studio-text); margin-bottom: 18px; letter-spacing: -0.01em; padding-right: 40px; }
+  .cs-shift-cols { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: stretch; }
+  .cs-shift-col { border-radius: 10px; padding: 16px 18px; }
+  .cs-shift-v1 { background: rgba(180, 83, 60, 0.05); border: 1px solid rgba(180, 83, 60, 0.16); }
+  .cs-shift-v7 { background: var(--studio-accent-light); border: 1px solid rgba(45, 90, 61, 0.18); }
+  .cs-shift-vlabel {
+    display: inline-block; font-family: var(--studio-mono); font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.06em; padding: 2px 8px; border-radius: 5px; margin-bottom: 10px;
+  }
+  .cs-shift-v1 .cs-shift-vlabel { background: rgba(180,83,60,0.14); color: #9A4530; }
+  .cs-shift-v7 .cs-shift-vlabel { background: rgba(45,90,61,0.14); color: var(--studio-accent); }
+  .cs-shift-col p { font-size: 0.93rem; color: var(--studio-text-body); line-height: 1.6; }
+  .cs-shift-to { align-self: center; color: var(--studio-text-muted); font-size: 1.1rem; }
+
+  /* ===== Feature band ===== */
+  .cs-section-feature { background: #F4F1EC; border-top: 1px solid var(--studio-border); border-bottom: 1px solid var(--studio-border); }
+
+  /* ===== Principles playground ===== */
+  .cs-pl {
+    background: var(--studio-bg); border: 1px solid var(--studio-border);
+    border-radius: 16px; overflow: hidden;
+  }
+  .cs-pl-tabs { display: flex; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--studio-border); }
+  .cs-pl-tab {
+    flex: 1 1 0; min-width: 96px;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+    background: transparent; border: 0; border-right: 1px solid var(--studio-border);
+    padding: 16px 18px; cursor: pointer; text-align: left;
+    transition: background 0.2s; position: relative;
+  }
+  .cs-pl-tab:last-child { border-right: 0; }
+  .cs-pl-tab:hover { background: rgba(45, 90, 61, 0.04); }
+  .cs-pl-tab.is-active { background: var(--studio-accent-light); }
+  .cs-pl-tab.is-active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--studio-accent); }
+  .cs-pl-tab-no { font-family: var(--studio-mono); font-size: 0.72rem; color: var(--studio-text-muted); }
+  .cs-pl-tab.is-active .cs-pl-tab-no { color: var(--studio-accent); }
+  .cs-pl-tab-label { font-size: 0.92rem; font-weight: 600; color: var(--studio-text-body); }
+  .cs-pl-tab.is-active .cs-pl-tab-label { color: var(--studio-text); }
+
+  .cs-pl-stage { position: relative; }
+  .cs-pl-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; padding: 40px; }
+  .cs-pl-panel[hidden] { display: none; }
+  .cs-pl-panel.is-active { animation: plFade 0.4s ease; }
+  @keyframes plFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .cs-pl-no { font-family: var(--studio-mono); font-size: 0.78rem; color: var(--studio-accent); margin-bottom: 14px; letter-spacing: 0.05em; }
+  .cs-pl-title { font-family: var(--studio-serif); font-size: clamp(1.4rem, 2.4vw, 1.85rem); line-height: 1.18; color: var(--studio-text); margin-bottom: 16px; letter-spacing: -0.015em; }
+  .cs-pl-body { font-size: 1rem; color: var(--studio-text-body); line-height: 1.72; margin-bottom: 22px; }
+  .cs-pl-ask {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 0.92rem; font-style: italic; color: var(--studio-text); line-height: 1.5;
+    padding-top: 18px; border-top: 1px dashed var(--studio-border);
+  }
+  .cs-ask-mark { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--studio-accent-light); color: var(--studio-accent); display: grid; place-items: center; margin-top: 1px; }
+
+  /* ----- Illustrations ----- */
+  .cs-pl-illo { display: flex; align-items: center; justify-content: center; }
+  .illo-pair {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: stretch;
+    width: 100%;
+  }
+  .illo-card {
+    border-radius: 12px; padding: 18px 16px; min-height: 150px;
+    display: flex; flex-direction: column; gap: 8px; position: relative;
+    border: 1px solid var(--studio-border);
+  }
+  .illo-mute { background: #fff; }
+  .illo-live { background: #fff; border-color: rgba(45,90,61,0.3); box-shadow: 0 12px 30px -18px rgba(45,90,61,0.45); }
+  .illo-arrow { align-self: center; color: var(--studio-text-muted); font-size: 1rem; }
+  .illo-tag { font-family: var(--studio-mono); font-size: 0.66rem; font-weight: 600; color: var(--studio-text-muted); letter-spacing: 0.06em; }
+  .illo-tag-on { color: var(--studio-accent); }
+  .illo-cap { margin-top: auto; font-size: 0.74rem; color: var(--studio-text-muted); }
+
+  .illo-bignum { font-size: 2rem; font-weight: 700; color: var(--studio-text); font-variant-numeric: tabular-nums; line-height: 1; }
+  .illo-bignum-sm { font-size: 1.5rem; }
+  .illo-lead { font-size: 0.96rem; font-weight: 600; color: var(--studio-text); line-height: 1.3; }
+  .illo-sub { font-size: 0.78rem; color: var(--studio-text-muted); }
+  .illo-up { color: var(--studio-accent); }
+  .illo-cta { margin-top: 6px; align-self: flex-start; font-size: 0.74rem; font-weight: 600; color: #fff; background: var(--studio-accent); padding: 5px 10px; border-radius: 6px; }
+
+  .illo-grid6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .illo-grid6 span { height: 26px; border-radius: 5px; background: #ECE7E0; }
+  .illo-hero { background: var(--studio-accent-light); border: 1px solid rgba(45,90,61,0.22); border-radius: 8px; padding: 10px 12px; display: flex; align-items: baseline; gap: 8px; }
+  .illo-hero-num { font-size: 1.4rem; font-weight: 700; color: var(--studio-accent); }
+  .illo-hero-cap { font-size: 0.72rem; color: var(--studio-text-muted); }
+  .illo-row3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+  .illo-row3 span { height: 16px; border-radius: 4px; background: #ECE7E0; }
+
+  .illo-widget { display: flex; flex-direction: column; gap: 7px; }
+  .illo-l { height: 9px; border-radius: 4px; background: #ECE7E0; display: block; }
+  .illo-l-40 { width: 40%; } .illo-l-50 { width: 50%; } .illo-l-60 { width: 60%; } .illo-l-80 { width: 80%; } .illo-l-90 { width: 90%; }
+  .illo-busy .illo-l:nth-child(2) { background: #E0D9D0; }
+  .illo-spark { display: block; height: 22px; border-radius: 4px; background: linear-gradient(90deg, rgba(45,90,61,0.18), rgba(45,90,61,0.32)); }
+
+  .illo-bars { display: flex; align-items: flex-end; gap: 7px; height: 56px; }
+  .illo-bars span { flex: 1; background: #D8E0DA; border-radius: 3px 3px 0 0; }
+  .illo-bars span:nth-child(1) { height: 60%; } .illo-bars span:nth-child(2) { height: 72%; }
+  .illo-bars span:nth-child(3) { height: 66%; } .illo-bars span:nth-child(4) { height: 88%; }
+  .illo-bars span:nth-child(5) { height: 64%; }
+  .illo-bar-hi { background: var(--studio-accent) !important; }
+  .illo-banner { font-size: 0.78rem; font-weight: 500; color: var(--studio-accent); background: var(--studio-accent-light); border-left: 2px solid var(--studio-accent); border-radius: 0 6px 6px 0; padding: 6px 9px; line-height: 1.35; }
+
+  .illo-dots { display: flex; gap: 9px; align-items: center; padding: 14px 0; }
+  .illo-dots span { width: 22px; height: 22px; border-radius: 6px; }
+  .illo-dots-hot span { background: var(--studio-danger); }
+  .illo-dots-calm span { background: #E4DFD8; }
+  .illo-dots-calm .illo-dot-hot { background: var(--studio-danger); }
+
+  /* ===== Iterations ===== */
+  .cs-iterations { display: flex; flex-direction: column; gap: 64px; }
+  .cs-iter-step { display: grid; grid-template-columns: 1.5fr 1fr; gap: 44px; align-items: center; }
+  .cs-iter-step.is-reverse { grid-template-columns: 1fr 1.5fr; }
+  .cs-iter-step.is-reverse .cs-iter-figure { order: 2; }
+  .cs-iter-figure { margin: 0; }
+  .cs-iter-frame {
+    display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; position: relative;
+    border-radius: 12px; overflow: hidden; border: 1px solid var(--studio-border);
+    box-shadow: 0 18px 40px -24px rgba(26, 26, 26, 0.32); background: #fff;
+  }
+  .cs-iter-frame img { width: 100%; height: auto; display: block; transition: transform 0.4s cubic-bezier(0.23,1,0.32,1); }
+  .cs-iter-frame:hover img { transform: scale(1.025); }
+  .cs-iter-frame:focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 3px; }
+  .cs-iter-version {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-family: var(--studio-mono); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.02em;
+    color: #fff; background: rgba(26,26,26,0.78); padding: 5px 12px; border-radius: 8px;
+    backdrop-filter: blur(4px);
+  }
+  .cs-iter-label { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--studio-accent); margin-bottom: 12px; }
+  .cs-iter-heading { font-family: var(--studio-serif); font-size: 1.5rem; line-height: 1.2; color: var(--studio-text); margin-bottom: 14px; letter-spacing: -0.015em; }
+  .cs-iter-body p { font-size: 1rem; color: var(--studio-text-body); line-height: 1.75; }
+
+  /* ===== Links ===== */
+  .cs-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+  .cs-link {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 500;
+    text-decoration: none; padding: 11px 20px; border-radius: 8px; border: 1px solid var(--studio-border);
+    color: var(--studio-text); transition: gap 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .cs-link:hover { gap: 11px; border-color: var(--studio-text-muted); transform: translateY(-1px); }
+  .cs-link-primary { background: var(--studio-accent); color: #fff; border-color: var(--studio-accent); }
+  .cs-link-primary:hover { background: #24492f; border-color: #24492f; }
+
+  /* ===== Lightbox ===== */
+  .cs-lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(18, 17, 15, 0.92); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; padding: 40px;
+  }
+  .cs-lightbox[hidden] { display: none; }
+  .cs-lightbox-close {
+    position: absolute; top: 22px; right: 24px; width: 42px; height: 42px;
+    display: grid; place-items: center; color: #fff; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; cursor: pointer;
+  }
+  .cs-lightbox-close:hover { background: rgba(255,255,255,0.2); }
+  .cs-lightbox-stage { margin: 0; max-width: 1200px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .cs-lightbox-stage img { max-width: 100%; max-height: 80vh; border-radius: 10px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6); }
+  .cs-lightbox-caption { color: rgba(255,255,255,0.82); font-size: 0.88rem; font-family: var(--studio-mono); letter-spacing: 0.02em; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 980px) {
+    .cs-pl-panel { grid-template-columns: 1fr; gap: 28px; padding: 32px; }
+    .cs-pl-tab { flex: 1 1 33%; }
+  }
+  @media (max-width: 860px) {
+    .cs-iter-step, .cs-iter-step.is-reverse { grid-template-columns: 1fr; gap: 22px; }
+    .cs-iter-step.is-reverse .cs-iter-figure { order: 0; }
+    .cs-shift-cols { grid-template-columns: 1fr; gap: 10px; }
+    .cs-shift-to { transform: rotate(90deg); }
+  }
+  @media (max-width: 768px) {
+    .studio-nav { display: none; }
+    .studio-menu-toggle { display: flex; }
+    .cs-hero { padding: 104px 0 40px; }
+    .cs-section { padding: 48px 0; }
+    .cs-headline { max-width: none; }
+    .cs-ba { grid-template-columns: 1fr; gap: 40px; }
+    .cs-ba-arrow { top: auto; left: 50%; bottom: -32px; transform: translate(-50%, 0) rotate(90deg); }
+    .cs-ba-item:last-child .cs-ba-arrow { display: none; }
+    .cs-pl-tab-label { font-size: 0.82rem; }
+    .cs-lightbox { padding: 16px; }
+  }
+  @media (max-width: 480px) {
+    .studio-container { padding: 0 var(--site-container-padding-mobile); }
+    .studio-header-inner { padding: 0 var(--site-container-padding-mobile); }
+    .cs-headline { font-size: 2.1rem; }
+    .cs-pl-tab { flex: 1 1 50%; min-width: 0; }
+    .cs-pl-panel { padding: 24px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .studio-reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .cs-pl-panel.is-active { animation: none; }
+    .cs-ba-frame:hover img, .cs-iter-frame:hover img { transform: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector('[data-variation-content="studio"]');
+    if (!root) return;
+
+    // Reveal on scroll
+    const reveals = root.querySelectorAll(".studio-reveal");
+    reveals.forEach((el) => {
+      el.style.animationPlayState = "paused";
+      el.style.opacity = "0";
+      el.style.transform = "translateY(16px)";
+    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            el.style.animationPlayState = "running";
+            el.style.opacity = "";
+            el.style.transform = "";
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+    reveals.forEach((el) => observer.observe(el));
+
+    // Principles tabs
+    const pl = root.querySelector("[data-principles]");
+    if (pl) {
+      const tabs = Array.from(pl.querySelectorAll("[data-pl-tab]"));
+      const panels = Array.from(pl.querySelectorAll("[data-pl-panel]"));
+      const activate = (id) => {
+        tabs.forEach((t) => {
+          const on = t.getAttribute("data-pl-tab") === id;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach((p) => {
+          const on = p.getAttribute("data-pl-panel") === id;
+          p.classList.toggle("is-active", on);
+          if (on) p.removeAttribute("hidden");
+          else p.setAttribute("hidden", "");
+        });
+      };
+      tabs.forEach((t, i) => {
+        t.addEventListener("click", () => activate(t.getAttribute("data-pl-tab")));
+        t.addEventListener("keydown", (e) => {
+          if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+          e.preventDefault();
+          const dir = e.key === "ArrowRight" ? 1 : -1;
+          const next = tabs[(i + dir + tabs.length) % tabs.length];
+          next.focus();
+          activate(next.getAttribute("data-pl-tab"));
+        });
+      });
+    }
+
+    // Lightbox
+    const lb = root.querySelector("[data-lightbox]");
+    if (lb) {
+      const lbImg = lb.querySelector("[data-lightbox-img]");
+      const lbCap = lb.querySelector("[data-lightbox-caption]");
+      const closeBtn = lb.querySelector("[data-lightbox-close]");
+      let lastFocus = null;
+      const open = (src, caption) => {
+        lastFocus = document.activeElement;
+        lbImg.setAttribute("src", src);
+        lbImg.setAttribute("alt", caption || "");
+        lbCap.textContent = caption || "";
+        lb.removeAttribute("hidden");
+        document.body.style.overflow = "hidden";
+        closeBtn.focus();
+      };
+      const close = () => {
+        lb.setAttribute("hidden", "");
+        lbImg.setAttribute("src", "");
+        document.body.style.overflow = "";
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      };
+      root.querySelectorAll("[data-zoom]").forEach((el) => {
+        el.addEventListener("click", () =>
+          open(el.getAttribute("data-zoom"), el.getAttribute("data-zoom-caption")),
+        );
+      });
+      closeBtn.addEventListener("click", close);
+      lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !lb.hasAttribute("hidden")) close();
+      });
+    }
+
+    // Mobile menu toggle
+    const toggle = root.querySelector(".studio-menu-toggle");
+    const nav = root.querySelector(".studio-nav");
+    if (toggle && nav) {
+      const openMenu = () => {
+        nav.style.display = "flex"; nav.style.flexDirection = "column";
+        nav.style.position = "absolute"; nav.style.top = "64px"; nav.style.left = "0"; nav.style.right = "0";
+        nav.style.background = "var(--studio-bg)"; nav.style.padding = "24px";
+        nav.style.borderBottom = "1px solid var(--studio-border)"; nav.style.gap = "16px";
+      };
+      const closeMenu = () => {
+        nav.style.display = ""; nav.style.flexDirection = ""; nav.style.position = "";
+        nav.style.top = ""; nav.style.left = ""; nav.style.right = "";
+        nav.style.background = ""; nav.style.padding = ""; nav.style.borderBottom = ""; nav.style.gap = "";
+      };
+      toggle.addEventListener("click", () => {
+        const isOpen = nav.style.display === "flex";
+        isOpen ? closeMenu() : openMenu();
+      });
+      nav.querySelectorAll(".studio-nav-link").forEach((link) => link.addEventListener("click", closeMenu));
+    }
+  });
+</script>
