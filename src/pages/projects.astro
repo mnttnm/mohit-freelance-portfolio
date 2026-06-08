@@ -6,48 +6,6 @@ import StudioFooter from "../components/StudioFooter.astro";
 
 const spotlightProjects = [
   {
-    id: "ai-resizing-studio",
-    type: "AI Image Pipeline",
-    title: "AI Resizing Studio",
-    outcome: "AI handles first-pass QA; humans review only what matters",
-    description:
-      "A bulk image-resizing tool for a marketing team that reformats thousands of event posters into every ad ratio they need. It's built around three interfaces — batch processing, side-by-side review, and an evaluation dashboard — with an AI judge running first-pass QA on every output, so reviewers spend their attention only where it's actually needed.",
-    tech: [
-      "Gemini 3 Image",
-      "OpenAI GPT Image",
-      "Next.js",
-      "Supabase",
-      "AI-as-judge",
-    ],
-    images: [
-      "/images/image-resizing/input-interface.png",
-      "/images/image-resizing/review-interface.jpeg",
-      "/images/image-resizing/eval.png",
-    ],
-    gradient: "image-resizing",
-    // Source repo is private (client work) — link intentionally hidden.
-    // Live app is behind the client's environment, so it's shown via
-    // screenshots instead.
-    note: "Private client engagement — shown via screenshots",
-    back: {
-      title: "How the three interfaces work together",
-      sections: [
-        {
-          heading: "Processing — generate at scale",
-          body: "Drop in images or a CSV and the pipeline fans each asset out into all of its target ratios at once. Every output gets a risk score (none → high) computed from crop loss, aspect-ratio mismatch, and the strategy used — so problem outputs are flagged before a human ever opens them. Smart / AI-only / Force-AI modes trade speed against cost per run.",
-        },
-        {
-          heading: "Review — a keyboard-fast human pass",
-          body: "Source and generated sit side by side with the AI's verdict and score already attached. Reviewers rate Good / Okay / Bad entirely from the keyboard and move through the whole queue without reaching for the mouse — filters rebuild the queue on the fly, so you can burn down just the unreviewed, or just the high-risk outputs.",
-        },
-        {
-          heading: "Evaluation — AI in the loop",
-          body: "An AI visual judge grades every output against the same rubric a human would. Deterministic checks and a retry/escalation policy then decide what to auto-accept, retry with a stronger safe-area prompt, reroute to another model, or send up for manual design work. The dashboard tracks good-rate, bad-rate on high-risk outputs, and cost per good output — and surfaces where the AI and humans disagree, so the rubric keeps sharpening over time.",
-        },
-      ],
-    },
-  },
-  {
     id: "ops-workspace",
     type: "Enterprise App",
     title: "Enterprise Ops Workspace",
@@ -91,35 +49,43 @@ const spotlightProjects = [
     },
   },
   {
-    id: "slicely",
-    type: "SaaS Product",
-    title: "Slicely",
-    outcome: "Turn any PDF into structured data",
+    id: "ai-resizing-studio",
+    type: "AI Image Pipeline",
+    title: "AI Resizing Studio",
+    outcome: "AI handles first-pass QA; humans review only what matters",
     description:
-      "A web app for extracting structured data from PDFs using reusable recipes. Users annotate the relevant pages of a PDF, define their extraction rules once, and view results rendered as a number, table, chart, or plain text — no per-document configuration needed.",
-    tech: ["Next.js", "Supabase", "Tailwind CSS", "LLM Integration"],
-    images: [
-      "/images/SCR-20260526-poif.png",
-      "/images/SCR-20260526-pokt.png",
+      "A bulk image-resizing tool for a marketing team that reformats thousands of event posters into every ad ratio they need. It's built around three interfaces — batch processing, side-by-side review, and an evaluation dashboard — with an AI judge running first-pass QA on every output, so reviewers spend their attention only where it's actually needed.",
+    tech: [
+      "Gemini 3 Image",
+      "OpenAI GPT Image",
+      "Next.js",
+      "Supabase",
+      "AI-as-judge",
     ],
-    gradient: "slicely",
-    // Source repo is private — link intentionally hidden.
-    liveUrl: "https://slicely-ai.vercel.app/",
-    liveLabel: "Live demo",
+    images: [
+      "/images/image-resizing/input-interface.png",
+      "/images/image-resizing/review-interface.jpeg",
+      "/images/image-resizing/eval.png",
+    ],
+    gradient: "image-resizing",
+    // Source repo is private (client work) — link intentionally hidden.
+    // Live app is behind the client's environment, so it's shown via
+    // screenshots instead.
+    note: "Private client engagement — shown via screenshots",
     back: {
-      title: "What's inside",
+      title: "How the three interfaces work together",
       sections: [
         {
-          heading: "Annotation module",
-          body: "A focused interface for marking up source PDFs — the part you spend the most time in if you're configuring a new slicer. Designed so the heavy work of pointing at the right regions of a PDF feels lightweight.",
+          heading: "Processing — generate at scale",
+          body: "Drop in images or a CSV and the pipeline fans each asset out into all of its target ratios at once. Every output gets a risk score (none → high) computed from crop loss, aspect-ratio mismatch, and the strategy used — so problem outputs are flagged before a human ever opens them. Smart / AI-only / Force-AI modes trade speed against cost per run.",
         },
         {
-          heading: "Dynamic response renderer",
-          body: "Each slicer can return very different shapes of data. The renderer picks the right view automatically — a single number, a chart, a table, or a formatted text block — so the dashboard reads cleanly across slicers without per-slicer UI work.",
+          heading: "Review — a keyboard-fast human pass",
+          body: "Source and generated sit side by side with the AI's verdict and score already attached. Reviewers rate Good / Okay / Bad entirely from the keyboard and move through the whole queue without reaching for the mouse — filters rebuild the queue on the fly, so you can burn down just the unreviewed, or just the high-risk outputs.",
         },
         {
-          heading: "Bulk processing & webhooks",
-          body: "Designed to chew through batches and notify other systems when results are ready, so it fits into a larger pipeline rather than being a standalone tool.",
+          heading: "Evaluation — AI in the loop",
+          body: "An AI visual judge grades every output against the same rubric a human would. Deterministic checks and a retry/escalation policy then decide what to auto-accept, retry with a stronger safe-area prompt, reroute to another model, or send up for manual design work. The dashboard tracks good-rate, bad-rate on high-risk outputs, and cost per good output — and surfaces where the AI and humans disagree, so the rubric keeps sharpening over time.",
         },
       ],
     },
@@ -167,35 +133,35 @@ const spotlightProjects = [
     },
   },
   {
-    id: "reviewhub",
-    type: "Agentic Workflow",
-    title: "ReviewHub",
-    outcome: "Agent-powered feedback loop, end-to-end",
+    id: "slicely",
+    type: "SaaS Product",
+    title: "Slicely",
+    outcome: "Turn any PDF into structured data",
     description:
-      "A feedback pipeline that connects three tools: in-browser annotations on a live prototype, a communication channel (Slack or Confluence), and a coding agent. Feedback captured in the browser flows to the chosen channel, gets picked up by an agent, and the task status is updated automatically once the work is done.",
-    tech: ["Agentation", "Slack", "Confluence", "Devin", "Next.js"],
+      "A web app for extracting structured data from PDFs using reusable recipes. Users annotate the relevant pages of a PDF, define their extraction rules once, and view results rendered as a number, table, chart, or plain text — no per-document configuration needed.",
+    tech: ["Next.js", "Supabase", "Tailwind CSS", "LLM Integration"],
     images: [
-      "/images/SCR-20260526-ppcv.png",
-      "/images/SCR-20260526-ppfp.jpeg",
+      "/images/SCR-20260526-poif.png",
+      "/images/SCR-20260526-pokt.png",
     ],
-    gradient: "reviewhub",
-    sourceUrl: "https://github.com/mnttnm/reviewhub",
-    liveUrl: "https://reviewhub-weld.vercel.app/",
+    gradient: "slicely",
+    // Source repo is private — link intentionally hidden.
+    liveUrl: "https://slicely-ai.vercel.app/",
     liveLabel: "Live demo",
     back: {
-      title: "How the loop closes",
+      title: "What's inside",
       sections: [
         {
-          heading: "Live prototype review",
-          body: "An Agentation widget overlays the running app so anyone — PM, designer, client — can drop pixel-accurate annotations without leaving the browser. Feedback is captured against what the reviewer is actually seeing, not a static screenshot.",
+          heading: "Annotation module",
+          body: "A focused interface for marking up source PDFs — the part you spend the most time in if you're configuring a new slicer. Designed so the heavy work of pointing at the right regions of a PDF feels lightweight.",
         },
         {
-          heading: "Feedback, where your team already lives",
-          body: "Slack is the default destination, but Confluence is now wired in for teams that work out of Atlassian. Pick the destination per project; the rest of the pipeline doesn't change.",
+          heading: "Dynamic response renderer",
+          body: "Each slicer can return very different shapes of data. The renderer picks the right view automatically — a single number, a chart, a table, or a formatted text block — so the dashboard reads cleanly across slicers without per-slicer UI work.",
         },
         {
-          heading: "Agent handoff and status sync",
-          body: "Coding agents pick tasks up from the feed and execute. Once a fix lands, the Confluence page or Slack thread updates itself — the loop closes without anyone playing telephone between QA, design, and engineering.",
+          heading: "Bulk processing & webhooks",
+          body: "Designed to chew through batches and notify other systems when results are ready, so it fits into a larger pipeline rather than being a standalone tool.",
         },
       ],
     },
@@ -246,35 +212,35 @@ const spotlightProjects = [
     },
   },
   {
-    id: "greetwood",
-    type: "Shopify Store",
-    title: "Greetwood",
-    outcome: "A Shopify store built by agentic AI",
+    id: "reviewhub",
+    type: "Agentic Workflow",
+    title: "ReviewHub",
+    outcome: "Agent-powered feedback loop, end-to-end",
     description:
-      "A Shopify store implementation for a D2C furniture brand. The theme, content, and store configuration were built entirely through code using AI agents (Claude Code and Codex Cloud) and the Shopify CLI, instead of Shopify's web-based admin.",
-    tech: ["Shopify", "Liquid", "Shopify CLI", "Custom Theme"],
+      "A feedback pipeline that connects three tools: in-browser annotations on a live prototype, a communication channel (Slack or Confluence), and a coding agent. Feedback captured in the browser flows to the chosen channel, gets picked up by an agent, and the task status is updated automatically once the work is done.",
+    tech: ["Agentation", "Slack", "Confluence", "Devin", "Next.js"],
     images: [
-      "/images/SCR-20260526-poxa.jpeg",
-      "/images/SCR-20260526-ppam.jpeg",
+      "/images/SCR-20260526-ppcv.png",
+      "/images/SCR-20260526-ppfp.jpeg",
     ],
-    gradient: "greetwood",
-    liveUrl: "https://greetwood.myshopify.com",
-    liveLabel: "Visit store",
-    // Source repo is private — link intentionally hidden.
+    gradient: "reviewhub",
+    sourceUrl: "https://github.com/mnttnm/reviewhub",
+    liveUrl: "https://reviewhub-weld.vercel.app/",
+    liveLabel: "Live demo",
     back: {
-      title: "How it came together",
+      title: "How the loop closes",
       sections: [
         {
-          heading: "Built largely with my AI toolkit",
-          body: "A good chunk of the work — theme customization, content scripts, store setup automation — was driven by the same agent skills I share in my AI toolkit. A nice loop: a tool I built for myself paid for itself on a real client engagement.",
+          heading: "Live prototype review",
+          body: "An Agentation widget overlays the running app so anyone — PM, designer, client — can drop pixel-accurate annotations without leaving the browser. Feedback is captured against what the reviewer is actually seeing, not a static screenshot.",
         },
         {
-          heading: "Theme that doesn't feel default",
-          body: "Cream, charcoal, wood-brown, and gold against Jost as a single type family. Custom Liquid sections for collection storytelling and product cards, tuned to feel closer to a premium paid theme than a stock Craft layout.",
+          heading: "Feedback, where your team already lives",
+          body: "Slack is the default destination, but Confluence is now wired in for teams that work out of Atlassian. Pick the destination per project; the rest of the pipeline doesn't change.",
         },
         {
-          heading: "Store-as-code",
-          body: "Collections, navigation, pages, and tags configured through API scripts in the repo. Easy to redo on a new dev store, easy to review, and history lives in git instead of an admin screen.",
+          heading: "Agent handoff and status sync",
+          body: "Coding agents pick tasks up from the feed and execute. Once a fix lands, the Confluence page or Slack thread updates itself — the loop closes without anyone playing telephone between QA, design, and engineering.",
         },
       ],
     },
@@ -282,6 +248,15 @@ const spotlightProjects = [
 ];
 
 const moreProjects = [
+  {
+    title: "Greetwood",
+    description:
+      "A Shopify store for a D2C furniture brand, built entirely through code — theme, content, and store configuration — using AI agents (Claude Code and Codex Cloud) and the Shopify CLI instead of Shopify's web admin.",
+    image: "/images/SCR-20260526-poxa.jpeg",
+    liveUrl: "https://greetwood.myshopify.com",
+    liveLabel: "Visit store",
+    type: "Shopify Store",
+  },
   {
     title: "Building a Business Co-Pilot with Claude Code",
     description:
