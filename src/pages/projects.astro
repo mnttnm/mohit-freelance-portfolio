@@ -745,217 +745,96 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                project is ever visible. On mobile we hide it and render every
                spotlight project as a self-contained, scrollable card instead,
                so the whole set is discoverable by scrolling. -->
-          <div class="work-mobile-intro">
-            <span class="work-mobile-intro-label"
-              >Selected work</span
-            >
-            <span class="work-mobile-intro-count"
-              >{spotlightProjects.length} featured projects &middot; scroll to
-              browse</span
-            >
-          </div>
-          <div class="work-mobile-list" data-mobile-list>
-            {
-              spotlightProjects.map((project, i) => {
-                const hasImages =
-                  project.images && project.images.length > 0;
-                const multiImage = hasImages && project.images.length > 1;
-                const hasCaseStudy = !!project.caseStudyUrl;
-                const hasLive =
-                  !!project.liveUrl &&
-                  project.liveUrl !== project.sourceUrl;
-                const positionLabel = String(i + 1).padStart(2, "0");
-                return (
-                  <article class="m-project" data-mobile-project>
-                    <div
-                      class={`m-project-gallery ${multiImage ? "" : "is-single"}`}
+          <!-- ===== Mobile spotlight deck (shown ≤900px) =====
+               On phones the desktop carousel is hidden; spotlight projects live
+               in a swipeable deck. Tapping the focal card opens a bottom-sheet
+               with the full detail (markup near the footer below). -->
+          <div class="mspot" data-mspot>
+            <div class="mspot-head">
+              <span class="mspot-eyebrow">Selected work</span>
+              <h2 class="mspot-title">things I&rsquo;ve <em>shipped.</em></h2>
+              <div class="mspot-status">
+                <span class="mspot-pos"
+                  ><span data-mspot-pos>01</span><span class="mspot-sep"
+                    >/</span
+                  ><span class="mspot-tot">{projectTotalLabel}</span></span
+                >
+                <span class="mspot-cur-type" data-mspot-curtype
+                  >{spotlightProjects[0].type}</span
+                >
+              </div>
+            </div>
+
+            <div class="mspot-deck" data-mspot-deck>
+              {
+                spotlightProjects.map((project, i) => {
+                  const hasImages =
+                    project.images && project.images.length > 0;
+                  return (
+                    <article
+                      class={`mspot-card ${i === 0 ? "is-focus" : ""}`}
+                      data-mspot-card
+                      data-mspot-index={i}
                     >
-                      {hasImages ? (
-                        project.images.map((img, j) => (
-                          <button
-                            type="button"
-                            class="m-project-shot"
-                            data-mobile-lightbox
-                            data-project-index={i}
-                            data-screenshot-index={j}
-                            aria-label={`View screenshot ${j + 1} of ${project.title} full-size`}
+                      <div class="mspot-media">
+                        {hasImages ? (
+                          <img
+                            src={project.images[0]}
+                            alt={`${project.title} screenshot`}
+                            loading={i < 2 ? "eager" : "lazy"}
+                          />
+                        ) : (
+                          <span
+                            class={`mspot-media-ph grad-${project.gradient}`}
                           >
-                            <img
-                              src={img}
-                              alt={`Screenshot ${j + 1} of ${project.title}`}
-                              loading="lazy"
-                            />
-                          </button>
-                        ))
-                      ) : (
-                        <div
-                          class={`m-project-shot m-project-shot-placeholder grad-${project.gradient}`}
-                        >
-                          <span>{project.title}</span>
-                        </div>
-                      )}
-                    </div>
-                    {multiImage && (
-                      <p class="m-project-gallery-hint">
-                        <span aria-hidden="true">&#8646;</span>
-                        Swipe &middot; {project.images.length} screenshots
-                        &middot; tap to enlarge
-                      </p>
-                    )}
-
-                    <div class="m-project-body">
-                      <div class="m-project-meta">
-                        <span class="m-project-type">{project.type}</span>
-                        <span class="m-project-count">
-                          {positionLabel} / {projectTotalLabel}
-                        </span>
-                      </div>
-
-                      <h2 class="m-project-title">{project.title}</h2>
-
-                      <div class="work-outcome m-project-outcome">
-                        <span class="work-outcome-icon" aria-hidden="true">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                          >
-                            <path
-                              d="M3 7L6 10L11 4"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </span>
-                        <span>{project.outcome}</span>
-                      </div>
-
-                      <p class="m-project-description">
-                        {project.description}
-                      </p>
-
-                      <div class="work-tech-list m-project-tech">
-                        {project.tech.map((t) => (
-                          <span class="work-tech-pill">{t}</span>
-                        ))}
-                      </div>
-
-                      <div class="work-actions m-project-actions">
-                        {hasCaseStudy && (
-                          <a
-                            href={project.caseStudyUrl}
-                            class="work-action work-action-primary"
-                            data-ph-action="case_study"
-                            data-ph-project={project.id}
-                          >
-                            {project.caseStudyLabel || "Read the case study"}
-                            <span aria-hidden="true">&rarr;</span>
-                          </a>
+                            {project.title}
+                          </span>
                         )}
-                        {hasLive && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener"
-                            class={`work-action ${hasCaseStudy ? "" : "work-action-primary"}`}
-                            data-ph-action="demo"
-                            data-ph-project={project.id}
-                          >
-                            {project.liveLabel}
-                            <span aria-hidden="true">&rarr;</span>
-                          </a>
-                        )}
-                        {project.sourceUrl && (
-                          <a
-                            href={project.sourceUrl}
-                            target="_blank"
-                            rel="noopener"
-                            class={`work-action ${hasCaseStudy || hasLive ? "" : "work-action-primary"}`}
-                            data-ph-action="github"
-                            data-ph-project={project.id}
-                          >
-                            {hasCaseStudy || hasLive
-                              ? "GitHub"
-                              : "View on GitHub"}
-                            <span aria-hidden="true">&rarr;</span>
-                          </a>
-                        )}
-                        {!hasCaseStudy &&
-                          !hasLive &&
-                          !project.sourceUrl &&
-                          project.note && (
-                            <p class="work-action-note">
-                              <span
-                                class="work-action-note-icon"
-                                aria-hidden="true"
-                              >
-                                <svg
-                                  width="13"
-                                  height="13"
-                                  viewBox="0 0 14 14"
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M7 1.5a3 3 0 0 1 3 3v1.5H4V4.5a3 3 0 0 1 3-3Z"
-                                    stroke="currentColor"
-                                    stroke-width="1.2"
-                                    stroke-linejoin="round"
-                                  />
-                                  <rect
-                                    x="2.75"
-                                    y="6"
-                                    width="8.5"
-                                    height="6"
-                                    rx="1.2"
-                                    stroke="currentColor"
-                                    stroke-width="1.2"
-                                  />
-                                </svg>
-                              </span>
-                              {project.note}
-                            </p>
-                          )}
                       </div>
-
-                      {project.back && (
-                        <details class="m-project-more">
-                          <summary class="m-project-more-summary">
-                            <span>{project.back.title}</span>
+                      <div class="mspot-foot">
+                        <div class="mspot-foot-top">
+                          <span class="mspot-card-eyebrow">
+                            {project.type}
+                          </span>
+                          <span class="mspot-open" aria-hidden="true">
                             <svg
-                              class="m-project-more-chevron"
-                              width="14"
-                              height="14"
-                              viewBox="0 0 14 14"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 16 16"
                               fill="none"
-                              aria-hidden="true"
                             >
                               <path
-                                d="M3 5l4 4 4-4"
+                                d="M5 11L11 5M5 5h6v6"
                                 stroke="currentColor"
                                 stroke-width="1.5"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                               />
                             </svg>
-                          </summary>
-                          <div class="m-project-more-body">
-                            {project.back.sections.map((section) => (
-                              <div class="m-project-more-section">
-                                <h4>{section.heading}</h4>
-                                <p>{section.body}</p>
-                              </div>
-                            ))}
-                          </div>
-                        </details>
-                      )}
-                    </div>
-                  </article>
-                );
-              })
-            }
+                          </span>
+                        </div>
+                        <h3 class="mspot-card-title">{project.title}</h3>
+                        <p class="mspot-card-outcome">{project.outcome}</p>
+                      </div>
+                    </article>
+                  );
+                })
+              }
+            </div>
+
+            <div class="mspot-dots" data-mspot-dots>
+              {
+                spotlightProjects.map((project, i) => (
+                  <button
+                    type="button"
+                    class={`mspot-dot ${i === 0 ? "is-active" : ""}`}
+                    data-mspot-dot
+                    data-mspot-index={i}
+                    aria-label={`Show ${project.title}`}
+                  />
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -1021,6 +900,56 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
               </a>
             ))
           }
+        </div>
+
+        <!-- Mobile More-projects card list (shown ≤900px) -->
+        <div class="mmore">
+          <div class="mmore-card">
+            {
+              moreProjects.map((project) => (
+                <a
+                  class="mmore-row"
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener"
+                  data-ph-action="more_project"
+                  data-ph-project={project.title}
+                >
+                  <span class="mmore-thumb">
+                    <img src={project.image} alt="" loading="lazy" />
+                  </span>
+                  <span class="mmore-mid">
+                    <span class="mmore-title">{project.title}</span>
+                    <span class="mmore-blurb">{project.description}</span>
+                    <span class="mmore-meta">
+                      <span class="mmore-type">{project.type}</span>
+                      {project.highlight && (
+                        <span class="mmore-badge">{project.highlight}</span>
+                      )}
+                    </span>
+                  </span>
+                  <span class="mmore-cta">
+                    {project.liveLabel.split(" ")[0]}
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3 7h8M7 3l4 4-4 4"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </a>
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>
@@ -1100,6 +1029,101 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
             stroke-linejoin="round"></path>
         </svg>
       </button>
+    </div>
+
+    <!-- Mobile spotlight: detail bottom-sheet + lightbox (≤900px) -->
+    <div class="mspot-scrim" data-mspot-scrim></div>
+    <div class="mspot-sheet" data-mspot-sheet>
+      <button
+        type="button"
+        class="mspot-close"
+        data-mspot-close
+        aria-label="Close details"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 4l6 6M10 4l-6 6"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <div class="mspot-grab"><span></span></div>
+      <div class="mspot-sheet-body" data-mspot-sheet-body></div>
+    </div>
+    <div class="mspot-lb" data-mspot-lb>
+      <button
+        type="button"
+        class="mspot-lb-btn mspot-lb-close"
+        data-mspot-lb-close
+        aria-label="Close"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 20 20"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 5l10 10M15 5L5 15"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <img data-mspot-lb-img alt="" />
+      <p class="mspot-lb-cap" data-mspot-lb-cap></p>
+      <div class="mspot-lb-ctrls">
+        <button
+          type="button"
+          class="mspot-lb-btn"
+          data-mspot-lb-prev
+          aria-label="Previous screenshot"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 22 22"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M14 4L7 11l7 7"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="mspot-lb-btn"
+          data-mspot-lb-next
+          aria-label="Next screenshot"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 22 22"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M8 4l7 7-7 7"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <StudioFooter />
@@ -2486,15 +2510,29 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
 
   @media (max-width: 900px) {
-    /* Swap the desktop carousel for the scrollable mobile card list. */
-    .work-browser {
+    /* Swap the desktop carousel for the scrollable mobile card list.
+       Hide the desktop-only pieces individually — NOT the .work-browser
+       wrapper, which also contains the mobile list. (display:none on the
+       wrapper would take the mobile cards down with it.) */
+    .work-browser-topline,
+    .work-browser-shell {
       display: none;
     }
-    .work-mobile-intro {
+    /* Swap desktop carousel → mobile deck, and desktop grid → mobile list */
+    .mspot {
+      display: block;
+    }
+    .mspot-scrim {
+      display: block;
+    }
+    .mspot-sheet {
       display: flex;
     }
-    .work-mobile-list {
-      display: grid;
+    .mmore {
+      display: block;
+    }
+    .more-projects-grid {
+      display: none;
     }
 
     .work-browser-shell {
@@ -2612,6 +2650,655 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     }
     .work-project-description {
       font-size: 0.92rem;
+    }
+  }
+</style>
+
+<!-- Global (not scoped) so runtime-built sheet content is styled too.
+     All selectors are mspot-/mmore- prefixed to avoid collisions. -->
+<style is:global>
+  /* ===================================================================
+     Mobile spotlight — swipe deck + bottom-sheet detail + More list.
+     Shown only ≤900px; the desktop carousel + grid are untouched.
+     =================================================================== */
+  .mspot,
+  .mmore {
+    display: none;
+  }
+
+  .mspot-head {
+    padding: 0 4px;
+  }
+  .mspot-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--studio-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .mspot-eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--studio-accent);
+  }
+  .mspot-title {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+    font-size: 2.15rem;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    color: var(--studio-text);
+  }
+  .mspot-title em {
+    font-style: italic;
+    color: var(--studio-accent);
+  }
+  .mspot-status {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--studio-border);
+  }
+  .mspot-pos {
+    font-family: var(--studio-serif);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--studio-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .mspot-pos .mspot-sep {
+    color: var(--studio-text-muted);
+    font-size: 1rem;
+    padding: 0 2px;
+  }
+  .mspot-pos .mspot-tot {
+    color: var(--studio-text-muted);
+    font-size: 1rem;
+  }
+  .mspot-cur-type {
+    margin-left: auto;
+    color: var(--studio-text-muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  @keyframes mspotTypeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .mspot-cur-type.is-swap {
+    animation: mspotTypeIn 0.34s ease;
+  }
+
+  .mspot-deck {
+    display: flex;
+    gap: 16px;
+    margin-top: 26px;
+    padding: 8px 7% 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .mspot-deck::-webkit-scrollbar {
+    display: none;
+  }
+  .mspot-card {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 11px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #1c2620;
+    box-shadow: 0 10px 26px rgba(30, 45, 36, 0.09);
+    transform: scale(0.965);
+    opacity: 0.82;
+    transition:
+      transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      opacity 0.4s ease,
+      box-shadow 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mspot-card.is-focus {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 20px 50px rgba(30, 45, 36, 0.18);
+  }
+  .mspot-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #f1f3ef;
+    overflow: hidden;
+    padding: 12px;
+  }
+  .mspot-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    border-radius: 2px;
+  }
+  .mspot-media-ph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+    font-family: var(--studio-serif);
+    font-size: 1.3rem;
+    color: rgba(26, 26, 26, 0.4);
+  }
+  .mspot-foot {
+    padding: 24px 22px 28px;
+    background: #1c2620;
+  }
+  .mspot-foot-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 11px;
+  }
+  .mspot-card-eyebrow {
+    color: #cdb185;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .mspot-open {
+    display: inline-grid;
+    place-items: center;
+    color: rgba(245, 242, 236, 0.32);
+  }
+  @keyframes mspotArrow {
+    0% {
+      opacity: 0;
+      transform: translate(-3px, 3px);
+    }
+    55% {
+      opacity: 1;
+      transform: translate(2px, -2px);
+      color: #cdb185;
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+  .mspot-card.is-focus .mspot-open {
+    color: rgba(245, 242, 236, 0.62);
+    animation: mspotArrow 0.62s cubic-bezier(0.23, 1, 0.32, 1) 0.12s both;
+  }
+  .mspot-card-title {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+    font-size: 1.02rem;
+    line-height: 1.2;
+    letter-spacing: -0.003em;
+    color: #f5f2ec;
+    margin-bottom: 9px;
+    text-wrap: balance;
+  }
+  .mspot-card-outcome {
+    color: rgba(245, 242, 236, 0.72);
+    font-size: 0.82rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .mspot-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 22px;
+  }
+  .mspot-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background: var(--studio-border);
+    transition:
+      background 0.25s,
+      width 0.25s;
+  }
+  .mspot-dot.is-active {
+    background: var(--studio-accent);
+    width: 20px;
+  }
+
+  /* ===== Detail bottom-sheet ===== */
+  .mspot-scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(18, 24, 20, 0.42);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.32s ease;
+  }
+  .mspot-scrim.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mspot-sheet {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 201;
+    height: auto;
+    max-height: 90vh;
+    transform: translateY(100%);
+    transition: transform 0.44s cubic-bezier(0.32, 0.72, 0, 1);
+    background: var(--studio-bg);
+    flex-direction: column;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -16px 50px rgba(20, 26, 22, 0.26);
+  }
+  .mspot-sheet.is-open {
+    transform: translateY(0);
+  }
+  .mspot-grab {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    padding: 11px 0 4px;
+  }
+  .mspot-grab span {
+    width: 38px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--studio-border);
+  }
+  .mspot-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid var(--studio-border);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--studio-text);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+  }
+  .mspot-sheet-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 10px 24px 36px;
+  }
+  .mspot-sheet-body::-webkit-scrollbar {
+    width: 0;
+  }
+  .mspot-s-eyebrow {
+    color: var(--studio-text-muted);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .mspot-s-title {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.14;
+    letter-spacing: -0.005em;
+    color: var(--studio-text);
+    margin-bottom: 14px;
+  }
+  .mspot-s-outcome {
+    font-family: var(--studio-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: var(--studio-accent);
+    margin-bottom: 28px;
+  }
+  .mspot-s-desc {
+    color: var(--studio-text-body);
+    font-size: 0.92rem;
+    line-height: 1.68;
+    margin-bottom: 24px;
+  }
+  .mspot-s-tags {
+    color: var(--studio-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 26px;
+  }
+  .mspot-s-shots {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 26px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .mspot-s-shots::-webkit-scrollbar {
+    display: none;
+  }
+  .mspot-shot {
+    flex: 0 0 70%;
+    aspect-ratio: 16 / 10;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #eef1ed;
+    position: relative;
+  }
+  .mspot-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+  .mspot-shot-zoom {
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(18, 24, 20, 0.6);
+    display: grid;
+    place-items: center;
+  }
+  .mspot-s-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .mspot-act {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 12px 16px;
+    flex: 1 1 auto;
+    color: var(--studio-text);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--studio-border);
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .mspot-act-primary {
+    color: #fff;
+    background: var(--studio-accent);
+    border-color: var(--studio-accent);
+  }
+  .mspot-act-note {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 2px 0;
+    color: var(--studio-text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .mspot-disc {
+    margin-top: 18px;
+    border-top: 1px solid var(--studio-border);
+  }
+  .mspot-disc summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 2px 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--studio-text);
+    list-style: none;
+    cursor: pointer;
+  }
+  .mspot-disc summary::-webkit-details-marker {
+    display: none;
+  }
+  .mspot-disc-chev {
+    color: var(--studio-text-muted);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .mspot-disc[open] .mspot-disc-chev {
+    transform: rotate(180deg);
+  }
+  .mspot-disc-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 14px 2px 4px;
+  }
+  .mspot-disc-body h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--studio-text);
+    margin-bottom: 5px;
+  }
+  .mspot-disc-body p {
+    font-size: 0.88rem;
+    line-height: 1.58;
+    color: var(--studio-text-body);
+  }
+  @keyframes mspotItemIn {
+    from {
+      opacity: 0;
+      transform: translateY(9px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > * {
+    animation: mspotItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(1) {
+    animation-delay: 0.04s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(2) {
+    animation-delay: 0.09s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(3) {
+    animation-delay: 0.14s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(4) {
+    animation-delay: 0.19s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(5) {
+    animation-delay: 0.24s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(6) {
+    animation-delay: 0.29s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(7) {
+    animation-delay: 0.34s;
+  }
+  .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(n + 8) {
+    animation-delay: 0.38s;
+  }
+
+  /* ===== Mobile lightbox ===== */
+  .mspot-lb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 210;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 12px;
+    background: rgba(12, 16, 14, 0.94);
+  }
+  .mspot-lb.is-open {
+    display: flex;
+  }
+  .mspot-lb img {
+    max-width: 100%;
+    max-height: 72%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+  .mspot-lb-cap {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.75rem;
+    font-family: ui-monospace, monospace;
+  }
+  .mspot-lb-ctrls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .mspot-lb-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+  .mspot-lb-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+
+  /* ===== More projects — mobile card list ===== */
+  .mmore-card {
+    background: transparent;
+  }
+  .mmore-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 2px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid rgba(26, 26, 26, 0.055);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mmore-row:last-child {
+    border-bottom: 0;
+  }
+  .mmore-thumb {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #eef1ed;
+    margin-top: 1px;
+  }
+  .mmore-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+  .mmore-mid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+  .mmore-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--studio-text);
+    line-height: 1.25;
+  }
+  .mmore-blurb {
+    color: var(--studio-text-body);
+    font-size: 0.8rem;
+    line-height: 1.42;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mmore-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .mmore-type {
+    color: var(--studio-text-muted);
+    font-size: 0.72rem;
+  }
+  .mmore-badge {
+    color: var(--studio-accent);
+    background: var(--studio-accent-light);
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .mmore-cta {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--studio-accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mspot-card.is-focus .mspot-open,
+    .mspot-cur-type.is-swap,
+    .mspot-sheet.is-open .mspot-sheet-body > * {
+      animation: none;
     }
   }
 </style>
@@ -3149,4 +3836,308 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
       });
     }
   });
+</script>
+
+<!-- Mobile spotlight deck: focus tracking, detail sheet, lightbox (≤900px) -->
+<script define:vars={{ MSPOT: spotlightProjects }}>
+  (function () {
+    function init() {
+      var root = document.querySelector("[data-mspot]");
+      if (!root) return;
+
+      var TOTAL = String(MSPOT.length).padStart(2, "0");
+      var esc = function (s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      };
+      var ph = function (event, props) {
+        try {
+          window.posthog &&
+            window.posthog.capture &&
+            window.posthog.capture(
+              event,
+              Object.assign({ page: location.pathname }, props || {})
+            );
+        } catch (e) {}
+      };
+
+      var deck = root.querySelector("[data-mspot-deck]");
+      var cards = Array.prototype.slice.call(
+        deck.querySelectorAll("[data-mspot-card]")
+      );
+      var dots = Array.prototype.slice.call(
+        root.querySelectorAll("[data-mspot-dot]")
+      );
+      var posEl = root.querySelector("[data-mspot-pos]");
+      var typeEl = root.querySelector("[data-mspot-curtype]");
+      var focus = 0;
+
+      function updateFocus() {
+        if (!deck.clientWidth) return;
+        var center = deck.scrollLeft + deck.clientWidth / 2;
+        var best = 0;
+        var bestD = Infinity;
+        cards.forEach(function (c, i) {
+          var cc = c.offsetLeft + c.clientWidth / 2;
+          var d = Math.abs(cc - center);
+          if (d < bestD) {
+            bestD = d;
+            best = i;
+          }
+        });
+        if (best !== focus) {
+          focus = best;
+          typeEl.textContent = MSPOT[best].type;
+          typeEl.classList.remove("is-swap");
+          void typeEl.offsetWidth;
+          typeEl.classList.add("is-swap");
+        }
+        posEl.textContent = String(best + 1).padStart(2, "0");
+        cards.forEach(function (c, i) {
+          c.classList.toggle("is-focus", i === best);
+        });
+        dots.forEach(function (d, i) {
+          d.classList.toggle("is-active", i === best);
+        });
+      }
+      var raf = null;
+      deck.addEventListener(
+        "scroll",
+        function () {
+          if (!raf)
+            raf = requestAnimationFrame(function () {
+              raf = null;
+              updateFocus();
+            });
+        },
+        { passive: true }
+      );
+      window.addEventListener("resize", updateFocus);
+
+      function scrollToCard(i) {
+        var c = cards[i];
+        deck.scrollTo({
+          left: c.offsetLeft - (deck.clientWidth - c.clientWidth) / 2,
+          behavior: "smooth",
+        });
+      }
+      dots.forEach(function (d, i) {
+        d.addEventListener("click", function () {
+          scrollToCard(i);
+        });
+      });
+
+      // tap a side card → center it; tap the focal card → open its detail sheet
+      var downX = 0;
+      var downY = 0;
+      cards.forEach(function (c, i) {
+        c.addEventListener("pointerdown", function (e) {
+          downX = e.clientX;
+          downY = e.clientY;
+        });
+        c.addEventListener("click", function (e) {
+          if (
+            Math.abs(e.clientX - downX) > 8 ||
+            Math.abs(e.clientY - downY) > 8
+          )
+            return;
+          if (i === focus) openSheet(i);
+          else scrollToCard(i);
+        });
+      });
+
+      // ===== detail sheet =====
+      var sheet = document.querySelector("[data-mspot-sheet]");
+      var scrim = document.querySelector("[data-mspot-scrim]");
+      var sheetBody = sheet.querySelector("[data-mspot-sheet-body]");
+      var curP = 0;
+
+      function tagsHtml(tech) {
+        var max = 4;
+        var shown = tech.slice(0, max).join("  ·  ");
+        var extra = tech.length > max ? "  ·  +" + (tech.length - max) : "";
+        return '<div class="mspot-s-tags">' + esc(shown + extra) + "</div>";
+      }
+      function actionsHtml(p) {
+        var hasCase = !!p.caseStudyUrl;
+        var hasLive = !!p.liveUrl && p.liveUrl !== p.sourceUrl;
+        var out = [];
+        if (hasCase)
+          out.push(
+            '<a class="mspot-act mspot-act-primary" href="' +
+              p.caseStudyUrl +
+              '" data-ph-action="case_study" data-ph-project="' +
+              p.id +
+              '">' +
+              esc(p.caseStudyLabel || "Read the case study") +
+              " &rarr;</a>"
+          );
+        if (hasLive)
+          out.push(
+            '<a class="mspot-act ' +
+              (hasCase ? "" : "mspot-act-primary") +
+              '" href="' +
+              p.liveUrl +
+              '" target="_blank" rel="noopener" data-ph-action="demo" data-ph-project="' +
+              p.id +
+              '">' +
+              esc(p.liveLabel || "Live") +
+              " &rarr;</a>"
+          );
+        if (p.sourceUrl)
+          out.push(
+            '<a class="mspot-act ' +
+              (hasCase || hasLive ? "" : "mspot-act-primary") +
+              '" href="' +
+              p.sourceUrl +
+              '" target="_blank" rel="noopener" data-ph-action="github" data-ph-project="' +
+              p.id +
+              '">' +
+              (hasCase || hasLive ? "GitHub" : "View on GitHub") +
+              " &rarr;</a>"
+          );
+        if (!hasCase && !hasLive && !p.sourceUrl && p.note)
+          out.push('<span class="mspot-act-note">🔒 ' + esc(p.note) + "</span>");
+        return '<div class="mspot-s-actions">' + out.join("") + "</div>";
+      }
+      function shotsHtml(p) {
+        if (!p.images || !p.images.length) return "";
+        var zoom =
+          '<span class="mspot-shot-zoom"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 5V2h3M10 7v3H7" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg></span>';
+        var inner = p.images
+          .map(function (img, j) {
+            return (
+              '<button type="button" class="mspot-shot" data-mspot-shot="' +
+              j +
+              '" aria-label="Enlarge screenshot ' +
+              (j + 1) +
+              '"><img src="' +
+              img +
+              '" alt="" loading="lazy">' +
+              zoom +
+              "</button>"
+            );
+          })
+          .join("");
+        return '<div class="mspot-s-shots">' + inner + "</div>";
+      }
+      function discHtml(p) {
+        if (!p.back) return "";
+        var chev =
+          '<span class="mspot-disc-chev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+        var sections = p.back.sections
+          .map(function (s) {
+            return "<div><h4>" + esc(s.heading) + "</h4><p>" + esc(s.body) + "</p></div>";
+          })
+          .join("");
+        return (
+          '<details class="mspot-disc"><summary><span>' +
+          esc(p.back.title) +
+          "</span>" +
+          chev +
+          '</summary><div class="mspot-disc-body">' +
+          sections +
+          "</div></details>"
+        );
+      }
+
+      function openSheet(i) {
+        var p = MSPOT[i];
+        curP = i;
+        sheetBody.innerHTML =
+          '<div class="mspot-s-eyebrow">' +
+          esc(p.type) +
+          " &middot; " +
+          String(i + 1).padStart(2, "0") +
+          " / " +
+          TOTAL +
+          "</div>" +
+          '<h2 class="mspot-s-title">' +
+          esc(p.title) +
+          "</h2>" +
+          '<div class="mspot-s-outcome">' +
+          esc(p.outcome) +
+          "</div>" +
+          '<p class="mspot-s-desc">' +
+          esc(p.description) +
+          "</p>" +
+          tagsHtml(p.tech) +
+          shotsHtml(p) +
+          actionsHtml(p) +
+          discHtml(p);
+        sheetBody.scrollTop = 0;
+        sheet.classList.add("is-open");
+        scrim.classList.add("is-open");
+        document.body.classList.add("lightbox-open");
+        wireShots(i);
+        ph("project_viewed", { project_id: p.id, title: p.title });
+      }
+      function closeSheet() {
+        sheet.classList.remove("is-open");
+        scrim.classList.remove("is-open");
+        if (!lb.classList.contains("is-open"))
+          document.body.classList.remove("lightbox-open");
+      }
+      sheet
+        .querySelector("[data-mspot-close]")
+        .addEventListener("click", closeSheet);
+      scrim.addEventListener("click", closeSheet);
+
+      // ===== lightbox =====
+      var lb = document.querySelector("[data-mspot-lb]");
+      var lbImg = lb.querySelector("[data-mspot-lb-img]");
+      var lbCap = lb.querySelector("[data-mspot-lb-cap]");
+      var lbIdx = 0;
+      function showLb() {
+        var pr = MSPOT[curP];
+        lbImg.src = pr.images[lbIdx];
+        lbCap.textContent =
+          pr.title + " — " + (lbIdx + 1) + "/" + pr.images.length;
+      }
+      function wireShots(i) {
+        sheetBody
+          .querySelectorAll(".mspot-shot")
+          .forEach(function (s) {
+            s.addEventListener("click", function () {
+              lbIdx = parseInt(s.getAttribute("data-mspot-shot"), 10);
+              showLb();
+              lb.classList.add("is-open");
+              document.body.classList.add("lightbox-open");
+            });
+          });
+      }
+      lb.querySelector("[data-mspot-lb-close]").addEventListener(
+        "click",
+        function () {
+          lb.classList.remove("is-open");
+          if (!sheet.classList.contains("is-open"))
+            document.body.classList.remove("lightbox-open");
+        }
+      );
+      lb.querySelector("[data-mspot-lb-prev]").addEventListener(
+        "click",
+        function () {
+          var n = MSPOT[curP].images.length;
+          lbIdx = (lbIdx - 1 + n) % n;
+          showLb();
+        }
+      );
+      lb.querySelector("[data-mspot-lb-next]").addEventListener(
+        "click",
+        function () {
+          var n = MSPOT[curP].images.length;
+          lbIdx = (lbIdx + 1) % n;
+          showLb();
+        }
+      );
+
+      updateFocus();
+    }
+
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", init);
+    else init();
+  })();
 </script>
