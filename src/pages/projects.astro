@@ -751,8 +751,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                with the full detail (markup near the footer below). -->
           <div class="mspot" data-mspot>
             <div class="mspot-head">
-              <span class="mspot-eyebrow">Selected work</span>
-              <h2 class="mspot-title">things I&rsquo;ve <em>shipped.</em></h2>
               <div class="mspot-status">
                 <span class="mspot-pos"
                   ><span data-mspot-pos>01</span><span class="mspot-sep"
@@ -2665,47 +2663,19 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   .mmore {
     display: none;
   }
+  /* Grid-item containment: lets the deck's own overflow-x scroll instead of
+     blowing out the page width (the deck sits in a display:grid wrapper). */
+  .mspot {
+    min-width: 0;
+  }
 
   .mspot-head {
     padding: 0 4px;
-  }
-  .mspot-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--studio-accent);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .mspot-eyebrow::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--studio-accent);
-  }
-  .mspot-title {
-    font-family: var(--studio-serif);
-    font-weight: 400;
-    font-size: 2.15rem;
-    line-height: 1.04;
-    letter-spacing: -0.015em;
-    color: var(--studio-text);
-  }
-  .mspot-title em {
-    font-style: italic;
-    color: var(--studio-accent);
   }
   .mspot-status {
     display: flex;
     align-items: baseline;
     gap: 12px;
-    margin-top: 22px;
-    padding-top: 16px;
-    border-top: 1px solid var(--studio-border);
   }
   .mspot-pos {
     font-family: var(--studio-serif);
@@ -2747,8 +2717,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
   .mspot-deck {
     display: flex;
+    min-width: 0;
     gap: 16px;
-    margin-top: 26px;
+    margin-top: 22px;
     padding: 8px 7% 4px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -2785,9 +2756,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
-    background: #f1f3ef;
+    background: transparent;
     overflow: hidden;
-    padding: 12px;
   }
   .mspot-media img {
     width: 100%;
@@ -2795,7 +2765,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     object-fit: contain;
     object-position: center;
     display: block;
-    border-radius: 2px;
   }
   .mspot-media-ph {
     position: absolute;
