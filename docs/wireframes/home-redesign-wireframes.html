@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home redesign — wireframes (Show-the-work first)</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --body:#555; --muted:#9a958d;
+    --line:#cdc7bd; --line-strong:#9c958a;
+    --paper:#faf8f5; --card:#fff;
+    --accent:#2d5a3d; --accent-soft:rgba(45,90,61,.10);
+    --skeleton:#e7e2d9; --skeleton-2:#ddd7cc;
+    --img:#d8e0d6; --img-2:#c8d4c5;
+    --radius:10px;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#efeae2;color:var(--ink);font-family:var(--sans);line-height:1.5;padding:40px 20px 80px}
+  .wrap{max-width:1180px;margin:0 auto}
+
+  /* ---- doc header ---- */
+  .doc-head{margin-bottom:36px}
+  .doc-head h1{font-size:1.5rem;margin:0 0 8px}
+  .doc-head p{margin:0;color:var(--body);max-width:760px;font-size:.95rem}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:.78rem;color:var(--body)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .sw{width:26px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--line-strong)}
+  .sw.img{background:var(--img)}
+  .sw.skel{background:var(--skeleton)}
+  .sw.acc{background:var(--accent)}
+  .sw.face{background:var(--skeleton);border-radius:50%;width:14px}
+
+  /* ---- concept block ---- */
+  .concept{margin-top:52px}
+  .concept-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .concept-head h2{margin:0;font-size:1.18rem}
+  .tag{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 9px;border-radius:999px}
+  .concept-sub{margin:0 0 22px;color:var(--body);font-size:.9rem;max-width:820px}
+
+  .frames{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start}
+  @media(max-width:840px){.frames{grid-template-columns:1fr}}
+
+  .frame-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+
+  /* device chrome */
+  .phone{width:300px;border:9px solid #2c2a27;border-radius:34px;background:var(--paper);overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.16)}
+  .phone .notch{height:22px;background:#2c2a27;border-radius:0 0 12px 12px;width:120px;margin:0 auto}
+  .browser{border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;background:var(--paper);box-shadow:0 16px 40px rgba(0,0,0,.10)}
+  .browser .bar{height:34px;background:#e7e2d9;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px;padding:0 12px}
+  .browser .bar i{width:10px;height:10px;border-radius:50%;background:#c9c2b6;display:inline-block}
+  .browser .bar .url{flex:1;height:16px;background:#fff;border-radius:4px;margin-left:8px;border:1px solid var(--line)}
+
+  .screen{padding:14px}
+  .browser .screen{padding:20px 26px}
+
+  /* low-fi primitives */
+  .nav{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:16px}
+  .logo{font-weight:700;font-size:.8rem}
+  .navlinks{display:flex;gap:10px}
+  .navlinks b{width:30px;height:7px;background:var(--skeleton);border-radius:3px;display:inline-block}
+  .navlinks .cta{width:46px;background:var(--accent)}
+  .burger{display:flex;flex-direction:column;gap:3px}
+  .burger i{width:18px;height:2px;background:var(--ink);display:block}
+
+  .eyebrow{height:8px;width:90px;background:var(--accent);border-radius:3px;margin-bottom:12px;opacity:.75}
+  .h-line{height:15px;background:var(--skeleton-2);border-radius:4px;margin-bottom:9px}
+  .h-line.big{height:19px}
+  .t-line{height:8px;background:var(--skeleton);border-radius:3px;margin-bottom:7px}
+  .t-line.short{width:55%}
+  .t-line.mid{width:78%}
+
+  .btnrow{display:flex;gap:8px;margin:14px 0}
+  .btn{height:30px;border-radius:6px;flex:0 0 auto;padding:0 4px}
+  .btn.p{width:96px;background:var(--accent)}
+  .btn.s{width:80px;background:transparent;border:1px solid var(--line-strong)}
+
+  .logos{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .logos b{height:13px;width:48px;background:var(--skeleton);border-radius:3px;display:inline-block;opacity:.8}
+  .logos .lbl{font-size:.6rem;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+
+  .sec-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+
+  /* work / screenshots */
+  .shot{background:var(--img);border:1px solid var(--line-strong);border-radius:8px;position:relative;overflow:hidden}
+  .shot::after{content:"SCREENSHOT";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;letter-spacing:.1em;color:#6f8170;font-weight:700}
+  .shot.lg{aspect-ratio:16/10}
+  .shot.sq{aspect-ratio:4/3}
+  .shot.wide{aspect-ratio:16/9}
+
+  .work-card{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .work-card .meta{padding:9px 10px}
+  .work-card .typ{font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+  .work-card .out{height:7px;background:var(--skeleton);border-radius:3px;width:85%}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+  /* testimonial */
+  .quote{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:11px}
+  .quote .head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .quote .face{width:26px;height:26px;border-radius:50%;background:var(--skeleton);flex:0 0 auto}
+  .quote .who b{display:block;height:7px;width:60px;background:var(--skeleton-2);border-radius:3px;margin-bottom:4px}
+  .quote .who i{display:block;height:6px;width:80px;background:var(--skeleton);border-radius:3px}
+  .quote .ql{height:6px;background:var(--skeleton);border-radius:3px;margin-bottom:5px}
+
+  /* services mini */
+  .svc{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:11px}
+  .svc .n{font-size:.6rem;color:var(--muted);font-weight:700}
+  .svc .st{height:9px;width:75%;background:var(--skeleton-2);border-radius:3px;margin:7px 0 8px}
+  .svc .sd{height:6px;background:var(--skeleton);border-radius:3px;margin-bottom:5px}
+
+  /* credentials strip */
+  .creds{border:1px dashed var(--line-strong);border-radius:8px;padding:12px;background:rgba(255,255,255,.5)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .chips b{height:16px;width:42px;background:var(--skeleton);border-radius:4px;display:inline-block}
+
+  .band{padding:16px 0;border-top:1px dashed var(--line)}
+  .band:first-child{border-top:none}
+
+  /* annotations */
+  .anno{position:relative}
+  .callout{font-size:.72rem;color:var(--accent);background:var(--accent-soft);border-left:3px solid var(--accent);padding:7px 10px;border-radius:0 6px 6px 0;margin:0 0 12px}
+  .callout b{color:var(--ink)}
+
+  .notes{margin-top:18px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:16px 18px}
+  .notes h3{margin:0 0 10px;font-size:.92rem}
+  .notes ul{margin:0;padding-left:18px}
+  .notes li{font-size:.85rem;color:var(--body);margin-bottom:6px}
+  .notes li b{color:var(--ink)}
+
+  .order{display:flex;flex-direction:column;gap:0}
+  .order .step{display:flex;gap:10px;font-size:.82rem;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .order .step:last-child{border-bottom:none}
+  .order .num{font-weight:700;color:var(--accent);min-width:20px}
+  .order .new{font-size:.6rem;background:var(--accent);color:#fff;padding:1px 6px;border-radius:999px;align-self:center;margin-left:auto}
+  .order .cut{font-size:.6rem;background:#b54a3a;color:#fff;padding:1px 6px;border-radius:999px;align-self:center;margin-left:auto}
+
+  hr.div{border:none;border-top:2px solid var(--line);margin:46px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="doc-head">
+    <h1>Home page redesign — wireframes</h1>
+    <p><b>Direction: “Show the work first.”</b> Both concepts below put visual proof and social proof at the top, and cut the long text sections. Each is shown as a phone (your mobile concern) and a desktop frame. Grey = text/skeleton, green = brand accent &amp; CTAs, green-tinted boxes = real product screenshots pulled from your <code>/projects</code> data.</p>
+    <div class="legend">
+      <span><i class="sw img"></i> real screenshot</span>
+      <span><i class="sw skel"></i> text / copy</span>
+      <span><i class="sw acc"></i> accent / CTA</span>
+      <span><i class="sw face"></i> testimonial face</span>
+    </div>
+  </div>
+
+  <!-- ============================= CONCEPT A ============================= -->
+  <section class="concept">
+    <div class="concept-head">
+      <h2>Concept A — “Gallery Lead”</h2>
+      <span class="tag">screenshots scroll up first</span>
+    </div>
+    <p class="concept-sub">Tiny hero, then a full-width row of large project screenshots you can swipe. The very first thing after the headline is a wall of real work. Trust comes from <i>seeing</i> shipped product before reading a word.</p>
+
+    <div class="frames">
+      <!-- PHONE A -->
+      <div>
+        <p class="frame-label">Mobile</p>
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="nav">
+              <span class="logo">Mohit Tater</span>
+              <div class="burger"><i></i><i></i></div>
+            </div>
+
+            <!-- compact hero -->
+            <div class="eyebrow"></div>
+            <div class="h-line big"></div>
+            <div class="h-line" style="width:70%"></div>
+            <div class="t-line mid" style="margin-top:10px"></div>
+            <div class="t-line short"></div>
+            <div class="btnrow"><div class="btn p"></div><div class="btn s"></div></div>
+            <div class="logos">
+              <span class="lbl">Trusted by</span>
+              <b></b><b></b><b></b>
+            </div>
+
+            <!-- WORK gallery -->
+            <div class="band">
+              <p class="sec-label">Selected work</p>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div class="work-card">
+                  <div class="shot lg"></div>
+                  <div class="meta"><div class="typ">Enterprise app</div><div class="out"></div></div>
+                </div>
+                <div class="work-card">
+                  <div class="shot lg"></div>
+                  <div class="meta"><div class="typ">AI image pipeline</div><div class="out"></div></div>
+                </div>
+                <div style="text-align:center;font-size:.62rem;color:var(--muted)">• swipe for more •</div>
+              </div>
+            </div>
+
+            <!-- testimonials -->
+            <div class="band">
+              <p class="sec-label">What clients say</p>
+              <div class="quote">
+                <div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div>
+                <div class="ql"></div><div class="ql" style="width:90%"></div><div class="ql" style="width:60%"></div>
+              </div>
+              <div class="quote" style="margin-top:8px">
+                <div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div>
+                <div class="ql"></div><div class="ql" style="width:70%"></div>
+              </div>
+            </div>
+
+            <!-- services condensed -->
+            <div class="band">
+              <p class="sec-label">What I do</p>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="svc"><div class="n">01 · 1–2 wks</div><div class="st"></div><div class="sd" style="width:90%"></div></div>
+                <div class="svc"><div class="n">02 · 2–8 wks</div><div class="st"></div><div class="sd" style="width:90%"></div></div>
+                <div class="svc"><div class="n">03 · 1–2 wks</div><div class="st"></div><div class="sd" style="width:90%"></div></div>
+              </div>
+            </div>
+
+            <!-- creds -->
+            <div class="band">
+              <div class="creds">
+                <p class="sec-label" style="margin:0">Shipped at · Toolkit</p>
+                <div class="chips"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+              </div>
+            </div>
+
+            <div class="band" style="text-align:center">
+              <div class="btn p" style="width:120px;height:34px;margin:0 auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESKTOP A -->
+      <div>
+        <p class="frame-label">Desktop</p>
+        <div class="browser">
+          <div class="bar"><i></i><i></i><i></i><span class="url"></span></div>
+          <div class="screen">
+            <div class="nav">
+              <span class="logo">Mohit Tater</span>
+              <div class="navlinks"><b></b><b></b><b></b><b class="cta"></b></div>
+            </div>
+
+            <div class="anno">
+              <div class="callout"><b>Hero stays under ~1 screen.</b> Headline + one line + CTAs + a real logo strip. No long paragraph.</div>
+            </div>
+            <div style="max-width:62%">
+              <div class="eyebrow"></div>
+              <div class="h-line big"></div>
+              <div class="h-line big" style="width:80%"></div>
+              <div class="t-line mid" style="margin-top:10px"></div>
+              <div class="btnrow"><div class="btn p"></div><div class="btn s"></div></div>
+              <div class="logos"><span class="lbl">Trusted by</span><b></b><b></b><b></b><b></b></div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>The big move:</b> real screenshots immediately. 3-up gallery, each with type + one-line outcome. Swaps your text-only “Work” teaser.</div>
+              <p class="sec-label">Selected work</p>
+              <div class="grid3">
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">Enterprise app</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">AI image pipeline</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">SaaS · Slicely</div><div class="out"></div></div></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>Faces up high.</b> 2–3 testimonials visible at once (not collapsed), names + roles you can verify.</div>
+              <p class="sec-label">What clients say</p>
+              <div class="grid3">
+                <div class="quote"><div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div><div class="ql"></div><div class="ql" style="width:90%"></div><div class="ql" style="width:55%"></div></div>
+                <div class="quote"><div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div><div class="ql"></div><div class="ql" style="width:80%"></div><div class="ql" style="width:60%"></div></div>
+                <div class="quote"><div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div><div class="ql"></div><div class="ql" style="width:85%"></div><div class="ql" style="width:50%"></div></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>Services compressed</b> from 3 paragraphs → 3 scannable cards (title + one line + timeframe).</div>
+              <p class="sec-label">What I do</p>
+              <div class="grid3">
+                <div class="svc"><div class="n">01 · 1–2 wks</div><div class="st"></div><div class="sd"></div><div class="sd" style="width:80%"></div></div>
+                <div class="svc"><div class="n">02 · 2–8 wks</div><div class="st"></div><div class="sd"></div><div class="sd" style="width:80%"></div></div>
+                <div class="svc"><div class="n">03 · 1–2 wks</div><div class="st"></div><div class="sd"></div><div class="sd" style="width:80%"></div></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>“Who I work with” + “How I work” cut.</b> Credentials reduced to one strip: where I’ve shipped + toolkit chips.</div>
+              <div class="creds">
+                <p class="sec-label" style="margin:0 0 4px">A decade shipping · trusted toolkit</p>
+                <div class="chips"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h3>Concept A — section order</h3>
+      <div class="order">
+        <div class="step"><span class="num">1</span><span>Hero — compact, + logo trust strip</span></div>
+        <div class="step"><span class="num">2</span><span>Selected work — swipeable screenshot gallery</span><span class="new">moved up + visual</span></div>
+        <div class="step"><span class="num">3</span><span>Testimonials — 2–3 expanded, faces</span><span class="new">moved up</span></div>
+        <div class="step"><span class="num">4</span><span>What I do — 3 mini service cards</span></div>
+        <div class="step"><span class="num">5</span><span>Credentials strip — shipped-at + toolkit</span></div>
+        <div class="step"><span class="num">—</span><span>“Who I work with” &amp; “How I work”</span><span class="cut">cut / folded</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div" />
+
+  <!-- ============================= CONCEPT B ============================= -->
+  <section class="concept">
+    <div class="concept-head">
+      <h2>Concept B — “Hero Showcase Split”</h2>
+      <span class="tag">proof literally above the fold</span>
+    </div>
+    <p class="concept-sub">A split hero: short pitch + CTA + logos on the left, your single best product screenshot on the right — so a screenshot of real work sits <i>next to the headline</i>, visible before any scroll. Then a tighter work grid below.</p>
+
+    <div class="frames">
+      <!-- PHONE B -->
+      <div>
+        <p class="frame-label">Mobile</p>
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="nav">
+              <span class="logo">Mohit Tater</span>
+              <div class="burger"><i></i><i></i></div>
+            </div>
+
+            <!-- stacked hero: copy then featured shot -->
+            <div class="eyebrow"></div>
+            <div class="h-line big"></div>
+            <div class="h-line" style="width:65%"></div>
+            <div class="t-line mid" style="margin-top:10px"></div>
+            <div class="btnrow"><div class="btn p"></div><div class="btn s"></div></div>
+            <!-- featured screenshot sits right in the hero on mobile too -->
+            <div class="shot wide" style="margin:6px 0 4px"></div>
+            <div class="logos"><span class="lbl">Trusted by</span><b></b><b></b><b></b></div>
+
+            <div class="band">
+              <p class="sec-label">More work</p>
+              <div class="grid2">
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">SaaS</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">Agentic</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">Plugin · 8K</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">AI tool</div><div class="out"></div></div></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <p class="sec-label">What clients say</p>
+              <div class="quote">
+                <div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div>
+                <div class="ql"></div><div class="ql" style="width:85%"></div><div class="ql" style="width:55%"></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <p class="sec-label">What I do · where I’ve shipped</p>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div class="svc"><div class="st" style="margin-top:0"></div><div class="sd" style="width:90%"></div></div>
+                <div class="svc"><div class="st" style="margin-top:0"></div><div class="sd" style="width:90%"></div></div>
+                <div class="creds"><div class="chips"><b></b><b></b><b></b><b></b></div></div>
+              </div>
+            </div>
+
+            <div class="band" style="text-align:center">
+              <div class="btn p" style="width:120px;height:34px;margin:0 auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESKTOP B -->
+      <div>
+        <p class="frame-label">Desktop</p>
+        <div class="browser">
+          <div class="bar"><i></i><i></i><i></i><span class="url"></span></div>
+          <div class="screen">
+            <div class="nav">
+              <span class="logo">Mohit Tater</span>
+              <div class="navlinks"><b></b><b></b><b></b><b class="cta"></b></div>
+            </div>
+
+            <div class="callout"><b>Split hero.</b> Pitch on the left, your best screenshot on the right — proof is above the fold, no scroll required.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center">
+              <div>
+                <div class="eyebrow"></div>
+                <div class="h-line big"></div>
+                <div class="h-line big" style="width:85%"></div>
+                <div class="t-line mid" style="margin-top:10px"></div>
+                <div class="t-line short"></div>
+                <div class="btnrow"><div class="btn p"></div><div class="btn s"></div></div>
+                <div class="logos"><span class="lbl">Trusted by</span><b></b><b></b><b></b></div>
+              </div>
+              <div class="shot wide"></div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>Work grid (2×2).</b> Four more shipped projects, each tagged with proof (e.g. “Plugin · 8K users”).</div>
+              <p class="sec-label">More work</p>
+              <div class="grid4">
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">SaaS · Slicely</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">Agentic · ReviewHub</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">Plugin · 8K users</div><div class="out"></div></div></div>
+                <div class="work-card"><div class="shot sq"></div><div class="meta"><div class="typ">AI toolkit</div><div class="out"></div></div></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>Testimonial strip.</b> A row of faces + short quotes; click/scroll for the rest.</div>
+              <p class="sec-label">What clients say</p>
+              <div class="grid3">
+                <div class="quote"><div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div><div class="ql"></div><div class="ql" style="width:85%"></div></div>
+                <div class="quote"><div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div><div class="ql"></div><div class="ql" style="width:80%"></div></div>
+                <div class="quote"><div class="head"><div class="face"></div><div class="who"><b></b><i></i></div></div><div class="ql"></div><div class="ql" style="width:75%"></div></div>
+              </div>
+            </div>
+
+            <div class="band">
+              <div class="callout"><b>One combined band:</b> services (left) + “shipped at / toolkit” credentials (right). Replaces 3 separate text sections.</div>
+              <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px">
+                <div class="grid3" style="grid-template-columns:1fr">
+                  <div class="svc"><div class="n">01 · Product shaping</div><div class="sd" style="width:88%"></div></div>
+                  <div class="svc"><div class="n">02 · End-to-end build</div><div class="sd" style="width:88%"></div></div>
+                  <div class="svc"><div class="n">03 · AI workflows</div><div class="sd" style="width:88%"></div></div>
+                </div>
+                <div class="creds">
+                  <p class="sec-label" style="margin:0 0 4px">Shipped at · Toolkit</p>
+                  <div class="chips"><b></b><b></b><b></b><b></b><b></b><b></b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h3>Concept B — section order</h3>
+      <div class="order">
+        <div class="step"><span class="num">1</span><span>Split hero — pitch + featured screenshot + logos</span><span class="new">proof above fold</span></div>
+        <div class="step"><span class="num">2</span><span>More work — 2×2 grid with proof tags</span><span class="new">visual</span></div>
+        <div class="step"><span class="num">3</span><span>Testimonials — face strip</span><span class="new">moved up</span></div>
+        <div class="step"><span class="num">4</span><span>Services + credentials — one combined band</span></div>
+        <div class="step"><span class="num">—</span><span>“Who I work with” &amp; “How I work”</span><span class="cut">cut / folded</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div" />
+
+  <div class="notes">
+    <h3>How they compare</h3>
+    <ul>
+      <li><b>Concept A (Gallery Lead)</b> — strongest “show the work” hit: big screenshots dominate right after a tiny hero. Best if the screenshots are your most convincing asset. Slightly more scrolling on mobile before the pitch lands.</li>
+      <li><b>Concept B (Hero Showcase Split)</b> — proof and pitch share the first screen, so a desktop visitor sees a real product without scrolling at all. Tighter overall; the 2×2 grid carries proof tags (“8K users”, etc.). Mobile stacks the featured shot directly under the headline.</li>
+      <li><b>Both</b> cut “Who I work with” and “How I work,” compress services to cards, and pull testimonials + screenshots up — roughly halving the text you scroll through on mobile.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
