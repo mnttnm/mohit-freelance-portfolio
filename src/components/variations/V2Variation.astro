@@ -5,6 +5,12 @@ import austinImage from '../../assets/austin-mcdaniel.webp';
 import alperImage from '../../assets/alper-ortac.webp';
 import kyleImage from '../../assets/kyle-prinsloo.webp';
 import fredImage from '../../assets/fred-wilmot.webp';
+import opsWorkspace from '../../assets/work/ops-workspace.png';
+import aiResizing from '../../assets/work/ai-resizing.png';
+import dashboards from '../../assets/work/dashboards.png';
+import slicely from '../../assets/work/slicely.png';
+import aiToolkit from '../../assets/work/ai-toolkit.png';
+import reviewhub from '../../assets/work/reviewhub.png';
 import StudioFooter from '../StudioFooter.astro';
 ---
 
@@ -30,16 +36,16 @@ import StudioFooter from '../StudioFooter.astro';
   <!-- Hero -->
   <section class="v2-hero" data-ph-section="hero">
     <div class="v2-container">
-      <p class="v2-eyebrow v2-reveal">Product Engineer &amp; Consultant</p>
-      <h1 class="v2-headline v2-reveal">I ship products, <em>end to end.</em></h1>
-      <p class="v2-subtext v2-reveal">
+      <p class="v2-eyebrow">Product Engineer &amp; Consultant</p>
+      <h1 class="v2-headline">I ship products, <em>end to end.</em></h1>
+      <p class="v2-subtext">
         For founders, operators, and technical teams building something new. One person across design, engineering, and QA/automation. AI for speed, human judgment where it counts.
       </p>
-      <div class="v2-hero-actions v2-reveal">
+      <div class="v2-hero-actions">
         <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="v2-btn-primary">Book a call &rarr;</a>
         <a href="/projects" class="v2-btn-text">See my work &rarr;</a>
       </div>
-      <div class="v2-trust-bar v2-reveal">
+      <div class="v2-trust-bar">
         <span class="v2-trust-item">10+ years shipping</span>
         <span class="v2-trust-sep">&middot;</span>
         <span class="v2-trust-item">10K+ users across my tools</span>
@@ -140,11 +146,42 @@ import StudioFooter from '../StudioFooter.astro';
   <!-- Work -->
   <section class="v2-projects" data-ph-section="projects_teaser">
     <div class="v2-container">
-      <p class="v2-section-label v2-reveal">Work</p>
-      <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
-      <p class="v2-work-body v2-reveal">Production software at Verizon and Arctic Wolf, Figma plugins used by 8K+ designers, and AI-powered systems for founders and operators. Most client work is under NDA. The public side of my portfolio is side projects, open-source tools, and explorations I've shipped on my own time.</p>
-      <div class="v2-work-actions v2-reveal">
-        <a href="/projects" class="v2-btn-primary">See all projects &rarr;</a>
+      <div class="v2-work-layout">
+        <div class="v2-work-text">
+          <p class="v2-section-label v2-reveal">Work</p>
+          <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
+          <p class="v2-work-body v2-reveal">Production software at Verizon and Arctic Wolf, Figma plugins used by 8K+ designers, and AI-powered systems for founders and operators. Most client work is under NDA. The public side of my portfolio is side projects, open-source tools, and explorations I've shipped on my own time.</p>
+        </div>
+
+        <div class="v2-work-mosaic v2-reveal">
+          <div class="v2-work-grid">
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={opsWorkspace} alt="Enterprise Ops Workspace" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Ops Workspace</span><span class="v2-thumb-type">Enterprise App</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={aiResizing} alt="AI Resizing Studio" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Resizing Studio</span><span class="v2-thumb-type">AI Pipeline</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={dashboards} alt="Designing Dashboards case study" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Designing Dashboards</span><span class="v2-thumb-type">Case Study</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={slicely} alt="Slicely" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Slicely</span><span class="v2-thumb-type">SaaS Product</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={aiToolkit} alt="AI Toolkit" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Toolkit</span><span class="v2-thumb-type">Developer Tool</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={reviewhub} alt="ReviewHub" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">ReviewHub</span><span class="v2-thumb-type">Agentic Workflow</span></figcaption>
+            </figure>
+          </div>
+          <a href="/projects" class="v2-work-cta" data-ph-cta="see_all_projects" data-ph-location="work_mosaic">See all projects &rarr;</a>
+        </div>
       </div>
     </div>
   </section>
@@ -322,22 +359,32 @@ import StudioFooter from '../StudioFooter.astro';
     padding: 0 var(--site-container-padding);
   }
 
-  /* ===== Reveal Animation ===== */
-  .v2-reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: v2Reveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  }
+  /* ===== Reveal ===== */
+  /* Content is present by default — motion is an enhancement, never a gate.
+     Only users who haven't asked to reduce motion get the entrance, and the
+     stagger delay is set per-group in JS so items cascade in reading order. */
+  /* Hidden state is gated on `.v2-js` (added by script) so that with JS
+     disabled or failed, every .v2-reveal stays fully visible. */
+  @media (prefers-reduced-motion: no-preference) {
+    .v2-js .v2-reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+        transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
 
-  .v2-reveal:nth-child(1) { animation-delay: 0.05s; }
-  .v2-reveal:nth-child(2) { animation-delay: 0.12s; }
-  .v2-reveal:nth-child(3) { animation-delay: 0.19s; }
-  .v2-reveal:nth-child(4) { animation-delay: 0.26s; }
+    /* Eyebrow labels settle in place rather than rising — a quieter entrance
+       that reads differently from the content blocks it introduces. */
+    .v2-js .v2-section-label.v2-reveal {
+      transform: translateY(6px);
+    }
 
-  @keyframes v2Reveal {
-    to {
+    .v2-js .v2-reveal.is-in {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
   }
 
@@ -840,7 +887,8 @@ import StudioFooter from '../StudioFooter.astro';
   .v2-quote {
     font-family: var(--v2-serif);
     font-size: 1.02rem;
-    font-weight: 200;
+    /* DM Serif Display only ships at 400 — anything lighter triggers faux-thin. */
+    font-weight: 400;
     color: var(--v2-text-body);
     line-height: 1.8;
     font-style: italic;
@@ -930,6 +978,17 @@ import StudioFooter from '../StudioFooter.astro';
     padding: 120px 0;
   }
 
+  .v2-work-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .v2-work-text {
+    max-width: 440px;
+  }
+
   .v2-work-headline {
     font-family: var(--v2-serif);
     font-size: clamp(1.6rem, 3.5vw, 2.4rem);
@@ -937,7 +996,6 @@ import StudioFooter from '../StudioFooter.astro';
     margin-bottom: 20px;
     letter-spacing: -0.02em;
     line-height: 1.2;
-    max-width: 560px;
   }
 
   .v2-work-headline em {
@@ -949,14 +1007,125 @@ import StudioFooter from '../StudioFooter.astro';
     font-size: 1.1rem;
     color: var(--v2-text-body);
     line-height: 1.8;
-    max-width: 600px;
-    margin-bottom: 36px;
+    margin-bottom: 0;
   }
 
-  .v2-work-actions {
+  /* ===== Project cards — real screenshots in a labelled container so each
+     tile reads as a product, not a flat image. No tint. ===== */
+  .v2-work-mosaic {
     display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 28px;
+    border-radius: 18px;
+    /* Accent-green panel with a soft top highlight; the inset shadow below
+       supplies the vignette so card edges stay crisp. */
+    background:
+      radial-gradient(120% 100% at 50% 28%, rgba(255, 255, 255, 0.07), transparent 64%),
+      var(--v2-accent);
+    box-shadow:
+      inset 0 0 72px rgba(0, 0, 0, 0.34),
+      0 24px 60px -22px rgba(45, 90, 61, 0.5);
+  }
+
+  .v2-work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .v2-thumb {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--v2-border);
+    background: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(26, 26, 26, 0.04);
+    transition:
+      box-shadow 0.4s ease,
+      transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 0.3s ease;
+  }
+
+  .v2-thumb-shot {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--v2-accent-light);
+    border-bottom: 1px solid var(--v2-border);
+  }
+
+  .v2-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Label bar — project name + category, the bit that kills the "barren" feel */
+  .v2-thumb-cap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 11px 13px 12px;
+  }
+
+  .v2-thumb-name {
+    max-width: 100%;
+    font-family: var(--v2-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--v2-text);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .v2-thumb-type {
+    font-family: var(--v2-sans);
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--v2-accent);
+    background: var(--v2-accent-light);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  .v2-thumb:hover {
+    transform: translateY(-3px);
+    border-color: rgba(45, 90, 61, 0.35);
+    box-shadow: 0 12px 30px rgba(26, 26, 26, 0.1);
+  }
+
+  .v2-thumb:hover .v2-thumb-img {
+    transform: scale(1.04);
+  }
+
+  /* CTA sits cleanly inside the green panel, under the grid */
+  .v2-work-cta {
+    align-self: flex-start;
+    display: inline-flex;
     align-items: center;
-    gap: 24px;
+    gap: 8px;
+    margin-top: 2px;
+    font-family: var(--v2-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(250, 248, 245, 0.92);
+    text-decoration: none;
+    transition: gap 0.22s ease, color 0.22s ease;
+  }
+
+  .v2-work-cta:hover {
+    gap: 13px;
+    color: #FFFFFF;
   }
 
   /* ===== Responsive ===== */
@@ -1015,6 +1184,25 @@ import StudioFooter from '../StudioFooter.astro';
       align-items: center;
       gap: 14px;
     }
+
+    .v2-work-layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .v2-work-text {
+      max-width: none;
+    }
+
+    .v2-work-mosaic {
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    /* Larger tiles on phones so they stay legible */
+    .v2-work-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 480px) {
@@ -1043,30 +1231,44 @@ import StudioFooter from '../StudioFooter.astro';
     const root = document.querySelector('[data-variation-content="v2"]');
     if (!root) return;
 
+    // Gate the hidden reveal state on JS being present — without this class the
+    // CSS leaves every .v2-reveal visible, so no-JS users still see content.
+    root.classList.add('v2-js');
+
     const reveals = root.querySelectorAll('.v2-reveal');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    reveals.forEach((el) => {
-      (el as HTMLElement).style.animationPlayState = 'paused';
-      (el as HTMLElement).style.opacity = '0';
-      (el as HTMLElement).style.transform = 'translateY(16px)';
-    });
+    if (prefersReduced) {
+      // No motion: the CSS never hid them, but mark them in for consistency.
+      reveals.forEach((el) => el.classList.add('is-in'));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target as HTMLElement;
+              // Cascade siblings within the same group (list, grid, container)
+              // so a section resolves in reading order instead of all at once.
+              const group = el.parentElement;
+              if (group) {
+                const sibs = Array.from(
+                  group.querySelectorAll(':scope > .v2-reveal')
+                );
+                const idx = sibs.indexOf(el);
+                if (idx > 0) {
+                  el.style.setProperty('--reveal-delay', `${Math.min(idx, 6) * 70}ms`);
+                }
+              }
+              el.classList.add('is-in');
+              observer.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      );
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            el.style.animationPlayState = 'running';
-            el.style.opacity = '';
-            el.style.transform = '';
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    reveals.forEach((el) => observer.observe(el));
+      reveals.forEach((el) => observer.observe(el));
+    }
 
     // Mobile menu toggle
     const toggle = root.querySelector('.v2-menu-toggle');
