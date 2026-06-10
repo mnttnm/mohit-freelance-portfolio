@@ -55,18 +55,46 @@ import StudioFooter from '../StudioFooter.astro';
     </div>
   </section>
 
-  <!-- Who I work with -->
-  <section class="v2-audience" data-ph-section="audience">
+  <!-- Work -->
+  <section class="v2-projects" data-ph-section="projects_teaser">
     <div class="v2-container">
-      <p class="v2-section-label v2-reveal">Who I work with</p>
-      <h2 class="v2-audience-headline v2-reveal">You're probably a fit <em>if any of these sound like you.</em></h2>
+      <div class="v2-work-layout">
+        <div class="v2-work-text">
+          <p class="v2-section-label v2-reveal">Work</p>
+          <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
+          <p class="v2-work-body v2-reveal">Production software at Verizon and Arctic Wolf, Figma plugins used by 8K+ designers, and AI-powered systems for founders and operators. Most client work is under NDA. The public side of my portfolio is side projects, open-source tools, and explorations I've shipped on my own time.</p>
+        </div>
 
-      <ul class="v2-audience-list">
-        <li class="v2-audience-item v2-reveal">You know what to build, but not how to build it &mdash; and you'd rather have one partner than three freelancers.</li>
-        <li class="v2-audience-item v2-reveal">You have a rough prototype &mdash; Bolt, Lovable, v0, a weekend hack &mdash; and you want it turned into something professional, tested, and ready for real customers.</li>
-        <li class="v2-audience-item v2-reveal">You're too early for specialists. You need one person to carry product, design, and code while you focus on the business.</li>
-        <li class="v2-audience-item v2-reveal">You want AI actually working for you &mdash; automating your day-to-day, shipping an agent side-project, or bringing AI into your team's dev workflow.</li>
-      </ul>
+        <div class="v2-work-mosaic v2-reveal">
+          <div class="v2-work-grid">
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={opsWorkspace} alt="Enterprise Ops Workspace" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Ops Workspace</span><span class="v2-thumb-type">Enterprise App</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={aiResizing} alt="AI Resizing Studio" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Resizing Studio</span><span class="v2-thumb-type">AI Pipeline</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={dashboards} alt="Designing Dashboards case study" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Designing Dashboards</span><span class="v2-thumb-type">Case Study</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={slicely} alt="Slicely" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Slicely</span><span class="v2-thumb-type">SaaS Product</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={aiToolkit} alt="AI Toolkit" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Toolkit</span><span class="v2-thumb-type">Developer Tool</span></figcaption>
+            </figure>
+            <figure class="v2-thumb">
+              <div class="v2-thumb-shot"><Image src={reviewhub} alt="ReviewHub" width={440} loading="lazy" class="v2-thumb-img" /></div>
+              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">ReviewHub</span><span class="v2-thumb-type">Agentic Workflow</span></figcaption>
+            </figure>
+          </div>
+          <a href="/projects" class="v2-work-cta" data-ph-cta="see_all_projects" data-ph-location="work_mosaic">See all projects &rarr;</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -111,76 +139,6 @@ import StudioFooter from '../StudioFooter.astro';
             <h3 class="v2-service-title">AI Workflows &amp; Automation</h3>
             <p class="v2-service-desc">For founders, operators, and small teams who want AI actually working for them. Automate your day-to-day, build personalized agents, run an ambitious AI side-project while your team focuses on the core product, or bring AI into your team's dev workflow. You don't need to be an AI expert. I'll help you stay ahead of AI without drowning in it.</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How I Work -->
-  <section id="v2-process" class="v2-process" data-ph-section="process">
-    <div class="v2-container">
-      <p class="v2-section-label v2-reveal">How I work</p>
-      <h2 class="v2-process-headline v2-reveal">Less overhead. <em>More shipping.</em></h2>
-
-      <div class="v2-process-grid">
-        <div class="v2-process-item v2-reveal">
-          <h3 class="v2-process-title">End to end, one person</h3>
-          <p class="v2-process-desc">Design, engineering, QA, and automation. The work that usually takes three specialists, done by one. No vendor stack, no roster of juniors, no hand-offs between disciplines.</p>
-        </div>
-        <div class="v2-process-item v2-reveal">
-          <h3 class="v2-process-title">Weeks, not months</h3>
-          <p class="v2-process-desc">Short engagements with a clear deliverable. I'd rather ship three useful things in a quarter than one bloated one.</p>
-        </div>
-        <div class="v2-process-item v2-reveal">
-          <h3 class="v2-process-title">AI where it helps, judgment where it matters</h3>
-          <p class="v2-process-desc">I use Claude Code, Cursor, and custom agents to move fast. I don't ship code I wouldn't have written myself, and I'll tell you when AI is leading us somewhere we shouldn't go.</p>
-        </div>
-        <div class="v2-process-item v2-reveal">
-          <h3 class="v2-process-title">You talk to me</h3>
-          <p class="v2-process-desc">No account managers, no hand-offs, no "let me check with the team." If you have a question at 11pm, the person who can answer it is the one who wrote the code.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Work -->
-  <section class="v2-projects" data-ph-section="projects_teaser">
-    <div class="v2-container">
-      <div class="v2-work-layout">
-        <div class="v2-work-text">
-          <p class="v2-section-label v2-reveal">Work</p>
-          <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
-          <p class="v2-work-body v2-reveal">Production software at Verizon and Arctic Wolf, Figma plugins used by 8K+ designers, and AI-powered systems for founders and operators. Most client work is under NDA. The public side of my portfolio is side projects, open-source tools, and explorations I've shipped on my own time.</p>
-        </div>
-
-        <div class="v2-work-mosaic v2-reveal">
-          <div class="v2-work-grid">
-            <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={opsWorkspace} alt="Enterprise Ops Workspace" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Ops Workspace</span><span class="v2-thumb-type">Enterprise App</span></figcaption>
-            </figure>
-            <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={aiResizing} alt="AI Resizing Studio" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Resizing Studio</span><span class="v2-thumb-type">AI Pipeline</span></figcaption>
-            </figure>
-            <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={dashboards} alt="Designing Dashboards case study" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Designing Dashboards</span><span class="v2-thumb-type">Case Study</span></figcaption>
-            </figure>
-            <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={slicely} alt="Slicely" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Slicely</span><span class="v2-thumb-type">SaaS Product</span></figcaption>
-            </figure>
-            <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={aiToolkit} alt="AI Toolkit" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Toolkit</span><span class="v2-thumb-type">Developer Tool</span></figcaption>
-            </figure>
-            <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={reviewhub} alt="ReviewHub" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">ReviewHub</span><span class="v2-thumb-type">Agentic Workflow</span></figcaption>
-            </figure>
-          </div>
-          <a href="/projects" class="v2-work-cta" data-ph-cta="see_all_projects" data-ph-location="work_mosaic">See all projects &rarr;</a>
         </div>
       </div>
     </div>
@@ -300,6 +258,48 @@ import StudioFooter from '../StudioFooter.astro';
 
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- How I Work -->
+  <section id="v2-process" class="v2-process" data-ph-section="process">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">How I work</p>
+      <h2 class="v2-process-headline v2-reveal">Less overhead. <em>More shipping.</em></h2>
+
+      <div class="v2-process-grid">
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">End to end, one person</h3>
+          <p class="v2-process-desc">Design, engineering, QA, and automation. The work that usually takes three specialists, done by one. No vendor stack, no roster of juniors, no hand-offs between disciplines.</p>
+        </div>
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">Weeks, not months</h3>
+          <p class="v2-process-desc">Short engagements with a clear deliverable. I'd rather ship three useful things in a quarter than one bloated one.</p>
+        </div>
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">AI where it helps, judgment where it matters</h3>
+          <p class="v2-process-desc">I use Claude Code, Cursor, and custom agents to move fast. I don't ship code I wouldn't have written myself, and I'll tell you when AI is leading us somewhere we shouldn't go.</p>
+        </div>
+        <div class="v2-process-item v2-reveal">
+          <h3 class="v2-process-title">You talk to me</h3>
+          <p class="v2-process-desc">No account managers, no hand-offs, no "let me check with the team." If you have a question at 11pm, the person who can answer it is the one who wrote the code.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who I work with -->
+  <section class="v2-audience" data-ph-section="audience">
+    <div class="v2-container">
+      <p class="v2-section-label v2-reveal">Who I work with</p>
+      <h2 class="v2-audience-headline v2-reveal">You're probably a fit <em>if any of these sound like you.</em></h2>
+
+      <ul class="v2-audience-list">
+        <li class="v2-audience-item v2-reveal">You know what to build, but not how to build it &mdash; and you'd rather have one partner than three freelancers.</li>
+        <li class="v2-audience-item v2-reveal">You have a rough prototype &mdash; Bolt, Lovable, v0, a weekend hack &mdash; and you want it turned into something professional, tested, and ready for real customers.</li>
+        <li class="v2-audience-item v2-reveal">You're too early for specialists. You need one person to carry product, design, and code while you focus on the business.</li>
+        <li class="v2-audience-item v2-reveal">You want AI actually working for you &mdash; automating your day-to-day, shipping an agent side-project, or bringing AI into your team's dev workflow.</li>
+      </ul>
     </div>
   </section>
 
