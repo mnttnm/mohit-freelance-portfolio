@@ -7,8 +7,6 @@ const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
 const CONTACT_FROM_EMAIL = import.meta.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
 const CONTACT_TO_EMAIL = import.meta.env.CONTACT_TO_EMAIL || 'mohittater.iiita@gmail.com';
 
-const resend = new Resend(RESEND_API_KEY);
-
 class RateLimiter {
   private store = new Map<string, { count: number; resetTime: number }>();
   constructor(private windowMs: number, private maxRequests: number) {
@@ -86,6 +84,10 @@ export const server = {
           message: 'Message must be between 10 and 1000 characters.',
         });
       }
+
+      // Instantiated here (not at module load) so static prerender doesn't
+      // require the API key — the handler only runs server-side at request time.
+      const resend = new Resend(RESEND_API_KEY);
 
       const { error } = await resend.emails.send({
         from: CONTACT_FROM_EMAIL,
