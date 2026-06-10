@@ -61,8 +61,8 @@ import StudioFooter from '../StudioFooter.astro';
       <div class="v2-work-layout">
         <div class="v2-work-text">
           <p class="v2-section-label v2-reveal">Work</p>
-          <h2 class="v2-work-headline v2-reveal">I ship tools, products, and <em>explorations.</em></h2>
-          <p class="v2-work-body v2-reveal">Production software at Verizon and Arctic Wolf, Figma plugins used by 8K+ designers, and AI-powered systems for founders and operators. Most client work is under NDA. The public side of my portfolio is side projects, open-source tools, and explorations I've shipped on my own time.</p>
+          <h2 class="v2-work-headline v2-reveal">Things I've built, and <em>keep building.</em></h2>
+          <p class="v2-work-body v2-reveal">A mix of curated projects, case studies, and AI toolkits &mdash; enterprise tools, SaaS products, and agent workflows I use daily. Some built for clients, some on my own time, most still evolving.</p>
         </div>
 
         <div class="v2-work-mosaic v2-reveal">
@@ -270,19 +270,19 @@ import StudioFooter from '../StudioFooter.astro';
       <div class="v2-process-grid">
         <div class="v2-process-item v2-reveal">
           <h3 class="v2-process-title">End to end, one person</h3>
-          <p class="v2-process-desc">Design, engineering, QA, and automation. The work that usually takes three specialists, done by one. No vendor stack, no roster of juniors, no hand-offs between disciplines.</p>
+          <p class="v2-process-desc">Design, engineering, QA, automation &mdash; work that usually takes three specialists, done by one. No hand-offs.</p>
         </div>
         <div class="v2-process-item v2-reveal">
           <h3 class="v2-process-title">Weeks, not months</h3>
-          <p class="v2-process-desc">Short engagements with a clear deliverable. I'd rather ship three useful things in a quarter than one bloated one.</p>
+          <p class="v2-process-desc">Short engagements, a clear deliverable. Three useful things a quarter beats one bloated one.</p>
         </div>
         <div class="v2-process-item v2-reveal">
-          <h3 class="v2-process-title">AI where it helps, judgment where it matters</h3>
-          <p class="v2-process-desc">I use Claude Code, Cursor, and custom agents to move fast. I don't ship code I wouldn't have written myself, and I'll tell you when AI is leading us somewhere we shouldn't go.</p>
+          <h3 class="v2-process-title">AI for speed, not autopilot</h3>
+          <p class="v2-process-desc">Claude Code, Cursor, and custom agents to move fast &mdash; but I never ship code I wouldn't have written by hand.</p>
         </div>
         <div class="v2-process-item v2-reveal">
           <h3 class="v2-process-title">You talk to me</h3>
-          <p class="v2-process-desc">No account managers, no hand-offs, no "let me check with the team." If you have a question at 11pm, the person who can answer it is the one who wrote the code.</p>
+          <p class="v2-process-desc">No account managers, no "let me check with the team." Ask at 11pm and the person who answers wrote the code.</p>
         </div>
       </div>
     </div>
@@ -295,10 +295,10 @@ import StudioFooter from '../StudioFooter.astro';
       <h2 class="v2-audience-headline v2-reveal">You're probably a fit <em>if any of these sound like you.</em></h2>
 
       <ul class="v2-audience-list">
-        <li class="v2-audience-item v2-reveal">You know what to build, but not how to build it &mdash; and you'd rather have one partner than three freelancers.</li>
-        <li class="v2-audience-item v2-reveal">You have a rough prototype &mdash; Bolt, Lovable, v0, a weekend hack &mdash; and you want it turned into something professional, tested, and ready for real customers.</li>
-        <li class="v2-audience-item v2-reveal">You're too early for specialists. You need one person to carry product, design, and code while you focus on the business.</li>
-        <li class="v2-audience-item v2-reveal">You want AI actually working for you &mdash; automating your day-to-day, shipping an agent side-project, or bringing AI into your team's dev workflow.</li>
+        <li class="v2-audience-item v2-reveal"><strong class="v2-audience-lead">You know what to build, not how.</strong> You'd rather have one partner than juggle three freelancers.</li>
+        <li class="v2-audience-item v2-reveal"><strong class="v2-audience-lead">You've got a rough prototype.</strong> Bolt, Lovable, v0, a weekend hack &mdash; now you want it professional, tested, and ready for real customers.</li>
+        <li class="v2-audience-item v2-reveal"><strong class="v2-audience-lead">You're too early for specialists.</strong> You need one person carrying product, design, and code while you focus on the business.</li>
+        <li class="v2-audience-item v2-reveal"><strong class="v2-audience-lead">You want AI actually working for you.</strong> Automating the day-to-day, shipping an agent side-project, or bringing AI into your team's workflow.</li>
       </ul>
     </div>
   </section>
@@ -599,10 +599,18 @@ import StudioFooter from '../StudioFooter.astro';
     padding: 28px 0 28px 64px;
     font-family: var(--v2-sans);
     font-size: clamp(1rem, 1.35vw, 1.08rem);
-    color: var(--v2-text);
+    color: var(--v2-text-body);
     line-height: 1.65;
     letter-spacing: 0;
     border-bottom: 1px solid var(--v2-border);
+  }
+
+  /* Bold lead carries the scan; the clause after it sits lighter. */
+  .v2-audience-lead {
+    display: block;
+    font-weight: 600;
+    color: var(--v2-text);
+    margin-bottom: 4px;
   }
 
   .v2-audience-item:first-child {
