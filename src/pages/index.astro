@@ -3,8 +3,16 @@ export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
 import V2Variation from '../components/variations/V2Variation.astro';
+import V3Variation from '../components/variations/V3Variation.astro';
+import HomeVariationToggle from '../components/HomeVariationToggle.astro';
 ---
 
 <Layout title="Mohit Tater | Product Engineer & Consultant" description="I ship products, end to end. Design, engineering, and QA/automation by one person. For founders and technical teams building something new.">
-  <V2Variation />
+  <HomeVariationToggle />
+  <div data-home-pane="v3">
+    <V3Variation />
+  </div>
+  <div data-home-pane="v2" style="display: none">
+    <V2Variation />
+  </div>
 </Layout>

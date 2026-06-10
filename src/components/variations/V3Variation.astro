@@ -1,0 +1,521 @@
+---
+import { Image } from 'astro:assets';
+import deanImage from '../../assets/dean-teffer.webp';
+import austinImage from '../../assets/austin-mcdaniel.webp';
+import fredImage from '../../assets/fred-wilmot.webp';
+import StudioFooter from '../StudioFooter.astro';
+
+// Selected work — real screenshots pulled from the /projects data.
+// Cards link to /projects, where the full browser + live/case-study links live.
+const work = [
+  {
+    id: 'ops-workspace',
+    type: 'Enterprise App',
+    title: 'Enterprise Ops Workspace',
+    outcome: 'Complex internal tool, delivered end-to-end',
+    image: '/images/SCR-20260526-posx.png',
+  },
+  {
+    id: 'ai-resizing-studio',
+    type: 'AI Image Pipeline',
+    title: 'AI Resizing Studio',
+    outcome: 'AI does first-pass QA; humans review only what matters',
+    image: '/images/image-resizing/input-interface.png',
+  },
+  {
+    id: 'slicely',
+    type: 'SaaS Product',
+    title: 'Slicely',
+    outcome: 'Turn any PDF into structured data',
+    image: '/images/SCR-20260526-poif.png',
+  },
+  {
+    id: 'reviewhub',
+    type: 'Agentic Workflow',
+    title: 'ReviewHub',
+    outcome: 'Agent-powered feedback loop, end-to-end',
+    image: '/images/SCR-20260526-ppcv.png',
+  },
+];
+
+const services = [
+  {
+    n: '01',
+    duration: '1–2 weeks',
+    title: 'Product Shaping & Strategy',
+    desc: 'Turn a fuzzy idea into a clear, build-ready plan — scope, UI, and sequence.',
+  },
+  {
+    n: '02',
+    duration: '2–8 weeks',
+    title: 'End-to-End Product Development',
+    desc: 'From prototype to production: design, frontend, backend, and QA. One person.',
+  },
+  {
+    n: '03',
+    duration: '1–2 weeks',
+    title: 'AI Workflows & Automation',
+    desc: 'Put AI to work in your product and your day-to-day, without the hype.',
+  },
+];
+---
+
+<div data-variation-content="v3">
+
+  <!-- Header -->
+  <header class="v3-header">
+    <div class="v3-header-inner">
+      <a href="/" class="v3-logo">Mohit Tater</a>
+      <nav class="v3-nav">
+        <a href="/" class="v3-nav-link v3-nav-link-active">Home</a>
+        <a href="/projects" class="v3-nav-link">Work</a>
+        <a href="/about" class="v3-nav-link">About</a>
+        <a href="#studio-footer" class="v3-nav-link v3-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
+      </nav>
+      <button class="v3-menu-toggle" aria-label="Toggle menu">
+        <span class="v3-menu-bar"></span>
+        <span class="v3-menu-bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero (compact) -->
+  <section class="v3-hero" data-ph-section="hero">
+    <div class="v3-container">
+      <p class="v3-eyebrow v3-reveal">Product Engineer &amp; Consultant</p>
+      <h1 class="v3-headline v3-reveal">I ship products, <em>end to end.</em></h1>
+      <p class="v3-subtext v3-reveal">
+        Design, engineering, and QA/automation — by one person. For founders and teams turning an idea into something real.
+      </p>
+      <div class="v3-hero-actions v3-reveal">
+        <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="v3-btn-primary" data-ph-cta="book_call" data-ph-location="hero">Book a call &rarr;</a>
+        <a href="/projects" class="v3-btn-text">See all work &rarr;</a>
+      </div>
+      <ul class="v3-trust-strip v3-reveal" aria-label="Proof points">
+        <li>Shipped at <strong>Verizon</strong> &amp; <strong>Arctic Wolf</strong></li>
+        <li><strong>8,000+</strong> designers on my Figma plugins</li>
+        <li><strong>10K+</strong> users across my tools</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Selected work — the proof, up front and visual -->
+  <section class="v3-work" data-ph-section="selected_work">
+    <div class="v3-container">
+      <div class="v3-section-head v3-reveal">
+        <p class="v3-section-label">Selected work</p>
+        <a href="/projects" class="v3-section-link">See all 6 projects &rarr;</a>
+      </div>
+
+      <div class="v3-gallery">
+        {work.map((p) => (
+          <a class="v3-work-card v3-reveal" href="/projects" data-ph-action="work_card" data-ph-project={p.id}>
+            <div class="v3-work-shot">
+              <img src={p.image} alt={`${p.title} screenshot`} loading="lazy" />
+            </div>
+            <div class="v3-work-meta">
+              <span class="v3-work-type">{p.type}</span>
+              <h3 class="v3-work-title">{p.title}</h3>
+              <p class="v3-work-outcome">
+                <span class="v3-check" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                {p.outcome}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="v3-gallery-hint" aria-hidden="true">Swipe for more &rarr;</p>
+    </div>
+  </section>
+
+  <!-- Testimonials — faces, up high, expanded -->
+  <section class="v3-testimonials" data-ph-section="testimonials">
+    <div class="v3-container">
+      <p class="v3-section-label v3-reveal">What clients say</p>
+      <div class="v3-tgrid">
+
+        <figure class="v3-tcard v3-reveal">
+          <blockquote>Mohit translated complex product requirements into wireframes and effective UX. I would work with him again, especially to turn a vision into design quickly and effectively.</blockquote>
+          <figcaption class="v3-tcard-foot">
+            <Image src={fredImage} alt="Fred Wilmot" width={44} height={44} class="v3-avatar" />
+            <span class="v3-tcard-who">
+              <a href="https://www.linkedin.com/in/fredwilmot/" target="_blank" rel="noopener noreferrer" class="v3-tcard-name">Fred Wilmot <span class="v3-arr">&nearr;</span></a>
+              <span class="v3-tcard-role">Founder &amp; 3x CISO</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="v3-tcard v3-reveal">
+          <blockquote>A highly talented product engineer. He highlighted assumptions and gaps in our thinking, then recommended paths forward. This really accelerated our work and led to a much better UI.</blockquote>
+          <figcaption class="v3-tcard-foot">
+            <Image src={deanImage} alt="Dean Teffer" width={44} height={44} class="v3-avatar" />
+            <span class="v3-tcard-who">
+              <a href="https://www.linkedin.com/in/deanteffer" target="_blank" rel="noopener noreferrer" class="v3-tcard-name">Dean Teffer <span class="v3-arr">&nearr;</span></a>
+              <span class="v3-tcard-role">VP of AI, Arctic Wolf</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="v3-tcard v3-reveal">
+          <blockquote>His fresh ideas and knack for nailing user needs made him stand out. Mohit isn't just talented; he's always eager to dig deeper and push the boundaries of design.</blockquote>
+          <figcaption class="v3-tcard-foot">
+            <Image src={austinImage} alt="Austin Mcdaniel" width={44} height={44} class="v3-avatar" />
+            <span class="v3-tcard-who">
+              <a href="https://www.linkedin.com/in/amcdnl" target="_blank" rel="noopener noreferrer" class="v3-tcard-name">Austin Mcdaniel <span class="v3-arr">&nearr;</span></a>
+              <span class="v3-tcard-role">CEO/Founder, GoodCode</span>
+            </span>
+          </figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Services — compact cards -->
+  <section class="v3-services" data-ph-section="services">
+    <div class="v3-container">
+      <p class="v3-section-label v3-reveal">What I do</p>
+      <div class="v3-svc-grid">
+        {services.map((s) => (
+          <div class="v3-svc v3-reveal">
+            <div class="v3-svc-top">
+              <span class="v3-svc-n">{s.n}</span>
+              <span class="v3-svc-dur">{s.duration}</span>
+            </div>
+            <h3 class="v3-svc-title">{s.title}</h3>
+            <p class="v3-svc-desc">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials strip -->
+  <section class="v3-creds" data-ph-section="about_teaser">
+    <div class="v3-container">
+      <div class="v3-creds-band v3-reveal">
+        <div class="v3-creds-main">
+          <p class="v3-section-label">A decade shipping products</p>
+          <p class="v3-creds-line">
+            10+ years across design, engineering, and QA — at <strong>BlueJeans/Verizon</strong>, <strong>Query.ai</strong>, and <strong>GoodCode</strong>, and solo for founders building their first product.
+          </p>
+          <div class="v3-chips">
+            <span>React</span><span>Next.js</span><span>TypeScript</span><span>Figma</span><span>Supabase</span><span>Claude &amp; AI agents</span>
+          </div>
+        </div>
+        <a href="/about" class="v3-btn-secondary">More about me &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <StudioFooter />
+
+</div>
+
+<style>
+  /* ===== V3 — "Gallery Lead" (Concept A). Reuses Studio tokens so StudioFooter styles cleanly. ===== */
+  [data-variation-content="v3"] {
+    --studio-bg: #FAF8F5;
+    --studio-bg-header: rgba(250, 248, 245, 0.95);
+    --studio-text: #1A1A1A;
+    --studio-text-body: #4A4A4A;
+    --studio-text-muted: #8A8A8A;
+    --studio-accent: #2D5A3D;
+    --studio-accent-light: rgba(45, 90, 61, 0.08);
+    --studio-border: #E5E0DA;
+    --studio-serif: 'DM Serif Display', Georgia, serif;
+    --studio-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --v3-bg: var(--studio-bg);
+    --v3-text: var(--studio-text);
+    --v3-body: var(--studio-text-body);
+    --v3-muted: var(--studio-text-muted);
+    --v3-accent: var(--studio-accent);
+    --v3-accent-light: var(--studio-accent-light);
+    --v3-border: var(--studio-border);
+    --v3-serif: var(--studio-serif);
+    --v3-sans: var(--studio-sans);
+
+    background: var(--v3-bg);
+    color: var(--v3-text);
+    font-family: var(--v3-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .v3-container {
+    max-width: var(--site-container-max);
+    margin: 0 auto;
+    padding: 0 var(--site-container-padding);
+  }
+
+  /* ===== Reveal (pure CSS so it survives the show/hide toggle) ===== */
+  .v3-reveal { opacity: 0; transform: translateY(16px); animation: v3Reveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+  .v3-reveal:nth-child(2) { animation-delay: 0.06s; }
+  .v3-reveal:nth-child(3) { animation-delay: 0.12s; }
+  .v3-reveal:nth-child(4) { animation-delay: 0.18s; }
+  .v3-reveal:nth-child(5) { animation-delay: 0.24s; }
+  @keyframes v3Reveal { to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .v3-reveal { animation: none; opacity: 1; transform: none; }
+  }
+
+  .v3-section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--v3-muted);
+    margin: 0 0 24px;
+  }
+
+  /* ===== Header ===== */
+  .v3-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--studio-bg-header);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--v3-border);
+  }
+  .v3-header-inner {
+    max-width: var(--site-container-max);
+    margin: 0 auto;
+    padding: 0 var(--site-container-padding);
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .v3-logo { font-family: var(--v3-serif); font-size: 1.15rem; color: var(--v3-text); text-decoration: none; }
+  .v3-nav { display: flex; align-items: center; gap: 28px; }
+  .v3-nav-link { font-size: 0.85rem; color: var(--v3-body); text-decoration: none; transition: color 0.2s; }
+  .v3-nav-link:hover { color: var(--v3-text); }
+  .v3-nav-link-active { color: var(--v3-text); font-weight: 600; }
+  .v3-nav-cta { color: var(--v3-accent); font-weight: 600; }
+  .v3-menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+  .v3-menu-bar { display: block; width: 22px; height: 1.5px; background: var(--v3-text); }
+
+  /* ===== Hero ===== */
+  .v3-hero { padding: 150px 0 64px; }
+  .v3-eyebrow {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--v3-accent); margin: 0 0 24px;
+  }
+  .v3-headline {
+    font-family: var(--v3-serif);
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    line-height: 1.08; letter-spacing: -0.025em;
+    color: var(--v3-text); margin: 0 0 22px; max-width: 720px;
+  }
+  .v3-headline em { font-style: italic; color: var(--v3-accent); }
+  .v3-subtext {
+    font-size: 1.15rem; color: var(--v3-body); line-height: 1.65;
+    max-width: 560px; margin: 0 0 32px;
+  }
+  .v3-hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+
+  .v3-trust-strip {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 10px 28px;
+    font-size: 0.9rem; color: var(--v3-body);
+  }
+  .v3-trust-strip li { position: relative; padding-left: 18px; }
+  .v3-trust-strip li::before {
+    content: ''; position: absolute; left: 0; top: 0.5em;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--v3-accent); opacity: 0.65;
+  }
+  .v3-trust-strip strong { color: var(--v3-text); font-weight: 600; }
+
+  /* ===== Buttons ===== */
+  .v3-btn-primary {
+    display: inline-block; padding: 14px 30px;
+    background: var(--v3-accent); color: #fff;
+    font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    border-radius: 6px; transition: background 0.25s, transform 0.2s;
+  }
+  .v3-btn-primary:hover { background: #234a31; transform: translateY(-1px); }
+  .v3-btn-text { font-size: 0.9rem; color: var(--v3-body); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .v3-btn-text:hover { color: var(--v3-accent); }
+  .v3-btn-secondary {
+    display: inline-block; padding: 12px 24px;
+    background: transparent; color: var(--v3-text);
+    border: 1px solid var(--v3-border); border-radius: 6px;
+    font-size: 0.88rem; font-weight: 600; text-decoration: none;
+    white-space: nowrap; transition: border-color 0.2s, color 0.2s;
+  }
+  .v3-btn-secondary:hover { border-color: var(--v3-accent); color: var(--v3-accent); }
+
+  /* ===== Selected work ===== */
+  .v3-work { padding: 48px 0 96px; }
+  .v3-section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 28px;
+  }
+  .v3-section-head .v3-section-label { margin: 0; }
+  .v3-section-link { font-size: 0.85rem; font-weight: 600; color: var(--v3-accent); text-decoration: none; white-space: nowrap; }
+  .v3-section-link:hover { text-decoration: underline; }
+
+  .v3-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .v3-work-card {
+    display: flex; flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--v3-border);
+    border-radius: 12px; overflow: hidden;
+    text-decoration: none; color: inherit;
+    transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.25s, border-color 0.25s;
+  }
+  .v3-work-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(45, 90, 61, 0.3);
+    box-shadow: 0 20px 44px rgba(30, 45, 36, 0.12);
+  }
+  .v3-work-shot {
+    aspect-ratio: 16 / 10; overflow: hidden;
+    background: #eef1ed; border-bottom: 1px solid var(--v3-border);
+  }
+  .v3-work-shot img {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .v3-work-card:hover .v3-work-shot img { transform: scale(1.03); }
+  .v3-work-meta { padding: 18px 20px 22px; }
+  .v3-work-type {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--v3-accent);
+  }
+  .v3-work-title {
+    font-family: var(--v3-serif); font-size: 1.3rem; font-weight: 400;
+    color: var(--v3-text); margin: 8px 0 10px; letter-spacing: -0.01em;
+  }
+  .v3-work-outcome {
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 0.92rem; color: var(--v3-body); line-height: 1.5; margin: 0;
+  }
+  .v3-check { display: inline-grid; place-items: center; color: var(--v3-accent); flex-shrink: 0; margin-top: 2px; }
+  .v3-gallery-hint { display: none; }
+
+  /* ===== Testimonials ===== */
+  .v3-testimonials { padding: 0 0 96px; }
+  .v3-tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .v3-tcard {
+    margin: 0; display: flex; flex-direction: column; justify-content: space-between;
+    gap: 18px; background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--v3-border); border-left: 3px solid var(--v3-accent);
+    border-radius: 10px; padding: 24px 22px;
+  }
+  .v3-tcard blockquote {
+    margin: 0; font-family: var(--v3-serif); font-style: italic;
+    font-size: 1.02rem; line-height: 1.6; color: var(--v3-body);
+  }
+  .v3-tcard-foot { display: flex; align-items: center; gap: 12px; }
+  .v3-avatar { border-radius: 50%; object-fit: cover; border: 2px solid var(--v3-border); flex-shrink: 0; }
+  .v3-tcard-who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .v3-tcard-name { font-weight: 600; font-size: 0.9rem; color: var(--v3-text); text-decoration: none; }
+  .v3-tcard-name:hover { color: var(--v3-accent); }
+  .v3-arr { font-size: 0.72rem; opacity: 0.5; }
+  .v3-tcard-name:hover .v3-arr { opacity: 1; }
+  .v3-tcard-role { font-size: 0.78rem; color: var(--v3-muted); }
+
+  /* ===== Services ===== */
+  .v3-services { padding: 0 0 96px; }
+  .v3-svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .v3-svc {
+    background: var(--v3-accent-light);
+    border: 1px solid var(--v3-border); border-radius: 10px;
+    padding: 24px 22px;
+  }
+  .v3-svc-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+  .v3-svc-n { font-family: var(--v3-serif); font-size: 1.05rem; color: var(--v3-muted); }
+  .v3-svc-dur { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v3-accent); }
+  .v3-svc-title { font-family: var(--v3-serif); font-size: 1.2rem; font-weight: 400; color: var(--v3-text); margin: 0 0 8px; letter-spacing: -0.01em; }
+  .v3-svc-desc { font-size: 0.92rem; color: var(--v3-body); line-height: 1.6; margin: 0; }
+
+  /* ===== Credentials ===== */
+  .v3-creds { padding: 0 0 100px; }
+  .v3-creds-band {
+    display: flex; align-items: center; justify-content: space-between; gap: 28px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--v3-border); border-radius: 12px;
+    padding: 32px 34px;
+  }
+  .v3-creds-main { min-width: 0; }
+  .v3-creds-main .v3-section-label { margin-bottom: 12px; }
+  .v3-creds-line { font-size: 1rem; color: var(--v3-body); line-height: 1.6; margin: 0 0 16px; max-width: 640px; }
+  .v3-creds-line strong { color: var(--v3-text); font-weight: 600; }
+  .v3-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .v3-chips span {
+    font-size: 0.74rem; font-weight: 600; color: var(--v3-body);
+    background: rgba(0, 0, 0, 0.04); border: 1px solid var(--v3-border);
+    border-radius: 5px; padding: 5px 10px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 880px) {
+    .v3-tgrid { grid-template-columns: 1fr; }
+    .v3-svc-grid { grid-template-columns: 1fr; }
+    .v3-creds-band { flex-direction: column; align-items: flex-start; gap: 22px; }
+  }
+
+  @media (max-width: 760px) {
+    .v3-nav { display: none; }
+    .v3-menu-toggle { display: flex; }
+    .v3-hero { padding: 116px 0 48px; }
+    .v3-work { padding: 32px 0 72px; }
+    .v3-testimonials, .v3-services { padding: 0 0 72px; }
+    .v3-creds { padding: 0 0 80px; }
+
+    /* Gallery becomes a swipeable row on mobile */
+    .v3-gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 14px;
+      margin: 0 calc(-1 * var(--site-container-padding-mobile));
+      padding: 4px var(--site-container-padding-mobile) 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .v3-gallery::-webkit-scrollbar { display: none; }
+    .v3-gallery { scrollbar-width: none; }
+    .v3-work-card { flex: 0 0 84%; scroll-snap-align: center; }
+    .v3-gallery-hint {
+      display: block; text-align: right;
+      font-size: 0.78rem; color: var(--v3-muted); margin: 4px 0 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .v3-container { padding: 0 var(--site-container-padding-mobile); }
+    .v3-header-inner { padding: 0 var(--site-container-padding-mobile); }
+    .v3-headline { font-size: 2rem; }
+    .v3-trust-strip { font-size: 0.84rem; gap: 8px 20px; }
+  }
+</style>
+
+<script>
+  // Mobile menu only — reveals are pure CSS so they survive the compare toggle.
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.querySelector('[data-variation-content="v3"]');
+    if (!root) return;
+    const toggle = root.querySelector('.v3-menu-toggle');
+    const nav = root.querySelector('.v3-nav') as HTMLElement | null;
+    if (!toggle || !nav) return;
+
+    const open = () => {
+      Object.assign(nav.style, {
+        display: 'flex', flexDirection: 'column', position: 'absolute',
+        top: '64px', left: '0', right: '0', background: 'var(--v3-bg)',
+        padding: '24px', borderBottom: '1px solid var(--v3-border)', gap: '16px',
+      });
+    };
+    const close = () => { nav.removeAttribute('style'); };
+    toggle.addEventListener('click', () => {
+      nav.style.display === 'flex' ? close() : open();
+    });
+    nav.querySelectorAll('.v3-nav-link').forEach((l) => l.addEventListener('click', close));
+  });
+</script>
