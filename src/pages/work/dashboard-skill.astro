@@ -67,19 +67,19 @@ const principles = [
 
 // The visual journey, with explicit version numbers.
 const iterations = [
-  { version: "Base", tag: "the original product", img: `${IMG}/original.png`,
+  { version: "Base", tag: "the original product", img: `${IMG}/original.webp`,
     alt: "The original product dashboard — a grid of equal-weight metric cards",
     heading: "A dump of charts",
     body: "The starting product: 15+ metrics at equal weight, bars all the same height, mismatched time periods, a greeting where a headline should be. It answers no question in particular." },
-  { version: "V1", tag: "raw intuition, no skill", img: `${IMG}/v1.png`,
+  { version: "V1", tag: "raw intuition, no skill", img: `${IMG}/v1.webp`,
     alt: "Claude's first redesign without the skill — a clean but generic KPI grid",
     heading: "Cleaner, still generic",
     body: "Claude's raw design instinct with no skill applied: a tidy KPI grid on Recharts defaults — bar, line, two-slice pie. Genuinely better, but it still displays numbers rather than answering a decision." },
-  { version: "V4", tag: "the overshoot", img: `${IMG}/v4.png`,
+  { version: "V4", tag: "the overshoot", img: `${IMG}/v4.webp`,
     alt: "A richer redesign with large decorative bars running hot on orange",
     heading: "Rich isn't the same as clear",
     body: "Big, confident bars — that don't differentiate near-identical numbers. Warm fills make the whole page look urgent, so nothing is. An honest wrong turn, kept in because the mistake is the clearest lesson." },
-  { version: "V7", tag: "with the skill", img: `${IMG}/v7-light.png`,
+  { version: "V7", tag: "with the skill", img: `${IMG}/v7-light.webp`,
     alt: "The final dashboard — a conversion funnel hero with earned insights and drill-downs",
     heading: "An actionable launchpad",
     body: "One hero question — where are quotes leaking? — answered by a clean funnel with the leak named in plain words. Every widget carries an insight and a real drill-down. Calm by default; red reserved for the one thing on fire." },
@@ -89,7 +89,7 @@ const iterations = [
 <Layout
   title="Designing actionable dashboards | Mohit Tater"
   description="A case study on a skill that turns generic chart-dump dashboards into actionable launchpads — V1 vs V7, the grounding principles, the iterations, and how it's validated."
-  ogImage="/images/dashboard-skill-project/v7-light.png"
+  ogImage="/images/dashboard-skill-project/v7-light.webp"
   mono
 >
   <div data-variation-content="studio">
@@ -146,8 +146,8 @@ const iterations = [
         <div class="cs-ba studio-reveal">
           <figure class="cs-ba-item">
             <span class="cs-ba-vtag cs-ba-vtag-before">V1</span>
-            <button type="button" class="cs-ba-frame" data-zoom={`${IMG}/v1.png`} data-zoom-caption="V1 — Claude's raw design intuition, no skill" aria-label="Zoom into the V1 dashboard">
-              <img src={`${IMG}/v1.png`} alt="V1: Claude's raw redesign — a clean but generic KPI grid on Recharts defaults" loading="eager" />
+            <button type="button" class="cs-ba-frame" data-zoom={`${IMG}/v1.webp`} data-zoom-caption="V1 — Claude's raw design intuition, no skill" aria-label="Zoom into the V1 dashboard">
+              <img src={`${IMG}/v1.webp`} alt="V1: Claude's raw redesign — a clean but generic KPI grid on Recharts defaults" loading="eager" />
               <span class="cs-zoom-hint" aria-hidden="true">
                 <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
               </span>
@@ -161,8 +161,8 @@ const iterations = [
 
           <figure class="cs-ba-item">
             <span class="cs-ba-vtag cs-ba-vtag-after">V7</span>
-            <button type="button" class="cs-ba-frame" data-zoom={`${IMG}/v7-light.png`} data-zoom-caption="V7 — the same model, with the skill applied" aria-label="Zoom into the V7 dashboard">
-              <img src={`${IMG}/v7-light.png`} alt="V7: the skill-designed dashboard — a conversion funnel hero with earned insights and drill-downs" loading="lazy" />
+            <button type="button" class="cs-ba-frame" data-zoom={`${IMG}/v7-light.webp`} data-zoom-caption="V7 — the same model, with the skill applied" aria-label="Zoom into the V7 dashboard">
+              <img src={`${IMG}/v7-light.webp`} alt="V7: the skill-designed dashboard — a conversion funnel hero with earned insights and drill-downs" loading="lazy" />
               <span class="cs-zoom-hint" aria-hidden="true">
                 <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L14 14M7 5v4M5 7h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
               </span>
@@ -431,9 +431,9 @@ const iterations = [
         <p class="cs-modal-sub">A quick cheat-sheet &mdash; read each against the before/after.</p>
 
         <div class="cs-modal-thumbs" aria-hidden="true">
-          <figure><span class="cs-mt-tag cs-mt-v1">V1</span><img src={`${IMG}/v1.png`} alt="" loading="lazy" /></figure>
+          <figure><span class="cs-mt-tag cs-mt-v1">V1</span><img src={`${IMG}/v1.webp`} alt="" loading="lazy" /></figure>
           <span class="cs-mt-arrow">&rarr;</span>
-          <figure><span class="cs-mt-tag cs-mt-v7">V7</span><img src={`${IMG}/v7-light.png`} alt="" loading="lazy" /></figure>
+          <figure><span class="cs-mt-tag cs-mt-v7">V7</span><img src={`${IMG}/v7-light.webp`} alt="" loading="lazy" /></figure>
         </div>
 
         <ol class="cs-notes">
