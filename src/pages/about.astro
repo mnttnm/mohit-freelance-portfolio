@@ -1,8 +1,10 @@
 ---
 export const prerender = true;
 
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import StudioFooter from "../components/StudioFooter.astro";
+import portrait from "../assets/mohit-portrait.jpg";
 ---
 
 <Layout title="About | Mohit Tater" description="A decade shipping products across design, engineering, and product strategy, from enterprise platforms to helping founders ship their first product.">
@@ -32,20 +34,28 @@ import StudioFooter from "../components/StudioFooter.astro";
     <!-- About Content -->
     <section class="about-content" data-ph-section="about">
       <div class="studio-container">
-        <p class="studio-section-label studio-reveal">About</p>
-        <h1 class="about-headline studio-reveal">Hey, I'm <em>Mohit.</em></h1>
-        <p class="about-body studio-reveal">
-          I've spent the last decade in tech: shipping products, designing interfaces, writing code, and figuring out what users actually need. These days I'm deep in the AI tooling world, constantly testing what's new and finding ways to make it useful. I help founders and businesses build better products, move faster with AI, and stop wasting time on things that should be automated. Based in Bengaluru, working with clients everywhere.
-        </p>
+        <div class="about-intro">
+          <div class="about-intro-text">
+            <p class="studio-section-label studio-reveal">About</p>
+            <h1 class="about-headline studio-reveal">Hey, I'm <em>Mohit.</em></h1>
+            <p class="about-body studio-reveal">
+              I've spent the last decade in tech: shipping products, designing interfaces, writing code, and figuring out what users actually need. These days I'm deep in the AI tooling world, constantly testing what's new and finding ways to make it useful. I help founders and businesses build better products, move faster with AI, and stop wasting time on things that should be automated. Based in Bengaluru, working with clients everywhere.
+            </p>
 
-        <div class="about-socials studio-reveal">
-          <a href="https://www.linkedin.com/in/tatermohit/" class="about-social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <span class="about-social-sep">/</span>
-          <a href="https://twitter.com/tatermohit" class="about-social-link" target="_blank" rel="noopener noreferrer">X</a>
-          <span class="about-social-sep">/</span>
-          <a href="https://github.com/mnttnm" class="about-social-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <span class="about-social-sep">/</span>
-          <a href="https://mohit.stream" class="about-social-link" target="_blank" rel="noopener noreferrer">mohit.stream</a>
+            <div class="about-socials studio-reveal">
+              <a href="https://www.linkedin.com/in/tatermohit/" class="about-social-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <span class="about-social-sep">/</span>
+              <a href="https://twitter.com/tatermohit" class="about-social-link" target="_blank" rel="noopener noreferrer">X</a>
+              <span class="about-social-sep">/</span>
+              <a href="https://github.com/mnttnm" class="about-social-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <span class="about-social-sep">/</span>
+              <a href="https://mohit.stream" class="about-social-link" target="_blank" rel="noopener noreferrer">mohit.stream</a>
+            </div>
+          </div>
+
+          <div class="about-portrait studio-reveal">
+            <Image src={portrait} alt="Mohit Tater" width={720} class="about-portrait-img" />
+          </div>
         </div>
 
         <h4 class="about-subsection-heading studio-reveal">Experience</h4>
@@ -241,6 +251,34 @@ import StudioFooter from "../components/StudioFooter.astro";
     color: var(--studio-accent);
   }
 
+  /* Intro: text + portrait side by side */
+  .about-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(240px, 32%, 360px);
+    gap: 56px;
+    align-items: center;
+    margin-bottom: 64px;
+  }
+
+  .about-intro-text {
+    min-width: 0;
+  }
+
+  .about-portrait {
+    position: relative;
+  }
+
+  .about-portrait-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid var(--studio-border);
+    box-shadow: 0 24px 48px -28px rgba(26, 26, 26, 0.45);
+  }
+
   .about-body {
     font-size: 1.1rem;
     color: var(--studio-text-body);
@@ -253,7 +291,7 @@ import StudioFooter from "../components/StudioFooter.astro";
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 56px;
+    margin-bottom: 0;
   }
 
   .about-social-link {
@@ -348,6 +386,17 @@ import StudioFooter from "../components/StudioFooter.astro";
 
     .about-content {
       padding: 120px 0 80px;
+    }
+
+    .about-intro {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    .about-portrait {
+      order: -1;
+      max-width: 260px;
     }
 
     .about-experience-list li {

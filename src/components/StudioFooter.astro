@@ -34,7 +34,7 @@ import { actions } from 'astro:actions';
 
           <div class="studio-form-group">
             <label for="studio-email">Email</label>
-            <input type="email" id="studio-email" name="email" required placeholder="your@email.com" />
+            <input type="email" id="studio-email" name="email" required placeholder="Work email" />
           </div>
 
           <div class="studio-form-group studio-form-group--grow">
@@ -61,14 +61,6 @@ import { actions } from 'astro:actions';
 
         <div class="studio-footer-card studio-footer-card--action">
           <div class="studio-footer-card-head">
-            <h3 class="studio-footer-card-heading">Drop a line</h3>
-            <p class="studio-footer-card-subtext">Quick question or an intro. Email works too.</p>
-          </div>
-          <a href="mailto:mohittater.iiita@gmail.com" class="studio-footer-card-cta studio-footer-email">mohittater.iiita@gmail.com &rarr;</a>
-        </div>
-
-        <div class="studio-footer-card studio-footer-card--action">
-          <div class="studio-footer-card-head">
             <h3 class="studio-footer-card-heading">Let's connect</h3>
             <p class="studio-footer-card-subtext">Say hi, follow along, or read what I'm thinking about.</p>
           </div>
@@ -87,7 +79,7 @@ import { actions } from 'astro:actions';
 
     </div>
 
-    <p class="studio-footer-copyright">&copy; 2026 Mohit Tater &middot; Bengaluru, India</p>
+    <p class="studio-footer-copyright">&copy; 2026 Mohit Tater</p>
   </div>
 </footer>
 
@@ -336,16 +328,6 @@ import { actions } from 'astro:actions';
   .studio-footer-card--action .studio-btn-primary {
     padding: 11px 22px;
     font-size: 0.85rem;
-  }
-
-  .studio-footer-email {
-    color: var(--studio-accent);
-    transition: opacity 0.2s;
-    word-break: break-all;
-  }
-
-  .studio-footer-email:hover {
-    opacity: 0.75;
   }
 
   .studio-footer-socials {
