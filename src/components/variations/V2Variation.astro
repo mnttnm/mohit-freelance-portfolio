@@ -420,32 +420,36 @@ const craftLayers = [
   <!-- About -->
   <section id="v2-about" class="v2-about" data-ph-section="about_teaser">
     <div class="v2-container">
+      <!-- Two-pane split: copy on a cream card | portrait framed inside a green
+           panel. On mobile the green panel becomes a horizontal profile card so
+           it stays composed rather than collapsing into a tall block. -->
       <div class="v2-about-layout">
-        <div class="v2-about-text">
-          <p class="v2-section-label v2-reveal">About</p>
-          <h2 class="v2-about-headline v2-reveal">A decade of shipping products, <em>and counting.</em></h2>
-          <p class="v2-about-body v2-reveal">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 8K+ designers, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, focused on AI-native product work.</p>
-          <div class="v2-about-socials v2-reveal">
-            <a href="https://www.linkedin.com/in/tatermohit/" class="v2-about-social" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <span class="v2-about-social-sep">/</span>
-            <a href="https://mohit.stream" class="v2-about-social" target="_blank" rel="noopener noreferrer">mohit.stream</a>
-            <span class="v2-about-social-sep">/</span>
-            <a href="https://github.com/mnttnm" class="v2-about-social" target="_blank" rel="noopener noreferrer">GitHub</a>
-          </div>
-
-          <div class="v2-about-actions v2-reveal">
+        <div class="v2-about-text v2-reveal">
+          <p class="v2-section-label">About</p>
+          <h2 class="v2-about-headline">A decade of shipping products, <em>and counting.</em></h2>
+          <p class="v2-about-body">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 8K+ designers, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, focused on AI-native product work.</p>
+          <div class="v2-about-actions">
             <a href="/about" class="v2-btn-primary">More about me &rarr;</a>
           </div>
         </div>
 
-        <!-- Portrait as a member of the page's card family: same 12px radius,
-             hairline border, accent-light backing and whisper shadow as the work
-             thumbnails — so it reads as native to the page, not an ornament. -->
-        <figure class="v2-about-figure v2-reveal">
-          <div class="v2-about-card">
+        <!-- Whole column is the green panel; the portrait sits framed inside it
+             with name + socials beneath on the same field. -->
+        <div class="v2-about-media v2-reveal">
+          <div class="v2-about-imgwrap">
             <Image src={portraitHome} alt="Mohit Tater" width={720} class="v2-about-img" />
           </div>
-        </figure>
+          <div class="v2-about-meta">
+            <span class="v2-about-name">Mohit Tater</span>
+            <div class="v2-about-socials">
+              <a href="https://www.linkedin.com/in/tatermohit/" class="v2-about-social" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <span class="v2-about-social-sep">/</span>
+              <a href="https://mohit.stream" class="v2-about-social" target="_blank" rel="noopener noreferrer">mohit.stream</a>
+              <span class="v2-about-social-sep">/</span>
+              <a href="https://github.com/mnttnm" class="v2-about-social" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1715,96 +1719,162 @@ const craftLayers = [
     display: flex;
     align-items: center;
     gap: 24px;
+    margin-top: auto;            /* pin the CTA to the bottom of the cream card */
   }
 
-  .v2-about-socials {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 28px;
-  }
-
-  .v2-about-social {
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--v2-accent);
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .v2-about-social:hover {
-    opacity: 0.7;
-  }
-
-  .v2-about-social-sep {
-    color: var(--v2-text-muted);
-    font-size: 0.85rem;
-  }
-
-  /* Two-column About teaser inside a soft accent-light panel — same container
-     language as the Services list — so the section reads as one composed block
-     and the white portrait card has a surface to sit on. */
+  /* Two-pane split: cream copy card | green portrait panel, separated by a gap
+     so they read as two distinct surfaces. */
   .v2-about-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(260px, 32%, 360px);
-    gap: 56px;
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) clamp(320px, 30%, 380px);
+    gap: 24px;
+    align-items: stretch;
+    min-height: 520px;           /* keeps both columns proportional even if copy is short */
+  }
+
+  /* Left — cream copy card */
+  .v2-about-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
     background: var(--v2-accent-light);
     border: 1px solid var(--v2-border);
     border-radius: 16px;
     padding: 48px;
   }
 
-  .v2-about-text {
-    min-width: 0;
-  }
-
-  /* Matted gallery print — soft accent-tinted mat ties the cooler studio photo
-     into the page's warm/green palette; the photo itself is gently warmed. */
-  .v2-about-figure {
-    margin: 0;
-  }
-
-  /* Portrait card — identical chrome to .v2-thumb so it belongs to the page's
-     card family: 12px radius, one hairline border, accent-light backing, whisper
-     shadow. The only addition is a gentle warming filter to pull the cooler
-     studio photo into the cream/green palette. No rings, mats, or glows. */
-  .v2-about-card {
-    width: 100%;
-    max-width: 360px;
-    margin: 0 auto;
-    border-radius: 12px;
+  /* Right — the whole column is the green panel; portrait floats inside it and
+     name + socials sit beneath on the same green field. */
+  .v2-about-media {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--v2-border);
-    background: #FFFFFF;
-    box-shadow: 0 1px 2px rgba(26, 26, 26, 0.04);
+    background:
+      radial-gradient(120% 80% at 50% 18%, rgba(255, 255, 255, 0.06), transparent 60%),
+      var(--v2-accent);
+  }
+
+  .v2-about-imgwrap {
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 24px 8px;       /* green breathes around the portrait */
   }
 
   .v2-about-img {
     display: block;
     width: 100%;
-    /* height:auto is required for aspect-ratio to win over the <img> height attr
-       Astro emits — without it the image renders at full intrinsic height. */
-    height: auto;
-    /* 4:5 — a touch taller than square, less tall than the source portrait. */
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: 50% 16%;
-    filter: sepia(0.16) saturate(1.06) contrast(1.01);
+    max-width: 320px;             /* compact portrait */
+    height: auto;                 /* full portrait, nothing clipped */
+    border-radius: 0;             /* sharp edges */
+  }
+
+  .v2-about-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 28px 32px;
+    margin-top: auto;            /* pin metadata to the bottom of the green column */
+  }
+
+  .v2-about-name {
+    font-family: var(--v2-serif);
+    font-size: 1.4rem;
+    line-height: 1.1;
+    color: var(--v2-bg);
+    letter-spacing: -0.01em;
+  }
+
+  .v2-about-socials {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .v2-about-social {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(250, 248, 245, 0.62);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .v2-about-social:hover {
+    color: var(--v2-bg);
+  }
+
+  .v2-about-social-sep {
+    color: rgba(250, 248, 245, 0.3);
+    font-size: 0.8rem;
   }
 
   @media (max-width: 860px) {
+    /* Stack the copy above the green panel, but turn the panel into a horizontal
+       profile card (portrait | info) so it stays composed at every width. */
     .v2-about-layout {
       grid-template-columns: 1fr;
-      gap: 36px;
-      justify-items: start;
-      padding: 28px;
+      min-height: 0;
+      gap: 16px;
     }
 
-    .v2-about-figure {
-      width: 100%;
-      max-width: 360px;
+    .v2-about-text {
+      padding: 32px;
+    }
+
+    .v2-about-actions {
+      margin-top: 24px;
+    }
+
+    .v2-about-media {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .v2-about-imgwrap {
+      flex: 0 0 44%;               /* portrait scales with the card, never sparse */
+      padding: 20px;
+    }
+
+    .v2-about-img {
+      max-width: none;
+    }
+
+    .v2-about-meta {
+      flex: 1 1 auto;
+      min-width: 0;
+      justify-content: center;
+      margin-top: 0;
+      padding: 24px 28px 24px 8px;
+    }
+  }
+
+  /* Small phones: tighten the two panes so the portrait still reads. */
+  @media (max-width: 480px) {
+    .v2-about-imgwrap {
+      flex-basis: 42%;
+      padding: 14px;
+    }
+
+    .v2-about-meta {
+      padding: 20px 18px 20px 6px;
+    }
+
+    .v2-about-name {
+      font-size: 1.2rem;
+    }
+
+    .v2-about-socials {
+      gap: 10px;
+    }
+
+    .v2-about-social,
+    .v2-about-social-sep {
+      font-size: 0.8rem;
     }
   }
 
