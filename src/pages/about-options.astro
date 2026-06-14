@@ -1,0 +1,400 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import portraitHome from '../assets/mohit-portrait-home.jpeg';
+---
+
+<Layout title="About section — two directions">
+  <main class="opt-page">
+    <header class="opt-head">
+      <p class="opt-kicker">Temp comparison · delete when done</p>
+      <h1 class="opt-title">About section, two directions</h1>
+      <p class="opt-sub">Both built with the real V2 tokens, fonts, green-panel recipe and card chrome. Current section shown first for reference.</p>
+    </header>
+
+    <!-- ============ REFINED — text inside green panel, flat photo, social badges ============ -->
+    <section class="opt-block">
+      <div class="opt-tag opt-tag--a">Refined · your direction</div>
+      <!-- Two-column split: lighter-accent text | dark-green media -->
+      <div class="r-layout">
+        <!-- Left: lighter accent, the text -->
+        <div class="r-text">
+          <p class="r-label">About</p>
+          <h2 class="r-headline">A decade of shipping products, <em>and counting.</em></h2>
+          <p class="r-body">10+ years across design, engineering, and QA/automation &mdash; the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 8K+ designers, and taken founders' first products from sketch to production.</p>
+          <a href="#" class="r-cta">More about me &rarr;</a>
+        </div>
+
+        <!-- Right: whole column dark green. Image = top ~2/3, metadata = bottom ~1/3 -->
+        <div class="r-media">
+          <div class="r-imgwrap">
+            <Image src={portraitHome} alt="Mohit Tater" width={720} class="r-img" />
+          </div>
+          <div class="r-meta">
+            <span class="r-name">Mohit Tater</span>
+            <div class="r-socials">
+              <a href="https://www.linkedin.com/in/mohittater" class="r-social">LinkedIn</a>
+              <span class="r-sep">/</span>
+              <a href="https://github.com/mohittater" class="r-social">GitHub</a>
+              <span class="r-sep">/</span>
+              <a href="https://x.com/tatermohit" class="r-social">X</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CURRENT (reference) ============ -->
+    <section class="opt-block">
+      <div class="opt-tag opt-tag--ref">Current</div>
+      <div class="about-layout">
+        <div class="about-text">
+          <p class="section-label">About</p>
+          <h2 class="about-headline">A decade of shipping products, <em>and counting.</em></h2>
+          <p class="about-body">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 8K+ designers, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, focused on AI-native product work.</p>
+          <div class="about-actions"><a href="#" class="btn-primary">More about me &rarr;</a></div>
+        </div>
+        <figure class="about-figure">
+          <div class="about-card">
+            <Image src={portraitHome} alt="Mohit Tater" width={720} class="about-img about-img--ref" />
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ OPTION 1 — green panel, mirrors Work ============ -->
+    <section class="opt-block">
+      <div class="opt-tag opt-tag--a">Option 1 · Framed like the Work panel</div>
+      <div class="a-layout">
+        <div class="about-text">
+          <p class="section-label">About</p>
+          <h2 class="about-headline">A decade of shipping products, <em>and counting.</em></h2>
+          <p class="about-body">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 8K+ designers, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, focused on AI-native product work.</p>
+          <div class="about-actions"><a href="#" class="btn-primary">More about me &rarr;</a></div>
+        </div>
+
+        <!-- Green panel = same recipe as .v2-work-mosaic -->
+        <div class="a-panel">
+          <figure class="a-card">
+            <div class="a-shot">
+              <Image src={portraitHome} alt="Mohit Tater" width={720} class="a-img" />
+            </div>
+            <figcaption class="a-cap">
+              <span class="a-name">Mohit Tater</span>
+              <span class="a-meta">Bengaluru · Freelance</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OPTION 2 — quiet matted portrait + proof strip ============ -->
+    <section class="opt-block">
+      <div class="opt-tag opt-tag--b">Option 2 · Quiet matted portrait + proof strip</div>
+      <div class="b-layout">
+        <div class="about-text">
+          <p class="section-label">About</p>
+          <h2 class="about-headline">A decade of shipping products, <em>and counting.</em></h2>
+          <p class="about-body">10+ years across design, engineering, and QA/automation &mdash; the three disciplines that usually take three different hires. I've shipped at enterprise scale and taken founders' first products from sketch to production.</p>
+          <ul class="b-stats">
+            <li><span class="b-num">10+</span><span class="b-lab">Years shipping</span></li>
+            <li><span class="b-num">8K+</span><span class="b-lab">Designers reached</span></li>
+            <li><span class="b-num">Ent.</span><span class="b-lab">Scale shipped</span></li>
+          </ul>
+          <div class="about-actions"><a href="#" class="btn-primary">More about me &rarr;</a></div>
+        </div>
+
+        <figure class="b-figure">
+          <div class="b-card">
+            <Image src={portraitHome} alt="Mohit Tater" width={720} class="b-img" />
+          </div>
+          <figcaption class="b-cap">Bengaluru, India</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* ===== V2 tokens, scoped to this page ===== */
+  .opt-page {
+    --bg: #FAF8F5;
+    --text: #1A1A1A;
+    --text-body: #4A4A4A;
+    --text-muted: #8A8A8A;
+    --accent: #2D5A3D;
+    --accent-light: rgba(45, 90, 61, 0.08);
+    --border: #E5E0DA;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding: 64px 0 120px;
+  }
+
+  .opt-head,
+  .opt-block {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .opt-head { margin-bottom: 8px; }
+  .opt-kicker {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #B23A3A; margin-bottom: 14px;
+  }
+  .opt-title { font-family: var(--serif); font-size: 2.2rem; letter-spacing: -0.02em; margin: 0 0 10px; }
+  .opt-sub { color: var(--text-body); max-width: 620px; margin: 0; }
+
+  .opt-block { margin-top: 72px; }
+  .opt-tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 999px; margin-bottom: 28px;
+  }
+  .opt-tag--ref { background: #F0EBE4; color: #8A8A8A; }
+  .opt-tag--a { background: var(--accent); color: #fff; }
+  .opt-tag--b { background: var(--accent-light); color: var(--accent); }
+
+  /* ===== REFINED — two-column split: light-accent text | dark-green media ===== */
+  .r-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(320px, 30%, 380px);
+    align-items: stretch;
+    gap: 24px;                   /* separates the text panel from the portrait panel */
+    min-height: 520px;           /* keeps both columns proportional even if text is short */
+  }
+
+  /* Left — lighter accent, the copy */
+  .r-text {
+    display: flex; flex-direction: column; min-width: 0;
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px;
+  }
+  .r-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-muted); margin: 0 0 24px;
+  }
+  .r-headline {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: var(--text);
+    margin: 0 0 20px; letter-spacing: -0.02em; line-height: 1.2; max-width: 480px;
+  }
+  .r-headline em { font-style: italic; color: var(--accent); }
+  .r-body {
+    font-size: 1.1rem; color: var(--text-body); line-height: 1.8;
+    max-width: 480px; margin: 0 0 32px;
+  }
+  .r-cta {
+    align-self: flex-start; margin-top: auto;
+    display: inline-block; padding: 14px 32px; background: var(--accent);
+    color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    border-radius: 6px; transition: transform 0.2s, background 0.25s;
+  }
+  .r-cta:hover { transform: translateY(-1px); }
+
+  /* Right — the WHOLE column is dark green. Photo sits on top, fully visible,
+     metadata flows beneath it on the same green field. */
+  .r-media {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 80% at 50% 18%, rgba(255,255,255,0.06), transparent 60%),
+      var(--accent);
+  }
+  /* Image floats inside the green field — smaller, fully visible, framed by green. */
+  .r-imgwrap {
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 24px 8px;       /* just enough green around the portrait */
+  }
+  .r-img {
+    display: block;
+    width: 100%;
+    max-width: 320px;             /* compact portrait */
+    height: auto;                 /* full portrait, nothing clipped */
+    border-radius: 0;             /* sharp edges */
+  }
+  .r-meta {
+    display: flex; flex-direction: column; justify-content: center; gap: 6px;
+    padding: 28px 32px;
+    margin-top: auto;            /* pin metadata to the bottom of the green column */
+  }
+  .r-name {
+    font-family: var(--serif); font-size: 1.4rem; line-height: 1.1;
+    color: #FAF8F5; letter-spacing: -0.01em;
+  }
+  .r-socials { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .r-social {
+    font-size: 0.85rem; font-weight: 500; color: rgba(250,248,245,0.62);
+    text-decoration: none; transition: color 0.2s ease;
+  }
+  .r-social:hover { color: #FAF8F5; }
+  .r-sep { color: rgba(250,248,245,0.3); font-size: 0.8rem; }
+
+  /* ===== Shared text column (matches .v2-about-*) ===== */
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-muted); margin: 0 0 24px;
+  }
+  .about-headline {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: var(--text);
+    margin: 0 0 20px; letter-spacing: -0.02em; line-height: 1.2; max-width: 560px;
+  }
+  .about-headline em { font-style: italic; color: var(--accent); }
+  .about-body {
+    font-size: 1.1rem; color: var(--text-body); line-height: 1.8;
+    max-width: 560px; margin: 0 0 36px;
+  }
+  .about-actions { display: flex; align-items: center; gap: 24px; }
+  .btn-primary {
+    display: inline-block; padding: 14px 32px; background: var(--accent);
+    color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    border-radius: 6px; transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-1px); }
+
+  /* ===== CURRENT (reference) ===== */
+  .about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(260px, 32%, 360px);
+    gap: 56px; align-items: center;
+    background: var(--accent-light); border: 1px solid var(--border);
+    border-radius: 16px; padding: 48px;
+  }
+  .about-figure { margin: 0; }
+  .about-card {
+    width: 100%; max-width: 360px; margin: 0 auto; border-radius: 12px;
+    overflow: hidden; border: 1px solid var(--border); background: #fff;
+    box-shadow: 0 1px 2px rgba(26,26,26,0.04);
+  }
+  .about-img { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 16%; }
+  .about-img--ref { filter: sepia(0.16) saturate(1.06) contrast(1.01); }
+
+  /* ===== OPTION 1 — text on cream left, green panel right (mirrors Work) ===== */
+  .a-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 40%, 420px);
+    gap: 64px; align-items: center;
+  }
+  /* Green panel — identical recipe to .v2-work-mosaic */
+  .a-panel {
+    padding: 24px; border-radius: 18px;
+    background:
+      radial-gradient(120% 100% at 50% 28%, rgba(255,255,255,0.07), transparent 64%),
+      var(--accent);
+    box-shadow:
+      inset 0 0 72px rgba(0,0,0,0.34),
+      0 24px 60px -22px rgba(45,90,61,0.5);
+  }
+  /* White card — identical chrome to .v2-thumb */
+  .a-card {
+    margin: 0; border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border); background: #fff;
+    box-shadow: 0 1px 2px rgba(26,26,26,0.04);
+  }
+  .a-shot {
+    aspect-ratio: 4/5; overflow: hidden;
+    background: var(--accent-light); border-bottom: 1px solid var(--border);
+  }
+  .a-img {
+    width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; display: block;
+    /* Green duotone: warm the photo, then a subtle accent multiply via blend wrapper.
+       Filter alone neutralizes the clashing cream so it reads as part of the panel. */
+    filter: grayscale(0.35) sepia(0.22) saturate(0.85) hue-rotate(58deg) contrast(1.02) brightness(1.02);
+  }
+  .a-cap {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 5px;
+    padding: 12px 14px 13px;
+  }
+  .a-name { font-size: 0.9rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+  .a-meta {
+    font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--accent); background: var(--accent-light); padding: 3px 8px; border-radius: 999px;
+  }
+
+  /* ===== OPTION 2 — quiet matted portrait + proof strip ===== */
+  .b-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(280px, 36%, 400px);
+    gap: 64px; align-items: center;
+  }
+  .b-stats {
+    list-style: none; margin: 0 0 36px; padding: 24px 0 0;
+    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: repeat(3, auto); gap: 40px; justify-content: start;
+  }
+  .b-stats li { display: flex; flex-direction: column; gap: 4px; }
+  .b-num { font-family: var(--serif); font-size: 1.9rem; line-height: 1; color: var(--accent); }
+  .b-lab { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.01em; }
+
+  .b-figure { margin: 0; }
+  .b-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border); background: #fff;
+    padding: 14px;                       /* the mat */
+    box-shadow: 0 1px 2px rgba(26,26,26,0.04);
+  }
+  .b-img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4/5;
+    object-fit: cover; object-position: 50% 18%; border-radius: 4px;
+    /* Recolor backdrop toward the page cream so the two merge */
+    filter: sepia(0.18) saturate(1.05) brightness(1.03) contrast(0.99);
+  }
+  .b-cap {
+    margin-top: 12px; text-align: center;
+    font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 860px) {
+    .about-layout, .a-layout, .b-layout { grid-template-columns: 1fr; gap: 32px; }
+    .about-layout { padding: 28px; }
+
+    /* Refined: stack the copy above the green panel, but turn that panel into a
+       horizontal profile card (portrait | info) so it stays composed at every
+       width instead of collapsing into a tall green block. */
+    .r-layout { grid-template-columns: 1fr; min-height: 0; gap: 16px; }
+    .r-text { padding: 32px; }
+    .r-cta { margin-top: 24px; }
+    .r-media { flex-direction: row; align-items: stretch; }
+    .r-imgwrap {
+      flex: 0 0 44%;               /* portrait scales with the card, never sparse */
+      padding: 20px;
+    }
+    .r-img { max-width: none; }
+    .r-meta {
+      flex: 1 1 auto; min-width: 0;
+      justify-content: center;
+      margin-top: 0;
+      padding: 24px 28px 24px 8px;
+    }
+    .r-socials { margin-top: 12px; flex-wrap: wrap; }
+
+    .a-panel { max-width: 420px; }
+    .b-figure, .a-panel { max-width: 420px; }
+  }
+
+  /* Small phones: tighten the two panes so the portrait still reads. */
+  @media (max-width: 480px) {
+    .r-imgwrap { flex-basis: 42%; padding: 14px; }
+    .r-meta { padding: 20px 18px 20px 6px; }
+    .r-name { font-size: 1.2rem; }
+    .r-socials { gap: 10px; }
+    .r-social, .r-sep { font-size: 0.8rem; }
+  }
+</style>
