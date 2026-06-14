@@ -375,10 +375,26 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
             >
               {spotlightProjects[0].title}
             </p>
-            <div class="work-browser-count" aria-live="polite">
-              <span data-project-current>01</span>
-              <span class="work-browser-count-divider">/</span>
-              <span>{projectTotalLabel}</span>
+            <div class="work-browser-nav" aria-label="Project navigation">
+              <div class="work-browser-count" aria-live="polite">
+                <span data-project-current>01</span>
+                <span class="work-browser-count-divider">/</span>
+                <span>{projectTotalLabel}</span>
+              </div>
+              <div class="work-arrows" data-project-arrows>
+                <button
+                  type="button"
+                  class="work-arrow"
+                  data-project-prev
+                  aria-label="Previous project">&larr;</button
+                >
+                <button
+                  type="button"
+                  class="work-arrow"
+                  data-project-next
+                  aria-label="Next project">&rarr;</button
+                >
+              </div>
             </div>
           </div>
 
@@ -694,43 +710,25 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                 </div>
               </div>
 
-              <!-- Project navigation (bottom of detail panel) -->
-              <div
-                class="work-project-nav"
-                aria-label="Project navigation"
-              >
-                <div class="work-dots" data-dots>
-                  {
-                    spotlightProjects.map((project, i) => (
-                      <button
-                        type="button"
-                        class={`work-dot ${i === 0 ? "is-active" : ""}`}
-                        data-project-dot
-                        data-project-index={i}
-                        aria-pressed={i === 0 ? "true" : "false"}
-                        aria-label={`Show ${project.title}`}
-                      >
-                        <span class="visually-hidden">{i + 1}</span>
-                      </button>
-                    ))
-                  }
-                </div>
-                <div class="work-arrows">
-                  <button
-                    type="button"
-                    class="work-arrow"
-                    data-project-prev
-                    aria-label="Previous project">&larr;</button
-                  >
-                  <button
-                    type="button"
-                    class="work-arrow"
-                    data-project-next
-                    aria-label="Next project">&rarr;</button
-                  >
-                </div>
-              </div>
             </div>
+          </div>
+
+          <!-- Dot indicators (below the cards) -->
+          <div class="work-dots" data-dots aria-label="Project indicators">
+            {
+              spotlightProjects.map((project, i) => (
+                <button
+                  type="button"
+                  class={`work-dot ${i === 0 ? "is-active" : ""}`}
+                  data-project-dot
+                  data-project-index={i}
+                  aria-pressed={i === 0 ? "true" : "false"}
+                  aria-label={`Show ${project.title}`}
+                >
+                  <span class="visually-hidden">{i + 1}</span>
+                </button>
+              ))
+            }
           </div>
 
           <!-- ===== Mobile stacked list (shown ≤900px) =====
@@ -1926,30 +1924,54 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     line-height: 1.65;
   }
 
-  /* Project nav (dots + arrows) */
-  .work-project-nav {
-    position: absolute;
-    left: 60px;
-    right: 60px;
-    bottom: 32px;
+  /* Top-right navigation cluster (slide position + arrows) */
+  .work-browser-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    z-index: 5;
+    gap: 14px;
+  }
+
+  .work-arrows {
+    display: flex;
+    gap: 6px;
+  }
+
+  .work-arrow {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: var(--studio-text);
+    background: #fff;
+    border: 1px solid var(--studio-border);
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: var(--studio-sans);
+    font-size: 0.85rem;
     transition:
-      opacity 0.3s ease,
-      visibility 0.3s ease;
+      background 0.2s,
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.2s,
+      box-shadow 0.3s;
   }
 
-  /* Hide project nav when viewing back face — back face has its own "Back" button */
-  .work-detail-panel.is-flipped .work-project-nav {
-    opacity: 0;
-    visibility: hidden;
+  .work-arrow:hover {
+    color: #fff;
+    background: var(--studio-accent);
+    border-color: var(--studio-accent);
   }
 
+  .work-arrow:active {
+    transform: translateY(1px);
+  }
+
+  /* Dot indicators — sit centered below the cards */
   .work-dots {
     display: flex;
+    justify-content: center;
     gap: 8px;
+    margin-top: 18px;
   }
 
   .work-dot {
@@ -1972,38 +1994,47 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     border-radius: 4px;
   }
 
-  .work-arrows {
-    display: flex;
-    gap: 6px;
+  /* Invitation: while idling on a slide, the "next" arrow gently leans
+     forward with a soft accent halo — a quiet "there's more this way" cue.
+     ~65% of each cycle is dead-still, so it reads as an occasional breath,
+     not a fidget. Pauses on hover; the JS stops it once the user navigates. */
+  @keyframes nextArrowInvite {
+    0%,
+    62% {
+      transform: translateX(0);
+      box-shadow: 0 0 0 0 rgba(45, 90, 61, 0);
+    }
+    72% {
+      transform: translateX(3px);
+      box-shadow: 0 0 0 4px rgba(45, 90, 61, 0.09);
+    }
+    82% {
+      transform: translateX(0.5px);
+      box-shadow: 0 0 0 2px rgba(45, 90, 61, 0.04);
+    }
+    90% {
+      transform: translateX(2px);
+      box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.06);
+    }
+    100% {
+      transform: translateX(0);
+      box-shadow: 0 0 0 0 rgba(45, 90, 61, 0);
+    }
   }
 
-  .work-arrow {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    place-items: center;
-    color: var(--studio-text);
-    background: #fff;
-    border: 1px solid var(--studio-border);
-    border-radius: 999px;
-    cursor: pointer;
-    font-family: var(--studio-sans);
-    font-size: 0.95rem;
-    transition:
-      background 0.2s,
-      border-color 0.2s,
-      color 0.2s,
-      transform 0.2s;
+  .work-arrows.is-hinting .work-arrow[data-project-next] {
+    animation: nextArrowInvite 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
-  .work-arrow:hover {
-    color: #fff;
-    background: var(--studio-accent);
-    border-color: var(--studio-accent);
+  /* The visitor found the arrow — let it rest while they decide. */
+  .work-arrows.is-hinting .work-arrow[data-project-next]:hover {
+    animation: none;
   }
 
-  .work-arrow:active {
-    transform: translateY(1px);
+  @media (prefers-reduced-motion: reduce) {
+    .work-arrows.is-hinting .work-arrow[data-project-next] {
+      animation: none;
+    }
   }
 
   /* Focus styles */
@@ -2494,11 +2525,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     .work-detail-face {
       padding: 56px 44px 88px;
     }
-
-    .work-project-nav {
-      left: 44px;
-      right: 44px;
-    }
   }
 
   @media (max-width: 900px) {
@@ -2507,7 +2533,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
        wrapper, which also contains the mobile list. (display:none on the
        wrapper would take the mobile cards down with it.) */
     .work-browser-topline,
-    .work-browser-shell {
+    .work-browser-shell,
+    .work-dots {
       display: none;
     }
     /* Swap desktop carousel → mobile deck, and desktop grid → mobile list */
@@ -2545,11 +2572,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
     .work-detail-face {
       padding: 40px 32px 92px;
-    }
-
-    .work-project-nav {
-      left: 32px;
-      right: 32px;
     }
   }
 
@@ -2607,12 +2629,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     }
     .work-action {
       width: 100%;
-    }
-
-    .work-project-nav {
-      left: 24px;
-      right: 24px;
-      bottom: 22px;
     }
 
     .more-projects-grid {
@@ -3322,6 +3338,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
       );
       const previous = showcase.querySelector("[data-project-prev]");
       const next = showcase.querySelector("[data-project-next]");
+      const arrowsWrap = showcase.querySelector(
+        "[data-project-arrows]"
+      ) as HTMLElement | null;
       const detailPanel = showcase.querySelector(
         "[data-detail-panel]"
       ) as HTMLElement | null;
@@ -3333,6 +3352,15 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
       ) as HTMLElement | null;
 
       let activeIndex = 0;
+      // The first updateProject(0) is the init paint, not a user action, so
+      // we don't stop the arrow nudge until navigation actually happens.
+      let navInitialized = false;
+      let nudgeStopped = false;
+      const stopNudge = () => {
+        if (nudgeStopped) return;
+        nudgeStopped = true;
+        arrowsWrap?.classList.remove("is-hinting");
+      };
 
       // ===== Analytics =====
       const phTrack = (
@@ -3369,6 +3397,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
       };
 
       const updateProject = (nextIndex: number) => {
+        if (navInitialized) stopNudge();
         activeIndex =
           (nextIndex + visualSets.length) % visualSets.length;
         const label = String(activeIndex + 1).padStart(2, "0");
@@ -3677,6 +3706,25 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
       });
 
       updateProject(0);
+      navInitialized = true;
+
+      // Start the "next" arrow's idle invitation once the showcase scrolls
+      // into view (not before — no point inviting off-screen). The observer
+      // fires once then disconnects; the CSS loop runs until the visitor
+      // navigates, at which point stopNudge() removes the class.
+      if (arrowsWrap) {
+        const nudgeObserver = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting || nudgeStopped) return;
+              arrowsWrap.classList.add("is-hinting");
+              obs.disconnect();
+            });
+          },
+          { threshold: 0.6 }
+        );
+        nudgeObserver.observe(showcase);
+      }
 
       // Auto-scroll into the spotlight after a longer peek at the hero so the
       // headline is read before motion. Bails if the user already scrolled,
