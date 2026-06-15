@@ -3692,8 +3692,24 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
         }
       });
 
-      updateProject(0);
+      // Deep-link support: /projects#<project-id> (e.g. linked from the home
+      // work mosaic) opens that project directly instead of the first one.
+      const hashId = decodeURIComponent(
+        location.hash.replace(/^#/, "")
+      );
+      const deepLinkIndex = hashId
+        ? details.findIndex((d) => d.dataset.projectId === hashId)
+        : -1;
+      updateProject(deepLinkIndex >= 0 ? deepLinkIndex : 0);
       navInitialized = true;
+
+      // Bring the showcase into view when arriving via a deep link — the data
+      // ids aren't element ids, so the browser won't scroll there on its own.
+      if (deepLinkIndex >= 0 && (showcase as HTMLElement).offsetParent) {
+        requestAnimationFrame(() =>
+          showcase.scrollIntoView({ behavior: "smooth", block: "start" })
+        );
+      }
 
       // Start the "next" arrow's idle invitation once the showcase scrolls
       // into view (not before — no point inviting off-screen). The observer
@@ -4130,6 +4146,25 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
           showLb();
         }
       );
+
+      // Deep-link: /projects#<id> (e.g. tapped from the home work mosaic)
+      // centers that spotlight card on load instead of the first one.
+      var mspotHashId = decodeURIComponent(
+        location.hash.replace(/^#/, "")
+      );
+      var mspotIndex = mspotHashId
+        ? MSPOT.findIndex(function (p) {
+            return p.id === mspotHashId;
+          })
+        : -1;
+      if (mspotIndex > 0 && deck.clientWidth && cards[mspotIndex]) {
+        var tc = cards[mspotIndex];
+        deck.scrollLeft =
+          tc.offsetLeft - (deck.clientWidth - tc.clientWidth) / 2;
+        requestAnimationFrame(function () {
+          root.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
 
       updateFocus();
     }

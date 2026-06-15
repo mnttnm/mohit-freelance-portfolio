@@ -235,28 +235,40 @@ const craftLayers = [
         <div class="v2-work-mosaic v2-reveal">
           <div class="v2-work-grid">
             <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={opsWorkspace} alt="Enterprise Ops Workspace" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Ops Workspace</span><span class="v2-thumb-type">Enterprise App</span></figcaption>
+              <a class="v2-thumb-link" href="/projects#ops-workspace" data-ph-cta="open_project" data-ph-location="work_mosaic">
+                <div class="v2-thumb-shot"><Image src={opsWorkspace} alt="Enterprise Ops Workspace" width={440} loading="lazy" class="v2-thumb-img" /></div>
+                <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Ops Workspace</span><span class="v2-thumb-type">Enterprise App</span></figcaption>
+              </a>
             </figure>
             <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={aiResizing} alt="AI Resizing Studio" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Resizing Studio</span><span class="v2-thumb-type">AI Pipeline</span></figcaption>
+              <a class="v2-thumb-link" href="/projects#ai-resizing-studio" data-ph-cta="open_project" data-ph-location="work_mosaic">
+                <div class="v2-thumb-shot"><Image src={aiResizing} alt="AI Resizing Studio" width={440} loading="lazy" class="v2-thumb-img" /></div>
+                <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Resizing Studio</span><span class="v2-thumb-type">AI Pipeline</span></figcaption>
+              </a>
             </figure>
             <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={dashboards} alt="Designing Dashboards case study" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Designing Dashboards</span><span class="v2-thumb-type">Case Study</span></figcaption>
+              <a class="v2-thumb-link" href="/projects#dashboard-skill" data-ph-cta="open_project" data-ph-location="work_mosaic">
+                <div class="v2-thumb-shot"><Image src={dashboards} alt="Designing Dashboards case study" width={440} loading="lazy" class="v2-thumb-img" /></div>
+                <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Designing Dashboards</span><span class="v2-thumb-type">Case Study</span></figcaption>
+              </a>
             </figure>
             <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={slicely} alt="Slicely" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Slicely</span><span class="v2-thumb-type">SaaS Product</span></figcaption>
+              <a class="v2-thumb-link" href="/projects#slicely" data-ph-cta="open_project" data-ph-location="work_mosaic">
+                <div class="v2-thumb-shot"><Image src={slicely} alt="Slicely" width={440} loading="lazy" class="v2-thumb-img" /></div>
+                <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">Slicely</span><span class="v2-thumb-type">SaaS Product</span></figcaption>
+              </a>
             </figure>
             <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={aiToolkit} alt="AI Toolkit" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Toolkit</span><span class="v2-thumb-type">Developer Tool</span></figcaption>
+              <a class="v2-thumb-link" href="/projects#ai-toolkit" data-ph-cta="open_project" data-ph-location="work_mosaic">
+                <div class="v2-thumb-shot"><Image src={aiToolkit} alt="AI Toolkit" width={440} loading="lazy" class="v2-thumb-img" /></div>
+                <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">AI Toolkit</span><span class="v2-thumb-type">Developer Tool</span></figcaption>
+              </a>
             </figure>
             <figure class="v2-thumb">
-              <div class="v2-thumb-shot"><Image src={reviewhub} alt="ReviewHub" width={440} loading="lazy" class="v2-thumb-img" /></div>
-              <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">ReviewHub</span><span class="v2-thumb-type">Agentic Workflow</span></figcaption>
+              <a class="v2-thumb-link" href="/projects#reviewhub" data-ph-cta="open_project" data-ph-location="work_mosaic">
+                <div class="v2-thumb-shot"><Image src={reviewhub} alt="ReviewHub" width={440} loading="lazy" class="v2-thumb-img" /></div>
+                <figcaption class="v2-thumb-cap"><span class="v2-thumb-name">ReviewHub</span><span class="v2-thumb-type">Agentic Workflow</span></figcaption>
+              </a>
             </figure>
           </div>
           <a href="/projects" class="v2-work-cta" data-ph-cta="see_all_projects" data-ph-location="work_mosaic">See all projects &rarr;</a>
@@ -2083,6 +2095,21 @@ const craftLayers = [
       box-shadow 0.4s ease,
       transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
       border-color 0.3s ease;
+  }
+
+  /* Whole tile is a link to its project on /projects — fills the figure so the
+     hover/lift on .v2-thumb still reads as one clickable surface. */
+  .v2-thumb-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .v2-thumb-link:focus-visible {
+    outline: 2px solid var(--v2-accent);
+    outline-offset: 2px;
   }
 
   .v2-thumb-shot {
