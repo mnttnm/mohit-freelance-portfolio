@@ -62,7 +62,7 @@ const craftLayers = [
       <!-- Eyebrow lives at wrap level (not inside .v2-hero-copy) so grid areas
            can slot the deck between it and the headline on mobile. --line drives
            the copy stagger, so order no longer depends on DOM nesting. -->
-      <p class="v2-eyebrow v2-hero-line" style="--line: 0">Design Engineer and Product Partner</p>
+      <p class="v2-eyebrow v2-hero-line" style="--line: 0">Design Engineer &amp; Product Partner</p>
 
       <div class="v2-hero-copy">
         <h1 class="v2-headline v2-hero-line" style="--line: 1">I ship products, <em>end to end.</em></h1>
@@ -281,7 +281,7 @@ const craftLayers = [
   <section id="v2-fit" class="v2-audience" data-ph-section="fit">
     <div class="v2-container">
       <p class="v2-section-label v2-reveal">We&rsquo;ll make a good team</p>
-      <h2 class="v2-audience-headline v2-reveal">You know the <em>what</em>. I handle the <em>how</em>.</h2>
+      <h2 class="v2-audience-headline v2-reveal">You bring the <em>what</em>. I handle the <em>how</em>.</h2>
 
       <ul class="v2-audience-list">
         <li class="v2-audience-item v2-reveal">
@@ -314,6 +314,7 @@ const craftLayers = [
     <div class="v2-container">
       <div class="v2-testimonials-section">
         <p class="v2-section-label v2-reveal">What clients say</p>
+        <h2 class="v2-testimonials-headline v2-reveal">Proof it works, <em>in their words.</em></h2>
         <div class="v2-testimonial-stack v2-reveal">
 
           <!-- Card 1: Fred Wilmot -->
@@ -479,9 +480,7 @@ const craftLayers = [
             <span class="v2-about-name">Mohit Tater</span>
             <div class="v2-about-socials">
               <a href="https://www.linkedin.com/in/tatermohit/" class="v2-about-social" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <span class="v2-about-social-sep">/</span>
               <a href="https://mohit.stream" class="v2-about-social" target="_blank" rel="noopener noreferrer">mohit.stream</a>
-              <span class="v2-about-social-sep">/</span>
               <a href="https://github.com/mnttnm" class="v2-about-social" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
@@ -561,7 +560,28 @@ const craftLayers = [
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--v2-text-muted);
-    margin-bottom: 48px;
+    margin-bottom: 16px;
+  }
+
+  /* Keep titles and copy from leaving a single word orphaned on its own line.
+     `balance` evens out short headings; `pretty` guards longer body text from
+     widows/orphans without reflowing every line. */
+  .v2-eyebrow,
+  .v2-headline,
+  .v2-work-headline,
+  .v2-audience-headline,
+  .v2-process-headline,
+  .v2-about-headline,
+  .v2-process-title {
+    text-wrap: balance;
+  }
+
+  .v2-subtext,
+  .v2-work-body,
+  .v2-about-body,
+  .v2-process-desc,
+  .v2-audience-item {
+    text-wrap: pretty;
   }
 
   /* ===== Header ===== */
@@ -1254,12 +1274,34 @@ const craftLayers = [
     .v2-hero-wrap > .v2-hero-art { grid-area: art; }
     .v2-hero-wrap > .v2-hero-copy { grid-area: copy; }
 
-    /* Centered so the overture (which centers + scales the deck) docks straight
+    /* The deck is its own band: generous space above and below sets it apart
+       from the copy, while the copy below is tightened into one group. Without
+       this the visual's margins matched the copy's internal rhythm and the whole
+       hero read as one evenly-spaced stack.
+       Centered so the overture (which centers + scales the deck) docks straight
        down into place with no sideways drift or clipping. */
     .v2-hero-art {
-      margin: 8px 0 24px;
+      margin: 36px 0 52px;
       justify-content: center;
       align-items: flex-start;
+    }
+
+    /* The eyebrow's own bottom margin would stack with the deck's top margin;
+       zero it so the band gap above the deck is exactly the value set above. */
+    .v2-hero-wrap > .v2-eyebrow {
+      margin-bottom: 0;
+    }
+
+    /* Tighten the copy group so its internal gaps stay clearly smaller than the
+       band gaps around the deck. */
+    .v2-hero-copy .v2-headline {
+      margin-bottom: 18px;
+    }
+    .v2-hero-copy .v2-subtext {
+      margin-bottom: 24px;
+    }
+    .v2-hero-copy .v2-hero-actions {
+      margin-bottom: 24px;
     }
 
     /* A tidy cascade that fits the mobile width with readable tabs. The product
@@ -1393,7 +1435,7 @@ const craftLayers = [
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--v2-accent);
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
 
   .v2-headline {
@@ -1654,6 +1696,22 @@ const craftLayers = [
     background: radial-gradient(ellipse at center, var(--v2-accent-light) 0%, transparent 70%);
     pointer-events: none;
     z-index: -1;
+  }
+
+  .v2-testimonials-headline {
+    font-family: var(--v2-serif);
+    font-size: var(--text-display-sm);
+    color: var(--v2-text);
+    margin-bottom: 48px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    max-width: 640px;
+    text-wrap: balance;
+  }
+
+  .v2-testimonials-headline em {
+    font-style: italic;
+    color: var(--v2-accent);
   }
 
   .v2-testimonial-stack {
@@ -1931,12 +1989,14 @@ const craftLayers = [
     letter-spacing: -0.01em;
   }
 
+  /* Socials stack one per row beneath the name — avoids the awkward wrap where
+     a single link drops to its own line. */
   .v2-about-socials {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 14px;
   }
 
   .v2-about-social {
@@ -1952,8 +2012,7 @@ const craftLayers = [
   }
 
   .v2-about-social-sep {
-    color: rgba(250, 248, 245, 0.3);
-    font-size: var(--text-sm);
+    display: none;
   }
 
   @media (max-width: 860px) {
@@ -2015,8 +2074,7 @@ const craftLayers = [
       gap: 10px;
     }
 
-    .v2-about-social,
-    .v2-about-social-sep {
+    .v2-about-social {
       font-size: var(--text-sm);
     }
   }
@@ -2210,7 +2268,7 @@ const craftLayers = [
     .v2-work,
     .v2-projects,
     .v2-about {
-      padding: 60px 0 80px;
+      padding: 44px 0 56px;
     }
 
     .v2-audience-item {
