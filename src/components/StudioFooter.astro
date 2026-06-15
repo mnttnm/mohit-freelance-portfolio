@@ -109,15 +109,15 @@ import { actions } from 'astro:actions';
     padding: 14px 32px;
     background: var(--studio-accent);
     color: #fff;
-    font-size: 0.9rem;
+    font-size: var(--text-md);
     font-weight: 600;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     transition: background 0.25s, transform 0.2s;
   }
 
   .studio-footer-unified .studio-btn-primary:hover {
-    background: #234a31;
+    background: var(--studio-accent-pressed);
     transform: translateY(-1px);
   }
 
@@ -130,7 +130,7 @@ import { actions } from 'astro:actions';
 
   .studio-footer-label {
     font-family: var(--studio-serif);
-    font-size: clamp(1.8rem, 3.8vw, 2.6rem);
+    font-size: var(--text-display-md);
     color: var(--studio-text);
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -138,7 +138,7 @@ import { actions } from 'astro:actions';
   }
 
   .studio-footer-subtitle {
-    font-size: 1rem;
+    font-size: var(--text-lg);
     color: var(--studio-text-body);
     line-height: 1.7;
     max-width: 560px;
@@ -153,9 +153,9 @@ import { actions } from 'astro:actions';
   }
 
   .studio-footer-card {
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--white-a60);
     border: 1px solid var(--studio-border);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: 32px;
     display: flex;
     flex-direction: column;
@@ -163,14 +163,14 @@ import { actions } from 'astro:actions';
 
   .studio-footer-card-heading {
     font-family: var(--studio-serif);
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
     color: var(--studio-text);
     margin: 0 0 8px;
     letter-spacing: -0.01em;
   }
 
   .studio-footer-card-subtext {
-    font-size: 0.9rem;
+    font-size: var(--text-md);
     color: var(--studio-text-body);
     line-height: 1.6;
     margin: 0 0 20px;
@@ -206,7 +206,7 @@ import { actions } from 'astro:actions';
   }
 
   .studio-form-group label {
-    font-size: 0.78rem;
+    font-size: var(--text-sm);
     font-weight: 600;
     color: var(--studio-text);
     letter-spacing: 0.02em;
@@ -216,11 +216,11 @@ import { actions } from 'astro:actions';
   .studio-form-group textarea {
     padding: 11px 13px;
     border: 1px solid var(--studio-border);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     background: var(--studio-bg);
     color: var(--studio-text);
     font-family: var(--studio-sans);
-    font-size: 0.92rem;
+    font-size: var(--text-md);
     transition: border-color 0.2s;
   }
 
@@ -254,7 +254,7 @@ import { actions } from 'astro:actions';
     padding: 14px 16px;
     background: var(--studio-accent);
     color: #fff;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     margin-bottom: 4px;
   }
 
@@ -267,14 +267,14 @@ import { actions } from 'astro:actions';
 
   .studio-form-success p {
     margin: 0;
-    font-size: 0.88rem;
+    font-size: var(--text-md);
   }
 
   .studio-form-success-close {
     background: none;
     border: none;
     color: #fff;
-    font-size: 1.4rem;
+    font-size: var(--text-2xl);
     cursor: pointer;
     padding: 0;
     line-height: 1;
@@ -286,7 +286,7 @@ import { actions } from 'astro:actions';
 
   .studio-form-error {
     color: #c0392b;
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     display: none;
   }
 
@@ -320,14 +320,14 @@ import { actions } from 'astro:actions';
 
   .studio-footer-card-cta {
     align-self: flex-start;
-    font-size: 0.88rem;
+    font-size: var(--text-md);
     font-weight: 600;
     text-decoration: none;
   }
 
   .studio-footer-card--action .studio-btn-primary {
     padding: 11px 22px;
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
   }
 
   .studio-footer-socials {
@@ -338,7 +338,7 @@ import { actions } from 'astro:actions';
   }
 
   .studio-footer-socials a {
-    font-size: 0.88rem;
+    font-size: var(--text-md);
     font-weight: 500;
     color: var(--studio-accent);
     text-decoration: none;
@@ -351,7 +351,7 @@ import { actions } from 'astro:actions';
 
   .studio-footer-socials-sep {
     color: var(--studio-text-muted);
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
   }
 
   /* ----- Copyright ----- */
@@ -360,7 +360,7 @@ import { actions } from 'astro:actions';
     padding-top: 24px;
     border-top: 1px solid var(--studio-border);
     text-align: center;
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     color: var(--studio-text-muted);
     letter-spacing: 0.02em;
   }

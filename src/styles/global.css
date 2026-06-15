@@ -9,7 +9,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: var(--text-lg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -22,9 +22,9 @@ body {
 
 /* Variation-specific body defaults */
 body.variation-studio {
-  background: #FAF8F5;
-  color: #1A1A1A;
-  font-family: 'Instrument Sans', -apple-system, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
 }
 
 body.variation-operator {
@@ -47,9 +47,9 @@ body.variation-minimal {
 
 /* Fallback if no variation set */
 body:not(.variation-studio):not(.variation-operator):not(.variation-conversational):not(.variation-minimal) {
-  background: #FAF8F5;
-  color: #1A1A1A;
-  font-family: 'Instrument Sans', -apple-system, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
 }
 
 ::selection {
@@ -58,8 +58,8 @@ body:not(.variation-studio):not(.variation-operator):not(.variation-conversation
 }
 
 body.variation-studio ::selection {
-  background: #2D5A3D;
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 body.variation-operator ::selection {

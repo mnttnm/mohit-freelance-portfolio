@@ -1,0 +1,129 @@
+/* =============================================================================
+   Design Tokens — the single source of truth for this site's visual language.
+
+   Two layers:
+     1. PRIMITIVES  — raw values. Never reference these directly in a component.
+     2. SEMANTIC    — the vocabulary components use (var(--color-accent), …).
+
+   Rules (enforced by scripts/lint-tokens.mjs, see DESIGN.md):
+     • Components reference semantic tokens only — never a raw hex/rgba.
+     • New brand colors get added here first, then used by name.
+     • Per-project decorative art is exempt — see DESIGN.md "Bucket B".
+   ============================================================================= */
+
+:root {
+  /* ---- Primitives ------------------------------------------------------- */
+  --green-700: #2d5a3d; /* accent */
+  --green-800: #234a31; /* accent, pressed/hover */
+  --sand-50:   #faf8f5; /* page background */
+  --ink-900:   #1a1a1a; /* primary text */
+  --ink-700:   #4a4a4a; /* body text */
+  --ink-500:   #8a8a8a; /* muted text */
+  --line-200:  #e5e0da; /* hairline borders */
+  --wash-100:  #eef1ed; /* soft accent-tinted surface */
+  --clay-500:  #b4533c; /* danger / warm accent */
+  --white:     #ffffff;
+
+  /* ---- Semantic: color -------------------------------------------------- */
+  --color-bg:             var(--sand-50);
+  --color-bg-header:      color-mix(in srgb, var(--color-bg) 95%, transparent);
+  --color-surface:        var(--white);
+  --color-text:           var(--ink-900);
+  --color-text-body:      var(--ink-700);
+  --color-text-muted:     var(--ink-500);
+  --color-accent:         var(--green-700);
+  --color-accent-pressed: var(--green-800);
+  --color-accent-wash:    var(--wash-100); /* solid soft surface (#eef1ed) */
+  --color-on-accent:      var(--white);
+
+  /* Accent opacity scale — the ONLY allowed translucent accents.
+     Four steps, not sixteen. Use these by name; never inline a color-mix. */
+  --accent-tint:   color-mix(in srgb, var(--color-accent) 8%,  transparent); /* faint fills */
+  --accent-soft:   color-mix(in srgb, var(--color-accent) 18%, transparent); /* hover surfaces, soft borders */
+  --accent-line:   color-mix(in srgb, var(--color-accent) 32%, transparent); /* borders, dividers */
+  --accent-strong: color-mix(in srgb, var(--color-accent) 50%, transparent); /* focus rings, emphasis */
+  --color-accent-tint: var(--accent-tint); /* legacy alias */
+  --color-border:         var(--line-200);
+  --color-danger:         var(--clay-500);
+
+  /* Neutral translucency — one alpha ramp [8 16 24 40 60 80], three bases.
+     ink = on light surfaces · white = on dark surfaces · scrim = shadows. */
+  --ink-a08: color-mix(in srgb, var(--ink-900) 8%,  transparent);
+  --ink-a16: color-mix(in srgb, var(--ink-900) 16%, transparent);
+  --ink-a24: color-mix(in srgb, var(--ink-900) 24%, transparent);
+  --ink-a40: color-mix(in srgb, var(--ink-900) 40%, transparent);
+  --ink-a60: color-mix(in srgb, var(--ink-900) 60%, transparent);
+  --ink-a80: color-mix(in srgb, var(--ink-900) 80%, transparent);
+  --white-a08: color-mix(in srgb, var(--white) 8%,  transparent);
+  --white-a16: color-mix(in srgb, var(--white) 16%, transparent);
+  --white-a24: color-mix(in srgb, var(--white) 24%, transparent);
+  --white-a40: color-mix(in srgb, var(--white) 40%, transparent);
+  --white-a60: color-mix(in srgb, var(--white) 60%, transparent);
+  --white-a80: color-mix(in srgb, var(--white) 80%, transparent);
+  --scrim-a08: color-mix(in srgb, #000 8%,  transparent);
+  --scrim-a16: color-mix(in srgb, #000 16%, transparent);
+  --scrim-a24: color-mix(in srgb, #000 24%, transparent);
+  --scrim-a40: color-mix(in srgb, #000 40%, transparent);
+  --scrim-a60: color-mix(in srgb, #000 60%, transparent);
+  --scrim-a80: color-mix(in srgb, #000 80%, transparent);
+
+  /* ---- Semantic: type --------------------------------------------------- */
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-sans:  'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+
+  /* Fixed type scale (body / UI). Reach for a step, not an arbitrary rem. */
+  --text-2xs: 0.62rem; /* legal, micro-captions */
+  --text-xs:  0.72rem; /* meta, small labels */
+  --text-sm:  0.82rem; /* secondary text, nav */
+  --text-md:  0.92rem; /* body default */
+  --text-lg:  1.05rem; /* lead body, large UI */
+  --text-xl:  1.2rem;  /* card titles, small headings */
+  --text-2xl: 1.5rem;  /* sub-headings */
+  --text-3xl: 2.05rem; /* fixed headings */
+
+  /* Fluid display scale (responsive headings). */
+  --text-display-xs: clamp(1.2rem, 2vw,   1.45rem);
+  --text-display-sm: clamp(1.4rem, 2.8vw, 1.95rem);
+  --text-display-md: clamp(1.7rem, 3.5vw, 2.5rem);
+  --text-display-lg: clamp(2.2rem, 5vw,   3.5rem);
+  --text-display-xl: clamp(2.4rem, 5.5vw, 4rem);
+
+  /* ---- Semantic: spacing (8px base, 4px half-step) ---------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+  --space-10: 64px;
+
+  /* ---- Semantic: radii -------------------------------------------------- */
+  --radius-2xs:    2px;   /* decorative micro-corners */
+  --radius-xs:     4px;   /* chips, badges, inputs */
+  --radius-sm:     6px;   /* buttons */
+  --radius-md:     10px;  /* small cards, fields */
+  --radius-lg:     14px;  /* cards */
+  --radius-xl:     18px;  /* large panels */
+  --radius-pill:   999px; /* pills, fully-rounded */
+  --radius-circle: 50%;   /* avatars, dots */
+
+  /* ---- Legacy aliases --------------------------------------------------- */
+  /* Map the original --studio-* names onto the system so existing markup
+     keeps working without a mass rename. Prefer --color-* in new code. */
+  --studio-bg:             var(--color-bg);
+  --studio-bg-header:      var(--color-bg-header);
+  --studio-text:           var(--color-text);
+  --studio-text-body:      var(--color-text-body);
+  --studio-text-muted:     var(--color-text-muted);
+  --studio-accent:         var(--color-accent);
+  --studio-accent-pressed: var(--color-accent-pressed);
+  --studio-accent-light:   var(--color-accent-tint);
+  --studio-accent-wash:    var(--color-accent-wash);
+  --studio-border:         var(--color-border);
+  --studio-danger:         var(--color-danger);
+  --studio-serif:          var(--font-serif);
+  --studio-sans:           var(--font-sans);
+  --studio-mono:           var(--font-mono);
+}
