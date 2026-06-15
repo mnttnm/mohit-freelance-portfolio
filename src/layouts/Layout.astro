@@ -13,7 +13,52 @@ const {
   ogImage = "/og-image.png",
   mono = false
 } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://mohittater.com');
+const siteOrigin = Astro.site ?? new URL('https://mohittater.in');
+const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
+// og:image must be an absolute URL — relative paths break previews on
+// LinkedIn, Slack, iMessage, etc.
+const ogImageURL = new URL(ogImage, siteOrigin);
+
+// Person / ProfilePage structured data — the machine-legible "who is this".
+// Emitted site-wide so any crawler or agent lands on it. Values mirror the
+// rendered HTML; no claims here that aren't on the page.
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    '@id': 'https://mohittater.in/#mohit',
+    name: 'Mohit Tater',
+    alternateName: 'tatermohit',
+    jobTitle: 'Design Engineer and Product Partner',
+    description,
+    url: 'https://mohittater.in/',
+    image: new URL('/og-image.png', siteOrigin).href,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bengaluru',
+      addressRegion: 'Karnataka',
+      addressCountry: 'IN',
+    },
+    knowsAbout: [
+      'Product design', 'Frontend engineering', 'React', 'Next.js',
+      'TypeScript', 'Astro', 'QA automation', 'AI workflows',
+      'Design systems',
+    ],
+    sameAs: [
+      'https://www.linkedin.com/in/tatermohit/',
+      'https://twitter.com/tatermohit',
+      'https://github.com/mnttnm',
+      'https://mohit.stream',
+    ],
+    worksFor: { '@type': 'Organization', name: 'Independent (Freelance)' },
+    potentialAction: {
+      '@type': 'ReserveAction',
+      name: 'Book a call with Mohit',
+      target: 'https://cal.com/tatermohit/call-with-mohit-tater',
+    },
+  },
+};
 
 // Only load the faces a page actually renders. DM Serif Display + Instrument
 // Sans cover every page; JetBrains Mono is opt-in (projects, case studies).
@@ -36,23 +81,34 @@ import PostHog from '../components/PostHog.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Mohit Tater" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mohit Tater" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mohit Tater — Design Engineer and Product Partner" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content="Mohit Tater — Design Engineer and Product Partner" />
     <meta name="twitter:site" content="@tatermohit" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
     <PostHog />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
