@@ -486,7 +486,7 @@ const iterations = [
   .studio-reveal {
     opacity: 0;
     transform: translateY(16px);
-    animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: studioReveal 0.7s var(--ease-out) forwards;
   }
   .studio-reveal:nth-child(1) { animation-delay: 0.05s; }
   .studio-reveal:nth-child(2) { animation-delay: 0.12s; }
@@ -542,9 +542,11 @@ const iterations = [
   .cs-back {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: var(--text-sm); color: var(--studio-text-muted); text-decoration: none;
-    margin-bottom: 32px; transition: color 0.2s, gap 0.2s;
+    margin-bottom: 32px; transition: color 0.2s;
   }
-  .cs-back:hover { color: var(--studio-accent); gap: 9px; }
+  .cs-back span { transition: transform 0.2s var(--ease-out); }
+  .cs-back:hover { color: var(--studio-accent); }
+  .cs-back:hover span { transform: translateX(-3px); }
   .cs-kicker {
     font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--studio-accent); margin-bottom: 20px;
@@ -591,7 +593,7 @@ const iterations = [
     box-shadow: 0 28px 60px -30px var(--ink-a40);
     background: #fff; position: relative;
   }
-  .cs-ba-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.4s cubic-bezier(0.23,1,0.32,1); }
+  .cs-ba-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.4s var(--ease-out); }
   .cs-ba-frame:hover img { transform: scale(1.03); }
   .cs-ba-frame:focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 3px; }
 
@@ -635,12 +637,12 @@ const iterations = [
     font-size: var(--text-sm); font-weight: 600; color: var(--studio-text-body);
     background: var(--studio-bg); border: 1px solid var(--studio-border);
     border-radius: var(--radius-pill); padding: 9px 16px; cursor: pointer;
-    transition: border-color .2s, color .2s, gap .2s;
+    transition: border-color .2s, color .2s;
   }
   .cs-changes-cta svg { color: var(--studio-accent); }
-  .cs-changes-cta-go { color: var(--studio-text-muted); transition: color .2s; }
-  .cs-changes-cta:hover { color: var(--studio-accent); border-color: var(--studio-accent); gap: 11px; }
-  .cs-changes-cta:hover .cs-changes-cta-go { color: var(--studio-accent); }
+  .cs-changes-cta-go { color: var(--studio-text-muted); transition: color .2s, transform .2s var(--ease-out); }
+  .cs-changes-cta:hover { color: var(--studio-accent); border-color: var(--studio-accent); }
+  .cs-changes-cta:hover .cs-changes-cta-go { color: var(--studio-accent); transform: translateX(3px); }
   .cs-changes-cta:focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 2px; }
 
   .cs-modal {
@@ -789,7 +791,7 @@ const iterations = [
     border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--studio-border);
     box-shadow: 0 18px 40px -24px var(--ink-a24); background: #fff;
   }
-  .cs-iter-frame img { width: 100%; height: auto; display: block; transition: transform 0.4s cubic-bezier(0.23,1,0.32,1); }
+  .cs-iter-frame img { width: 100%; height: auto; display: block; transition: transform 0.4s var(--ease-out); }
   .cs-iter-frame:hover img { transform: scale(1.025); }
   .cs-iter-frame:focus-visible { outline: 2px solid var(--studio-accent); outline-offset: 3px; }
   .cs-iter-version {
@@ -807,9 +809,11 @@ const iterations = [
   .cs-link {
     display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-md); font-weight: 500;
     text-decoration: none; padding: 11px 20px; border-radius: var(--radius-md); border: 1px solid var(--studio-border);
-    color: var(--studio-text); transition: gap 0.2s, border-color 0.2s, transform 0.2s;
+    color: var(--studio-text); transition: border-color 0.2s, transform 0.2s var(--ease-out);
   }
-  .cs-link:hover { gap: 11px; border-color: var(--studio-text-muted); transform: translateY(-1px); }
+  .cs-link span { transition: transform 0.2s var(--ease-out); }
+  .cs-link:hover { border-color: var(--studio-text-muted); transform: translateY(-1px); }
+  .cs-link:hover span { transform: translateX(3px); }
   .cs-link-primary { background: var(--studio-accent); color: #fff; border-color: var(--studio-accent); }
   .cs-link-primary:hover { background: var(--studio-accent-pressed); border-color: var(--studio-accent-pressed); }
 

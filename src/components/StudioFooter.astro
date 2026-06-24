@@ -94,7 +94,7 @@ import { actions } from 'astro:actions';
   .studio-footer-unified .studio-reveal {
     opacity: 0;
     transform: translateY(16px);
-    animation: studioFooterReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: studioFooterReveal 0.7s var(--ease-out) forwards;
   }
 
   @keyframes studioFooterReveal {
@@ -113,12 +113,18 @@ import { actions } from 'astro:actions';
     font-weight: 600;
     text-decoration: none;
     border-radius: var(--radius-sm);
-    transition: background 0.25s, transform 0.2s;
+    transition: background 0.25s, transform 0.16s var(--ease-out);
   }
 
-  .studio-footer-unified .studio-btn-primary:hover {
-    background: var(--studio-accent-pressed);
-    transform: translateY(-1px);
+  .studio-footer-unified .studio-btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .studio-footer-unified .studio-btn-primary:hover {
+      background: var(--studio-accent-pressed);
+      transform: translateY(-1px);
+    }
   }
 
   /* ----- Footer shell ----- */

@@ -271,7 +271,7 @@ const craftLayers = [
               </a>
             </figure>
           </div>
-          <a href="/projects" class="v2-work-cta" data-ph-cta="see_all_projects" data-ph-location="work_mosaic">See all projects &rarr;</a>
+          <a href="/projects" class="v2-work-cta" data-ph-cta="see_all_projects" data-ph-location="work_mosaic">See all projects <span class="v2-cta-arrow">&rarr;</span></a>
         </div>
       </div>
     </div>
@@ -535,8 +535,8 @@ const craftLayers = [
       opacity: 0;
       transform: translateY(14px);
       transition:
-        opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1),
-        transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+        opacity 0.55s var(--ease-out),
+        transform 0.55s var(--ease-out);
       transition-delay: var(--reveal-delay, 0ms);
       will-change: opacity, transform;
     }
@@ -715,8 +715,8 @@ const craftLayers = [
       opacity: 0;
       transform: translateY(12px);
       transition:
-        opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-        transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        opacity 0.6s var(--ease-out),
+        transform 0.6s var(--ease-out);
     }
 
     /* The eyebrow settles in from a shorter rise than the content it introduces —
@@ -1375,7 +1375,7 @@ const craftLayers = [
        together, no center-stage overture. */
     .v2-hero.is-spring .v2-layer,
     .v2-hero.is-spring .v2-product {
-      animation: v2-spring-in 0.66s cubic-bezier(0.34, 1.46, 0.64, 1) backwards;
+      animation: v2-spring-in 0.66s var(--ease-spring) backwards;
       animation-delay: calc(var(--layer) * 40ms);
     }
     .v2-hero.is-spring .v2-byline {
@@ -1496,12 +1496,18 @@ const craftLayers = [
     font-weight: 600;
     text-decoration: none;
     border-radius: var(--radius-sm);
-    transition: background 0.25s, transform 0.2s;
+    transition: background 0.25s, transform 0.16s var(--ease-out);
   }
 
-  .v2-btn-primary:hover {
-    background: var(--studio-accent-pressed);
-    transform: translateY(-1px);
+  .v2-btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .v2-btn-primary:hover {
+      background: var(--studio-accent-pressed);
+      transform: translateY(-1px);
+    }
   }
 
   .v2-btn-text {
@@ -1726,7 +1732,7 @@ const craftLayers = [
     border-bottom: none;
     padding: 20px 28px;
     cursor: pointer;
-    transition: background 0.25s, padding 0.35s ease;
+    transition: background 0.25s var(--ease-out);
     position: relative;
     overflow: hidden;
   }
@@ -1758,12 +1764,12 @@ const craftLayers = [
     overflow: hidden;
     flex-shrink: 0;
     border: 2px solid var(--v2-border);
-    transition: width 0.3s, height 0.3s;
+    transition: transform 0.3s var(--ease-out);
   }
 
   .v2-tcard-active .v2-avatar {
-    width: 48px;
-    height: 48px;
+    /* 48/44 — scale instead of animating width/height (GPU, no relayout) */
+    transform: scale(1.0909);
   }
 
   .v2-avatar-img {
@@ -2150,9 +2156,9 @@ const craftLayers = [
     background: #FFFFFF;
     box-shadow: 0 1px 2px var(--ink-a08);
     transition:
-      box-shadow 0.4s ease,
-      transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
-      border-color 0.3s ease;
+      box-shadow 0.25s ease,
+      transform 0.25s var(--ease-out),
+      border-color 0.25s ease;
   }
 
   /* Whole tile is a link to its project on /projects — fills the figure so the
@@ -2183,7 +2189,7 @@ const craftLayers = [
     object-fit: cover;
     object-position: top center;
     display: block;
-    transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 0.3s var(--ease-out);
   }
 
   /* Label bar — project name + category, the bit that kills the "barren" feel */
@@ -2219,14 +2225,16 @@ const craftLayers = [
     border-radius: var(--radius-pill);
   }
 
-  .v2-thumb:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-line);
-    box-shadow: 0 12px 30px var(--ink-a08);
-  }
+  @media (hover: hover) and (pointer: fine) {
+    .v2-thumb:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-line);
+      box-shadow: 0 12px 30px var(--ink-a08);
+    }
 
-  .v2-thumb:hover .v2-thumb-img {
-    transform: scale(1.04);
+    .v2-thumb:hover .v2-thumb-img {
+      transform: scale(1.04);
+    }
   }
 
   /* CTA sits cleanly inside the green panel, under the grid */
@@ -2234,19 +2242,30 @@ const craftLayers = [
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     margin-top: 2px;
     font-family: var(--v2-sans);
     font-size: var(--text-md);
     font-weight: 600;
     color: rgba(250, 248, 245, 0.92);
     text-decoration: none;
-    transition: gap 0.22s ease, color 0.22s ease;
+    transition: color 0.22s ease;
+  }
+
+  .v2-cta-arrow {
+    display: inline-block;
+    /* nudge the arrow on hover with transform (GPU) instead of animating gap */
+    transition: transform 0.22s var(--ease-out);
   }
 
   .v2-work-cta:hover {
-    gap: 13px;
     color: #FFFFFF;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .v2-work-cta:hover .v2-cta-arrow {
+      transform: translateX(4px);
+    }
   }
 
   /* ===== Responsive ===== */

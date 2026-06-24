@@ -1155,7 +1155,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   .studio-reveal {
     opacity: 0;
     transform: translateY(16px);
-    animation: studioReveal 0.7s cubic-bezier(0.23, 1, 0.32, 1)
+    animation: studioReveal 0.7s var(--ease-out)
       forwards;
   }
 
@@ -1422,7 +1422,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   .work-visual-set.is-active {
     display: grid;
     place-items: center;
-    animation: workReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+    animation: workReveal 0.45s var(--ease-out);
   }
 
   .work-visual-img {
@@ -1441,7 +1441,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     outline-offset: 8px;
     cursor: zoom-in;
     font-family: inherit;
-    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 0.35s var(--ease-out);
   }
 
   .work-visual-img.is-active {
@@ -1627,7 +1627,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .work-project.is-active {
     display: block;
-    animation: workReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+    animation: workReveal 0.38s var(--ease-out);
   }
 
   .work-project-header {
@@ -1690,7 +1690,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
 
   .work-project.is-active .work-flip-top {
-    animation: flipReveal 0.45s cubic-bezier(0.23, 1, 0.32, 1) 0.55s
+    animation: flipReveal 0.45s var(--ease-out) 0.55s
       both;
   }
 
@@ -1840,7 +1840,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .work-project-back.is-active {
     display: block;
-    animation: workReveal 0.38s cubic-bezier(0.23, 1, 0.32, 1);
+    animation: workReveal 0.38s var(--ease-out);
   }
 
   .work-back-header {
@@ -2087,15 +2087,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     border: 1px solid var(--studio-border);
     border-radius: var(--radius-sm);
     transition:
-      transform 0.25s cubic-bezier(0.23, 1, 0.32, 1),
-      box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1),
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s var(--ease-out),
       border-color 0.25s;
-  }
-
-  .more-project:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-line);
-    box-shadow: 0 18px 40px rgba(30, 45, 36, 0.1);
   }
 
   .more-project-image {
@@ -2110,11 +2104,20 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 0.3s var(--ease-out);
   }
 
-  .more-project:hover .more-project-image img {
-    transform: scale(1.03);
+  /* Gate movement hovers — on touch, :hover fires on tap (false positive) */
+  @media (hover: hover) and (pointer: fine) {
+    .more-project:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-line);
+      box-shadow: 0 18px 40px rgba(30, 45, 36, 0.1);
+    }
+
+    .more-project:hover .more-project-image img {
+      transform: scale(1.03);
+    }
   }
 
   .more-project-body {
@@ -2202,7 +2205,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     object-fit: contain;
     border-radius: var(--radius-sm);
     box-shadow: 0 30px 80px var(--scrim-a40);
-    animation: lightboxImgIn 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+    animation: lightboxImgIn 0.25s var(--ease-out);
   }
 
   .lightbox-caption {
@@ -2739,7 +2742,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     transform: scale(0.965);
     opacity: 0.82;
     transition:
-      transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      transform 0.4s var(--ease-out),
       opacity 0.4s ease,
       box-shadow 0.4s ease;
     -webkit-tap-highlight-color: transparent;
@@ -2815,7 +2818,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .mspot-card.is-focus .mspot-open {
     color: rgba(245, 242, 236, 0.62);
-    animation: mspotArrow 0.62s cubic-bezier(0.23, 1, 0.32, 1) 0.12s both;
+    animation: mspotArrow 0.62s var(--ease-out) 0.12s both;
   }
   .mspot-card-title {
     font-family: var(--studio-serif);
@@ -2882,7 +2885,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     height: auto;
     max-height: 90vh;
     transform: translateY(100%);
-    transition: transform 0.44s cubic-bezier(0.32, 0.72, 0, 1);
+    transition: transform 0.44s var(--ease-drawer);
     background: var(--studio-bg);
     flex-direction: column;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
@@ -3265,6 +3268,14 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     .mspot-cur-type.is-swap,
     .mspot-sheet.is-open .mspot-sheet-body > * {
       animation: none;
+    }
+    /* Drop hover movement/zoom too — reduced motion means no position change,
+       not just no keyframes. Opacity/color hovers are kept (they aid comprehension). */
+    .more-project:hover,
+    .more-project:hover .more-project-image img,
+    .work-visual-img:hover,
+    .work-screenshot-thumb:hover {
+      transform: none;
     }
   }
 </style>
