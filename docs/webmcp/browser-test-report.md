@@ -3,6 +3,8 @@
 Base commit: `8bf783f` plus the scoped working-tree implementation
 Preview deployment: `dpl_9ztuSTSKibjcfoCQTdmFF6fEtQ4G`
 Preview URL: `https://mohit-freelance-portfolio-gusrj3z5z-tatermohit.vercel.app`
+Production deployment: `dpl_9NqmdH1ArdY9u5bmWAjAFrwm3vBE` from commit `1df9bbd`
+Production URL: `https://mohittater.in/`
 Environment: local Astro 7 development server and Vercel preview on Node.js 24
 Browser: Codex built-in browser
 Model: current Codex task plus separate GPT-5.6 Luna and Terra QA tasks
@@ -17,6 +19,7 @@ Date: 2026-09-04
 - Existing-site baseline: `/`, `/projects`, and `/about` rendered with their expected primary heading. The agent panel was absent until invoked, and exactly five tools were available on each ordinary portfolio page.
 - External side effects intentionally skipped: contact-form submission, Resend delivery, and every real inquiry or message.
 - Model coverage: Terra selected the intended tool in 5/5 routing prompts and completed the available P0 flow. Its inquiry-clear finding was fixed and regression-tested. Luna completed page, saved-artifact, and injection baselines, but this browser runtime rejects `webmcp_list_tools` and exposes no `document.modelContext`, so Luna's real tool-routing rehearsal remains blocked by the platform.
+- Public release: passed. GitHub serves the source and recognized MIT license publicly; Vercel's build log identifies commit `1df9bbd`; the public production URL completed the golden flow without owner authentication and produced no deployment error log entries.
 
 ## Final UI polish rerun — 2026-09-04
 
@@ -34,7 +37,7 @@ Date: 2026-09-04
 | --- | --- | --- | --- | --- | --- |
 | PF-01 | Pass | n/a | n/a | n/a | Install/build state is healthy; 29/29 tests passed across 9 files; token lint and Astro server build passed; audit reports 0 vulnerabilities; local takeaway data is ignored. |
 | PF-02 | Pass | n/a | Yes | n/a | Home, Projects, and About rendered normally with no default agent panel. Desktop and narrow layouts were inspected; the mobile panel does not overlap the fixed header. |
-| PF-03 | Pass | n/a | n/a | Yes | Final preview is READY. HTTPS, `Origin-Agent-Cluster: ?1`, and `Permissions-Policy: tools=(self)` were observed. Existing private Blob takeaway data remained readable on the final deployment. WAF returned `429` after the configured request budget. |
+| PF-03 | Pass | n/a | n/a | Yes | Production deployment `dpl_9NqmdH1ArdY9u5bmWAjAFrwm3vBE` is READY from commit `1df9bbd`. HTTPS, `Origin-Agent-Cluster: ?1`, and `Permissions-Policy: tools=(self)` were observed. Private Blob takeaway data remained readable and the production firewall rule is enabled at 5 saves per IP per 600 seconds. |
 | DISC-01 | Pass | none | Yes | n/a | Exactly `understand_mohit`, `find_relevant_work`, `create_personalized_view`, `save_takeaway`, and `prepare_project_inquiry` were discovered on `/`, `/projects`, and `/about`. Saved takeaway pages exposed no WebMCP tools. |
 | DISC-02 | Partial; Luna runtime blocked | n/a | n/a | n/a | Terra chose the intended tool in 5/5 fresh prompts. Luna's browser backend rejects `webmcp_list_tools`, so its five real routing runs could not observe or invoke the registered tools. |
 | UND-01 | Pass, model coverage pending | `understand_mohit` | No UI mutation, as expected | n/a | Returned the canonical role, Bengaluru location, services, strengths, experience, best-fit work, project IDs, and public links within the output budget. |
@@ -70,9 +73,9 @@ Date: 2026-09-04
 ## Open coverage and blockers
 
 1. **Release gate — GPT-5.6 Luna:** Terra's available routing and P0 coverage is complete. Luna's browser environment currently rejects the WebMCP tool-list operation and does not expose the page's model context, so its real tool-routing and invocation rehearsal must be rerun when that runtime capability is available.
-2. **Preview visual pass:** the preview is protected by Vercel Authentication. The built-in browser reached the Vercel/GitHub sign-in flow, and no credentials were entered. Runtime, headers, Blob persistence, and WAF were verified through the authenticated Vercel CLI instead.
+2. **Preview access:** preview deployments remain protected by Vercel Authentication. The public production URL is unprotected and received the complete signed-out browser pass.
 3. **Real email delivery:** intentionally skipped. Test only with explicit approval and a test inbox.
 
 ## Release verdict
 
-**Implementation-ready; public-release gates remain.** The functional integration, security controls, storage, preview deployment, direct PDF download, current-task browser verification, and Terra coverage pass. Production promotion still requires the public license/repository, an exact production deployment, and a production golden-flow rerun. Luna routing remains a disclosed client-runtime coverage gap rather than a demonstrated implementation defect. No real inquiry was sent.
+**Public release verified; submission media remains.** The public repository and MIT license, exact production deployment, security controls, storage, direct PDF download, desktop/mobile UI, and production golden flow pass. Luna routing remains a disclosed client-runtime coverage gap rather than a demonstrated implementation defect. No real inquiry was sent. The public demo video and final Devpost submission are still outstanding.

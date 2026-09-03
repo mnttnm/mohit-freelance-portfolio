@@ -89,15 +89,15 @@ Expected golden match for the founder query: AI Resizing Studio, ReviewHub, and 
 
 ## Public Demo Link
 
-**Target:** https://mohittater.in/
+**Verified:** https://mohittater.in/
 
-**BLOCKED:** The production domain currently serves the pre-WebMCP version. Deploy the reviewed WebMCP build, then verify it in an incognito, non-owner browser before copying this URL into Devpost.
+The public production deployment was verified without owner authentication on September 4. It serves the WebMCP release from implementation commit `1df9bbd`, exposes the required response headers, and completed the golden tool flow against durable production storage.
 
 ## Public Repository Link
 
-**Target:** https://github.com/mnttnm/mohit-freelance-portfolio
+**Verified:** https://github.com/mnttnm/mohit-freelance-portfolio
 
-**BLOCKED:** The repository is currently private and has no license. Select and add an OSI-approved license, scan for secrets, commit the WebMCP work, push it, make the repository public, and verify the URL while signed out.
+The repository is public, synchronized with `main`, and GitHub recognizes the included license as MIT.
 
 ## Demo Video
 
@@ -129,18 +129,14 @@ Capture at desktop width with real browser chrome omitted or neatly cropped. Use
 - Design-token lint and production build.
 - Production dependency audit with zero reported vulnerabilities.
 - Preview HTTPS, WebMCP response headers, Blob persistence, and save-endpoint rate limiting.
+- Public GitHub repository with a recognized MIT license and readable source/README.
+- Public production deployment from implementation commit `1df9bbd` with no authentication wall.
+- Production golden flow covering discovery, relevance, personalization persistence/reset, confirmation gating, durable save/idempotency, PDF rendering, and unsent inquiry preparation/clearing.
 
 ### Must finish before the deadline
 
-- Confirmed title: **MCP, Meet PCM**.
-- Select and add an OSI-approved license.
-- Review the working tree for secrets and unintended private material.
-- Commit and push the complete WebMCP extension with dated evidence.
-- Make the repository public and verify it while signed out.
-- Deploy this exact reviewed build to the public production URL.
-- Repeat the golden flow against production from a non-owner browser.
 - Record, upload, and verify the public YouTube demo.
-- Add final live, repository, and video URLs here and in Devpost.
+- Add the final video URL here and in Devpost.
 - Complete Devpost's final submit action before September 4, 2026 at 08:00 UTC / 1:30 PM IST.
 - Freeze the repository, video, and live site after the deadline until judging ends September 21 at 5:00 PM Pacific.
 
@@ -148,7 +144,7 @@ Capture at desktop width with real browser chrome omitted or neatly cropped. Use
 
 - WebMCP support varies across experimental browser and agent runtimes.
 - The available GPT-5.6 Luna browser runtime did not expose the required page model context, so real Luna routing remains blocked by that runtime.
-- A preview deployment exists but is protected by Vercel authentication and is not suitable as the public judging URL.
+- Preview deployments remain owner-protected; the production judging URL is public and was verified separately.
 - Saved takeaways are public by unguessable link and do not yet have an account-based library or revocation UI.
 - Inquiry preparation intentionally stops before external communication.
 - Real email delivery, timed cancellation, and timed storage-failure recovery were not exercised against production.

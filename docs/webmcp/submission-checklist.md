@@ -7,36 +7,36 @@ Deadline: **September 4, 2026 at 08:00 UTC / 1:30 PM IST**. Aim to complete the 
 - [x] Confirm the title **MCP, Meet PCM**.
 - [ ] Confirm the submitter is **Individual** and country is **India**.
 - [x] Select the OSI-approved MIT license.
-- [ ] Confirm GitHub recognizes the committed MIT license at the top of the public repository.
+- [x] Confirm GitHub recognizes the committed MIT license at the top of the public repository.
 
 ## 2. Make the evidence public
 
-- [ ] Review every changed/untracked file; exclude private notes and temporary data.
+- [x] Review the release set and exclude unrelated `.impeccable` material plus two pre-existing design-note documents.
 - [x] Search the complete repository history and working tree for committed environment files and high-confidence API-key, token, credential, and private-key patterns. The only environment-shaped file in history is the placeholder-only `.env.example`; no high-confidence secret pattern was found.
-- [ ] Commit the WebMCP extension with a timestamp inside the August 25–September 4 submission period.
-- [ ] Push the intended commit to GitHub.
-- [ ] Change repository visibility to Public only after the secret/privacy review.
-- [ ] Open the repository while signed out and verify source, README, license, and run instructions are readable.
+- [x] Commit the WebMCP extension with a timestamp inside the August 25–September 4 submission period (`1df9bbd`).
+- [x] Push the intended commit to GitHub.
+- [x] Change repository visibility to Public only after the secret/privacy review.
+- [x] Open the repository without owner authentication and verify source, README, license, and run instructions are readable.
 
 ## 3. Promote the reviewed build
 
-- [ ] Configure production Blob storage and a strong `TAKEAWAY_ID_SECRET` without committing either value.
-- [ ] Deploy the exact reviewed commit to `https://mohittater.in/`.
-- [ ] Confirm the deployed commit SHA matches the public repository.
-- [ ] Open the site in an incognito or non-owner browser; no Vercel login or credentials should be required.
-- [ ] Confirm `/`, `/projects`, `/about`, a saved takeaway, its PDF, and a missing-takeaway URL all render.
-- [ ] Confirm the required response headers and production save-rate limit remain active.
+- [x] Configure production Blob storage and a strong `TAKEAWAY_ID_SECRET` without committing either value.
+- [x] Deploy the exact reviewed implementation commit to `https://mohittater.in/` (`dpl_9NqmdH1ArdY9u5bmWAjAFrwm3vBE`).
+- [x] Confirm Vercel cloned implementation commit `1df9bbd` from the public repository.
+- [x] Open the site without owner authentication; no Vercel login or credentials are required.
+- [x] Confirm `/`, `/projects`, `/about`, a saved takeaway, its PDF, and a missing-takeaway URL all render.
+- [x] Confirm `Origin-Agent-Cluster`, `Permissions-Policy`, and the enabled 5-request/600-second IP rate limit for `POST /api/takeaways`.
 
 ## 4. Run the production golden flow
 
-- [ ] Discover exactly five WebMCP tools.
-- [ ] Run the founder relevant-work prompt and confirm the evidence is factual.
-- [ ] Create the CTO personalized view and confirm visible state, navigation persistence, minimize, and reset.
-- [ ] Verify saving without public-link confirmation creates nothing.
-- [ ] Confirm saving after consent returns a durable URL that survives a new tab/reload.
-- [ ] Download and open the PDF.
-- [ ] Prepare an inquiry, verify the contact form prefill, then clear it.
-- [ ] Confirm the inquiry was not sent and no Resend request was triggered.
+- [x] Discover exactly five WebMCP tools.
+- [x] Run the founder relevant-work prompt and confirm the evidence is factual.
+- [x] Create the CTO personalized view and confirm visible state, reload persistence, minimize/restore, and reset.
+- [x] Verify saving without public-link confirmation creates nothing.
+- [x] Confirm saving after consent returns a durable URL and an exact retry returns the same record.
+- [x] Download and open the two-page PDF.
+- [x] Prepare an inquiry, verify the contact form prefill, then clear it.
+- [x] Confirm the inquiry was not sent and no Resend request was triggered.
 - [ ] Capture clean desktop screenshots of the five required frames.
 
 ## 5. Record and publish
