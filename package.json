@@ -3,29 +3,43 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "astro dev",
     "lint:tokens": "node scripts/lint-tokens.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "build": "npm run lint:tokens && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^5.0.3",
-    "@astrojs/vercel": "^10.0.3",
-    "astro": "^6.1.1",
+    "@astrojs/react": "^6.0.5",
+    "@astrojs/vercel": "^11.0.9",
+    "@vercel/blob": "^2.8.0",
+    "astro": "^7.2.10",
+    "pdf-lib": "^1.17.1",
     "posthog-js": "^1.382.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "resend": "^6.12.0",
-    "validator": "^13.15.35"
+    "resend": "^6.25.0",
+    "validator": "^13.15.35",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/validator": "^13.15.10",
-    "agentation": "^3.0.2"
+    "agentation": "^3.0.2",
+    "vitest": "^4.1.11",
+    "webmcp-types": "^0.1.5"
+  },
+  "overrides": {
+    "@vercel/routing-utils": {
+      "path-to-regexp": "6.3.0"
+    },
+    "browserslist": "4.28.8",
+    "dompurify": "3.4.14"
   }
 }

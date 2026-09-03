@@ -3,6 +3,8 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  robots?: string;
+  agentExperience?: boolean;
   /** Load JetBrains Mono — only the pages that use --studio-mono need it. */
   mono?: boolean;
 }
@@ -11,6 +13,8 @@ const {
   title,
   description = "Design Engineer and Product Partner. 10+ years building at the intersection of design, engineering, and product strategy.",
   ogImage = "/og-image.png",
+  robots = "index, follow",
+  agentExperience = true,
   mono = false
 } = Astro.props;
 const siteOrigin = Astro.site ?? new URL('https://mohittater.in');
@@ -71,6 +75,7 @@ const fontHref = `https://fonts.googleapis.com/css2?${fontFamilies.join('&')}&di
 import '../styles/tokens.css';
 import '../styles/global.css';
 import AgentationWidget from '../components/dev/AgentationWidget';
+import AgentExperience from '../components/agent/AgentExperience';
 import PostHog from '../components/PostHog.astro';
 ---
 
@@ -82,7 +87,7 @@ import PostHog from '../components/PostHog.astro';
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Mohit Tater" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
@@ -114,14 +119,22 @@ import PostHog from '../components/PostHog.astro';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href={fontHref} rel="stylesheet" />
   </head>
-  <body>
+  <body data-webmcp-enabled={agentExperience ? "true" : "false"}>
     <slot />
 
-    <AgentationWidget client:only="react" />
+    {agentExperience && <AgentExperience client:load />}
+    <div class="dev-agentation-widget">
+      <AgentationWidget client:only="react" />
+    </div>
 
     <script>
       // Engagement event tracking (section views, CTA + outbound clicks).
       import '../scripts/analytics';
+    </script>
+
+    <script>
+      // Progressive WebMCP registration. Unsupported browsers remain unchanged.
+      import '../scripts/webmcp';
     </script>
 
     <script>
@@ -166,3 +179,13 @@ import PostHog from '../components/PostHog.astro';
     </script>
   </body>
 </html>
+
+<style is:global>
+  @media print {
+    .dev-agentation-widget,
+    [data-agentation-root],
+    [data-feedback-toolbar] {
+      display: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,866 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTakeawayRepository } from '../../lib/takeaways/config';
+import { TAKEAWAY_ID_PATTERN, type TakeawayRecord } from '../../lib/takeaways/model';
+
+export const prerender = false;
+
+const id = Astro.params.id ?? '';
+let record: TakeawayRecord | null = null;
+let unavailable = false;
+
+if (TAKEAWAY_ID_PATTERN.test(id)) {
+  try {
+    record = await getTakeawayRepository().get(id);
+  } catch {
+    unavailable = true;
+  }
+}
+
+if (!record) Astro.response.status = unavailable ? 503 : 404;
+
+const createdDate = record
+  ? new Intl.DateTimeFormat('en', { dateStyle: 'long' }).format(new Date(record.createdAt))
+  : null;
+const machineRecord = record
+  ? JSON.stringify(record).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')
+  : null;
+---
+
+<Layout
+  title={record ? 'Portfolio takeaway — Mohit Tater' : 'Takeaway unavailable — Mohit Tater'}
+  description="A public-by-link, agent-prepared summary of relevant work from Mohit Tater's portfolio."
+  robots="noindex, nofollow"
+  agentExperience={false}
+  mono
+>
+  <header class="takeaway-nav">
+    <a class="takeaway-brand" href="/">Mohit Tater</a>
+    <p>Agent-prepared portfolio note</p>
+    <a class="takeaway-nav-link" href="/projects">View full work <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="takeaway-page">
+    {record ? (
+      <>
+        <header class="takeaway-hero">
+          <div class="takeaway-hero__copy">
+            <div class="takeaway-hero__meta">
+              <p class="takeaway-kicker"><span aria-hidden="true">✦</span> Saved portfolio context</p>
+              <span class="takeaway-sharing">Public by link · Not indexed</span>
+            </div>
+            <h1>The context worth carrying forward.</h1>
+            <p class="takeaway-intro">
+              A focused record of the public work and evidence that mattered in this conversation.
+            </p>
+            <p class="takeaway-date">Created {createdDate}</p>
+          </div>
+
+          <aside class="takeaway-focus" aria-label="Why this takeaway was saved">
+            <p class="takeaway-label">Relevant for</p>
+            <p>{record.focus}</p>
+            {record.audience && (
+              <div class="takeaway-audience">
+                <span>Prepared for</span>
+                <strong>{record.audience}</strong>
+              </div>
+            )}
+          </aside>
+        </header>
+
+        <section class="takeaway-section takeaway-work" aria-labelledby="takeaway-work-heading">
+          <header class="takeaway-section-heading">
+            <div>
+              <p class="takeaway-label">Selected public evidence</p>
+              <h2 id="takeaway-work-heading">Work worth revisiting</h2>
+            </div>
+            <p>{record.projectSnapshots.length} curated {record.projectSnapshots.length === 1 ? 'project' : 'projects'}</p>
+          </header>
+          <ol class="takeaway-projects">
+            {record.projectSnapshots.map((project, index) => (
+              <li>
+                <article>
+                  <span class="takeaway-project-number">{String(index + 1).padStart(2, '0')}</span>
+                  <div class="takeaway-project-copy">
+                    <p class="takeaway-project-id">{project.id}</p>
+                    <h3><a href={project.canonicalUrl}>{project.title}<span aria-hidden="true"> ↗</span></a></h3>
+                    <p class="takeaway-outcome">{project.outcome}</p>
+                  </div>
+                  <ul class="takeaway-evidence">
+                    {project.evidence.map((item) => <li>{item}</li>)}
+                  </ul>
+                </article>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {record.capabilityLabels.length > 0 && (
+          <section class="takeaway-section takeaway-capabilities" aria-labelledby="takeaway-capabilities-heading">
+            <div>
+              <p class="takeaway-label">Pattern across the work</p>
+              <h2 id="takeaway-capabilities-heading">Capabilities that kept surfacing</h2>
+            </div>
+            <ul class="takeaway-capability-list">
+              {record.capabilityLabels.map((label, index) => (
+                <li><span>{String(index + 1).padStart(2, '0')}</span>{label}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {(record.notes || record.questions.length > 0) && (
+          <section class="takeaway-section takeaway-notes" aria-labelledby="takeaway-notes-heading">
+            <header>
+              <p class="takeaway-label">Keep the context</p>
+              <h2 id="takeaway-notes-heading">Notes and next questions</h2>
+              <p>Use this as the starting point for the next conversation—not another blank page.</p>
+            </header>
+            <div class="takeaway-notes__content">
+              {record.notes && (
+                <div>
+                  <p class="takeaway-note-heading">What stood out</p>
+                  <p class="takeaway-note-copy">{record.notes}</p>
+                </div>
+              )}
+              {record.questions.length > 0 && (
+                <div>
+                  <p class="takeaway-note-heading">Questions to carry forward</p>
+                  <ol>{record.questions.map((question) => <li>{question}</li>)}</ol>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        <footer class="takeaway-footer">
+          <div>
+            <p class="takeaway-label">Continue from here</p>
+            <h2>Ready for the next useful conversation.</h2>
+          </div>
+          <nav class="takeaway-actions" aria-label="Takeaway actions">
+            <a class="takeaway-primary" href="/#studio-footer">Contact Mohit</a>
+            <a href="/projects">Explore full portfolio</a>
+            <button id="copy-takeaway-link" type="button">Copy link</button>
+            <a id="download-takeaway-pdf" href={`/api/takeaways/${record.id}/pdf`} download>Download PDF</a>
+            <button id="print-takeaway" type="button">Print</button>
+            <p id="takeaway-action-status" aria-live="polite"></p>
+          </nav>
+        </footer>
+
+        <script type="application/json" id="takeaway-record" set:html={machineRecord} />
+      </>
+    ) : (
+      <section class="takeaway-missing">
+        <p class="takeaway-kicker"><span aria-hidden="true">✦</span> {unavailable ? 'Temporarily unavailable' : 'Takeaway not found'}</p>
+        <h1>{unavailable ? 'This portfolio note cannot be loaded right now.' : 'This portfolio note does not exist.'}</h1>
+        <p>{unavailable ? 'The saved context is still safe. Please try the same link again in a little while.' : 'Check the address, or return to Mohit’s portfolio and start from the public work.'}</p>
+        <div class="takeaway-missing__actions">
+          <a class="takeaway-primary" href="/">Open the portfolio</a>
+          <a href="/projects">Browse selected work</a>
+        </div>
+      </section>
+    )}
+  </main>
+
+  {record && (
+    <script>
+      const status = document.querySelector<HTMLElement>('#takeaway-action-status');
+      const copyButton = document.querySelector<HTMLButtonElement>('#copy-takeaway-link');
+      copyButton?.addEventListener('click', async () => {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(window.location.href);
+          } else {
+            const temporary = document.createElement('textarea');
+            temporary.value = window.location.href;
+            temporary.style.position = 'fixed';
+            temporary.style.opacity = '0';
+            document.body.appendChild(temporary);
+            temporary.select();
+            if (!document.execCommand('copy')) throw new Error('Copy command unavailable');
+            temporary.remove();
+          }
+          if (status) status.textContent = 'Link copied.';
+          copyButton.textContent = 'Copied';
+          window.setTimeout(() => { copyButton.textContent = 'Copy link'; }, 1_800);
+        } catch {
+          if (status) status.textContent = 'Copy failed. Select the address from your browser.';
+        }
+      });
+      document.querySelector('#download-takeaway-pdf')?.addEventListener('click', () => {
+        if (status) status.textContent = 'Your PDF download is starting.';
+        (window as any).phTrack?.('webmcp_takeaway_pdf_downloaded');
+      });
+      document.querySelector('#print-takeaway')?.addEventListener('click', () => {
+        (window as any).phTrack?.('webmcp_takeaway_print_started');
+        window.print();
+      });
+      (window as any).phTrack?.('webmcp_takeaway_opened');
+    </script>
+  )}
+</Layout>
+
+<style>
+  .takeaway-nav {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    display: grid;
+    width: 100%;
+    min-height: var(--space-10);
+    padding: 0 max(var(--space-5), calc((100vw - 1120px) / 2));
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-header);
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    backdrop-filter: blur(var(--space-3));
+  }
+
+  .takeaway-brand,
+  .takeaway-nav-link {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .takeaway-brand {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+  }
+
+  .takeaway-nav p,
+  .takeaway-nav-link {
+    font-size: var(--text-xs);
+  }
+
+  .takeaway-nav p {
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .takeaway-nav-link {
+    justify-self: end;
+    font-weight: 600;
+  }
+
+  .takeaway-page {
+    width: min(100% - var(--space-8), 1120px);
+    margin: 0 auto;
+    padding: var(--space-10) 0;
+  }
+
+  .takeaway-hero {
+    display: grid;
+    min-height: 520px;
+    overflow: hidden;
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 18% 12%, var(--accent-tint), transparent 34%),
+      var(--color-surface);
+    box-shadow: 0 var(--space-5) var(--space-10) var(--scrim-a08);
+    grid-template-columns: minmax(0, 1.16fr) minmax(320px, 0.84fr);
+  }
+
+  .takeaway-hero__copy {
+    display: flex;
+    padding: var(--space-10);
+    flex-direction: column;
+  }
+
+  .takeaway-hero__meta,
+  .takeaway-section-heading,
+  .takeaway-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .takeaway-kicker,
+  .takeaway-label,
+  .takeaway-project-id,
+  .takeaway-note-heading {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .takeaway-kicker span {
+    margin-right: var(--space-1);
+  }
+
+  .takeaway-sharing {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .takeaway-page h1,
+  .takeaway-page h2,
+  .takeaway-page h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  .takeaway-page h1 {
+    max-width: 12ch;
+    margin: auto 0 var(--space-4);
+    font-size: var(--text-display-xl);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .takeaway-intro {
+    max-width: 54ch;
+    margin: 0;
+    color: var(--color-text-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+
+  .takeaway-date {
+    margin: var(--space-8) 0 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .takeaway-focus {
+    position: relative;
+    display: flex;
+    padding: var(--space-10) var(--space-8);
+    flex-direction: column;
+    justify-content: center;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  .takeaway-focus::before {
+    position: absolute;
+    top: var(--space-5);
+    left: var(--space-5);
+    color: var(--white-a24);
+    content: '“';
+    font-family: var(--font-serif);
+    font-size: var(--text-display-xl);
+    line-height: 1;
+  }
+
+  .takeaway-focus .takeaway-label {
+    color: var(--white-a60);
+  }
+
+  .takeaway-focus > p:nth-child(2) {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    line-height: 1.4;
+    white-space: pre-line;
+    text-wrap: pretty;
+  }
+
+  .takeaway-audience {
+    display: flex;
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--white-a24);
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .takeaway-audience span {
+    color: var(--white-a60);
+    font-size: var(--text-xs);
+  }
+
+  .takeaway-audience strong {
+    font-size: var(--text-md);
+    font-weight: 600;
+  }
+
+  .takeaway-section {
+    margin-top: calc(var(--space-10) + var(--space-5));
+  }
+
+  .takeaway-section-heading {
+    align-items: flex-end;
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .takeaway-section-heading > p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .takeaway-page h2 {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-display-md);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .takeaway-projects {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .takeaway-projects > li {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .takeaway-projects article {
+    display: grid;
+    padding: var(--space-8) 0;
+    grid-template-columns: var(--space-8) minmax(240px, 0.9fr) minmax(320px, 1.1fr);
+    gap: var(--space-5);
+  }
+
+  .takeaway-project-number,
+  .takeaway-capability-list span {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .takeaway-projects h3 {
+    margin: var(--space-2) 0 var(--space-3);
+    font-size: var(--text-2xl);
+    line-height: 1.15;
+  }
+
+  .takeaway-projects h3 a {
+    color: var(--color-text);
+    text-decoration-color: var(--accent-line);
+    text-decoration-thickness: 1px;
+    text-underline-offset: var(--space-1);
+  }
+
+  .takeaway-projects h3 span {
+    color: var(--color-accent);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+  }
+
+  .takeaway-outcome {
+    max-width: 34ch;
+    margin: 0;
+    color: var(--color-text-body);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
+  .takeaway-evidence {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .takeaway-evidence li {
+    position: relative;
+    margin-top: var(--space-3);
+    padding-left: var(--space-5);
+    color: var(--color-text-body);
+    line-height: 1.65;
+  }
+
+  .takeaway-evidence li:first-child {
+    margin-top: 0;
+  }
+
+  .takeaway-evidence li::before {
+    position: absolute;
+    top: 0.72em;
+    left: 0;
+    width: var(--space-2);
+    height: 1px;
+    background: var(--color-accent);
+    content: '';
+  }
+
+  .takeaway-capabilities {
+    display: grid;
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    background: var(--color-accent-wash);
+    grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1.2fr);
+    gap: var(--space-8);
+  }
+
+  .takeaway-capability-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .takeaway-capability-list li {
+    display: grid;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--accent-line);
+    color: var(--color-text-body);
+    grid-template-columns: var(--space-5) 1fr;
+    gap: var(--space-2);
+  }
+
+  .takeaway-notes {
+    display: grid;
+    padding: var(--space-8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+    gap: var(--space-10);
+    box-shadow: 0 var(--space-4) var(--space-8) var(--scrim-a08);
+  }
+
+  .takeaway-notes header > p:last-child,
+  .takeaway-note-copy,
+  .takeaway-notes__content li,
+  .takeaway-missing > p:last-of-type {
+    color: var(--color-text-body);
+    line-height: 1.65;
+  }
+
+  .takeaway-notes header > p:last-child {
+    margin-top: var(--space-4);
+  }
+
+  .takeaway-notes__content {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .takeaway-note-copy {
+    margin: var(--space-3) 0 0;
+    white-space: pre-line;
+  }
+
+  .takeaway-notes ol {
+    margin: var(--space-3) 0 0;
+    padding-left: var(--space-5);
+  }
+
+  .takeaway-notes li {
+    margin-top: var(--space-2);
+    padding-left: var(--space-1);
+  }
+
+  .takeaway-footer {
+    margin-top: calc(var(--space-10) + var(--space-5));
+    padding: var(--space-8) 0 0;
+    border-top: 1px solid var(--color-border);
+    align-items: flex-start;
+  }
+
+  .takeaway-footer h2 {
+    max-width: 14ch;
+    font-size: var(--text-display-sm);
+  }
+
+  .takeaway-actions,
+  .takeaway-missing__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .takeaway-actions {
+    max-width: 560px;
+    justify-content: flex-end;
+  }
+
+  .takeaway-actions a,
+  .takeaway-actions button,
+  .takeaway-missing__actions a {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      transform 220ms var(--ease-out),
+      border-color 220ms var(--ease-out),
+      background-color 220ms var(--ease-out),
+      color 220ms var(--ease-out);
+  }
+
+  .takeaway-primary {
+    border-color: var(--color-accent) !important;
+    background: var(--color-accent) !important;
+    color: var(--color-on-accent) !important;
+  }
+
+  .takeaway-actions a:hover,
+  .takeaway-actions button:hover,
+  .takeaway-missing__actions a:hover {
+    border-color: var(--accent-line);
+    background: var(--color-accent-wash);
+    transform: translateY(-1px);
+  }
+
+  .takeaway-primary:hover {
+    background: var(--color-accent-pressed) !important;
+  }
+
+  .takeaway-actions a:active,
+  .takeaway-actions button:active,
+  .takeaway-missing__actions a:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  .takeaway-actions a:focus-visible,
+  .takeaway-actions button:focus-visible,
+  .takeaway-missing__actions a:focus-visible,
+  .takeaway-nav a:focus-visible,
+  .takeaway-projects a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  #takeaway-action-status {
+    width: 100%;
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-body);
+    font-size: var(--text-xs);
+    text-align: right;
+  }
+
+  .takeaway-missing {
+    display: flex;
+    min-height: calc(100dvh - 220px);
+    padding: var(--space-10);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at top right, var(--accent-soft), transparent 42%),
+      var(--color-surface);
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 var(--space-5) var(--space-10) var(--scrim-a08);
+  }
+
+  .takeaway-missing h1 {
+    max-width: 16ch;
+    margin: var(--space-5) 0 var(--space-4);
+  }
+
+  .takeaway-missing > p:last-of-type {
+    max-width: 52ch;
+  }
+
+  .takeaway-missing__actions {
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 860px) {
+    .takeaway-hero {
+      min-height: auto;
+      grid-template-columns: 1fr;
+    }
+
+    .takeaway-hero__copy,
+    .takeaway-focus {
+      padding: var(--space-8);
+    }
+
+    .takeaway-page h1 {
+      margin-top: var(--space-10);
+    }
+
+    .takeaway-projects article {
+      grid-template-columns: var(--space-6) minmax(0, 1fr);
+    }
+
+    .takeaway-evidence {
+      grid-column: 2;
+    }
+
+    .takeaway-capabilities,
+    .takeaway-notes {
+      grid-template-columns: 1fr;
+    }
+
+    .takeaway-footer {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .takeaway-actions {
+      max-width: none;
+      justify-content: flex-start;
+    }
+
+    #takeaway-action-status {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .takeaway-nav {
+      padding: var(--space-3) var(--space-4);
+      grid-template-columns: 1fr auto;
+    }
+
+    .takeaway-nav p {
+      display: none;
+    }
+
+    .takeaway-page {
+      width: min(100% - var(--space-6), 1120px);
+      padding: var(--space-6) 0 var(--space-8);
+    }
+
+    .takeaway-hero__copy,
+    .takeaway-focus,
+    .takeaway-capabilities,
+    .takeaway-notes,
+    .takeaway-missing {
+      padding: var(--space-5);
+    }
+
+    .takeaway-hero__meta,
+    .takeaway-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .takeaway-page h1 {
+      margin-top: var(--space-8);
+      font-size: var(--text-display-lg);
+    }
+
+    .takeaway-focus > p:nth-child(2) {
+      font-size: var(--text-xl);
+    }
+
+    .takeaway-section {
+      margin-top: var(--space-10);
+    }
+
+    .takeaway-projects article {
+      padding: var(--space-6) 0;
+      grid-template-columns: var(--space-5) minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+
+    .takeaway-capability-list {
+      grid-template-columns: 1fr;
+    }
+
+    .takeaway-actions a,
+    .takeaway-actions button,
+    .takeaway-missing__actions a {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  @media print {
+    @page {
+      margin: 14mm;
+    }
+
+    .takeaway-nav,
+    .takeaway-actions {
+      display: none;
+    }
+
+    .takeaway-page {
+      width: 100%;
+      padding: 0;
+    }
+
+    .takeaway-hero {
+      min-height: auto;
+      border-color: var(--color-border);
+      box-shadow: none;
+      grid-template-columns: 1.15fr 0.85fr;
+      break-inside: avoid;
+    }
+
+    .takeaway-hero__copy,
+    .takeaway-focus {
+      padding: 16px;
+    }
+
+    .takeaway-page h1 {
+      margin: 34px 0 8px;
+      font-size: var(--text-3xl);
+    }
+
+    .takeaway-intro,
+    .takeaway-focus > p:nth-child(2) {
+      font-size: var(--text-sm);
+      line-height: 1.45;
+    }
+
+    .takeaway-date,
+    .takeaway-audience {
+      margin-top: 10px;
+    }
+
+    .takeaway-section {
+      margin-top: 24px;
+    }
+
+    .takeaway-page h2 {
+      font-size: var(--text-2xl);
+    }
+
+    .takeaway-projects article {
+      padding: 12px 0;
+      grid-template-columns: 24px 0.9fr 1.1fr;
+      gap: 10px;
+      break-inside: avoid;
+    }
+
+    .takeaway-projects h3 {
+      margin: 3px 0 5px;
+      font-size: var(--text-lg);
+    }
+
+    .takeaway-outcome,
+    .takeaway-evidence li,
+    .takeaway-note-copy,
+    .takeaway-notes li {
+      font-size: var(--text-xs);
+      line-height: 1.4;
+    }
+
+    .takeaway-capabilities,
+    .takeaway-notes {
+      padding: 14px;
+      box-shadow: none;
+      break-inside: avoid;
+    }
+
+    .takeaway-notes {
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 24px;
+    }
+
+    .takeaway-footer {
+      margin-top: 26px;
+      padding-top: 14px;
+      break-inside: avoid;
+    }
+  }
+</style>

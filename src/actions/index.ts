@@ -7,8 +7,6 @@ const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
 const CONTACT_FROM_EMAIL = import.meta.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
 const CONTACT_TO_EMAIL = import.meta.env.CONTACT_TO_EMAIL || 'mohittater.iiita@gmail.com';
 
-const resend = new Resend(RESEND_API_KEY);
-
 class RateLimiter {
   private store = new Map<string, { count: number; resetTime: number }>();
   constructor(private windowMs: number, private maxRequests: number) {
@@ -87,6 +85,15 @@ export const server = {
         });
       }
 
+      if (!RESEND_API_KEY) {
+        console.error('Contact form is unavailable: RESEND_API_KEY is not configured.');
+        throw new ActionError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'The contact form is temporarily unavailable. Please use the booking link instead.',
+        });
+      }
+
+      const resend = new Resend(RESEND_API_KEY);
       const { error } = await resend.emails.send({
         from: CONTACT_FROM_EMAIL,
         to: [CONTACT_TO_EMAIL],

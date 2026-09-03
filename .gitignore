@@ -3,6 +3,8 @@
 node_modules/
 dist/
 .astro/
+.data/webmcp-takeaways/
+.devpost-hackathon-state.json
 .vercel/
 .playwright-mcp/
 .superpowers/
@@ -16,3 +18,4 @@ reference-materials/
 .env.*.local
 .claude/
 playground-*.html
+.env*

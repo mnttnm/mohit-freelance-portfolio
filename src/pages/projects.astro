@@ -3,13 +3,11 @@ export const prerender = true;
 
 import Layout from "../layouts/Layout.astro";
 import StudioFooter from "../components/StudioFooter.astro";
+import { getProject } from "../content/projects";
 
-const spotlightProjects = [
+const spotlightPresentation = [
   {
     id: "ops-workspace",
-    type: "Enterprise App",
-    title: "Enterprise Ops Workspace",
-    outcome: "Complex internal tool, delivered end-to-end",
     description:
       "An internal web app that supports a sales team's day-to-day operations. It includes multi-step onboarding forms, filterable tables and grids, template detail views, and an in-app help system, with a UI designed to keep complex enterprise workflows easy to navigate.",
     tech: [
@@ -50,9 +48,6 @@ const spotlightProjects = [
   },
   {
     id: "ai-resizing-studio",
-    type: "AI Image Pipeline",
-    title: "AI Resizing Studio",
-    outcome: "AI handles first-pass QA; humans review only what matters",
     description:
       "A bulk image-resizing tool for a marketing team that reformats thousands of event posters into every ad ratio they need. It's built around three interfaces — batch processing, side-by-side review, and an evaluation dashboard — with an AI judge running first-pass QA on every output, so reviewers spend their attention only where it's actually needed.",
     tech: [
@@ -92,9 +87,6 @@ const spotlightProjects = [
   },
   {
     id: "dashboard-skill",
-    type: "Design Case Study",
-    title: "Designing Dashboards",
-    outcome: "Generic chart-dumps → actionable launchpads",
     description:
       "An agent skill that turns the everyday “wall of charts” dashboard into something a person can actually act on. The case study isolates what the skill adds — V1 (Claude with no skill) vs V7 (with it) — and the six grounding principles behind it that hold for any dashboard, any stack, any domain.",
     tech: [
@@ -134,9 +126,6 @@ const spotlightProjects = [
   },
   {
     id: "slicely",
-    type: "SaaS Product",
-    title: "Slicely",
-    outcome: "Turn any PDF into structured data",
     description:
       "A web app for extracting structured data from PDFs using reusable recipes. Users annotate the relevant pages of a PDF, define their extraction rules once, and view results rendered as a number, table, chart, or plain text — no per-document configuration needed.",
     tech: ["Next.js", "Supabase", "Tailwind CSS", "LLM Integration"],
@@ -168,9 +157,6 @@ const spotlightProjects = [
   },
   {
     id: "ai-toolkit",
-    type: "Developer Tool",
-    title: "AI Toolkit",
-    outcome: "AI workflows I actually use daily",
     description:
       "A collection of reusable agent skills and Codex automation templates for Claude Code and Codex. Skills cover product UI, dashboards, interface grading, UX patterns, interaction design, and workflow automation, and can be installed with a single command. I use it to keep my agentic-engineering practice current.",
     tech: ["Claude Code", "Codex", "Agent Skills", "Automations"],
@@ -213,9 +199,6 @@ const spotlightProjects = [
   },
   {
     id: "reviewhub",
-    type: "Agentic Workflow",
-    title: "ReviewHub",
-    outcome: "Agent-powered feedback loop, end-to-end",
     description:
       "A feedback pipeline that connects three tools: in-browser annotations on a live prototype, a communication channel (Slack or Confluence), and a coding agent. Feedback captured in the browser flows to the chosen channel, gets picked up by an agent, and the task status is updated automatically once the work is done.",
     tech: ["Agentation", "Slack", "Confluence", "Devin", "Next.js"],
@@ -247,70 +230,66 @@ const spotlightProjects = [
   },
 ];
 
-const moreProjects = [
+const spotlightProjects = spotlightPresentation.map((presentation) => {
+  const canonical = getProject(presentation.id);
+  if (!canonical) throw new Error(`Missing canonical project: ${presentation.id}`);
+  return {
+    ...presentation,
+    type: canonical.type,
+    title: canonical.title,
+    outcome: canonical.outcome,
+  };
+});
+
+const moreProjectPresentation = [
   {
-    title: "Greetwood",
-    description:
-      "A Shopify store for a D2C furniture brand, built entirely through code — theme, content, and store configuration — using AI agents (Claude Code and Codex Cloud) and the Shopify CLI instead of Shopify's web admin.",
+    id: "greetwood",
     image: "/images/SCR-20260526-poxa.webp",
-    liveUrl: "https://greetwood.myshopify.com",
     liveLabel: "Visit store",
-    type: "Shopify Store",
   },
   {
-    title: "Building a Business Co-Pilot with Claude Code",
-    description:
-      "An AI-powered business management system that handles daily planning, revenue tracking, and weekly reviews, built with Claude Code acting as an autonomous co-pilot across an Obsidian-based workspace.",
+    id: "business-copilot",
     image: "/projects/business-copilot.webp",
-    liveUrl:
-      "https://medium.com/@tatermohit/i-built-a-business-co-pilot-using-claude-code-heres-the-exact-system-cfe32ee59558",
     liveLabel: "Read article",
-    type: "Article",
   },
   {
-    title: "learning.log",
-    description:
-      "A capture-and-publish platform that turns quick notes into a public learning stream, with a Raycast-powered input pipeline, Redis-backed queue, and automated GitHub publishing.",
+    id: "learning-log",
     image: "/projects/learning-log.webp",
-    liveUrl: "https://mohit.stream",
     liveLabel: "Live app",
-    type: "Web App",
   },
   {
-    title: "Figma Variable Explorer",
-    description:
-      "Browse, inspect, and export Figma design variables in List, JSON, and CSS formats. Supports both design and development modes, used by 8,000+ designers.",
+    id: "figma-variable-explorer",
     image: "/projects/figma-variable-explorer.webp",
-    liveUrl:
-      "https://www.figma.com/community/plugin/1310888112326715990/figma-variable-explorer",
     liveLabel: "Open plugin",
-    sourceUrl: "https://github.com/mnttnm/figma-variable-explorer",
-    type: "Figma Plugin",
     highlight: "8,000+ users",
   },
   {
-    title: "Tech Career Guide for CS Students",
-    description:
-      "An interactive career exploration tool covering 45+ tech career paths with salary benchmarks, personality-based matching, and structured learning roadmaps for Indian CS students.",
+    id: "tech-career-guide",
     image: "/projects/career-guide.webp",
-    liveUrl: "https://tech-career-guide.vercel.app/",
     liveLabel: "Live app",
-    sourceUrl:
-      "https://github.com/mnttnm/btech-cs-career-guide-india",
-    type: "Web App",
   },
   {
-    title: "Notes in Google Docs",
-    description:
-      "Capture notes from anywhere on your Mac and store them directly in Google Docs. Create new documents, switch between them, and manage everything without leaving Raycast.",
+    id: "notes-in-google-docs",
     image: "/projects/notes-in-gdocs.webp",
-    liveUrl: "https://www.raycast.com/tatermohit/note-in-google-doc",
     liveLabel: "Install extension",
-    sourceUrl: "https://github.com/mnttnm/raycast-note-in-doc",
-    type: "Raycast Extension",
     highlight: "1,000+ installs",
   },
 ];
+
+const moreProjects = moreProjectPresentation.map((presentation) => {
+  const canonical = getProject(presentation.id);
+  if (!canonical) throw new Error(`Missing canonical project: ${presentation.id}`);
+  const primaryLink = canonical.links.find((link) => link.kind !== "source");
+  if (!primaryLink) throw new Error(`Missing primary project link: ${presentation.id}`);
+
+  return {
+    ...presentation,
+    title: canonical.title,
+    description: canonical.summary,
+    type: canonical.type,
+    liveUrl: primaryLink.url,
+  };
+});
 
 const projectTotalLabel = String(spotlightProjects.length).padStart(
   2,
@@ -854,6 +833,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
           {
             moreProjects.map((project) => (
               <a
+                id={project.id}
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener"
