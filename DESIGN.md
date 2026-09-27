@@ -24,6 +24,9 @@ type:
   display: { xs: "clamp(1.2,1.45)", sm: "clamp(1.4,1.95)", md: "clamp(1.7,2.5)", lg: "clamp(2.2,3.5)", xl: "clamp(2.4,4)" } # rem
 spacing: { base: 8px, scale: [4, 8, 12, 16, 24, 32, 48, 64] }
 radius:  { 2xs: 2px, xs: 4px, sm: 6px, md: 10px, lg: 14px, xl: 18px, pill: 999px, circle: 50% }
+# Elevation: three shadow steps built on the scrim ramp.
+shadow: { sm: "--shadow-sm", md: "--shadow-md", lg: "--shadow-lg" } # raised · lifted media · floating UI
+layout: { header-h: 64px } # fixed header; sticky UI and scroll-margins offset by it
 # Translucent accents come from a 4-step scale, never an ad-hoc opacity.
 accent-alpha:
   tint:   { value: "8%",  token: "--accent-tint",   role: "faint tinted fills" }
@@ -67,6 +70,12 @@ between "more" and "less", choose less.
   inline `color-mix` — the linter fails the build on both. If a usage doesn't
   fit one of the four, the right move is almost always to pick the nearest, not
   to add a fifth.
+- **Elevation = three shadow tokens.** `--shadow-sm` for raised surfaces,
+  `--shadow-md` for lifted media and panels, `--shadow-lg` for floating UI
+  (sticky bars, previews, pop-overs). Don't hand-build a `box-shadow`.
+- **Clear the fixed header with `--header-h`.** Sticky elements use
+  `top: var(--header-h)`; anchor targets use `scroll-margin-top` built from it
+  (in-page links scroll with `scrollIntoView`, which honours it).
 - **Neutral translucency = ramp tokens.** Black/ink/white at opacity come from
   one alpha ramp `[8 16 24 40 60 80]` over three bases: `--ink-aNN` (on light),
   `--white-aNN` (on dark), `--scrim-aNN` (shadows). Raw `rgba(0,0,0/26,26,26/255,255,255, …)`

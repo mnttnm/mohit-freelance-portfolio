@@ -1,0 +1,136 @@
+---
+/* Sticky index of the case files (desktop only). Tracks the file in view and
+   follows the lens, so it's always a true table of contents for what's shown. */
+import { caseFiles, alsoShipped } from "../../content/work";
+---
+
+<nav class="rail" aria-label="Case files">
+  <div class="rail-inner">
+    <p class="rail-label">In this section</p>
+    <div class="rail-track" data-rail>
+    <span class="rail-indicator" data-rail-indicator aria-hidden="true"></span>
+    <ol class="rail-list">
+      {
+        caseFiles.map((file) => (
+          <li data-rail-item={file.id}>
+            <a class="rail-link" href={`#${file.id}`}>
+              <span class="rail-num">{file.number}</span>
+              <span class="rail-title">{file.title}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    </div>
+    <a class="rail-next" href="#also-shipped">
+      <span>Also shipped</span>
+      <span class="rail-next-count" data-rail-shipped-count>{alsoShipped.length}</span>
+      <span aria-hidden="true">&darr;</span>
+    </a>
+  </div>
+</nav>
+
+<style>
+  .rail {
+    position: relative;
+  }
+  .rail-inner {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-10) + var(--space-6));
+  }
+
+  .rail-label {
+    margin: 0 0 var(--space-3);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .rail-track {
+    position: relative;
+  }
+  .rail-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .rail-indicator {
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: 2px;
+    height: var(--rail-h, 0px);
+    border-radius: var(--radius-pill);
+    background: var(--color-text);
+    opacity: 0;
+    transform: translateY(var(--rail-y, 0px));
+    transition:
+      transform 0.45s var(--ease-out),
+      height 0.45s var(--ease-out),
+      opacity 0.2s var(--ease-out);
+  }
+  .rail-track.has-active .rail-indicator {
+    opacity: 1;
+  }
+
+  .rail-link {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: var(--space-2);
+    padding: var(--space-2) 0 var(--space-2) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.35;
+    text-decoration: none;
+    transition: color 0.2s var(--ease-out);
+  }
+  .rail-num {
+    padding-top: 2px;
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-variant-numeric: tabular-nums;
+  }
+  .rail-link:hover {
+    color: var(--color-text);
+  }
+  .rail-link[aria-current="true"] {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .rail-link[aria-current="true"] .rail-num {
+    color: var(--color-accent);
+  }
+
+  .rail-next {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+    color: var(--color-text-body);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+  .rail-next:hover {
+    color: var(--color-text);
+  }
+  .rail-next-count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 20px;
+    height: 20px;
+    border-radius: var(--radius-pill);
+    background: var(--ink-a08);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+  }
+
+  @media (max-width: 1099px) {
+    .rail {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,198 @@
+---
+/* "Show work involving…" A visitor usually arrives with one need (an AI
+   workflow, a design problem). The lens narrows every list on the page to the
+   projects that used that discipline, and the counts double as a quick read of
+   breadth. State lives in ?lens= so a filtered view can be shared. */
+import { disciplines, caseFiles, alsoShipped } from "../../content/work";
+
+const all = [...caseFiles, ...alsoShipped];
+const options = [
+  { id: "all", label: "Everything", count: all.length },
+  ...disciplines.map((d) => ({
+    id: d.id,
+    label: d.label,
+    count: all.filter((p) => (p.disciplines as string[]).includes(d.id)).length,
+  })),
+];
+---
+
+<!-- Filtering needs JS; without it every project is already listed. -->
+<noscript><style>[data-lens-bar] { display: none; }</style></noscript>
+<div class="lens-sentinel" data-lens-sentinel aria-hidden="true"></div>
+<div class="lens" data-lens-bar>
+  <div class="wk-container lens-inner">
+    <span class="lens-label" id="lens-label">Show work involving</span>
+    <div class="lens-options" role="group" aria-labelledby="lens-label">
+      {
+        options.map((option) => (
+          <button
+            type="button"
+            class="lens-option"
+            data-lens={option.id}
+            aria-pressed={option.id === "all" ? "true" : "false"}
+          >
+            <span>{option.label}</span>
+            <span class="lens-count">
+              {option.count}
+              <span class="visually-hidden"> projects</span>
+            </span>
+          </button>
+        ))
+      }
+    </div>
+    <p class="lens-status" data-lens-status aria-live="polite">
+      <span class="lens-status-visual" aria-hidden="true" data-lens-status-visual
+        >{all.length} of {all.length}</span
+      >
+      <span class="visually-hidden" data-lens-status-sr></span>
+    </p>
+  </div>
+</div>
+
+<style>
+  .lens-sentinel {
+    height: 1px;
+    margin-bottom: -1px;
+  }
+
+  .lens {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 30;
+    border-block: 1px solid var(--color-border);
+    background: var(--color-bg-header);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: box-shadow 0.3s var(--ease-out);
+  }
+  .lens.is-stuck {
+    border-top-color: transparent;
+    box-shadow: 0 8px 20px -16px var(--scrim-a40);
+  }
+
+  .lens-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: var(--space-10);
+  }
+
+  .lens-label {
+    flex: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lens-options {
+    position: relative; /* contain the visually-hidden labels inside the scroller */
+    display: flex;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .lens-option {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 36px;
+    padding: 0 var(--space-2) 0 var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-text-body);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      transform 0.16s var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lens-option:active {
+    transform: scale(0.96);
+  }
+  .lens-count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--ink-a08);
+    color: var(--color-text-body);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-variant-numeric: tabular-nums;
+    transition: inherit;
+  }
+  .lens-option[aria-pressed="true"] {
+    border-color: var(--color-text);
+    background: var(--color-text);
+    color: var(--color-surface);
+  }
+  .lens-option[aria-pressed="true"] .lens-count {
+    background: var(--white-a16);
+    color: var(--color-surface);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lens-option:not([aria-pressed="true"]):hover {
+      border-color: var(--ink-a24);
+      color: var(--color-text);
+    }
+  }
+
+  .lens-status {
+    flex: none;
+    margin: 0 0 0 auto;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 899px) {
+    .lens-label,
+    .lens-status {
+      display: none;
+    }
+    .lens-inner {
+      padding: 0;
+    }
+    .lens-options {
+      flex: 1;
+      overflow-x: auto;
+      padding: var(--space-3) var(--site-container-padding);
+      scroll-padding-inline: var(--site-container-padding);
+      scrollbar-width: none;
+      /* fade the edges so it's obvious the row scrolls */
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        var(--color-text) var(--space-4),
+        var(--color-text) calc(100% - var(--space-6)),
+        transparent
+      );
+    }
+    .lens-options::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .lens {
+      position: relative;
+      top: auto;
+    }
+    .lens-options {
+      padding-inline: var(--site-container-padding-mobile);
+      scroll-padding-inline: var(--site-container-padding-mobile);
+    }
+  }
+</style>

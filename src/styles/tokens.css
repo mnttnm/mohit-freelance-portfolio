@@ -109,6 +109,16 @@
   --radius-pill:   999px; /* pills, fully-rounded */
   --radius-circle: 50%;   /* avatars, dots */
 
+  /* ---- Semantic: elevation ---------------------------------------------- */
+  /* Three steps, all built on the scrim ramp. Raised panels, lifted media,
+     and floating UI (sheets, sticky bars, previews). */
+  --shadow-sm: 0 1px 2px var(--scrim-a08), 0 1px 1px var(--scrim-a08);
+  --shadow-md: 0 2px 4px var(--scrim-a08), 0 12px 28px -12px var(--scrim-a24);
+  --shadow-lg: 0 4px 12px var(--scrim-a08), 0 32px 64px -24px var(--scrim-a40);
+
+  /* ---- Semantic: layout ------------------------------------------------- */
+  --header-h: 64px; /* fixed site header; sticky UI and scroll-margins offset by it */
+
   /* ---- Semantic: motion ------------------------------------------------- */
   /* Strong custom easings (built-in CSS curves are too weak). Reference by
      name; don't re-paste raw cubic-beziers across components. */

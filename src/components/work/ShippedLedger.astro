@@ -1,0 +1,344 @@
+---
+/* "Also shipped": the unmarked frames from the proof sheet, as a dense ledger.
+   Every row opens the real thing. On desktop a preview follows the cursor, so
+   the list stays scannable without giving each row a big image. */
+import { Image, getImage } from "astro:assets";
+import { alsoShipped } from "../../content/work";
+
+const previews = await Promise.all(
+  alsoShipped.map((project) => getImage({ src: project.image, width: 720, format: "webp" })),
+);
+
+const first = alsoShipped[0].number;
+const last = alsoShipped[alsoShipped.length - 1].number;
+---
+
+<div class="led" id="also-shipped" data-ph-section="more_projects" aria-labelledby="led-title">
+  <div class="wk-container">
+    <header class="wk-section-head led-head">
+      <p class="wk-eyebrow">Also shipped · {first}–{last}</p>
+      <h2 class="wk-h2" id="led-title">Smaller builds, <em>in the wild.</em></h2>
+      <p class="wk-section-sub">
+        Plugins, extensions, and tools built in my own time. Every row opens the
+        real thing.
+      </p>
+    </header>
+
+    <ol class="led-list" data-ledger>
+      {
+        alsoShipped.map((project, i) => (
+          <li
+            class="led-row wk-rise"
+            id={project.id}
+            data-item
+            data-disciplines={project.disciplines.join(" ")}
+          >
+            <a
+              class="led-link"
+              href={project.url}
+              target="_blank"
+              rel="noopener"
+              data-ph-action="more_project"
+              data-ph-project={project.id}
+              data-preview={previews[i].src}
+            >
+              <span class="led-num">{project.number}</span>
+              <span class="led-thumb">
+                <Image
+                  src={project.image}
+                  alt=""
+                  widths={[160, 480]}
+                  sizes="(hover: hover) and (pointer: fine) 360px, 80px"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="led-main">
+                <span class="led-title">{project.title}</span>
+                <span class="led-outcome">{project.outcome}</span>
+              </span>
+              <span class="led-type">{project.type}</span>
+              <span class="led-end">
+                {project.signal ? <span class="led-signal">{project.signal}</span> : <span class="led-signal" />}
+                <span class="led-go">
+                  {project.label}
+                  <span aria-hidden="true">↗</span>
+                  <span class="visually-hidden"> (opens in a new tab)</span>
+                </span>
+              </span>
+            </a>
+            {project.sourceUrl ? (
+              <a
+                class="led-src"
+                href={project.sourceUrl}
+                target="_blank"
+                rel="noopener"
+                data-ph-action="github"
+                data-ph-project={project.id}
+              >
+                Source<span class="visually-hidden"> code for {project.title} on GitHub</span>
+              </a>
+            ) : (
+              <span class="led-src led-src-none" aria-hidden="true">·</span>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+    <p class="led-empty" data-ledger-empty hidden>
+      No smaller builds for this discipline. <button type="button" data-lens-reset>Show everything</button>
+    </p>
+  </div>
+
+  <div class="led-preview" data-led-preview aria-hidden="true">
+    <img alt="" data-led-preview-img />
+  </div>
+</div>
+
+<style>
+  .led {
+    padding-top: var(--space-10);
+  }
+
+  .led-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-text);
+  }
+
+  .led-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 72px;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .led-row[hidden] {
+    display: none;
+  }
+
+  .led-link {
+    display: grid;
+    grid-template-columns: 40px 64px minmax(0, 1fr) 150px 120px 130px;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 88px;
+    padding: var(--space-3) 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .led-num {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+  }
+  .led-thumb {
+    display: block;
+    width: 64px;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid var(--ink-a08);
+    border-radius: var(--radius-2xs);
+    background: var(--color-accent-wash);
+  }
+  .led-thumb :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  .led-main {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+  .led-title {
+    color: var(--color-text);
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    line-height: 1.2;
+    transition: transform 0.35s var(--ease-out);
+  }
+  .led-outcome {
+    color: var(--color-text-body);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+  .led-type {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .led-end {
+    display: contents;
+  }
+  .led-signal {
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .led-go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    justify-self: end;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .led-src {
+    justify-self: end;
+    color: var(--color-text-body);
+    font-size: var(--text-xs);
+    text-decoration: underline;
+    text-decoration-color: var(--ink-a24);
+    text-underline-offset: 3px;
+  }
+  .led-src:hover {
+    color: var(--color-text);
+    text-decoration-color: currentColor;
+  }
+  .led-src-none {
+    color: var(--color-border);
+    text-decoration: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .led-link:hover .led-title {
+      transform: translateX(6px);
+    }
+    .led-link:hover .led-go {
+      color: var(--color-accent);
+    }
+    /* With a following preview, the inline thumbnail is redundant. */
+    .led.has-preview .led-thumb {
+      display: none;
+    }
+    .led.has-preview .led-link {
+      grid-template-columns: 40px minmax(0, 1fr) 150px 120px 130px;
+    }
+  }
+
+  .led-empty {
+    margin: var(--space-5) 0 0;
+    color: var(--color-text-body);
+    font-size: var(--text-sm);
+  }
+  .led-empty button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ---- Cursor preview --------------------------------------------------- */
+  .led-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    width: 360px;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border: 1px solid var(--ink-a08);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-wash);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(var(--x, -999px), var(--y, -999px), 0) rotate(var(--r, 0deg));
+    scale: 0.92;
+    transition:
+      opacity 0.2s var(--ease-out),
+      scale 0.35s var(--ease-out);
+    will-change: transform;
+  }
+  .led-preview.is-on {
+    opacity: 1;
+    scale: 1;
+  }
+  .led-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+
+  /* ---- Responsive -------------------------------------------------------- */
+  @media (max-width: 1099px) {
+    .led-link {
+      grid-template-columns: 32px 64px minmax(0, 1fr) 120px 110px;
+    }
+    .led-type {
+      display: none;
+    }
+  }
+  @media (max-width: 760px) {
+    .led-row {
+      grid-template-columns: minmax(0, 1fr);
+      position: relative;
+    }
+    .led-link {
+      grid-template-columns: 80px minmax(0, 1fr);
+      grid-template-areas:
+        "thumb main"
+        "thumb meta";
+      gap: var(--space-1) var(--space-4);
+      min-height: 0;
+      padding: var(--space-4) 0;
+    }
+    .led-num,
+    .led-type {
+      display: none;
+    }
+    .led-thumb {
+      grid-area: thumb;
+      width: 80px;
+      align-self: start;
+    }
+    .led-main {
+      grid-area: main;
+    }
+    .led-title {
+      font-size: var(--text-lg);
+    }
+    .led-end {
+      grid-area: meta;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding-right: var(--space-10);
+    }
+    .led-signal,
+    .led-go {
+      font-size: var(--text-xs);
+    }
+    .led-signal:empty {
+      display: none;
+    }
+    .led-src {
+      position: absolute;
+      right: 0;
+      bottom: var(--space-4);
+    }
+    .led-src-none {
+      display: none;
+    }
+    .led-preview {
+      display: none;
+    }
+  }
+</style>

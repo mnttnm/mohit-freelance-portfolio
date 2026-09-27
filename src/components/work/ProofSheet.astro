@@ -1,0 +1,537 @@
+---
+/* The hero is a photographer's contact sheet ("proof sheet") of every project.
+   The six selects are circled in grease pencil, the way a photographer marks
+   the frames worth printing, and each circled frame opens its full case file
+   below. The metaphor is the argument: here is everything, here is what I'd
+   show you first, and here is the proof. */
+import { Image } from "astro:assets";
+import { caseFiles, alsoShipped } from "../../content/work";
+import { portfolioProfile } from "../../content/portfolio";
+
+const shortTitles: Record<string, string> = {
+  "ops-workspace": "Ops Workspace",
+  "business-copilot": "Business Co-Pilot",
+  "tech-career-guide": "Career Guide",
+  "figma-variable-explorer": "Variable Explorer",
+  "notes-in-google-docs": "Notes in Docs",
+};
+
+const frames = [
+  ...caseFiles.map((file) => ({
+    id: file.id,
+    number: file.number,
+    title: file.title,
+    image: file.shots[0].src,
+    select: true,
+  })),
+  ...alsoShipped.map((project) => ({
+    id: project.id,
+    number: project.number,
+    title: project.title,
+    image: project.image,
+    select: false,
+  })),
+].map((frame) => ({ ...frame, short: shortTitles[frame.id] ?? frame.title }));
+
+/* Three hand-drawn loops (viewBox 0 0 160 110; the shot sits at ~5..155 ×
+   5..105). Each starts, travels clockwise, and overshoots its own start, like a
+   quick pencil stroke. Rotating through them keeps the marks from looking
+   stamped. */
+const marks = [
+  "M44 7C86 2 146 1 155 17C161 34 159 79 151 97C143 108 67 110 20 105C6 102 2 74 3 47C4 22 9 8 32 6C58 4 83 5 101 9",
+  "M58 5C99 3 150 5 156 24C160 45 158 83 147 100C132 109 55 108 16 102C4 97 3 66 4 40C5 18 14 6 40 5C66 4 88 6 108 10",
+  "M36 8C80 1 144 3 154 19C160 38 160 78 150 98C138 108 60 109 19 104C5 100 1 70 4 43C6 19 13 7 36 6C62 5 86 6 104 8",
+];
+---
+
+<section
+  class="ps"
+  aria-labelledby="ps-title"
+  data-ph-section="projects_hero"
+  data-hero
+>
+  <div class="wk-container">
+    <div class="ps-intro">
+      <p class="wk-eyebrow ps-in" style="--i: 0">
+        Work index · {frames.length} projects
+      </p>
+      <h1 id="ps-title" class="ps-title ps-in" style="--i: 1">
+        Selected work, <em>shown in full.</em>
+      </h1>
+      <div class="ps-side ps-in" style="--i: 2">
+        <p class="ps-lead">
+          Six case files and six smaller builds, from enterprise tools and AI
+          pipelines to plugins with thousands of users. Each shows the
+          disciplines it took, the stack, and where you can check it yourself.
+        </p>
+        <div class="ps-actions">
+          <a
+            class="wk-btn wk-btn-primary"
+            href={portfolioProfile.links.booking}
+            data-ph-cta="book_call"
+            data-ph-location="projects_hero"
+            >Book a 30-min call <span class="wk-arrow" aria-hidden="true">&rarr;</span></a
+          >
+          <a class="wk-btn wk-btn-quiet" href="#case-files"
+            >Start with the case files <span class="wk-arrow wk-arrow-down" aria-hidden="true">&darr;</span></a
+          >
+        </div>
+      </div>
+    </div>
+
+    <figure class="ps-sheet ps-in" style="--i: 3" aria-labelledby="ps-legend">
+      <div class="ps-edge" aria-hidden="true">
+        <span>Mohit Tater · Work</span>
+        <span class="ps-edge-mid">▸ 01–{frames.length}</span>
+        <span>Selects marked</span>
+      </div>
+
+      <ol class="ps-grid">
+        {
+          frames.map((frame, i) => (
+            <li class="ps-cell">
+              <a
+                class:list={["ps-frame", { "is-select": frame.select }]}
+                href={`#${frame.id}`}
+                data-frame={frame.id}
+                data-ph-cta="open_project"
+                data-ph-location="proof_sheet"
+                style={`--f: ${i}`}
+                title={frame.title}
+              >
+                <span class="ps-media">
+                <span class="ps-shot">
+                  <Image
+                    src={frame.image}
+                    alt=""
+                    widths={[240, 400]}
+                    sizes="(min-width: 1100px) 180px, (min-width: 900px) 22vw, 30vw"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </span>
+                {frame.select && (
+                  <svg
+                    class="ps-mark"
+                    viewBox="0 0 160 110"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <path d={marks[i % marks.length]} pathLength="1" />
+                  </svg>
+                )}
+                </span>
+                <span class="ps-cap">
+                  <span class="ps-num">{frame.number}</span>
+                  <span class="ps-name">{frame.short}</span>
+                  <span class="visually-hidden">
+                    {frame.short !== frame.title ? `: ${frame.title}` : ""}
+                    {frame.select ? " (case file)" : " (also shipped)"}
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      <figcaption class="ps-legend" id="ps-legend">
+        <span class="ps-legend-item">
+          <svg class="ps-legend-mark" viewBox="0 0 24 16" aria-hidden="true">
+            <path d="M8 2C15 1 22 2 22 8C22 14 14 15 8 14C3 13 2 10 2 7C2 4 5 2 10 2C13 2 15 3 16 3" />
+          </svg>
+          Circled: full case files below
+        </span>
+        <span class="ps-legend-item ps-legend-muted">Unmarked: also shipped</span>
+      </figcaption>
+    </figure>
+
+    <ul class="ps-proof ps-in" style="--i: 4" aria-label="Track record">
+      <li><strong>10+ years</strong> shipping design, engineering &amp; QA</li>
+      <li><strong>10K+ users</strong> across my tools</li>
+      <li>
+        Previously at <strong>BlueJeans (Verizon)</strong>,
+        <strong>Query.ai</strong>, <strong>GoodCode</strong>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ps {
+    padding: calc(var(--header-h) + var(--space-10)) 0 var(--space-8);
+  }
+
+  /* ---- Intro: headline left, lead + actions right ---------------------- */
+  .ps-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "title side";
+    column-gap: var(--space-10);
+    align-items: end;
+    margin-bottom: var(--space-8);
+  }
+  .ps-intro > .wk-eyebrow {
+    grid-area: eyebrow;
+  }
+  .ps-title {
+    grid-area: title;
+    margin: 0;
+    color: var(--color-text);
+    font-family: var(--font-serif);
+    font-size: var(--text-display-xl);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .ps-title em {
+    color: var(--color-accent);
+  }
+  .ps-side {
+    grid-area: side;
+    padding-bottom: var(--space-1);
+  }
+  .ps-lead {
+    max-width: 46ch;
+    margin: 0 0 var(--space-5);
+    color: var(--color-text-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  .ps-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  /* ---- The sheet ------------------------------------------------------- */
+  .ps-sheet {
+    margin: 0;
+    padding: var(--space-4) var(--space-6) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .ps-edge {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-5);
+    border-bottom: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .ps-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ps-cell {
+    min-width: 0;
+  }
+
+  .ps-frame {
+    position: relative;
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ps-frame:focus-visible {
+    outline-offset: 8px;
+  }
+
+  .ps-shot {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid var(--ink-a08);
+    border-radius: var(--radius-2xs);
+    background: var(--color-accent-wash);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 0.35s var(--ease-out),
+      box-shadow 0.35s var(--ease-out);
+  }
+  .ps-shot :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .ps-cap {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    min-width: 0;
+    margin-top: var(--space-2);
+    font-size: var(--text-xs);
+    line-height: 1.3;
+  }
+  .ps-num {
+    flex: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-variant-numeric: tabular-nums;
+  }
+  .is-select .ps-num {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  .ps-name {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-text-body);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .ps-media {
+    position: relative;
+    display: block;
+  }
+
+  /* Grease-pencil loop. The viewBox puts the shot at 5..155 × 5..105, so an
+     inset of 5 units on each side (3.33% of the width, 5% of the height) maps
+     it exactly onto the shot with the stroke overhanging. */
+  .ps-mark {
+    position: absolute;
+    inset: -5% -3.34%;
+    width: 106.68%;
+    height: 110%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .ps-mark path {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    vector-effect: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ps-frame:hover .ps-shot {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .ps-frame:hover .ps-shot :global(img) {
+      transform: scale(1.04);
+    }
+    .ps-frame:hover .ps-name {
+      color: var(--color-text);
+    }
+  }
+
+  /* Lens: frames outside the active discipline recede. */
+  .ps-frame.is-dimmed .ps-shot {
+    opacity: 0.35;
+    filter: grayscale(1);
+  }
+  .ps-frame.is-dimmed .ps-mark {
+    opacity: 0.3;
+  }
+  .ps-shot,
+  .ps-mark {
+    transition-property: transform, box-shadow, opacity, filter;
+    transition-duration: 0.35s;
+    transition-timing-function: var(--ease-out);
+  }
+
+  .ps-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-text-body);
+    font-size: var(--text-xs);
+  }
+  .ps-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .ps-legend-muted {
+    color: var(--color-text-muted);
+  }
+  .ps-legend-mark {
+    width: 24px;
+    height: 16px;
+  }
+  .ps-legend-mark path {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  /* ---- Proof strip ------------------------------------------------------ */
+  .ps-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-body);
+    font-size: var(--text-sm);
+  }
+  .ps-proof li {
+    position: relative;
+  }
+  .ps-proof li + li::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(var(--space-3) * -1);
+    width: 3px;
+    height: 3px;
+    border-radius: var(--radius-circle);
+    background: var(--color-text-muted);
+    transform: translate(-50%, -50%);
+  }
+  .ps-proof strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  /* ---- Entrance choreography ------------------------------------------ */
+  @media (prefers-reduced-motion: no-preference) {
+    .ps-in {
+      animation: ps-in 0.8s var(--ease-out) both;
+      animation-delay: calc(var(--i) * 80ms);
+    }
+    .ps-frame {
+      animation: ps-frame 0.6s var(--ease-out) both;
+      animation-delay: calc(320ms + var(--f) * 35ms);
+    }
+    .ps-mark path {
+      stroke-dashoffset: 1;
+      animation: ps-draw 0.7s var(--ease-in-out) forwards;
+      animation-delay: calc(900ms + var(--f) * 130ms);
+    }
+  }
+  @keyframes ps-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+  @keyframes ps-frame {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+  @keyframes ps-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ---- Responsive ------------------------------------------------------ */
+  @media (max-width: 1099px) {
+    .ps-intro {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "eyebrow"
+        "title"
+        "side";
+      row-gap: var(--space-5);
+    }
+  }
+
+  @media (max-width: 1099px) {
+    /* A wrapped row would orphan a separator dot at the line start. */
+    .ps-proof {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .ps-proof li + li::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .ps-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    /* Narrow columns: let names wrap to two lines instead of clipping. */
+    .ps-cap {
+      align-items: flex-start;
+      gap: var(--space-1);
+    }
+    .ps-num {
+      padding-top: 1px;
+    }
+    .ps-name {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      white-space: normal;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ps {
+      padding: calc(var(--header-h) + var(--space-8)) 0 var(--space-6);
+    }
+    .ps-intro {
+      margin-bottom: var(--space-6);
+    }
+    .ps-lead {
+      font-size: var(--text-md);
+    }
+    .ps-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .ps-actions .wk-btn-quiet {
+      min-height: 40px;
+    }
+    .ps-sheet {
+      margin-inline: calc(var(--space-2) * -1);
+      padding: var(--space-3) var(--space-4) var(--space-4);
+    }
+    .ps-edge-mid {
+      display: none;
+    }
+    .ps-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5) var(--space-3);
+    }
+    .ps-mark path {
+      stroke-width: 3;
+    }
+    .ps-name {
+      font-size: var(--text-2xs);
+    }
+  }
+</style>

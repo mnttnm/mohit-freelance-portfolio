@@ -1,0 +1,153 @@
+---
+/* A quiet, persistent way to act once the hero CTA has scrolled away. It
+   appears after the hero, steps aside when the contact section is on screen
+   (no point offering what's already visible), and can be dismissed for the
+   session. A face makes "book a call" feel like talking to a person. */
+import { Image } from "astro:assets";
+import portrait from "../../assets/mohit-portrait-home.jpeg";
+import { portfolioProfile } from "../../content/portfolio";
+---
+
+<aside class="scta" data-sticky-cta aria-label="Book a call" inert>
+  <a
+    class="scta-link"
+    href={portfolioProfile.links.booking}
+    data-ph-cta="book_call"
+    data-ph-location="sticky_cta"
+  >
+    <Image src={portrait} alt="" width={36} height={36} densities={[1, 2]} class="scta-face" />
+    <span class="scta-text">
+      <span class="scta-kicker">Seen something close to what you need?</span>
+      <span class="scta-main">Book a 30-min call <span aria-hidden="true">&rarr;</span></span>
+    </span>
+  </a>
+  <button type="button" class="scta-close" data-sticky-cta-close aria-label="Dismiss">
+    <svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true">
+      <path d="M4 4l6 6M10 4l-6 6"></path>
+    </svg>
+  </button>
+</aside>
+
+<style>
+  .scta {
+    position: fixed;
+    bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
+    left: 50%;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    padding: var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translate(-50%, calc(100% + var(--space-6)));
+    transition:
+      transform 0.5s var(--ease-drawer),
+      opacity 0.3s var(--ease-out);
+  }
+  .scta.is-visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  /* The WebMCP briefing launcher owns the bottom-right; never compete with it. */
+  :global(body:has(.agent-experience-launcher, .agent-experience)) .scta {
+    display: none;
+  }
+
+  .scta-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 0 var(--space-3) 0 0;
+    color: inherit;
+    text-decoration: none;
+  }
+  .scta-link :global(.scta-face) {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-circle);
+    object-fit: cover;
+    box-shadow: 0 0 0 2px var(--white-a24);
+  }
+  .scta-text {
+    display: grid;
+    line-height: 1.2;
+  }
+  .scta-kicker {
+    color: var(--white-a80);
+    font-size: var(--text-2xs);
+  }
+  .scta-main {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .scta-main span {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .scta-link:hover .scta-main span {
+      transform: translateX(3px);
+    }
+  }
+  .scta-link:focus-visible,
+  .scta-close:focus-visible {
+    outline: 2px solid var(--color-surface);
+    outline-offset: 2px;
+    border-radius: var(--radius-pill);
+  }
+
+  .scta-close {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    margin-left: var(--space-1);
+    border: 0;
+    border-radius: var(--radius-circle);
+    background: var(--white-a08);
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease-out);
+  }
+  .scta-close:hover {
+    background: var(--white-a16);
+  }
+  .scta-close svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  @media (max-width: 640px) {
+    .scta {
+      right: var(--space-3);
+      left: var(--space-3);
+      bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
+      transform: translateY(calc(100% + var(--space-6)));
+    }
+    .scta.is-visible {
+      transform: none;
+    }
+    .scta-link {
+      flex: 1;
+      min-width: 0;
+    }
+    .scta-kicker {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scta {
+      transition: opacity 0.2s linear;
+    }
+  }
+</style>

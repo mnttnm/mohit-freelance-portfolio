@@ -1,0 +1,752 @@
+---
+import { Image, getImage } from "astro:assets";
+import { disciplines, type CaseFile } from "../../content/work";
+
+interface Props {
+  file: CaseFile;
+}
+
+const { file } = Astro.props;
+
+// Lightbox sources: one large, sharp rendition per screenshot.
+const fullShots = await Promise.all(
+  file.shots.map((shot) =>
+    getImage({ src: shot.src, width: Math.min(2400, shot.src.width), format: "webp" }),
+  ),
+);
+
+const linkLabel = {
+  "case-study": "Read the case study",
+  demo: "Live demo",
+  source: "Source on GitHub",
+} as const;
+
+const involved = new Set<string>(file.disciplines);
+const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on something similar: `;
+---
+
+<article
+  class="case"
+  id={file.id}
+  data-case={file.id}
+  data-item
+  data-disciplines={file.disciplines.join(" ")}
+  data-title={file.title}
+  aria-labelledby={`${file.id}-title`}
+>
+  <header class="case-head wk-rise">
+    <div class="case-meta">
+      <span class="case-num">{file.number}</span>
+      <span class="case-type">{file.type}</span>
+      {
+        file.isPrivate && (
+          <span class="case-badge">
+            <svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true">
+              <path d="M4.25 6V4.5a2.75 2.75 0 0 1 5.5 0V6" />
+              <rect x="2.75" y="6" width="8.5" height="6" rx="1.25" />
+            </svg>
+            Client engagement
+          </span>
+        )
+      }
+    </div>
+    <h3 class="case-title" id={`${file.id}-title`}>{file.title}</h3>
+    <p class="case-outcome">{file.outcome}</p>
+  </header>
+
+  <div class="case-media wk-rise" data-viewer>
+    <div class="case-stage">
+      <div class="case-stage-inner">
+        {
+          file.shots.map((shot, j) => (
+            <button
+              type="button"
+              class:list={["case-shot", { "is-active": j === 0 }]}
+              style={`--ar: ${shot.src.width} / ${shot.src.height}`}
+              data-shot={j}
+              data-full={fullShots[j].src}
+              data-caption={shot.caption}
+              inert={j !== 0}
+              aria-label={`Enlarge screenshot: ${shot.caption}`}
+            >
+              <Image
+                src={shot.src}
+                alt={shot.alt}
+                widths={[640, 960, 1280, 1680]}
+                sizes="(min-width: 1240px) 880px, (min-width: 1100px) calc(100vw - 360px), calc(100vw - 48px)"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          ))
+        }
+      </div>
+      <span class="case-zoom" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="14" height="14">
+          <path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" />
+        </svg>
+        Enlarge
+      </span>
+    </div>
+
+    {
+      file.shots.length > 1 ? (
+        <div class="case-tabs" role="group" aria-label={`${file.title} screenshots`}>
+          {file.shots.map((shot, j) => (
+            <button
+              type="button"
+              class="case-tab"
+              data-shot-tab={j}
+              aria-pressed={j === 0 ? "true" : "false"}
+            >
+              <span class="case-tab-num">{j + 1}</span>
+              <span class="case-tab-label">{shot.caption}</span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p class="case-single-cap">{file.shots[0].caption}</p>
+      )
+    }
+  </div>
+
+  <div class="case-body wk-rise">
+    <div class="case-story">
+      <p class="case-desc">{file.description}</p>
+
+      <details class="case-notes">
+        <summary>
+          <span class="case-notes-title">{file.notesTitle}</span>
+          <span class="case-notes-count">{file.notes.length} notes</span>
+          <svg class="case-notes-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <path d="M3 4.5 6 7.5l3-3" />
+          </svg>
+        </summary>
+        <ol class="case-notes-list">
+          {
+            file.notes.map((note) => (
+              <li>
+                <h4>{note.heading}</h4>
+                <p>{note.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </details>
+    </div>
+
+    <dl class="case-facts">
+      <div class="case-fact">
+        <dt>
+          Disciplines
+          <span class="case-fact-aside">{file.disciplines.length} of {disciplines.length}</span>
+        </dt>
+        <dd>
+          <ul class="case-disc">
+            {
+              disciplines.map((d) =>
+                involved.has(d.id) ? (
+                  <li class="is-on">
+                    <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                      <path d="M2.5 6.25 5 8.75l4.5-5.5" />
+                    </svg>
+                    {d.label}
+                  </li>
+                ) : (
+                  <li aria-hidden="true">{d.label}</li>
+                ),
+              )
+            }
+          </ul>
+        </dd>
+      </div>
+
+      <div class="case-fact">
+        <dt>Stack</dt>
+        <dd>
+          <ul class="case-stack">
+            {file.stack.map((item) => <li>{item}</li>)}
+          </ul>
+        </dd>
+      </div>
+
+      <div class="case-fact">
+        <dt>Proof</dt>
+        <dd>
+          {
+            file.links.length > 0 ? (
+              <ul class="case-proof">
+                {file.links.map((link) => {
+                  const external = /^https?:/.test(link.url);
+                  return (
+                    <li>
+                      <a
+                        href={link.url}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener" : undefined}
+                        data-ph-action={link.kind === "source" ? "github" : link.kind === "demo" ? "demo" : "case_study"}
+                        data-ph-project={file.id}
+                      >
+                        {linkLabel[link.kind]}
+                        <span aria-hidden="true">{external ? "↗" : "→"}</span>
+                        {external && <span class="visually-hidden"> (opens in a new tab)</span>}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p class="case-private">
+                Private client work, shown through real screenshots.
+                {file.privacyNote && <span> {file.privacyNote}</span>}
+              </p>
+            )
+          }
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+  <footer class="case-foot">
+    <a
+      class="case-discuss"
+      href="#studio-footer"
+      data-discuss={discussMessage}
+      data-ph-cta="discuss_similar"
+      data-ph-location={file.id}
+    >
+      Discuss a project like this
+      <span class="case-discuss-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </footer>
+</article>
+
+<style>
+  .case {
+    padding-block: var(--space-8) var(--space-10);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ---- Head ----------------------------------------------------------- */
+  .case-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin-bottom: var(--space-3);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+  .case-num {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .case-type {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .case-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 2px var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-body);
+    font-family: var(--font-sans);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+  }
+  .case-badge svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.3;
+  }
+  .case-title {
+    margin: 0;
+    color: var(--color-text);
+    font-family: var(--font-serif);
+    font-size: var(--text-display-md);
+    font-weight: 400;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .case-outcome {
+    margin: var(--space-2) 0 0;
+    color: var(--color-text-body);
+    font-size: var(--text-lg);
+    text-wrap: balance;
+  }
+
+  /* ---- Media viewer --------------------------------------------------- */
+  .case-media {
+    margin-top: var(--space-6);
+  }
+  .case-stage {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(circle at 15% 0%, var(--accent-tint), transparent 55%),
+      var(--color-accent-wash);
+    overflow: hidden;
+  }
+  /* The inner box is a size container, so each screenshot can be sized to the
+     largest box of its own aspect ratio that fits (cqw/cqh). The button then
+     hugs the image exactly, so the border and shadow sit on the picture, not
+     on letterboxing. */
+  .case-stage-inner {
+    position: absolute;
+    inset: clamp(16px, 4.5%, 44px);
+    display: grid;
+    place-items: center;
+    container-type: size;
+  }
+  .case-shot {
+    grid-area: 1 / 1;
+    width: min(100cqw, 100cqh * (var(--ar)));
+    aspect-ratio: var(--ar);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--ink-a08);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+    cursor: zoom-in;
+    opacity: 0;
+    transform: scale(0.985);
+    transition:
+      opacity 0.35s var(--ease-out),
+      transform 0.5s var(--ease-out);
+  }
+  .case-shot.is-active {
+    z-index: 1;
+    opacity: 1;
+    transform: none;
+  }
+  .case-shot :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .case-shot:focus-visible {
+    outline-offset: 4px;
+  }
+
+  .case-zoom {
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--ink-a80);
+    color: var(--color-surface);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 0.2s var(--ease-out),
+      transform 0.25s var(--ease-out);
+    pointer-events: none;
+  }
+  .case-zoom svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .case-stage:hover .case-zoom {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .case-stage:has(.case-shot:focus-visible) .case-zoom {
+    opacity: 1;
+    transform: none;
+  }
+
+  .case-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    margin-top: var(--space-3);
+  }
+  .case-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 40px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text-muted);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: color 0.2s var(--ease-out);
+  }
+  .case-tab::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out);
+  }
+  .case-tab-num {
+    display: inline-grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-circle);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    line-height: 1;
+  }
+  .case-tab[aria-pressed="true"] {
+    color: var(--color-text);
+  }
+  .case-tab[aria-pressed="true"]::after {
+    transform: scaleX(1);
+  }
+  .case-tab[aria-pressed="true"] .case-tab-num {
+    border-color: var(--color-text);
+    background: var(--color-text);
+    color: var(--color-surface);
+  }
+  .case-tab:hover {
+    color: var(--color-text);
+  }
+  .case-single-cap {
+    margin: var(--space-3) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ---- Body ------------------------------------------------------------ */
+  .case-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    margin-top: var(--space-6);
+  }
+  .case-desc {
+    margin: 0;
+    color: var(--color-text-body);
+    font-size: var(--text-md);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .case-notes {
+    margin-top: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    interpolate-size: allow-keywords;
+  }
+  .case-notes summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 52px;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    list-style: none;
+    cursor: pointer;
+  }
+  .case-notes summary::-webkit-details-marker {
+    display: none;
+  }
+  .case-notes-title {
+    min-width: 0;
+    text-wrap: balance;
+  }
+  .case-notes-count {
+    flex: none;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-weight: 400;
+  }
+  .case-notes-chev {
+    margin-left: auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s var(--ease-out);
+  }
+  .case-notes[open] .case-notes-chev {
+    transform: rotate(180deg);
+  }
+  .case-notes::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.4s var(--ease-out),
+      content-visibility 0.4s allow-discrete;
+  }
+  .case-notes[open]::details-content {
+    block-size: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-notes::details-content {
+      transition: none;
+    }
+  }
+  .case-notes-list {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    padding: var(--space-1) 0 var(--space-5);
+    list-style: none;
+    counter-reset: note;
+  }
+  .case-notes-list li {
+    position: relative;
+    padding-left: var(--space-6);
+    counter-increment: note;
+  }
+  .case-notes-list li::before {
+    content: counter(note, decimal-leading-zero);
+    position: absolute;
+    top: 3px;
+    left: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+  }
+  .case-notes-list h4 {
+    margin: 0 0 var(--space-1);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .case-notes-list p {
+    margin: 0;
+    color: var(--color-text-body);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  /* ---- Facts ------------------------------------------------------------ */
+  .case-facts {
+    display: grid;
+    gap: var(--space-5);
+    margin: 0;
+    align-content: start;
+  }
+  .case-fact dt {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .case-fact-aside {
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .case-fact dd {
+    margin: 0;
+  }
+
+  .case-disc {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .case-disc li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 32px;
+    padding: 0 var(--space-3);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+  .case-disc li.is-on {
+    border: 1px solid var(--color-text);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .case-disc svg {
+    flex: none;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .case-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .case-stack li {
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-xs);
+    background: var(--ink-a08);
+    color: var(--color-text-body);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    line-height: 1.8;
+  }
+
+  .case-proof {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .case-proof a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 32px;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--ink-a24);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s var(--ease-out);
+  }
+  .case-proof a:hover {
+    text-decoration-color: currentColor;
+  }
+  .case-private {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+  .case-private span {
+    color: var(--color-text-body);
+  }
+
+  /* ---- Foot ------------------------------------------------------------- */
+  .case-foot {
+    margin-top: var(--space-6);
+  }
+  .case-discuss {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--ink-a24);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      border-color 0.2s var(--ease-out),
+      background-color 0.2s var(--ease-out),
+      transform 0.16s var(--ease-out);
+  }
+  .case-discuss:active {
+    transform: scale(0.97);
+  }
+  .case-discuss-arrow {
+    transition: transform 0.25s var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .case-discuss:hover {
+      border-color: var(--color-text);
+      background: var(--color-surface);
+    }
+    .case-discuss:hover .case-discuss-arrow {
+      transform: translateX(3px);
+    }
+  }
+
+  /* ---- Lens: hidden files --------------------------------------------- */
+  .case[hidden] {
+    display: none;
+  }
+
+  /* ---- Responsive -------------------------------------------------------- */
+  @media (max-width: 899px) {
+    .case-body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-6);
+    }
+  }
+  @media (max-width: 640px) {
+    .case {
+      padding-block: var(--space-6) var(--space-8);
+    }
+    .case-media {
+      margin-top: var(--space-5);
+      margin-inline: calc(var(--site-container-padding-mobile) * -1);
+    }
+    .case-stage {
+      aspect-ratio: 16 / 11;
+      border-radius: 0;
+    }
+    .case-stage-inner {
+      inset: var(--space-4) var(--space-3);
+    }
+    .case-tabs {
+      position: relative;
+      flex-wrap: nowrap;
+      gap: var(--space-4);
+      overflow-x: auto;
+      padding-inline: var(--site-container-padding-mobile) var(--space-8);
+      scrollbar-width: none;
+      mask-image: linear-gradient(
+        to right,
+        var(--color-text) calc(100% - var(--space-8)),
+        transparent
+      );
+    }
+    .case-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .case-tab {
+      flex: none;
+    }
+    .case-single-cap {
+      padding-inline: var(--site-container-padding-mobile);
+    }
+    .case-discuss {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

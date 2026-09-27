@@ -170,10 +170,10 @@ import PostHog from '../components/PostHog.astro';
           const target = document.querySelector(href);
           if (!target) return;
           e.preventDefault();
-          const rect = target.getBoundingClientRect();
-          const top = rect.top + window.scrollY;
-          window.scrollTo({ top, behavior: 'smooth' });
-          history.replaceState(null, '', href);
+          // scrollIntoView honours each target's scroll-margin-top, so pages
+          // can clear their fixed header without re-implementing this.
+          target.scrollIntoView({ block: 'start', behavior: prefersReduced ? 'auto' : 'smooth' });
+          history.replaceState(history.state, '', href);
         });
       });
     </script>
