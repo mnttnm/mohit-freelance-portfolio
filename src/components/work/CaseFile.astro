@@ -45,7 +45,7 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
               <path d="M4.25 6V4.5a2.75 2.75 0 0 1 5.5 0V6" />
               <rect x="2.75" y="6" width="8.5" height="6" rx="1.25" />
             </svg>
-            Client engagement
+            Client work
           </span>
         )
       }
@@ -116,8 +116,8 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
 
       <details class="case-notes">
         <summary>
-          <span class="case-notes-title">{file.notesTitle}</span>
-          <span class="case-notes-count">{file.notes.length} notes</span>
+          <span class="case-notes-title">Under the hood</span>
+          <span class="case-notes-count">{file.notes.length}</span>
           <svg class="case-notes-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
             <path d="M3 4.5 6 7.5l3-3" />
           </svg>
@@ -196,16 +196,12 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
                 })}
               </ul>
             ) : (
-              <p class="case-private">
-                Private client work, shown through real screenshots.
-                {file.privacyNote && <span> {file.privacyNote}</span>}
-              </p>
+              <p class="case-private">Private client work. Screenshots only.</p>
             )
           }
         </dd>
       </div>
     </dl>
-  </div>
 
   <footer class="case-foot">
     <a
@@ -215,10 +211,11 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
       data-ph-cta="discuss_similar"
       data-ph-location={file.id}
     >
-      Discuss a project like this
+      Want something like this?
       <span class="case-discuss-arrow" aria-hidden="true">&rarr;</span>
     </a>
   </footer>
+  </div>
 </article>
 
 <style>
@@ -443,8 +440,21 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
   .case-body {
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    gap: var(--space-8);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "story facts"
+      "foot facts";
+    column-gap: var(--space-8);
     margin-top: var(--space-6);
+  }
+  .case-story {
+    grid-area: story;
+  }
+  .case-facts {
+    grid-area: facts;
+  }
+  .case-foot {
+    grid-area: foot;
   }
   .case-desc {
     margin: 0;
@@ -654,13 +664,10 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
     font-size: var(--text-sm);
     line-height: 1.55;
   }
-  .case-private span {
-    color: var(--color-text-body);
-  }
 
   /* ---- Foot ------------------------------------------------------------- */
   .case-foot {
-    margin-top: var(--space-6);
+    margin-top: var(--space-5);
   }
   .case-discuss {
     display: inline-flex;
@@ -704,7 +711,15 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
   @media (max-width: 899px) {
     .case-body {
       grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-6);
+      grid-template-rows: none;
+      grid-template-areas:
+        "story"
+        "facts"
+        "foot";
+      row-gap: var(--space-6);
+    }
+    .case-foot {
+      margin-top: 0;
     }
   }
   @media (max-width: 640px) {
@@ -747,6 +762,10 @@ const discussMessage = `Hi Mohit, I looked at ${file.title} and I'm working on s
     .case-discuss {
       width: 100%;
       justify-content: center;
+    }
+    /* The "n of 4" count carries it; skip the greyed-out cells on phones. */
+    .case-disc li:not(.is-on) {
+      display: none;
     }
   }
 </style>

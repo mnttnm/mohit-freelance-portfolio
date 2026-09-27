@@ -94,156 +94,157 @@ export interface Shot {
 
 interface CaseFileSource {
   id: string;
+  /** A voiced one-liner. The canonical `outcome` in projects.ts stays as the
+      plain statement the WebMCP tools return. */
+  tagline: string;
   description: string;
   stack: string[];
   shots: Shot[];
-  notesTitle: string;
   notes: Array<{ heading: string; body: string }>;
 }
 
 const caseFileSources: CaseFileSource[] = [
   {
     id: 'ops-workspace',
+    tagline: 'Dense enterprise workflows, made calm.',
     description:
-      "An internal web app that supports a sales team's day-to-day operations. It includes multi-step onboarding forms, filterable tables and grids, template detail views, and an in-app help system, with a UI designed to keep complex enterprise workflows easy to navigate.",
+      "The internal app a sales team runs its day on: client onboarding, templates, reporting, and in-app help, all on one shared data model.",
     stack: ['Next.js 16', 'Tailwind v4', 'shadcn/ui', 'Supabase', 'NextAuth'],
     shots: [
-      { src: opsOnboarding, caption: 'Onboarding wizard', alt: 'Multi-step client onboarding form with a progress checklist' },
+      { src: opsOnboarding, caption: 'Onboarding', alt: 'Multi-step client onboarding form with a progress checklist' },
       { src: opsClient, caption: 'Client record', alt: 'Client overview with identity, billing, and contacts panels' },
-      { src: opsTemplates, caption: 'Template hub', alt: 'Template library with filters for vertical and channel' },
+      { src: opsTemplates, caption: 'Templates', alt: 'Template library with filters for vertical and channel' },
     ],
-    notesTitle: 'How the app is put together',
     notes: [
       {
-        heading: 'Three connected modules',
-        body: "Client capture wizard, template library admin, and reporting. Each module has its own role but shares a common data model, so a change to a template ripples cleanly into how it's used in onboarding and how it shows up in reports.",
+        heading: 'Three modules, one model',
+        body: 'Onboarding, template admin, and reporting share one data model, so a template change flows cleanly into both.',
       },
       {
-        heading: 'Data model',
-        body: "Clients, templates, submissions, and audit records. Designed so historical onboarding records stay intact and readable even as templates evolve over time, the kind of detail that only matters once you're months into using it.",
+        heading: 'History that stays true',
+        body: 'Past onboarding records stay intact and readable even as the templates behind them evolve.',
       },
       {
-        heading: 'Auth and deployment',
-        body: "NextAuth v5 against the company's OIDC server for SSO, Supabase service-role on the server side for trusted operations, and a CodeBuild → ECS pipeline for deploys.",
+        heading: 'Enterprise plumbing',
+        body: "SSO through the company's OIDC server with NextAuth v5, trusted server-side operations in Supabase, and CodeBuild → ECS deploys.",
       },
     ],
   },
   {
     id: 'ai-resizing-studio',
+    tagline: 'AI does first-pass QA. People review what matters.',
     description:
-      "A bulk image-resizing tool for a marketing team that reformats thousands of event posters into every ad ratio they need. It's built around three interfaces (batch processing, side-by-side review, and an evaluation dashboard) with an AI judge running first-pass QA on every output, so reviewers spend their attention only where it's actually needed.",
+      'Thousands of event posters, reformatted into every ad size. An AI judge checks each output first, so reviewers only look where it counts.',
     stack: ['Gemini 3 Image', 'OpenAI GPT Image', 'Next.js', 'Supabase', 'AI-as-judge'],
     shots: [
-      { src: resizingInput, caption: 'Batch processing', alt: 'Batch input screen for generating every target ratio at once' },
-      { src: resizingReview, caption: 'Side-by-side review', alt: 'Source and generated images side by side with the AI verdict' },
-      { src: resizingEval, caption: 'Evaluation dashboard', alt: 'Dashboard tracking good-rate, risk, and cost per good output' },
+      { src: resizingInput, caption: 'Batch', alt: 'Batch input screen for generating every target ratio at once' },
+      { src: resizingReview, caption: 'Review', alt: 'Source and generated images side by side with the AI verdict' },
+      { src: resizingEval, caption: 'Evaluation', alt: 'Dashboard tracking good-rate, risk, and cost per good output' },
     ],
-    notesTitle: 'How the three interfaces work together',
     notes: [
       {
-        heading: 'Processing: generate at scale',
-        body: 'Drop in images or a CSV and the pipeline fans each asset out into all of its target ratios at once. Every output gets a risk score (none → high) computed from crop loss, aspect-ratio mismatch, and the strategy used, so problem outputs are flagged before a human ever opens them.',
+        heading: 'Risk-scored at scale',
+        body: 'Every asset fans out into all its ratios at once, and each output is scored for crop loss and mismatch before anyone opens it.',
       },
       {
-        heading: 'Review: a keyboard-fast human pass',
-        body: "Source and generated sit side by side with the AI's verdict and score already attached. Reviewers rate Good / Okay / Bad entirely from the keyboard, and filters rebuild the queue on the fly so you can burn down just the unreviewed or just the high-risk outputs.",
+        heading: 'Keyboard-fast review',
+        body: 'Source and output side by side, the AI verdict attached, rated Good / Okay / Bad without touching the mouse.',
       },
       {
-        heading: 'Evaluation: AI in the loop',
-        body: 'An AI visual judge grades every output against the same rubric a human would. Deterministic checks and a retry/escalation policy decide what to auto-accept, retry, reroute to another model, or send up for manual design work. The dashboard surfaces where the AI and humans disagree, so the rubric keeps sharpening.',
+        heading: 'A rubric that sharpens',
+        body: 'The dashboard tracks cost per good output and flags where AI and human judgement disagree.',
       },
     ],
   },
   {
     id: 'dashboard-skill',
+    tagline: 'From a wall of charts to a clear next step.',
     description:
-      'An agent skill that turns the everyday “wall of charts” dashboard into something a person can actually act on. The case study isolates what the skill adds (Claude with no skill vs. with it) and the six grounding principles behind it that hold for any dashboard, any stack, any domain.',
+      'An agent skill that redesigns dashboards around decisions instead of data. The case study puts Claude with and without it side by side.',
     stack: ['UI/UX', 'Data Viz', 'Agent Skill', 'Recharts', 'Design System'],
     shots: [
-      { src: dashboardOriginal, caption: 'Before: the chart wall', alt: 'The original dashboard, a grid of equally weighted charts' },
-      { src: dashboardV7Light, caption: 'After: V7', alt: 'The V7 dashboard led by a conversion funnel and earned insights' },
-      { src: dashboardV7Dark, caption: 'V7, dark theme', alt: 'The V7 dashboard in its dark theme' },
+      { src: dashboardOriginal, caption: 'Before', alt: 'The original dashboard, a grid of equally weighted charts' },
+      { src: dashboardV7Light, caption: 'After', alt: 'The V7 dashboard led by a conversion funnel and earned insights' },
+      { src: dashboardV7Dark, caption: 'After, dark', alt: 'The V7 dashboard in its dark theme' },
     ],
-    notesTitle: "What's inside the case study",
     notes: [
       {
-        heading: 'Six grounding principles',
-        body: 'Start from the decision not the data, lead with one thing, earn every element, show the insight not just the data, end in a next step, and spend emphasis sparingly.',
+        heading: 'Six principles',
+        body: 'Start from the decision, lead with one thing, earn every element, show the insight, end in a next step, spend emphasis sparingly.',
       },
       {
-        heading: 'A real redesign, including the wrong turns',
-        body: 'Original → V1 → V4 → V7, shown honestly. The V4 frame is kept in on purpose, because an iteration that mistook richness for clarity is the clearest lesson of the lot.',
+        heading: 'Wrong turns included',
+        body: 'Original → V1 → V4 → V7, with the over-decorated V4 kept in because it teaches the most.',
       },
       {
-        heading: 'Validated, not just asserted',
-        body: 'A fresh agent with no memory of the previous version rebuilds the dashboard blind from the same brief. If it lands in the same place, the principles are doing the work, not attachment to a layout.',
+        heading: 'Tested blind',
+        body: 'A fresh agent rebuilds from the same brief. If it lands in the same place, the principles are doing the work.',
       },
     ],
   },
   {
     id: 'slicely',
+    tagline: 'Show it a PDF once. Get structured data every time.',
     description:
-      'A web app for extracting structured data from PDFs using reusable recipes. Users annotate the relevant pages of a PDF, define their extraction rules once, and view results rendered as a number, table, chart, or plain text, with no per-document configuration needed.',
+      'Annotate a PDF, define the extraction once, and every similar document comes back as a number, a table, a chart, or text.',
     stack: ['Next.js', 'Supabase', 'Tailwind CSS', 'LLM Integration'],
     shots: [
-      { src: slicelyDashboard, caption: 'Results dashboard', alt: 'Slicer output rendered as text and tables, ready for review' },
-      { src: slicelyStudio, caption: 'Annotation studio', alt: 'A PDF beside its page-selection rules and LLM prompts' },
+      { src: slicelyDashboard, caption: 'Results', alt: 'Slicer output rendered as text and tables, ready for review' },
+      { src: slicelyStudio, caption: 'Studio', alt: 'A PDF beside its page-selection rules and LLM prompts' },
     ],
-    notesTitle: "What's inside",
     notes: [
       {
-        heading: 'Annotation module',
-        body: 'A focused interface for marking up source PDFs, the part you spend the most time in when configuring a new slicer. Designed so pointing at the right regions of a PDF feels lightweight.',
+        heading: 'Annotation that feels light',
+        body: 'The screen you spend the most time in, designed so pointing at the right part of a PDF takes seconds.',
       },
       {
-        heading: 'Dynamic response renderer',
-        body: 'Each slicer can return very different shapes of data. The renderer picks the right view automatically (a single number, a chart, a table, or formatted text) with no per-slicer UI work.',
+        heading: 'Results that pick their shape',
+        body: 'Each recipe returns different data, and the renderer chooses the right view on its own.',
       },
       {
-        heading: 'Bulk processing & webhooks',
-        body: 'Designed to chew through batches and notify other systems when results are ready, so it fits into a larger pipeline rather than being a standalone tool.',
+        heading: 'Pipeline-ready',
+        body: 'Batch processing and webhooks, so it slots into a larger system instead of standing alone.',
       },
     ],
   },
   {
     id: 'ai-toolkit',
+    tagline: 'The agent skills I use every day, open-sourced.',
     description:
-      'A collection of reusable agent skills and Codex automation templates for Claude Code and Codex. Skills cover product UI, dashboards, interface grading, UX patterns, interaction design, and workflow automation, and install with a single command. I use it to keep my agentic-engineering practice current.',
+      'Skills and automations for Claude Code and Codex, covering product UI, dashboards, UX, and interface grading. One command to install.',
     stack: ['Claude Code', 'Codex', 'Agent Skills', 'Automations'],
     shots: [
-      { src: aiToolkit, caption: 'The skills repository', alt: 'The AI Toolkit repository listing its skills and automations' },
+      { src: aiToolkit, caption: 'The repository', alt: 'The AI Toolkit repository listing its skills and automations' },
     ],
-    notesTitle: 'Skills in the toolkit',
     notes: [
-      { heading: 'product-ui', body: 'Production-grade product interface work: the invisible craft that makes software feel premium.' },
-      { heading: 'dashboard', body: 'Modern, actionable dashboards through a structured requirements → strategy → design workflow.' },
-      { heading: 'interface-grader', body: 'Quantitative grading of any frontend interface against a craft rubric, with iteration-over-iteration deltas.' },
-      { heading: 'ux-patterns & interaction-design', body: 'Frictionless UX patterns and the microinteractions, motion, and state handling that go on top.' },
-      { heading: 'Codex automations', body: 'Templates for daily digests, weekly journals, content mining, and session-log backups.' },
+      { heading: 'product-ui', body: 'The invisible craft that makes product interfaces feel premium.' },
+      { heading: 'dashboard', body: 'Requirements → strategy → design, for dashboards people act on.' },
+      { heading: 'interface-grader', body: 'Scores any interface against a craft rubric, iteration over iteration.' },
+      { heading: 'Codex automations', body: 'Daily digests, weekly journals, content mining, session backups.' },
     ],
   },
   {
     id: 'reviewhub',
+    tagline: 'Feedback goes in. Fixes come out.',
     description:
-      'A feedback pipeline that connects three tools: in-browser annotations on a live prototype, a communication channel (Slack or Confluence), and a coding agent. Feedback captured in the browser flows to the chosen channel, gets picked up by an agent, and the task status updates automatically once the work is done.',
+      'Reviewers annotate a live prototype, the note lands in Slack or Confluence, a coding agent picks it up, and the thread updates itself when the fix ships.',
     stack: ['Agentation', 'Slack', 'Confluence', 'Devin', 'Next.js'],
     shots: [
-      { src: reviewhubOps, caption: 'Review operations', alt: 'ReviewHub dashboard of projects, webhooks, and review counts' },
-      { src: reviewhubSlack, caption: 'Feedback in Slack', alt: 'Annotated review submissions arriving in a Slack thread' },
+      { src: reviewhubOps, caption: 'Operations', alt: 'ReviewHub dashboard of projects, webhooks, and review counts' },
+      { src: reviewhubSlack, caption: 'In Slack', alt: 'Annotated review submissions arriving in a Slack thread' },
     ],
-    notesTitle: 'How the loop closes',
     notes: [
       {
-        heading: 'Live prototype review',
-        body: 'An Agentation widget overlays the running app so anyone (PM, designer, client) can drop pixel-accurate annotations without leaving the browser, against what they are actually seeing.',
+        heading: 'Pixel-accurate notes',
+        body: 'Anyone can annotate the running app itself, not a screenshot of it.',
       },
       {
-        heading: 'Feedback where your team already lives',
-        body: "Slack is the default destination, with Confluence wired in for teams that work out of Atlassian. Pick the destination per project; the rest of the pipeline doesn't change.",
+        heading: 'Where your team already is',
+        body: 'Slack by default, Confluence for Atlassian teams. The rest of the loop stays the same.',
       },
       {
-        heading: 'Agent handoff and status sync',
-        body: 'Coding agents pick tasks up from the feed and execute. Once a fix lands, the Confluence page or Slack thread updates itself, so nobody plays telephone between QA, design, and engineering.',
+        heading: 'The loop closes itself',
+        body: 'Agents take the task, ship the fix, and update the thread. Nobody plays telephone.',
       },
     ],
   },
@@ -256,10 +257,9 @@ export const caseFiles = caseFileSources.map((source, index) => {
     number: String(index + 1).padStart(2, '0'),
     title: project.title,
     type: project.type,
-    outcome: project.outcome,
+    outcome: source.tagline,
     links: project.links,
     isPrivate: project.confidentiality === 'screenshots-only',
-    privacyNote: project.confidentiality === 'screenshots-only' ? project.evidenceGaps[0] : null,
     disciplines: disciplinesFor(project),
   };
 });
@@ -268,13 +268,13 @@ export type CaseFile = (typeof caseFiles)[number];
 
 /* ---- Also shipped (the ledger) -------------------------------------------- */
 
-const shippedSources: Array<{ id: string; image: ImageMetadata; label: string; signal?: string }> = [
-  { id: 'figma-variable-explorer', image: figmaVariableExplorer, label: 'Open plugin', signal: '8,000+ users' },
-  { id: 'notes-in-google-docs', image: notesInGdocs, label: 'Install', signal: '1,000+ installs' },
-  { id: 'greetwood', image: greetwood, label: 'Visit store', signal: 'Live store' },
-  { id: 'learning-log', image: learningLog, label: 'Open app' },
-  { id: 'tech-career-guide', image: careerGuide, label: 'Open app' },
-  { id: 'business-copilot', image: businessCopilot, label: 'Read article' },
+const shippedSources: Array<{ id: string; image: ImageMetadata; label: string; blurb: string; signal?: string }> = [
+  { id: 'figma-variable-explorer', image: figmaVariableExplorer, label: 'Open plugin', blurb: 'Figma variables, inspectable and exportable', signal: '8,000+ users' },
+  { id: 'notes-in-google-docs', image: notesInGdocs, label: 'Install', blurb: 'A thought on your Mac, straight into a Doc', signal: '1,000+ installs' },
+  { id: 'greetwood', image: greetwood, label: 'Visit store', blurb: 'A furniture storefront, built entirely in code', signal: 'Live store' },
+  { id: 'learning-log', image: learningLog, label: 'Open app', blurb: 'Quick notes, published as they happen' },
+  { id: 'tech-career-guide', image: careerGuide, label: 'Open app', blurb: '45+ tech careers, mapped for CS students' },
+  { id: 'business-copilot', image: businessCopilot, label: 'Read article', blurb: 'Claude Code as a planning partner' },
 ];
 
 export const alsoShipped = shippedSources.map((source, index) => {
@@ -287,7 +287,7 @@ export const alsoShipped = shippedSources.map((source, index) => {
     number: String(caseFileSources.length + index + 1).padStart(2, '0'),
     title: project.title,
     type: project.type,
-    outcome: project.outcome,
+    outcome: source.blurb,
     url: primary.url,
     sourceUrl: sourceLink?.url ?? null,
     disciplines: disciplinesFor(project),
@@ -302,14 +302,15 @@ export const caseQuotes: Record<
   string,
   { person: string; role: string; href: string; avatar: ImageMetadata; quote: string }
 > = {
-  // Shown after the named case file. Quotes are verbatim from the home page.
+  // Shown after the named case file. Word-for-word excerpts of the full
+  // testimonials on the home page (an ellipsis marks a trimmed opening).
   'ai-resizing-studio': {
     person: 'Dean Teffer',
     role: 'VP of AI, Arctic Wolf',
     href: 'https://www.linkedin.com/in/deanteffer',
     avatar: deanAvatar,
     quote:
-      'Mohit is a highly talented product engineer and a pleasure to work with. There were many occasions where after analyzing our goals, he highlighted assumptions and gaps in our thinking, and then recommended paths forward. This really accelerated our work and led to a much better UI.',
+      '…he highlighted assumptions and gaps in our thinking, and then recommended paths forward. This really accelerated our work and led to a much better UI.',
   },
   slicely: {
     person: 'Fred Wilmot',
@@ -317,6 +318,6 @@ export const caseQuotes: Record<
     href: 'https://www.linkedin.com/in/fredwilmot/',
     avatar: fredAvatar,
     quote:
-      'Mohit effectively translated complex product requirements into wireframes and effective UX designs. We brainstormed solutions given his experience and my requirements. I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.',
+      'I would work with Mohit again, especially in trying to translate a vision into design quickly and effectively.',
   },
 };
