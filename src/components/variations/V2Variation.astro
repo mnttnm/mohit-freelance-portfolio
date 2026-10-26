@@ -40,22 +40,23 @@ const craftLayers = [
   </script>
 
   <!-- Header -->
-  <header class="v2-header">
+  <header class="v2-header" data-menu>
     <div class="v2-header-inner">
       <a href="/" class="v2-logo">Mohit Tater</a>
-      <nav class="v2-nav">
-        <a href="/" class="v2-nav-link v2-nav-link-active">Home</a>
+      <nav class="v2-nav" id="v2-nav" data-menu-panel>
+        <a href="/" class="v2-nav-link v2-nav-link-active" aria-current="page">Home</a>
         <a href="/projects" class="v2-nav-link">Work</a>
         <a href="/about" class="v2-nav-link">About</a>
         <a href="#studio-footer" class="v2-nav-link v2-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
       </nav>
-      <button class="v2-menu-toggle" aria-label="Toggle menu">
+      <button class="v2-menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="v2-nav" data-menu-toggle>
         <span class="v2-menu-bar"></span>
         <span class="v2-menu-bar"></span>
       </button>
     </div>
   </header>
 
+  <main id="main">
   <!-- Hero -->
   <section class="v2-hero" data-ph-section="hero" data-hero-concept="layers" data-hero-anim>
     <div class="v2-container v2-hero-wrap">
@@ -65,43 +66,19 @@ const craftLayers = [
       <p class="v2-eyebrow v2-hero-line" style="--line: 0">Design Engineer &amp; Product Partner</p>
 
       <div class="v2-hero-copy">
-        <h1 class="v2-headline v2-hero-line" style="--line: 1">I ship products, <em>end to end.</em></h1>
+        <h1 class="v2-headline v2-hero-line" style="--line: 1">I ship products, end to end.</h1>
         <p class="v2-subtext v2-hero-line" style="--line: 2">
           One partner, from first sketch to shipped &mdash; for founders and teams building something new.
         </p>
         <div class="v2-hero-actions v2-hero-line" style="--line: 3">
-          <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="v2-btn-primary">Book a call &rarr;</a>
-          <a href="/projects" class="v2-btn-text">See my work &rarr;</a>
+          <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="v2-btn-primary">Book a call</a>
+          <a href="/projects" class="v2-btn-text">See my work <span class="v2-cta-arrow">&rarr;</span></a>
         </div>
         <div class="v2-trust-bar v2-hero-line" style="--line: 4">
           <span class="v2-trust-item">10+ years shipping</span>
           <span class="v2-trust-sep">&middot;</span>
           <span class="v2-trust-item">10K+ users across my tools</span>
         </div>
-      </div>
-
-      <!-- Return-visit copy skeleton. On a same-session refresh the deck springs
-           straight back onto the right while the copy resolves ~0.7s later — the
-           left column would sit empty in the meantime. These placeholders fill
-           that gap and crossfade out as the real copy lands. They occupy the same
-           grid areas as the eyebrow/copy and are absolutely positioned within
-           those cells, so they overlay without affecting layout. Shown only on
-           the spring path (.is-spring); never on the first-visit overture (the
-           deck is center-stage then) or for reduced-motion. aria-hidden — purely
-           decorative. -->
-      <span class="v2-hero-sk v2-hero-sk-eyebrow" aria-hidden="true">
-        <span class="v2-sk v2-sk-eyebrow"></span>
-      </span>
-      <div class="v2-hero-sk v2-hero-sk-copy" aria-hidden="true">
-        <span class="v2-sk v2-sk-head"></span>
-        <span class="v2-sk v2-sk-head v2-sk-head-2"></span>
-        <span class="v2-sk v2-sk-sub"></span>
-        <span class="v2-sk v2-sk-sub v2-sk-sub-2"></span>
-        <span class="v2-sk-actions">
-          <span class="v2-sk v2-sk-btn"></span>
-          <span class="v2-sk v2-sk-btn v2-sk-btn-2"></span>
-        </span>
-        <span class="v2-sk v2-sk-trust"></span>
       </div>
 
       <!-- Decorative hero artwork — purely visual, hidden from AT.
@@ -227,8 +204,7 @@ const craftLayers = [
     <div class="v2-container">
       <div class="v2-work-layout">
         <div class="v2-work-text">
-          <p class="v2-section-label v2-reveal">Work</p>
-          <h2 class="v2-work-headline v2-reveal">Things I've built, and <em>keep building.</em></h2>
+          <h2 class="v2-work-headline v2-reveal">Products I've shipped</h2>
           <p class="v2-work-body v2-reveal">A mix of curated projects, case studies, and AI toolkits &mdash; enterprise tools, SaaS products, and agent workflows I use daily. Some built for clients, some on my own time, most still evolving.</p>
         </div>
 
@@ -280,13 +256,12 @@ const craftLayers = [
   <!-- We'll make a good team (merged: who I work with + what I do) -->
   <section id="v2-fit" class="v2-audience" data-ph-section="fit">
     <div class="v2-container">
-      <p class="v2-section-label v2-reveal">We&rsquo;ll make a good team</p>
-      <h2 class="v2-audience-headline v2-reveal">You bring the <em>what</em>. I handle the <em>how</em>.</h2>
+      <h2 class="v2-audience-headline v2-reveal">Three ways I can help</h2>
 
       <ul class="v2-audience-list">
         <li class="v2-audience-item v2-reveal">
           <div class="v2-team-head">
-            <strong class="v2-audience-lead v2-team-lead">You've an idea, but aren't sure what to build.</strong>
+            <strong class="v2-audience-lead v2-team-lead">You have an idea, but aren't sure what to build.</strong>
             <span class="v2-team-badge">Product Shaping &amp; Strategy</span>
           </div>
           I review what you have, brainstorm with you, and hand back a clear plan for the UI, scope, and build order &mdash; so whoever writes the code isn't guessing.
@@ -313,8 +288,7 @@ const craftLayers = [
   <section id="v2-testimonials" class="v2-work" data-ph-section="testimonials">
     <div class="v2-container">
       <div class="v2-testimonials-section">
-        <p class="v2-section-label v2-reveal">What clients say</p>
-        <h2 class="v2-testimonials-headline v2-reveal">Proof it works, <em>in their words.</em></h2>
+        <h2 class="v2-testimonials-headline v2-reveal">What clients said</h2>
         <div class="v2-testimonial-stack v2-reveal">
 
           <!-- Card 1: Fred Wilmot -->
@@ -430,8 +404,7 @@ const craftLayers = [
   <!-- How I Work -->
   <section id="v2-process" class="v2-process" data-ph-section="process">
     <div class="v2-container">
-      <p class="v2-section-label v2-reveal">How I work</p>
-      <h2 class="v2-process-headline v2-reveal">Less overhead. <em>More shipping.</em></h2>
+      <h2 class="v2-process-headline v2-reveal">How working with me runs</h2>
 
       <div class="v2-process-grid">
         <div class="v2-process-item v2-reveal">
@@ -462,11 +435,10 @@ const craftLayers = [
            it stays composed rather than collapsing into a tall block. -->
       <div class="v2-about-layout">
         <div class="v2-about-text v2-reveal">
-          <p class="v2-section-label">About</p>
-          <h2 class="v2-about-headline">A decade of shipping products, <em>and counting.</em></h2>
-          <p class="v2-about-body">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 8K+ designers, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, focused on AI-native product work.</p>
+          <h2 class="v2-about-headline">10+ years across design, code and QA</h2>
+          <p class="v2-about-body">10+ years working across design, engineering, and QA/automation, the three disciplines that usually take three different hires. I've shipped at enterprise scale, built tools used by 10K+ users, and helped founders take their first product from sketch to production. Currently freelancing from Bengaluru, focused on AI-native product work.</p>
           <div class="v2-about-actions">
-            <a href="/about" class="v2-btn-primary">More about me &rarr;</a>
+            <a href="/about" class="v2-btn-primary">More about me</a>
           </div>
         </div>
 
@@ -488,6 +460,8 @@ const craftLayers = [
       </div>
     </div>
   </section>
+
+  </main>
 
   <StudioFooter />
 
@@ -538,6 +512,11 @@ const craftLayers = [
         opacity 0.55s var(--ease-out),
         transform 0.55s var(--ease-out);
       transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    /* Promote to a layer only while waiting to animate — dropping it after
+       keeps 20+ idle compositor layers from lingering on the page. */
+    .v2-js .v2-reveal:not(.is-in) {
       will-change: opacity, transform;
     }
 
@@ -592,7 +571,6 @@ const craftLayers = [
     right: 0;
     z-index: 100;
     background: var(--v2-bg-header);
-    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--v2-border);
   }
 
@@ -608,6 +586,7 @@ const craftLayers = [
 
   .v2-logo {
     font-family: var(--v2-serif);
+    font-weight: 700;
     font-size: var(--text-xl);
     color: var(--v2-text);
     text-decoration: none;
@@ -648,7 +627,6 @@ const craftLayers = [
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
   }
 
   .v2-menu-bar {
@@ -656,12 +634,13 @@ const craftLayers = [
     width: 22px;
     height: 1.5px;
     background: var(--v2-text);
-    transition: transform 0.3s;
   }
 
   /* ===== Hero ===== */
   .v2-hero {
     padding: 150px 0 64px;
+    /* The 3D card stack pokes past narrow screens; never let it widen the page. */
+    overflow-x: clip;
   }
 
   /* While the hero entrance plays, the rest of the page is held back (and scroll
@@ -714,6 +693,8 @@ const craftLayers = [
     .v2-js .v2-hero[data-hero-anim] .v2-hero-line {
       opacity: 0;
       transform: translateY(12px);
+      /* Failsafe: if the entrance script never runs, the copy still appears. */
+      animation: v2-hero-failsafe 0.01s linear 2.5s forwards;
       transition:
         opacity 0.6s var(--ease-out),
         transform 0.6s var(--ease-out);
@@ -730,6 +711,7 @@ const craftLayers = [
        copy block (for the mobile deck-between-eyebrow-and-headline layout) yet
        still leads the cascade. */
     .v2-js .v2-hero[data-hero-anim].is-art-done .v2-hero-line {
+      animation: none;
       opacity: 1;
       transform: none;
       transition-delay: calc(var(--line, 0) * 90ms);
@@ -742,106 +724,6 @@ const craftLayers = [
     }
   }
 
-  /* ===== Return-visit copy skeleton ===== */
-  /* Live in the eyebrow/copy grid areas and fill those cells absolutely, so they
-     overlay the (still-transparent) real copy without nudging layout. Hidden by
-     default; the spring path reveals them, and they crossfade out the instant the
-     copy resolves (.is-art-done). */
-  .v2-hero-sk {
-    display: none;
-  }
-  .v2-hero-wrap > .v2-hero-sk-eyebrow {
-    grid-area: eyebrow;
-  }
-  .v2-hero-wrap > .v2-hero-sk-copy {
-    grid-area: copy;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .v2-js .v2-hero.is-spring .v2-hero-sk {
-      display: flex;
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      flex-direction: column;
-      align-items: flex-start;
-      opacity: 1;
-      transition: opacity 0.4s ease;
-    }
-    /* Copy has landed — fade the placeholder out from under it. */
-    .v2-js .v2-hero.is-spring.is-art-done .v2-hero-sk {
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
-
-  /* Individual placeholder bars: a soft warm-gray with a slow shimmer sweep,
-     drawn from the studio border tone so they sit quietly on the page. */
-  .v2-sk {
-    display: block;
-    border-radius: var(--radius-sm);
-    background: linear-gradient(
-      100deg,
-      var(--v2-border) 18%,
-      color-mix(in srgb, var(--v2-border) 45%, #fff) 38%,
-      var(--v2-border) 58%
-    );
-    background-size: 220% 100%;
-    animation: v2-sk-shimmer 1.6s ease-in-out infinite;
-  }
-  @keyframes v2-sk-shimmer {
-    0% {
-      background-position: 185% 0;
-    }
-    100% {
-      background-position: -45% 0;
-    }
-  }
-
-  .v2-sk-eyebrow {
-    width: 220px;
-    height: 11px;
-    border-radius: var(--radius-xs);
-  }
-  .v2-sk-head {
-    width: 80%;
-    height: 38px;
-  }
-  .v2-sk-head-2 {
-    width: 54%;
-    margin-top: 14px;
-  }
-  .v2-sk-sub {
-    width: 72%;
-    height: 14px;
-    border-radius: var(--radius-xs);
-    margin-top: 30px;
-  }
-  .v2-sk-sub-2 {
-    width: 60%;
-    height: 14px;
-    border-radius: var(--radius-xs);
-    margin-top: 11px;
-  }
-  .v2-sk-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 34px;
-  }
-  .v2-sk-btn {
-    width: 138px;
-    height: 48px;
-    border-radius: var(--radius-pill);
-  }
-  .v2-sk-btn-2 {
-    width: 112px;
-  }
-  .v2-sk-trust {
-    width: 264px;
-    height: 12px;
-    border-radius: var(--radius-xs);
-    margin-top: 34px;
-  }
 
   /* ===== Hero artwork (decorative) — Craft Layers stack ===== */
   .v2-hero-art {
@@ -866,7 +748,7 @@ const craftLayers = [
      as the copy resolves in. The transition is armed only for this leg (added by
      JS), so the overture itself snaps in without sliding. */
   .v2-hero-art.is-docking {
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.55s var(--ease-out);
   }
 
   /* The stack is sized from its own knobs so the layout box always fits the
@@ -902,7 +784,14 @@ const craftLayers = [
       calc(var(--layer) * var(--step-y)),
       calc(var(--layer) * 16px)
     );
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  /* Promote the cards only while they're actually animating. */
+  .v2-hero.is-loading .v2-layer,
+  .v2-hero.is-loading .v2-product,
+  .v2-hero.is-spring .v2-layer,
+  .v2-hero.is-spring .v2-product {
     will-change: transform;
   }
 
@@ -1317,6 +1206,14 @@ const craftLayers = [
     }
   }
 
+  /* Small phones (≤400px): tighten the cascade so the deck fits the width. */
+  @media (max-width: 400px) {
+    .v2-stack {
+      --card-w: 212px;
+      --step-x: 18px;
+    }
+  }
+
   /* Delight: hovering the fanned-open stack brings the tiles to life — the
      discipline icons spring, the AI spark turns, and the usage bars re-grow. */
   @media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
@@ -1331,7 +1228,7 @@ const craftLayers = [
     }
 
     .v2-stack:hover .v2-pv-chart span {
-      animation: v2-bar-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: v2-bar-rise 0.6s var(--ease-out) both;
     }
     .v2-stack:hover .v2-pv-chart span:nth-child(2) { animation-delay: 60ms; }
     .v2-stack:hover .v2-pv-chart span:nth-child(3) { animation-delay: 120ms; }
@@ -1362,11 +1259,11 @@ const craftLayers = [
        otherwise block the hover spring. */
     .v2-hero.is-loading .v2-layer,
     .v2-hero.is-loading .v2-product {
-      animation: v2-layer-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+      animation: v2-layer-in 0.58s var(--ease-out) backwards;
       animation-delay: calc(var(--layer) * 150ms);
     }
     .v2-hero.is-loading .v2-byline {
-      animation: v2-byline-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+      animation: v2-byline-in 0.5s var(--ease-out) backwards;
       animation-delay: 1080ms;
     }
 
@@ -1379,7 +1276,7 @@ const craftLayers = [
       animation-delay: calc(var(--layer) * 40ms);
     }
     .v2-hero.is-spring .v2-byline {
-      animation: v2-byline-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+      animation: v2-byline-in 0.5s var(--ease-out) backwards;
       animation-delay: 340ms;
     }
 
@@ -1430,9 +1327,10 @@ const craftLayers = [
   }
 
   .v2-eyebrow {
+    font-family: var(--font-mono);
     font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    font-weight: 500;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--v2-accent);
     margin-bottom: 20px;
@@ -1440,18 +1338,15 @@ const craftLayers = [
 
   .v2-headline {
     font-family: var(--v2-serif);
+    font-weight: 800;
     font-size: var(--text-display-xl);
     line-height: 1.1;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     color: var(--v2-text);
     margin-bottom: 28px;
     max-width: 720px;
   }
 
-  .v2-headline em {
-    font-style: italic;
-    color: var(--v2-accent);
-  }
 
   .v2-subtext {
     font-size: var(--text-xl);
@@ -1474,6 +1369,7 @@ const craftLayers = [
     flex-wrap: wrap;
     gap: 12px;
     align-items: center;
+    font-family: var(--font-mono);
     font-size: var(--text-sm);
     color: var(--v2-text-muted);
   }
@@ -1491,7 +1387,7 @@ const craftLayers = [
     display: inline-block;
     padding: 14px 32px;
     background: var(--v2-accent);
-    color: #fff;
+    color: var(--color-on-accent);
     font-size: var(--text-md);
     font-weight: 600;
     text-decoration: none;
@@ -1515,11 +1411,19 @@ const craftLayers = [
     color: var(--v2-text-body);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.2s;
+    padding-block: 10px;
+    margin-block: -10px;
+    transition: color 0.2s var(--ease-out);
   }
 
-  .v2-btn-text:hover {
-    color: var(--v2-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .v2-btn-text:hover {
+      color: var(--v2-accent);
+    }
+
+    .v2-btn-text:hover .v2-cta-arrow {
+      transform: translateX(4px);
+    }
   }
 
   /* ===== Audience ===== */
@@ -1529,6 +1433,7 @@ const craftLayers = [
 
   .v2-audience-headline {
     font-family: var(--v2-serif);
+    font-weight: 700;
     font-size: var(--text-display-sm);
     color: var(--v2-text);
     margin-bottom: 48px;
@@ -1537,10 +1442,6 @@ const craftLayers = [
     max-width: 640px;
   }
 
-  .v2-audience-headline em {
-    font-style: italic;
-    color: var(--v2-accent);
-  }
 
   .v2-audience-list {
     list-style: none;
@@ -1614,9 +1515,10 @@ const craftLayers = [
     border-radius: var(--radius-pill);
     background: var(--v2-accent-light);
     border: 1px solid var(--v2-border);
-    font-size: var(--text-2xs);
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     color: var(--v2-accent);
     white-space: nowrap;
@@ -1627,10 +1529,10 @@ const craftLayers = [
   .v2-team-lead {
     flex: 1;
     font-family: var(--v2-serif);
-    font-weight: 400;
+    font-weight: 700;
     font-size: var(--text-display-xs);
     color: var(--v2-text);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     line-height: 1.25;
     margin-bottom: 0;
   }
@@ -1642,18 +1544,15 @@ const craftLayers = [
 
   .v2-process-headline {
     font-family: var(--v2-serif);
+    font-weight: 800;
     font-size: var(--text-display-md);
     color: var(--v2-text);
     margin-bottom: 48px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     max-width: 640px;
   }
 
-  .v2-process-headline em {
-    font-style: italic;
-    color: var(--v2-accent);
-  }
 
   .v2-process-grid {
     display: grid;
@@ -1669,6 +1568,7 @@ const craftLayers = [
 
   .v2-process-title {
     font-family: var(--v2-serif);
+    font-weight: 700;
     font-size: var(--text-lg);
     color: var(--v2-text);
     margin: 0 0 10px;
@@ -1706,6 +1606,7 @@ const craftLayers = [
 
   .v2-testimonials-headline {
     font-family: var(--v2-serif);
+    font-weight: 700;
     font-size: var(--text-display-sm);
     color: var(--v2-text);
     margin-bottom: 48px;
@@ -1715,10 +1616,6 @@ const craftLayers = [
     text-wrap: balance;
   }
 
-  .v2-testimonials-headline em {
-    font-style: italic;
-    color: var(--v2-accent);
-  }
 
   .v2-testimonial-stack {
     display: flex;
@@ -1818,18 +1715,28 @@ const craftLayers = [
     opacity: 1;
   }
 
+  /* Expands to the quote's real height via a 0fr→1fr grid row, so long quotes
+     on narrow phones are never clipped by a fixed max-height. */
   .v2-tcard-body {
-    max-height: 0;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
-    margin-top: 0;
+    transition:
+      grid-template-rows 0.4s var(--ease-out),
+      opacity 0.3s var(--ease-out);
+  }
+
+  /* The 20px gap lives inside the collapsing row, so only the grid row animates. */
+  .v2-tcard-body > .v2-quote {
+    min-height: 0;
+    overflow: hidden;
+    padding-top: 20px;
   }
 
   .v2-tcard-active .v2-tcard-body {
-    max-height: 300px;
+    grid-template-rows: 1fr;
     opacity: 1;
-    margin-top: 20px;
   }
 
   .v2-tcard-active {
@@ -1840,23 +1747,19 @@ const craftLayers = [
   }
 
   .v2-quote {
-    font-family: var(--v2-serif);
+    font-family: var(--v2-sans);
     font-size: var(--text-lg);
-    /* DM Serif Display only ships at 400 — anything lighter triggers faux-thin. */
     font-weight: 400;
     color: var(--v2-text-body);
-    line-height: 1.8;
-    font-style: italic;
-    opacity: 0.85;
+    line-height: 1.7;
   }
 
   .v2-tcard-preview {
     display: none;
-    font-family: var(--v2-serif);
+    font-family: var(--v2-sans);
     font-size: var(--text-sm);
-    font-weight: 300;
+    font-weight: 400;
     color: var(--v2-text-muted);
-    font-style: italic;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1901,18 +1804,15 @@ const craftLayers = [
 
   .v2-about-headline {
     font-family: var(--v2-serif);
+    font-weight: 800;
     font-size: var(--text-display-md);
     color: var(--v2-text);
     margin-bottom: 20px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     max-width: 560px;
   }
 
-  .v2-about-headline em {
-    font-style: italic;
-    color: var(--v2-accent);
-  }
 
   .v2-about-body {
     font-size: var(--text-lg);
@@ -1989,10 +1889,11 @@ const craftLayers = [
 
   .v2-about-name {
     font-family: var(--v2-serif);
+    font-weight: 700;
     font-size: var(--text-2xl);
     line-height: 1.1;
     color: var(--v2-bg);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   /* Socials stack one per row beneath the name — avoids the awkward wrap where
@@ -2008,17 +1909,16 @@ const craftLayers = [
   .v2-about-social {
     font-size: var(--text-sm);
     font-weight: 500;
-    color: rgba(250, 248, 245, 0.62);
+    color: var(--white-a80);
     text-decoration: none;
-    transition: color 0.2s ease;
+    /* Taller tap target without moving anything: pad, then pull back. */
+    padding-block: 10px;
+    margin-block: -10px;
+    transition: color 0.2s var(--ease-out);
   }
 
   .v2-about-social:hover {
     color: var(--v2-bg);
-  }
-
-  .v2-about-social-sep {
-    display: none;
   }
 
   @media (max-width: 860px) {
@@ -2103,17 +2003,14 @@ const craftLayers = [
 
   .v2-work-headline {
     font-family: var(--v2-serif);
+    font-weight: 800;
     font-size: var(--text-display-md);
     color: var(--v2-text);
     margin-bottom: 20px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.2;
   }
 
-  .v2-work-headline em {
-    font-style: italic;
-    color: var(--v2-accent);
-  }
 
   .v2-work-body {
     font-size: var(--text-lg);
@@ -2153,7 +2050,7 @@ const craftLayers = [
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--v2-border);
-    background: #FFFFFF;
+    background: var(--color-surface);
     box-shadow: 0 1px 2px var(--ink-a08);
     transition:
       box-shadow 0.25s ease,
@@ -2214,15 +2111,16 @@ const craftLayers = [
   }
 
   .v2-thumb-type {
-    font-family: var(--v2-sans);
-    font-size: var(--text-2xs);
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.03em;
     color: var(--v2-accent);
     background: var(--v2-accent-light);
     padding: 3px 8px;
     border-radius: var(--radius-pill);
+    white-space: nowrap;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -2247,9 +2145,12 @@ const craftLayers = [
     font-family: var(--v2-sans);
     font-size: var(--text-md);
     font-weight: 600;
-    color: rgba(250, 248, 245, 0.92);
+    color: var(--white-a80);
     text-decoration: none;
-    transition: color 0.22s ease;
+    /* Taller tap target without moving anything. */
+    padding-block: 10px;
+    margin-block: -10px;
+    transition: color 0.22s var(--ease-out);
   }
 
   .v2-cta-arrow {
@@ -2259,7 +2160,7 @@ const craftLayers = [
   }
 
   .v2-work-cta:hover {
-    color: #FFFFFF;
+    color: var(--color-on-accent);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -2361,6 +2262,8 @@ const craftLayers = [
 </style>
 
 <script>
+  import { initMobileMenu } from '../../scripts/mobile-menu';
+
   // Intersection Observer for scroll-triggered reveals + testimonial stack interaction
   document.addEventListener('DOMContentLoaded', () => {
     const root = document.querySelector('[data-variation-content="v2"]');
@@ -2399,6 +2302,16 @@ const craftLayers = [
         document.body.style.overflow = '';
       };
 
+      // Any attempt to move on (scroll, swipe, click, key) ends the entrance
+      // early, so the scroll lock never fights the visitor.
+      const skipIntent = new AbortController();
+      const onSkipIntent = (fn: () => void) => {
+        const opts = { once: true, passive: true, signal: skipIntent.signal };
+        ['wheel', 'touchmove', 'pointerdown', 'keydown'].forEach((type) =>
+          window.addEventListener(type, fn, opts)
+        );
+      };
+
       // The full deck-load plays once per session; later visits get the lighter
       // spring settle. (No client router here — every visit is a full reload —
       // so the "have I shown it yet" flag lives in sessionStorage.)
@@ -2415,13 +2328,10 @@ const craftLayers = [
         heroAnim.classList.add('is-art-instant', 'is-art-done');
         root.classList.add('is-hero-revealed');
       } else if (heroSeen) {
-        // Return visit: the light spring settle — quick, in place, no overture.
-        lockPage();
-        heroAnim.classList.add('is-spring');
-        window.setTimeout(() => {
-          heroAnim.classList.add('is-art-done');
-          releasePage();
-        }, 700);
+        // Return visit: the deck springs back into place while the copy is
+        // already resolving — no overture, nothing held back, no scroll lock.
+        heroAnim.classList.add('is-spring', 'is-art-done');
+        root.classList.add('is-hero-revealed');
       } else {
         // First visit this session: the full deck-load overture.
         try {
@@ -2467,11 +2377,15 @@ const craftLayers = [
         const dock = () => {
           if (docked) return;
           docked = true;
+          skipIntent.abort();
           if (heroArt) heroArt.classList.add('is-docking');
           heroAnim.classList.remove('is-overture'); // transforms back to its cell
           heroAnim.classList.add('is-art-done'); // copy resolves in
           releasePage();
         };
+        // A visitor who tries to scroll, tap or press a key mid-overture
+        // has seen enough — hand them the page now instead of holding it.
+        onSkipIntent(dock);
         window.setTimeout(dock, MIN_OVERTURE);
       }
 
@@ -2511,53 +2425,54 @@ const craftLayers = [
       reveals.forEach((el) => observer.observe(el));
     }
 
-    // Mobile menu toggle
-    const toggle = root.querySelector('.v2-menu-toggle');
-    const nav = root.querySelector('.v2-nav') as HTMLElement | null;
-    if (toggle && nav) {
-      const openMenu = () => {
-        nav.style.display = 'flex';
-        nav.style.flexDirection = 'column';
-        nav.style.position = 'absolute';
-        nav.style.top = '64px';
-        nav.style.left = '0';
-        nav.style.right = '0';
-        nav.style.background = 'var(--v2-bg)';
-        nav.style.padding = '24px';
-        nav.style.borderBottom = '1px solid var(--v2-border)';
-        nav.style.gap = '16px';
-      };
-      const closeMenu = () => {
-        nav.style.display = '';
-        nav.style.flexDirection = '';
-        nav.style.position = '';
-        nav.style.top = '';
-        nav.style.left = '';
-        nav.style.right = '';
-        nav.style.background = '';
-        nav.style.padding = '';
-        nav.style.borderBottom = '';
-        nav.style.gap = '';
-      };
-      toggle.addEventListener('click', () => {
-        const isOpen = nav.style.display === 'flex';
-        isOpen ? closeMenu() : openMenu();
-      });
-      nav.querySelectorAll('.v2-nav-link').forEach((link) => {
-        link.addEventListener('click', closeMenu);
-      });
-    }
+    initMobileMenu(root.querySelector<HTMLElement>('.v2-header'));
 
-    // Testimonial stacked cards — click to expand
-    const tcards = root.querySelectorAll('.v2-tcard');
+    // Testimonial stacked cards — click a collapsed card to expand it. For
+    // keyboard and screen-reader users the one-line preview is the control
+    // (the card itself holds a profile link, so it can't be a button).
+    const tcards = Array.from(root.querySelectorAll<HTMLElement>('.v2-tcard'));
+    const syncCards = () => {
+      tcards.forEach((c) => {
+        const preview = c.querySelector<HTMLElement>('.v2-tcard-preview');
+        if (!preview) return;
+        if (c.classList.contains('v2-tcard-active')) {
+          preview.removeAttribute('tabindex');
+        } else {
+          preview.setAttribute('tabindex', '0');
+          preview.setAttribute('aria-expanded', 'false');
+        }
+      });
+    };
+    const activate = (card: HTMLElement, moveFocus = false) => {
+      if (card.classList.contains('v2-tcard-active')) return;
+      tcards.forEach((c) => c.classList.remove('v2-tcard-active'));
+      card.classList.add('v2-tcard-active');
+      syncCards();
+      if (moveFocus) {
+        // The preview just disappeared — land focus on the quote it opened.
+        const quote = card.querySelector<HTMLElement>('.v2-quote');
+        quote?.setAttribute('tabindex', '-1');
+        quote?.focus({ preventScroll: true });
+      }
+    };
     tcards.forEach((card) => {
+      const preview = card.querySelector<HTMLElement>('.v2-tcard-preview');
+      const name = card.querySelector('.v2-profile-link')?.firstChild?.textContent?.trim();
+      if (preview) {
+        preview.setAttribute('role', 'button');
+        if (name) preview.setAttribute('aria-label', `Read ${name}'s full testimonial`);
+        preview.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            activate(card, true);
+          }
+        });
+      }
       card.addEventListener('click', (e) => {
         if ((e.target as HTMLElement).closest('a')) return;
-        if (card.classList.contains('v2-tcard-active')) return;
-
-        tcards.forEach((c) => c.classList.remove('v2-tcard-active'));
-        card.classList.add('v2-tcard-active');
+        activate(card);
       });
     });
+    syncCards();
   });
 </script>

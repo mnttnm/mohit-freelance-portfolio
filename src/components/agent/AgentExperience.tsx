@@ -25,6 +25,24 @@ type AgentPanel = 'view' | 'inquiry';
 
 const AGENT_PANEL_DISMISSED_KEY = 'mohit:webmcp:panel-dismissed:v1';
 
+// sessionStorage can throw (private mode, blocked site data); treat failures as "not stored".
+function readPanelDismissed(): boolean {
+  try {
+    return sessionStorage.getItem(AGENT_PANEL_DISMISSED_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function writePanelDismissed(dismissed: boolean): void {
+  try {
+    if (dismissed) sessionStorage.setItem(AGENT_PANEL_DISMISSED_KEY, 'true');
+    else sessionStorage.removeItem(AGENT_PANEL_DISMISSED_KEY);
+  } catch {
+    // Storage unavailable: the dismissal just won't persist across reloads.
+  }
+}
+
 export default function AgentExperience() {
   const [personalizedView, setPersonalizedView] = useState<PersonalizedViewState | null>(null);
   const [preparedInquiry, setPreparedInquiry] = useState<PreparedInquiryState | null>(null);
@@ -34,7 +52,7 @@ export default function AgentExperience() {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const openPanel = (panel: AgentPanel) => {
-    sessionStorage.removeItem(AGENT_PANEL_DISMISSED_KEY);
+    writePanelDismissed(false);
     setActivePanel(panel);
     setIsOpen(true);
     requestAnimationFrame(() => headingRef.current?.focus());
@@ -50,7 +68,7 @@ export default function AgentExperience() {
     }
     if (
       (restored.personalizedView || restored.preparedInquiry)
-      && sessionStorage.getItem(AGENT_PANEL_DISMISSED_KEY) !== 'true'
+      && !readPanelDismissed()
     ) {
       setIsOpen(true);
     }
@@ -94,7 +112,7 @@ export default function AgentExperience() {
   );
 
   const dismissPanel = () => {
-    sessionStorage.setItem(AGENT_PANEL_DISMISSED_KEY, 'true');
+    writePanelDismissed(true);
     setIsOpen(false);
   };
 

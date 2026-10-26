@@ -40,7 +40,7 @@ const machineRecord = record
     <a class="takeaway-nav-link" href="/projects">View full work <span aria-hidden="true">↗</span></a>
   </header>
 
-  <main class="takeaway-page">
+  <main id="main" class="takeaway-page">
     {record ? (
       <>
         <header class="takeaway-hero">
@@ -214,7 +214,6 @@ const machineRecord = record
     background: var(--color-bg-header);
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    backdrop-filter: blur(var(--space-3));
   }
 
   .takeaway-brand,
@@ -225,6 +224,8 @@ const machineRecord = record
 
   .takeaway-brand {
     font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.01em;
     font-size: var(--text-xl);
   }
 
@@ -303,7 +304,8 @@ const machineRecord = record
   .takeaway-page h2,
   .takeaway-page h3 {
     font-family: var(--font-serif);
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   .takeaway-page h1 {
@@ -359,6 +361,8 @@ const machineRecord = record
   .takeaway-focus > p:nth-child(2) {
     margin: var(--space-4) 0 0;
     font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     font-size: var(--text-2xl);
     line-height: 1.4;
     white-space: pre-line;

@@ -5,7 +5,7 @@ interface Props {
   ogImage?: string;
   robots?: string;
   agentExperience?: boolean;
-  /** Load JetBrains Mono — only the pages that use --studio-mono need it. */
+  /** Load Chivo Mono — only the pages that use --studio-mono need it. */
   mono?: boolean;
 }
 
@@ -64,13 +64,12 @@ const personLd = {
   },
 };
 
-// Only load the faces a page actually renders. DM Serif Display + Instrument
-// Sans cover every page; JetBrains Mono is opt-in (projects, case studies).
+// Only load the faces a page actually renders. Chivo (variable weight) covers
+// every page; Chivo Mono is opt-in (projects, case studies).
 const fontFamilies = [
-  'family=DM+Serif+Display:ital@0;1',
-  'family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500',
+  'family=Chivo:ital,wght@0,400..800;1,400..500',
 ];
-if (mono) fontFamilies.push('family=JetBrains+Mono:wght@400;500;600');
+if (mono) fontFamilies.push('family=Chivo+Mono:wght@400..600');
 const fontHref = `https://fonts.googleapis.com/css2?${fontFamilies.join('&')}&display=swap`;
 import '../styles/tokens.css';
 import '../styles/global.css';
@@ -120,12 +119,16 @@ import PostHog from '../components/PostHog.astro';
     <link href={fontHref} rel="stylesheet" />
   </head>
   <body data-webmcp-enabled={agentExperience ? "true" : "false"}>
+    <a class="skip-link" href="#main">Skip to content</a>
     <slot />
 
     {agentExperience && <AgentExperience client:load />}
-    <div class="dev-agentation-widget">
-      <AgentationWidget client:only="react" />
-    </div>
+    {/* Dev-only review widget — not rendered (or shipped) in production. */}
+    {import.meta.env.DEV && (
+      <div class="dev-agentation-widget">
+        <AgentationWidget client:only="react" />
+      </div>
+    )}
 
     <script>
       // Engagement event tracking (section views, CTA + outbound clicks).
@@ -150,6 +153,7 @@ import PostHog from '../components/PostHog.astro';
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
               }
             });
           },
@@ -162,7 +166,8 @@ import PostHog from '../components/PostHog.astro';
         revealEls.forEach((el) => observer.observe(el));
       }
 
-      // Smooth nav scroll
+      // In-page anchors: glide unless the visitor asked for less motion, and
+      // land below the fixed header (scroll-margin-top, set in global.css).
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', function (e) {
           const href = this.getAttribute('href');
@@ -170,10 +175,11 @@ import PostHog from '../components/PostHog.astro';
           const target = document.querySelector(href);
           if (!target) return;
           e.preventDefault();
-          const rect = target.getBoundingClientRect();
-          const top = rect.top + window.scrollY;
-          window.scrollTo({ top, behavior: 'smooth' });
+          target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
           history.replaceState(null, '', href);
+          // Move keyboard/screen-reader focus with the view, without a second jump.
+          if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+          (target as HTMLElement).focus({ preventScroll: true });
         });
       });
     </script>

@@ -295,6 +295,36 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   2,
   "0"
 );
+
+// Intrinsic pixel sizes of the screenshots under public/, so the browser can
+// reserve the right box before each image loads (no layout shift). CSS still
+// controls the rendered size. Unknown paths simply get no attributes.
+const IMAGE_SIZES: Record<string, [number, number]> = {
+  "/images/SCR-20260526-poif.webp": [3598, 2020],
+  "/images/SCR-20260526-pokt.webp": [3590, 2014],
+  "/images/SCR-20260526-porc.webp": [3588, 2008],
+  "/images/SCR-20260526-posx.webp": [3598, 2010],
+  "/images/SCR-20260526-povd.webp": [3594, 2014],
+  "/images/SCR-20260526-poxa.webp": [3600, 2014],
+  "/images/SCR-20260526-ppcv.webp": [3334, 2008],
+  "/images/SCR-20260526-ppfp.webp": [3458, 2170],
+  "/images/dashboard-skill-project/original.webp": [3584, 2262],
+  "/images/dashboard-skill-project/v7-dark.webp": [3600, 2423],
+  "/images/dashboard-skill-project/v7-light.webp": [3576, 2495],
+  "/images/image-resizing/eval.webp": [3578, 2008],
+  "/images/image-resizing/input-interface.webp": [3266, 2010],
+  "/images/image-resizing/review-interface.webp": [3600, 2008],
+  "/images/mohit-ai-toolkit.webp": [3576, 2014],
+  "/projects/business-copilot.webp": [3122, 1896],
+  "/projects/career-guide.webp": [3600, 2014],
+  "/projects/figma-variable-explorer.webp": [1800, 960],
+  "/projects/learning-log.webp": [3600, 2004],
+  "/projects/notes-in-gdocs.webp": [3584, 1790],
+};
+const imgSize = (src: string) => {
+  const size = IMAGE_SIZES[src];
+  return size ? { width: size[0], height: size[1] } : {};
+};
 ---
 
 <Layout
@@ -304,14 +334,15 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 >
   <div data-variation-content="studio">
     <!-- Header -->
-    <header class="studio-header">
+    <header class="studio-header" data-menu>
       <div class="studio-header-inner">
         <a href="/" class="studio-logo">Mohit Tater</a>
-        <nav class="studio-nav">
+        <nav class="studio-nav" id="site-nav" data-menu-panel>
           <a href="/" class="studio-nav-link">Home</a>
           <a
             href="/projects"
-            class="studio-nav-link studio-nav-link-active">Work</a
+            class="studio-nav-link studio-nav-link-active"
+            aria-current="page">Work</a
           >
           <a href="/about" class="studio-nav-link">About</a>
           <a
@@ -321,18 +352,19 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
             data-ph-location="nav">Let's talk</a
           >
         </nav>
-        <button class="studio-menu-toggle" aria-label="Toggle menu">
+        <button class="studio-menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
           <span class="studio-menu-bar"></span>
           <span class="studio-menu-bar"></span>
         </button>
       </div>
     </header>
 
+    <main id="main">
     <!-- Page Hero -->
     <section class="projects-hero" data-ph-section="projects_hero">
       <div class="studio-container">
         <h1 class="projects-headline studio-reveal">
-          Selected <em>work.</em>
+          Selected work.
         </h1>
       </div>
     </section>
@@ -403,6 +435,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                             >
                               <img
                                 src={img}
+                                {...imgSize(img)}
                                 alt={`Screenshot ${j + 1} of ${project.title}`}
                                 loading={
                                   i === 0 && j === 0
@@ -453,7 +486,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                               data-screenshot-index={j}
                               aria-label={`Screenshot ${j + 1}`}
                             >
-                              <img src={img} alt="" loading="lazy" />
+                              <img
+                                src={img}
+                                {...imgSize(img)}
+                                alt=""
+                                loading="lazy"
+                              />
                             </button>
                           ))}
                       </div>
@@ -744,11 +782,15 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                       class={`mspot-card ${i === 0 ? "is-focus" : ""}`}
                       data-mspot-card
                       data-mspot-index={i}
+                      role="button"
+                      tabindex="0"
+                      aria-label={`Open ${project.title} details`}
                     >
                       <div class="mspot-media">
                         {hasImages ? (
                           <img
                             src={project.images[0]}
+                            {...imgSize(project.images[0])}
                             alt={`${project.title} screenshot`}
                             loading={i < 2 ? "eager" : "lazy"}
                           />
@@ -842,6 +884,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                 <div class="more-project-image">
                   <img
                     src={project.image}
+                    {...imgSize(project.image)}
                     alt={`${project.title} screenshot`}
                     loading="lazy"
                   />
@@ -886,7 +929,12 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
                   data-ph-project={project.title}
                 >
                   <span class="mmore-thumb">
-                    <img src={project.image} alt="" loading="lazy" />
+                    <img
+                      src={project.image}
+                      {...imgSize(project.image)}
+                      alt=""
+                      loading="lazy"
+                    />
                   </span>
                   <span class="mmore-mid">
                     <span class="mmore-title">{project.title}</span>
@@ -923,6 +971,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
         </div>
       </div>
     </section>
+    </main>
 
     <!-- Lightbox -->
     <div
@@ -1003,7 +1052,14 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
     <!-- Mobile spotlight: detail bottom-sheet + lightbox (≤900px) -->
     <div class="mspot-scrim" data-mspot-scrim></div>
-    <div class="mspot-sheet" data-mspot-sheet>
+    <div
+      class="mspot-sheet"
+      data-mspot-sheet
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mspot-sheet-title"
+      inert
+    >
       <button
         type="button"
         class="mspot-close"
@@ -1027,7 +1083,13 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
       <div class="mspot-grab"><span></span></div>
       <div class="mspot-sheet-body" data-mspot-sheet-body></div>
     </div>
-    <div class="mspot-lb" data-mspot-lb>
+    <div
+      class="mspot-lb"
+      data-mspot-lb
+      role="dialog"
+      aria-modal="true"
+      aria-label="Screenshot viewer"
+    >
       <button
         type="button"
         class="mspot-lb-btn mspot-lb-close"
@@ -1132,24 +1194,27 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
 
   /* ===== Reveal Animation ===== */
-  .studio-reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: studioReveal 0.7s var(--ease-out)
-      forwards;
-  }
+  /* Only hide-and-slide for visitors who haven't asked for less motion;
+     everyone else sees the content in place from the first paint. */
+  @media (prefers-reduced-motion: no-preference) {
+    .studio-reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: studioReveal 0.7s var(--ease-out) forwards;
+    }
 
-  .studio-reveal:nth-child(1) {
-    animation-delay: 0.05s;
-  }
-  .studio-reveal:nth-child(2) {
-    animation-delay: 0.12s;
-  }
-  .studio-reveal:nth-child(3) {
-    animation-delay: 0.19s;
-  }
-  .studio-reveal:nth-child(4) {
-    animation-delay: 0.26s;
+    .studio-reveal:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+    .studio-reveal:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+    .studio-reveal:nth-child(3) {
+      animation-delay: 0.19s;
+    }
+    .studio-reveal:nth-child(4) {
+      animation-delay: 0.26s;
+    }
   }
 
   @keyframes studioReveal {
@@ -1177,7 +1242,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     right: 0;
     z-index: 100;
     background: var(--studio-bg-header);
-    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--studio-border);
   }
 
@@ -1193,10 +1257,11 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
   .studio-logo {
     font-family: var(--studio-serif);
+    font-weight: 700;
     font-size: var(--text-xl);
     color: var(--studio-text);
     text-decoration: none;
-    letter-spacing: 0;
+    letter-spacing: -0.01em;
   }
 
   .studio-nav {
@@ -1249,19 +1314,16 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
   .projects-headline {
     font-family: var(--studio-serif);
+    font-weight: 800;
     font-size: var(--text-display-lg);
     line-height: 1.1;
-    letter-spacing: 0;
+    letter-spacing: -0.03em;
     color: var(--studio-text);
     margin-bottom: 20px;
     max-width: 920px;
     text-wrap: balance;
   }
 
-  .projects-headline em {
-    font-style: italic;
-    color: var(--studio-accent);
-  }
 
   .projects-subtext {
     font-size: var(--text-lg);
@@ -1278,14 +1340,6 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   .work-browser {
     display: grid;
     gap: 16px;
-    transform-origin: center top;
-    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  /* Anticipation: the whole unit lifts AND slightly scales — combining spatial
-     and depth cues so the motion reads even without a relative reference. */
-  .work-browser.is-anticipating {
-    transform: translateY(-12px) scale(1.008);
   }
 
   .work-browser-topline {
@@ -1299,7 +1353,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     color: var(--studio-text);
     font-family: var(--studio-serif);
     font-size: var(--text-lg);
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0;
     transition: opacity 0.18s ease;
   }
@@ -1310,7 +1364,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
   .work-browser-count {
     color: var(--studio-text-muted);
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--studio-mono);
     font-size: var(--text-sm);
     font-variant-numeric: tabular-nums;
   }
@@ -1341,39 +1395,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     border-radius: 0;
     box-shadow: 0 24px 70px rgba(30, 45, 36, 0.08);
     transition:
-      box-shadow 0.45s cubic-bezier(0.34, 1.2, 0.64, 1),
+      box-shadow 0.45s var(--ease-out),
       border-color 0.45s ease,
       background 0.45s ease;
-  }
-
-  /* Non-spatial cues during anticipation:
-     - shadow grows dramatically (high-contrast, very readable)
-     - border gains an accent green hint
-     - the inner radial gradient brightens — the panel "warms up" */
-  .work-browser.is-anticipating .work-browser-shell {
-    box-shadow: 0 54px 130px var(--accent-line);
-    border-color: var(--accent-strong);
-    background: radial-gradient(
-        circle at 12% 10%,
-        var(--accent-line),
-        transparent 38%
-      ),
-      var(--white-a60);
-  }
-
-  /* The active project dot pulses — gives the eye a small, contained
-     reference point of motion inside the panel itself. */
-  @keyframes dotPulse {
-    0% {
-      box-shadow: 0 0 0 0 var(--accent-strong);
-    }
-    100% {
-      box-shadow: 0 0 0 10px transparent;
-    }
-  }
-
-  .work-browser.is-anticipating .work-dot.is-active {
-    animation: dotPulse 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* ===== Visual panel (left) ===== */
@@ -1453,8 +1477,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     box-shadow: 0 22px 52px rgba(30, 45, 36, 0.18);
     color: var(--ink-a40);
     font-family: var(--studio-serif);
+    font-weight: 700;
     font-size: var(--text-display-sm);
-    letter-spacing: 0.02em;
+    letter-spacing: -0.02em;
   }
 
   .work-visual-placeholder.is-active {
@@ -1679,9 +1704,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     color: var(--studio-text);
     font-family: var(--studio-serif);
     font-size: var(--text-3xl);
-    font-weight: 400;
+    font-weight: 700;
     line-height: 1.05;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
@@ -1867,7 +1892,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     color: var(--studio-text);
     font-family: var(--studio-serif);
     font-size: var(--text-2xl);
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.15;
   }
 
@@ -1964,7 +1990,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   /* Invitation: while idling on a slide, the "next" arrow gently leans
      forward with a soft accent halo — a quiet "there's more this way" cue.
      ~65% of each cycle is dead-still, so it reads as an occasional breath,
-     not a fidget. Pauses on hover; the JS stops it once the user navigates. */
+     not a fidget. Plays twice, then rests for good. Pauses on hover; the JS
+     stops it once the user navigates. */
   @keyframes nextArrowInvite {
     0%,
     62% {
@@ -1990,7 +2017,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
 
   .work-arrows.is-hinting .work-arrow[data-project-next] {
-    animation: nextArrowInvite 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: nextArrowInvite 4.2s cubic-bezier(0.4, 0, 0.2, 1) 2;
   }
 
   /* The visitor found the arrow — let it rest while they decide. */
@@ -2041,7 +2068,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     color: var(--studio-text);
     font-family: var(--studio-serif);
     font-size: var(--text-display-sm);
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.15;
   }
 
@@ -2132,7 +2160,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     color: var(--studio-text);
     font-family: var(--studio-serif);
     font-size: var(--text-xl);
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     line-height: 1.2;
   }
 
@@ -2349,6 +2378,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     padding: 16px;
     color: var(--ink-a40);
     font-family: var(--studio-serif);
+    font-weight: 700;
+    letter-spacing: -0.01em;
     font-size: var(--text-xl);
     text-align: center;
     cursor: default;
@@ -2390,7 +2421,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
   .m-project-count {
     color: var(--studio-text-muted);
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--studio-mono);
     font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
@@ -2401,9 +2432,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     color: var(--studio-text);
     font-family: var(--studio-serif);
     font-size: var(--text-2xl);
-    font-weight: 400;
+    font-weight: 700;
     line-height: 1.1;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
@@ -2659,6 +2690,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .mspot-pos {
     font-family: var(--studio-serif);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     font-size: var(--text-2xl);
     line-height: 1;
     color: var(--studio-text);
@@ -2755,6 +2788,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     padding: 16px;
     text-align: center;
     font-family: var(--studio-serif);
+    font-weight: 700;
+    letter-spacing: -0.01em;
     font-size: var(--text-xl);
     color: var(--ink-a40);
   }
@@ -2771,7 +2806,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .mspot-card-eyebrow {
     color: #cdb185;
-    font-size: var(--text-2xs);
+    font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -2802,10 +2837,10 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .mspot-card-title {
     font-family: var(--studio-serif);
-    font-weight: 400;
+    font-weight: 700;
     font-size: var(--text-lg);
     line-height: 1.2;
-    letter-spacing: -0.003em;
+    letter-spacing: -0.01em;
     color: #f5f2ec;
     margin-bottom: 9px;
     text-wrap: balance;
@@ -2824,6 +2859,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     margin-top: 22px;
   }
   .mspot-dot {
+    position: relative;
     width: 7px;
     height: 7px;
     border-radius: var(--radius-pill);
@@ -2834,6 +2870,13 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     transition:
       background 0.25s,
       width 0.25s;
+  }
+  /* Invisible 44px-tall tap target around the 7px dot. Horizontal reach is
+     half the 7px gap so neighbouring dots never steal each other's taps. */
+  .mspot-dot::after {
+    content: "";
+    position: absolute;
+    inset: -18.5px -3.5px;
   }
   .mspot-dot.is-active {
     background: var(--studio-accent);
@@ -2912,7 +2955,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .mspot-s-eyebrow {
     color: var(--studio-text-muted);
-    font-size: var(--text-2xs);
+    font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 0.13em;
     text-transform: uppercase;
@@ -2920,16 +2963,17 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
   }
   .mspot-s-title {
     font-family: var(--studio-serif);
-    font-weight: 400;
+    font-weight: 700;
     font-size: var(--text-2xl);
     line-height: 1.14;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.02em;
     color: var(--studio-text);
     margin-bottom: 14px;
   }
   .mspot-s-outcome {
     font-family: var(--studio-serif);
-    font-style: italic;
+    font-weight: 500;
+    font-style: normal;
     font-size: var(--text-lg);
     line-height: 1.4;
     color: var(--studio-accent);
@@ -3080,7 +3124,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     }
   }
   .mspot-sheet.is-open .mspot-sheet-body > * {
-    animation: mspotItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: mspotItemIn 0.5s var(--ease-out) both;
   }
   .mspot-sheet.is-open .mspot-sheet-body > *:nth-child(1) {
     animation-delay: 0.04s;
@@ -3227,7 +3271,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
     background: var(--studio-accent-light);
     border-radius: var(--radius-xs);
     padding: 2px 7px;
-    font-size: var(--text-2xs);
+    font-size: var(--text-xs);
     font-weight: 700;
     white-space: nowrap;
   }
@@ -3261,37 +3305,73 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 </style>
 
 <script>
+  import { initMobileMenu } from "../scripts/mobile-menu";
   document.addEventListener("DOMContentLoaded", () => {
     const root = document.querySelector(
       '[data-variation-content="studio"]'
     );
     if (!root) return;
 
-    // Reveal animations
-    const reveals = root.querySelectorAll(".studio-reveal");
-
-    reveals.forEach((el) => {
-      (el as HTMLElement).style.animationPlayState = "paused";
-      (el as HTMLElement).style.opacity = "0";
-      (el as HTMLElement).style.transform = "translateY(16px)";
-    });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            el.style.animationPlayState = "running";
-            el.style.opacity = "";
-            el.style.transform = "";
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    // Reveal animations — scroll-triggered. Skipped entirely for reduced
+    // motion (the CSS doesn't hide anything then), and backed by a failsafe
+    // so content can never stay invisible if the observer doesn't fire.
+    const reveals = Array.from(
+      root.querySelectorAll<HTMLElement>(".studio-reveal")
     );
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    reveals.forEach((el) => observer.observe(el));
+    if (!reduceMotion && reveals.length) {
+      const pending = new Set(reveals);
+      let observer: IntersectionObserver | null = null;
+
+      const reveal = (el: HTMLElement) => {
+        if (!pending.delete(el)) return;
+        el.style.animationPlayState = "running";
+        el.style.opacity = "";
+        el.style.transform = "";
+        observer?.unobserve(el);
+      };
+
+      if ("IntersectionObserver" in window) {
+        reveals.forEach((el) => {
+          el.style.animationPlayState = "paused";
+          el.style.opacity = "0";
+          el.style.transform = "translateY(16px)";
+        });
+
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting)
+                reveal(entry.target as HTMLElement);
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+        );
+        reveals.forEach((el) => observer!.observe(el));
+
+        // Failsafe: ~4s after load, anything still hidden above the screen is
+        // revealed, and anything still hidden ON the screen means the
+        // observer isn't working — so reveal everything. Content further
+        // down otherwise keeps its scroll reveal.
+        window.setTimeout(() => {
+          const viewBottom = window.innerHeight - 40;
+          let observerStuck = false;
+          Array.from(pending).forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (!r.height) return;
+            if (r.bottom <= 0) return reveal(el);
+            const seen = Math.min(r.bottom, viewBottom) - Math.max(r.top, 0);
+            if (seen / r.height >= 0.15) observerStuck = true;
+          });
+          if (observerStuck) Array.from(pending).forEach(reveal);
+        }, 4000);
+      } else {
+        reveals.forEach(reveal);
+      }
+    }
 
     // Project showcase
     const showcase = root.querySelector("[data-project-showcase]");
@@ -3556,11 +3636,17 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
             : "hidden";
       };
 
+      // Element that had focus before the viewer opened — focus returns
+      // there on close so keyboard users keep their place.
+      let lightboxReturnFocus: HTMLElement | null = null;
+
       const openLightbox = (
         projectIndex: number,
         screenshotIndex: number
       ) => {
         if (!lightbox) return;
+        if (lightbox.hidden)
+          lightboxReturnFocus = document.activeElement as HTMLElement | null;
         lightboxProject = projectIndex;
         lightboxIdx = screenshotIndex;
         phTrack("project_engaged", {
@@ -3578,7 +3664,33 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
         if (!lightbox) return;
         lightbox.hidden = true;
         document.body.classList.remove("lightbox-open");
+        lightboxReturnFocus?.focus({ preventScroll: true });
+        lightboxReturnFocus = null;
       };
+
+      // Keep Tab cycling through the viewer's own buttons while it is open.
+      lightbox?.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key !== "Tab") return;
+        const focusables = Array.from(
+          lightbox.querySelectorAll<HTMLElement>("button")
+        ).filter(
+          (el) =>
+            !el.hasAttribute("disabled") &&
+            el.getClientRects().length > 0 &&
+            getComputedStyle(el).visibility !== "hidden"
+        );
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const current = document.activeElement as HTMLElement | null;
+        if (event.shiftKey && (current === first || !lightbox.contains(current))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (current === last || !lightbox.contains(current))) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
 
       lightboxClose?.addEventListener("click", closeLightbox);
       lightboxPrev?.addEventListener("click", () => {
@@ -3704,8 +3816,8 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
 
       // Start the "next" arrow's idle invitation once the showcase scrolls
       // into view (not before — no point inviting off-screen). The observer
-      // fires once then disconnects; the CSS loop runs until the visitor
-      // navigates, at which point stopNudge() removes the class.
+      // fires once then disconnects; the CSS plays the invite twice, and
+      // stopNudge() removes the class as soon as the visitor navigates.
       if (arrowsWrap) {
         const nudgeObserver = new IntersectionObserver(
           (entries, obs) => {
@@ -3719,127 +3831,9 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
         );
         nudgeObserver.observe(showcase);
       }
-
-      // Auto-scroll into the spotlight after a longer peek at the hero so the
-      // headline is read before motion. Bails if the user already scrolled,
-      // has a hash deep-link, or starts interacting.
-      // Sequence: 0ms land → 1800ms spotlight lifts (anticipation) → 2700ms page scrolls →
-      // 3300ms panel settles. The "More details" button has its own CSS-driven
-      // late entry tied to .is-active, so it animates in on every project switch.
-      (() => {
-        if (window.location.hash) return;
-        if (window.scrollY > 4) return;
-        if (
-          window.matchMedia("(prefers-reduced-motion: reduce)")
-            .matches
-        )
-          return;
-        // On mobile the desktop browser is hidden and replaced by the scrollable
-        // card list, so there's nothing to lift/anticipate — skip the auto-scroll.
-        if (window.matchMedia("(max-width: 900px)").matches) return;
-
-        const section = document.querySelector(
-          ".projects-browser-section"
-        ) as HTMLElement | null;
-        const browser = document.querySelector(
-          ".work-browser"
-        ) as HTMLElement | null;
-        if (!section || !browser) return;
-
-        let cancelled = false;
-        const timeouts: number[] = [];
-
-        const cancel = () => {
-          if (cancelled) return;
-          cancelled = true;
-          timeouts.forEach((id) => window.clearTimeout(id));
-          browser.classList.remove("is-anticipating");
-          window.removeEventListener("wheel", cancel);
-          window.removeEventListener("touchstart", cancel);
-          window.removeEventListener("keydown", cancel);
-          window.removeEventListener("mousedown", cancel);
-        };
-
-        window.addEventListener("wheel", cancel, { passive: true });
-        window.addEventListener("touchstart", cancel, {
-          passive: true,
-        });
-        window.addEventListener("mousedown", cancel);
-        window.addEventListener("keydown", cancel);
-
-        // Anticipation lift — the whole spotlight unit (topline + shell) rises,
-        // shadow deepens, green hint on the border. Held longer so the hero gets read.
-        timeouts.push(
-          window.setTimeout(() => {
-            if (cancelled) return;
-            browser.classList.add("is-anticipating");
-          }, 1800)
-        );
-
-        // Begin the scroll. The lift is still in effect, so the scroll reads as
-        // the same motion continuing — the panel that just rose now meets you.
-        timeouts.push(
-          window.setTimeout(() => {
-            if (cancelled) return;
-            const HEADER_OFFSET = 64;
-            const target =
-              section.getBoundingClientRect().top +
-              window.scrollY -
-              HEADER_OFFSET -
-              12;
-            if (target > window.scrollY + 4) {
-              window.scrollTo({ top: target, behavior: "smooth" });
-            }
-          }, 2700)
-        );
-
-        // Release the lift as the panel reaches its resting position in view.
-        timeouts.push(
-          window.setTimeout(() => {
-            browser.classList.remove("is-anticipating");
-          }, 3300)
-        );
-      })();
     }
 
-    // Mobile menu toggle
-    const toggle = root.querySelector(".studio-menu-toggle");
-    const nav = root.querySelector(
-      ".studio-nav"
-    ) as HTMLElement | null;
-    if (toggle && nav) {
-      const openMenu = () => {
-        nav.style.display = "flex";
-        nav.style.flexDirection = "column";
-        nav.style.position = "absolute";
-        nav.style.top = "64px";
-        nav.style.left = "0";
-        nav.style.right = "0";
-        nav.style.background = "var(--studio-bg)";
-        nav.style.padding = "24px";
-        nav.style.borderBottom = "1px solid var(--studio-border)";
-        nav.style.gap = "16px";
-      };
-      const closeMenu = () => {
-        nav.style.display = "";
-        nav.style.flexDirection = "";
-        nav.style.position = "";
-        nav.style.top = "";
-        nav.style.left = "";
-        nav.style.right = "";
-        nav.style.background = "";
-        nav.style.padding = "";
-        nav.style.borderBottom = "";
-        nav.style.gap = "";
-      };
-      toggle.addEventListener("click", () => {
-        const isOpen = nav.style.display === "flex";
-        isOpen ? closeMenu() : openMenu();
-      });
-      nav.querySelectorAll(".studio-nav-link").forEach((link) => {
-        link.addEventListener("click", closeMenu);
-      });
-    }
+    initMobileMenu(root.querySelector<HTMLElement>(".studio-header"));
   });
 </script>
 
@@ -3951,13 +3945,59 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
           if (i === focus) openSheet(i);
           else scrollToCard(i);
         });
+        // Keyboard / screen reader: Enter or Space opens this card's details.
+        c.addEventListener("keydown", function (e) {
+          if (e.key !== "Enter" && e.key !== " ") return;
+          e.preventDefault();
+          if (i !== focus) scrollToCard(i);
+          openSheet(i);
+        });
       });
 
       // ===== detail sheet =====
       var sheet = document.querySelector("[data-mspot-sheet]");
       var scrim = document.querySelector("[data-mspot-scrim]");
       var sheetBody = sheet.querySelector("[data-mspot-sheet-body]");
+      var sheetClose = sheet.querySelector("[data-mspot-close]");
       var curP = 0;
+      // Where focus goes back to when the sheet / viewer closes.
+      var sheetReturnFocus = null;
+      var lbReturnFocus = null;
+
+      // Visible, enabled controls inside a container — used to keep Tab
+      // cycling inside an open sheet or viewer.
+      function focusablesIn(container) {
+        return Array.prototype.slice
+          .call(
+            container.querySelectorAll(
+              'button, a[href], summary, [tabindex]:not([tabindex="-1"])'
+            )
+          )
+          .filter(function (el) {
+            return (
+              !el.hasAttribute("disabled") &&
+              el.getClientRects().length > 0 &&
+              getComputedStyle(el).visibility !== "hidden"
+            );
+          });
+      }
+      function trapTab(e, container) {
+        var items = focusablesIn(container);
+        if (!items.length) return;
+        var first = items[0];
+        var last = items[items.length - 1];
+        var current = document.activeElement;
+        if (e.shiftKey && (current === first || !container.contains(current))) {
+          e.preventDefault();
+          last.focus();
+        } else if (
+          !e.shiftKey &&
+          (current === last || !container.contains(current))
+        ) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
 
       function tagsHtml(tech) {
         var max = 4;
@@ -4059,7 +4099,7 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
           " / " +
           TOTAL +
           "</div>" +
-          '<h2 class="mspot-s-title">' +
+          '<h2 class="mspot-s-title" id="mspot-sheet-title">' +
           esc(p.title) +
           "</h2>" +
           '<div class="mspot-s-outcome">' +
@@ -4073,21 +4113,28 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
           actionsHtml(p) +
           discHtml(p);
         sheetBody.scrollTop = 0;
+        if (!sheet.classList.contains("is-open"))
+          sheetReturnFocus = document.activeElement;
+        sheet.removeAttribute("inert");
         sheet.classList.add("is-open");
         scrim.classList.add("is-open");
         document.body.classList.add("lightbox-open");
+        sheetClose.focus({ preventScroll: true });
         wireShots(i);
         ph("project_viewed", { project_id: p.id, title: p.title });
       }
       function closeSheet() {
+        if (!sheet.classList.contains("is-open")) return;
         sheet.classList.remove("is-open");
         scrim.classList.remove("is-open");
+        sheet.setAttribute("inert", "");
         if (!lb.classList.contains("is-open"))
           document.body.classList.remove("lightbox-open");
+        if (sheetReturnFocus && sheetReturnFocus.focus)
+          sheetReturnFocus.focus({ preventScroll: true });
+        sheetReturnFocus = null;
       }
-      sheet
-        .querySelector("[data-mspot-close]")
-        .addEventListener("click", closeSheet);
+      sheetClose.addEventListener("click", closeSheet);
       scrim.addEventListener("click", closeSheet);
 
       // ===== lightbox =====
@@ -4108,19 +4155,39 @@ const projectTotalLabel = String(spotlightProjects.length).padStart(
             s.addEventListener("click", function () {
               lbIdx = parseInt(s.getAttribute("data-mspot-shot"), 10);
               showLb();
+              if (!lb.classList.contains("is-open"))
+                lbReturnFocus = document.activeElement;
               lb.classList.add("is-open");
               document.body.classList.add("lightbox-open");
+              lbClose.focus({ preventScroll: true });
             });
           });
       }
-      lb.querySelector("[data-mspot-lb-close]").addEventListener(
-        "click",
-        function () {
-          lb.classList.remove("is-open");
-          if (!sheet.classList.contains("is-open"))
-            document.body.classList.remove("lightbox-open");
+      var lbClose = lb.querySelector("[data-mspot-lb-close]");
+      function closeLb() {
+        if (!lb.classList.contains("is-open")) return;
+        lb.classList.remove("is-open");
+        if (!sheet.classList.contains("is-open"))
+          document.body.classList.remove("lightbox-open");
+        if (lbReturnFocus && lbReturnFocus.focus)
+          lbReturnFocus.focus({ preventScroll: true });
+        lbReturnFocus = null;
+      }
+      lbClose.addEventListener("click", closeLb);
+
+      // Escape closes the top-most layer; Tab stays inside it while open.
+      document.addEventListener("keydown", function (e) {
+        var lbOpen = lb.classList.contains("is-open");
+        var sheetOpen = sheet.classList.contains("is-open");
+        if (!lbOpen && !sheetOpen) return;
+        if (e.key === "Escape") {
+          e.preventDefault();
+          if (lbOpen) closeLb();
+          else closeSheet();
+        } else if (e.key === "Tab") {
+          trapTab(e, lbOpen ? lb : sheet);
         }
-      );
+      });
       lb.querySelector("[data-mspot-lb-prev]").addEventListener(
         "click",
         function () {

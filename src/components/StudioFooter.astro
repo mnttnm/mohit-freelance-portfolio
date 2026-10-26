@@ -2,10 +2,10 @@
 import { actions } from 'astro:actions';
 ---
 
-<!-- Unified footer: "Got a project in mind?" + send-message form + 3 stacked action cards -->
+<!-- Unified footer: "Tell me what you're building" + send-message form + 2 stacked action cards -->
 <footer id="studio-footer" class="studio-footer-unified" data-ph-section="contact">
   <div class="studio-container">
-    <p class="studio-footer-label studio-reveal">Got a project in mind?</p>
+    <h2 class="studio-footer-label studio-reveal">Tell me what you're building</h2>
     <p class="studio-footer-subtitle studio-reveal">
       I'm always happy to chat, even if you're just exploring ideas and not sure what you need yet. No pitch, just a conversation.
     </p>
@@ -42,13 +42,13 @@ import { actions } from 'astro:actions';
             <textarea id="studio-message" name="message" required minlength="10" maxlength="1000" placeholder="Tell me what you're working on."></textarea>
           </div>
 
-          <button type="submit" class="studio-btn-primary studio-form-submit">Send message &rarr;</button>
+          <button type="submit" class="studio-btn-primary studio-form-submit">Send message</button>
 
           <div id="studio-form-error" class="studio-form-error" role="alert"></div>
         </form>
       </div>
 
-      <!-- Right: three stacked action boxes -->
+      <!-- Right: two stacked action boxes -->
       <div class="studio-footer-actions">
 
         <div class="studio-footer-card studio-footer-card--action">
@@ -56,7 +56,7 @@ import { actions } from 'astro:actions';
             <h3 class="studio-footer-card-heading">Prefer a call?</h3>
             <p class="studio-footer-card-subtext">No slides, no pitch. Just 30 minutes to talk through what you're building.</p>
           </div>
-          <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="studio-btn-primary studio-footer-card-cta">Book a call &rarr;</a>
+          <a href="https://cal.com/tatermohit/call-with-mohit-tater" class="studio-btn-primary studio-footer-card-cta">Book a call</a>
         </div>
 
         <div class="studio-footer-card studio-footer-card--action">
@@ -65,7 +65,7 @@ import { actions } from 'astro:actions';
             <p class="studio-footer-card-subtext">Say hi, follow along, or read what I'm thinking about.</p>
           </div>
           <div class="studio-footer-socials">
-            <a href="https://twitter.com/tatermohit" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a href="https://twitter.com/tatermohit" target="_blank" rel="noopener noreferrer">X</a>
             <span class="studio-footer-socials-sep">/</span>
             <a href="https://www.linkedin.com/in/tatermohit/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span class="studio-footer-socials-sep">/</span>
@@ -91,10 +91,12 @@ import { actions } from 'astro:actions';
     padding: 0 var(--site-container-padding);
   }
 
-  .studio-footer-unified .studio-reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: studioFooterReveal 0.7s var(--ease-out) forwards;
+  @media (prefers-reduced-motion: no-preference) {
+    .studio-footer-unified .studio-reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: studioFooterReveal 0.7s var(--ease-out) forwards;
+    }
   }
 
   @keyframes studioFooterReveal {
@@ -108,7 +110,7 @@ import { actions } from 'astro:actions';
     display: inline-block;
     padding: 14px 32px;
     background: var(--studio-accent);
-    color: #fff;
+    color: var(--color-on-accent);
     font-size: var(--text-md);
     font-weight: 600;
     text-decoration: none;
@@ -136,9 +138,10 @@ import { actions } from 'astro:actions';
 
   .studio-footer-label {
     font-family: var(--studio-serif);
+    font-weight: 800;
     font-size: var(--text-display-md);
     color: var(--studio-text);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     margin-bottom: 16px;
   }
@@ -169,6 +172,7 @@ import { actions } from 'astro:actions';
 
   .studio-footer-card-heading {
     font-family: var(--studio-serif);
+    font-weight: 700;
     font-size: var(--text-xl);
     color: var(--studio-text);
     margin: 0 0 8px;
@@ -227,13 +231,14 @@ import { actions } from 'astro:actions';
     color: var(--studio-text);
     font-family: var(--studio-sans);
     font-size: var(--text-md);
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s var(--ease-out);
   }
 
   .studio-form-group input:focus,
   .studio-form-group textarea:focus {
     outline: none;
     border-color: var(--studio-accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
   }
 
   .studio-form-group input::placeholder,
@@ -248,6 +253,15 @@ import { actions } from 'astro:actions';
     font-family: var(--studio-sans);
   }
 
+  .studio-form-submit:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .studio-form-group [aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
   .studio-honeypot {
     display: none;
     visibility: hidden;
@@ -259,7 +273,7 @@ import { actions } from 'astro:actions';
     display: none;
     padding: 14px 16px;
     background: var(--studio-accent);
-    color: #fff;
+    color: var(--color-on-accent);
     border-radius: var(--radius-sm);
     margin-bottom: 4px;
   }
@@ -279,11 +293,15 @@ import { actions } from 'astro:actions';
   .studio-form-success-close {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--color-on-accent);
     font-size: var(--text-2xl);
     cursor: pointer;
     padding: 0;
     line-height: 1;
+    /* 44px tap target; negative margin keeps the banner's height unchanged. */
+    min-width: 44px;
+    min-height: 44px;
+    margin: -12px -12px -12px 0;
   }
 
   .studio-form-success-close:hover {
@@ -291,7 +309,7 @@ import { actions } from 'astro:actions';
   }
 
   .studio-form-error {
-    color: #c0392b;
+    color: var(--color-danger);
     font-size: var(--text-sm);
     display: none;
   }
@@ -348,7 +366,10 @@ import { actions } from 'astro:actions';
     font-weight: 500;
     color: var(--studio-accent);
     text-decoration: none;
-    transition: opacity 0.2s;
+    /* Taller tap target without moving anything: pad, then pull back. */
+    padding-block: 10px;
+    margin-block: -10px;
+    transition: opacity 0.2s var(--ease-out);
   }
 
   .studio-footer-socials a:hover {
@@ -434,6 +455,24 @@ import { actions } from 'astro:actions';
       track('contact_form_started');
     });
 
+    // Mark the fields the server rejected so they're findable (and announced),
+    // and clear the mark as soon as the visitor edits that field.
+    const markInvalid = (names: string[]) => {
+      names.forEach((name) => {
+        const field = form.elements.namedItem(name) as HTMLElement | null;
+        if (!field) return;
+        field.setAttribute('aria-invalid', 'true');
+        field.setAttribute('aria-describedby', 'studio-form-error');
+      });
+      (form.querySelector('[aria-invalid="true"]') as HTMLElement | null)?.focus();
+    };
+    form.addEventListener('input', (e) => {
+      const field = e.target as HTMLElement;
+      if (field.getAttribute('aria-invalid') !== 'true') return;
+      field.removeAttribute('aria-invalid');
+      field.removeAttribute('aria-describedby');
+    });
+
     form.addEventListener('submit', async (e: Event) => {
       e.preventDefault();
       clearError();
@@ -443,25 +482,34 @@ import { actions } from 'astro:actions';
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Sending\u2026';
+      form.setAttribute('aria-busy', 'true');
 
-      const { error } = await actions.contact(new FormData(form));
+      try {
+        const { error } = await actions.contact(new FormData(form));
 
-      if (!error) {
-        track('contact_form_submitted', { success: true });
-        showSuccess();
-        form.reset();
-        formStarted = false;
-      } else if (isInputError(error)) {
-        track('contact_form_submitted', { success: false, reason: 'validation' });
-        const firstField = Object.keys(error.fields)[0];
-        setError(error.fields[firstField]?.[0] ?? 'Please check the form and try again.');
-      } else {
-        track('contact_form_submitted', { success: false, reason: 'server' });
-        setError(error.message || 'Something went wrong. Please email me directly.');
+        if (!error) {
+          track('contact_form_submitted', { success: true });
+          showSuccess();
+          form.reset();
+          formStarted = false;
+        } else if (isInputError(error)) {
+          track('contact_form_submitted', { success: false, reason: 'validation' });
+          const fields = Object.keys(error.fields);
+          setError(error.fields[fields[0]]?.[0] ?? 'Please check the form and try again.');
+          markInvalid(fields);
+        } else {
+          track('contact_form_submitted', { success: false, reason: 'server' });
+          setError("That didn't send. Try again in a minute, or book a call instead.");
+        }
+      } catch {
+        // Offline or the request never completed — don't leave the button stuck.
+        track('contact_form_submitted', { success: false, reason: 'network' });
+        setError("That didn't go through. Check your connection and try again.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        form.removeAttribute('aria-busy');
       }
-
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
     });
   });
 </script>

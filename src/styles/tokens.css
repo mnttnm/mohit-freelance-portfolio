@@ -18,7 +18,7 @@
   --sand-50:   #faf8f5; /* page background */
   --ink-900:   #1a1a1a; /* primary text */
   --ink-700:   #4a4a4a; /* body text */
-  --ink-500:   #8a8a8a; /* muted text */
+  --ink-500:   #6b6b6b; /* muted text — 5:1 on the page bg (#8a8a8a failed AA) */
   --line-200:  #e5e0da; /* hairline borders */
   --wash-100:  #eef1ed; /* soft accent-tinted surface */
   --clay-500:  #b4533c; /* danger / warm accent */
@@ -68,9 +68,12 @@
   --scrim-a80: color-mix(in srgb, #000 80%, transparent);
 
   /* ---- Semantic: type --------------------------------------------------- */
-  --font-serif: 'DM Serif Display', Georgia, serif;
-  --font-sans:  'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+  /* One family, two cuts: Chivo for everything (display moments at 700–800),
+     Chivo Mono for metadata and numbers. */
+  --font-display: 'Chivo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:    'Chivo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'Chivo Mono', ui-monospace, monospace;
+  --font-serif:   var(--font-display); /* legacy name — display role, no longer a serif */
 
   /* Fixed type scale (body / UI). Reach for a step, not an arbitrary rem. */
   --text-2xs: 0.62rem; /* legal, micro-captions */

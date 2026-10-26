@@ -6,22 +6,36 @@
 ---
 
 <script>
-  import posthog from 'posthog-js';
-
   const key = import.meta.env.PUBLIC_POSTHOG_KEY;
   const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? 'https://us.i.posthog.com';
 
   if (key) {
-    posthog.init(key, {
-      api_host: host,
-      // ui_host tells PostHog where its app lives, needed when api_host is a
-      // same-origin reverse-proxy path (e.g. "/ingest") so toolbar/replay
-      // links still resolve to the real dashboard.
-      ui_host: 'https://us.posthog.com',
-      defaults: '2025-05-24',
-      person_profiles: 'identified_only',
-    });
-    // Expose globally so per-page scripts can call window.posthog.capture(...).
-    (window as any).posthog = posthog;
+    // posthog-js is ~60 KB gzipped. Parsing it on load competes with the hero
+    // entrance, so fetch it once the browser is idle. Events fired before then
+    // (CTA clicks, section views) are queued and replayed after init.
+    const queued: unknown[][] = [];
+    (window as any).posthog = { capture: (...args: unknown[]) => queued.push(args) };
+
+    const load = async () => {
+      const { default: posthog } = await import('posthog-js');
+      posthog.init(key, {
+        api_host: host,
+        // ui_host tells PostHog where its app lives, needed when api_host is a
+        // same-origin reverse-proxy path (e.g. "/ingest") so toolbar/replay
+        // links still resolve to the real dashboard.
+        ui_host: 'https://us.posthog.com',
+        defaults: '2025-05-24',
+        person_profiles: 'identified_only',
+      });
+      // Expose globally so per-page scripts can call window.posthog.capture(...).
+      (window as any).posthog = posthog;
+      queued.forEach((args) => (posthog.capture as (...a: unknown[]) => void)(...args));
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => void load(), { timeout: 3000 });
+    } else {
+      setTimeout(() => void load(), 1500);
+    }
   }
 </script>

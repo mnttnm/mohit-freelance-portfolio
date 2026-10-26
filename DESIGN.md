@@ -7,7 +7,7 @@ color:
   surface:        { value: "#ffffff", role: "cards, raised panels" }
   text:           { value: "#1a1a1a", role: "primary / headings" }
   text-body:      { value: "#4a4a4a", role: "paragraph body" }
-  text-muted:     { value: "#8a8a8a", role: "captions, meta, de-emphasis" }
+  text-muted:     { value: "#6b6b6b", role: "captions, meta, de-emphasis" }
   accent:         { value: "#2d5a3d", role: "the one primary action per view" }
   accent-pressed: { value: "#234a31", role: "accent hover / active" }
   accent-wash:    { value: "#eef1ed", role: "soft accent-tinted fill" }
@@ -15,9 +15,9 @@ color:
   border:         { value: "#e5e0da", role: "hairlines, dividers" }
   danger:         { value: "#b4533c", role: "errors, destructive" }
 type:
-  serif: "DM Serif Display"   # display moments only — hero, section titles
-  sans:  "Instrument Sans"    # all body, UI, labels
-  mono:  "JetBrains Mono"     # opt-in: code, project metadata
+  display-face: "Chivo"   # headings at 700–800, tight tracking (-0.02/-0.03em)
+  sans:    "Chivo"        # all body, UI, labels at 400–600
+  mono:    "Chivo Mono"   # small facts and metadata: hero label, trust line, tags
   # Fixed sizes (body/UI) — pick a step, never a raw rem.
   scale: { 2xs: .62, xs: .72, sm: .82, md: .92, lg: 1.05, xl: 1.2, 2xl: 1.5, 3xl: 2.05 } # rem
   # Fluid sizes (responsive headings).
@@ -40,9 +40,10 @@ decisions the token table can't make for you.
 
 ## Voice
 
-Restrained and editorial. Confident, not loud. The serif display face does the
-emotional work in a few deliberate moments (hero, section openers); everything
-else is quiet sans. White space is a feature, not a gap to fill. When unsure
+Restrained and direct. Confident, not loud. One family, Chivo, carries the
+whole site: weight and size make the hierarchy (bold display headings, quiet
+regular body), and Chivo Mono marks small facts. No serif, no italic accent
+words in headlines, no grey caps label above every section. White space is a feature, not a gap to fill. When unsure
 between "more" and "less", choose less.
 
 ## How to use the system
@@ -52,9 +53,10 @@ between "more" and "less", choose less.
   `--studio-*` names still work — they alias the same tokens.
 - **One accent action per view.** `--color-accent` marks the single primary
   thing to do. If two things are green, neither reads as primary.
-- **Type roles are fixed.** Serif for display moments, sans for everything else,
-  mono only where it earns it (code, structured metadata). Don't introduce a
-  fourth family.
+- **Type roles are fixed.** Chivo at 700–800 for headings, Chivo at 400–600
+  for everything else, Chivo Mono only for small facts and metadata. Don't
+  introduce another family. (`--font-serif` survives only as a legacy alias
+  for the display role.)
 - **Font size = a scale token.** Body/UI use the fixed `--text-*` steps;
   responsive headings use `--text-display-*`. Raw `font-size: …rem/px/clamp()`
   fails the build. Pick the nearest step rather than inventing a size.

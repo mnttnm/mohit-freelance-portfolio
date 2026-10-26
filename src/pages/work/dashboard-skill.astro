@@ -94,22 +94,23 @@ const iterations = [
 >
   <div data-variation-content="studio">
     <!-- Header -->
-    <header class="studio-header">
+    <header class="studio-header" data-menu>
       <div class="studio-header-inner">
         <a href="/" class="studio-logo">Mohit Tater</a>
-        <nav class="studio-nav">
+        <nav class="studio-nav" id="site-nav" data-menu-panel>
           <a href="/" class="studio-nav-link">Home</a>
-          <a href="/projects" class="studio-nav-link studio-nav-link-active">Work</a>
+          <a href="/projects" class="studio-nav-link studio-nav-link-active" aria-current="page">Work</a>
           <a href="/about" class="studio-nav-link">About</a>
           <a href="#studio-footer" class="studio-nav-link studio-nav-cta" data-ph-cta="lets_talk" data-ph-location="nav">Let's talk</a>
         </nav>
-        <button class="studio-menu-toggle" aria-label="Toggle menu">
+        <button class="studio-menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
           <span class="studio-menu-bar"></span>
           <span class="studio-menu-bar"></span>
         </button>
       </div>
     </header>
 
+    <main id="main">
     <!-- Hero — leads with the premise -->
     <section class="cs-hero" data-ph-section="case_study_hero">
       <div class="studio-container">
@@ -118,7 +119,7 @@ const iterations = [
         </a>
         <p class="cs-kicker studio-reveal">Case study &middot; Agent skill</p>
         <h1 class="cs-headline studio-reveal">
-          A skill that turns dashboards into <em>decisions</em>, not decoration.
+          A skill that turns dashboards into decisions, not decoration.
         </h1>
         <p class="cs-lede studio-reveal">
           Most dashboards are a wall of charts &mdash; technically full, practically useless.
@@ -188,7 +189,6 @@ const iterations = [
     <!-- Six principles — interactive, illustrated -->
     <section class="cs-section cs-section-feature" aria-labelledby="principles-heading" data-principles>
       <div class="studio-container">
-        <p class="studio-section-label studio-reveal">The grounding</p>
         <h2 id="principles-heading" class="cs-h2 studio-reveal">Six principles, every iteration</h2>
         <p class="cs-section-intro studio-reveal">
           The questions I built against from the very first pass &mdash; they hold whatever the
@@ -355,7 +355,6 @@ const iterations = [
     <!-- The iterations -->
     <section class="cs-section" aria-labelledby="iterations-heading">
       <div class="studio-container">
-        <p class="studio-section-label studio-reveal">The iterations</p>
         <h2 id="iterations-heading" class="cs-h2 studio-reveal">Watching the principles take hold</h2>
         <p class="cs-section-intro studio-reveal">
           Progress wasn't a straight line &mdash; it overshot into decoration before it settled.
@@ -387,7 +386,6 @@ const iterations = [
     <!-- How it stays honest -->
     <section class="cs-section cs-section-feature" aria-labelledby="proof-heading">
       <div class="studio-container">
-        <p class="studio-section-label studio-reveal">The honesty check</p>
         <h2 id="proof-heading" class="cs-h2 studio-reveal">How the skill keeps itself honest</h2>
         <div class="cs-prose studio-reveal">
           <p>
@@ -417,6 +415,7 @@ const iterations = [
         </div>
       </div>
     </section>
+    </main>
 
     <StudioFooter />
 
@@ -483,15 +482,18 @@ const iterations = [
   }
 
   /* ===== Reveal Animation ===== */
-  .studio-reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: studioReveal 0.7s var(--ease-out) forwards;
+  /* Only hide + animate when the visitor hasn't asked for reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .studio-reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: studioReveal 0.7s var(--ease-out) forwards;
+    }
+    .studio-reveal:nth-child(1) { animation-delay: 0.05s; }
+    .studio-reveal:nth-child(2) { animation-delay: 0.12s; }
+    .studio-reveal:nth-child(3) { animation-delay: 0.19s; }
+    .studio-reveal:nth-child(4) { animation-delay: 0.26s; }
   }
-  .studio-reveal:nth-child(1) { animation-delay: 0.05s; }
-  .studio-reveal:nth-child(2) { animation-delay: 0.12s; }
-  .studio-reveal:nth-child(3) { animation-delay: 0.19s; }
-  .studio-reveal:nth-child(4) { animation-delay: 0.26s; }
   @keyframes studioReveal { to { opacity: 1; transform: translateY(0); } }
 
   /* ===== Section Label ===== */
@@ -510,7 +512,6 @@ const iterations = [
     top: 0; left: 0; right: 0;
     z-index: 100;
     background: var(--studio-bg-header);
-    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--studio-border);
   }
   .studio-header-inner {
@@ -524,6 +525,7 @@ const iterations = [
   }
   .studio-logo {
     font-family: var(--studio-serif);
+    font-weight: 700;
     font-size: var(--text-xl);
     color: var(--studio-text);
     text-decoration: none;
@@ -553,11 +555,11 @@ const iterations = [
   }
   .cs-headline {
     font-family: var(--studio-serif);
+    font-weight: 800;
     font-size: var(--text-display-xl);
-    line-height: 1.08; letter-spacing: -0.025em; color: var(--studio-text);
+    line-height: 1.08; letter-spacing: -0.03em; color: var(--studio-text);
     margin-bottom: 28px; max-width: 940px; text-wrap: balance;
   }
-  .cs-headline em { font-style: italic; color: var(--studio-accent); }
   .cs-lede { font-size: var(--text-lg); color: var(--studio-text-body); line-height: 1.8; max-width: 720px; }
   .cs-lede em { color: var(--studio-text); font-style: italic; font-weight: 500; }
 
@@ -565,8 +567,9 @@ const iterations = [
   .cs-section { padding: 64px 0; }
   .cs-h2 {
     font-family: var(--studio-serif);
+    font-weight: 800;
     font-size: var(--text-display-md);
-    line-height: 1.14; letter-spacing: -0.02em; color: var(--studio-text);
+    line-height: 1.14; letter-spacing: -0.03em; color: var(--studio-text);
     margin-bottom: 18px; text-wrap: balance;
   }
   .cs-section-intro { font-size: var(--text-lg); color: var(--studio-text-body); line-height: 1.75; max-width: 680px; margin-bottom: 48px; }
@@ -626,8 +629,9 @@ const iterations = [
   .cs-ba-closer { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
   .cs-ba-oneliner {
     margin: 0; flex: 1 1 380px; max-width: 680px;
-    font-family: var(--studio-serif); font-size: var(--text-display-xs);
-    line-height: 1.4; color: var(--studio-text); letter-spacing: -0.01em;
+    font-family: var(--studio-serif);
+    font-weight: 700; font-size: var(--text-display-xs);
+    line-height: 1.4; color: var(--studio-text); letter-spacing: -0.02em;
   }
   .cs-ba-oneliner em { color: var(--studio-accent); font-style: italic; }
 
@@ -663,7 +667,7 @@ const iterations = [
   }
   .cs-modal-close:hover { color: var(--studio-text); border-color: var(--studio-text-muted); }
   .cs-modal-eyebrow { font-family: var(--studio-mono); font-size: var(--text-xs); letter-spacing: 0.06em; color: var(--studio-accent); margin-bottom: 8px; }
-  .cs-modal-title { font-family: var(--studio-serif); font-size: var(--text-2xl); letter-spacing: -0.015em; color: var(--studio-text); margin-bottom: 8px; line-height: 1.1; }
+  .cs-modal-title { font-family: var(--studio-serif); font-weight: 700; font-size: var(--text-2xl); letter-spacing: -0.02em; color: var(--studio-text); margin-bottom: 8px; line-height: 1.1; }
   .cs-modal-sub { font-size: var(--text-md); color: var(--studio-text-muted); margin-bottom: 22px; }
 
   .cs-modal-thumbs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-bottom: 24px; }
@@ -682,7 +686,7 @@ const iterations = [
   .cs-note-l { display: flex; gap: 8px; font-size: var(--text-sm); line-height: 1.5; color: var(--studio-text-body); margin-bottom: 5px; }
   .cs-note-l:last-child { margin-bottom: 0; }
   .cs-note-l7 { color: var(--studio-text); }
-  .cs-chip { flex-shrink: 0; font-family: var(--studio-mono); font-size: var(--text-2xs); font-weight: 600; padding: 1px 6px; border-radius: var(--radius-xs); height: fit-content; margin-top: 2px; }
+  .cs-chip { flex-shrink: 0; font-family: var(--studio-mono); font-size: var(--text-xs); font-weight: 600; padding: 1px 6px; border-radius: var(--radius-xs); height: fit-content; margin-top: 2px; }
   .cs-chip-v1 { background: rgba(180, 83, 60, 0.14); color: #9A4530; }
   .cs-chip-v7 { background: var(--accent-soft); color: var(--studio-accent); }
 
@@ -718,7 +722,7 @@ const iterations = [
   @keyframes plFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
   .cs-pl-no { font-family: var(--studio-mono); font-size: var(--text-sm); color: var(--studio-accent); margin-bottom: 14px; letter-spacing: 0.05em; }
-  .cs-pl-title { font-family: var(--studio-serif); font-size: var(--text-display-sm); line-height: 1.18; color: var(--studio-text); margin-bottom: 16px; letter-spacing: -0.015em; }
+  .cs-pl-title { font-family: var(--studio-serif); font-weight: 700; font-size: var(--text-display-sm); line-height: 1.18; color: var(--studio-text); margin-bottom: 16px; letter-spacing: -0.02em; }
   .cs-pl-body { font-size: var(--text-lg); color: var(--studio-text-body); line-height: 1.72; margin-bottom: 22px; }
   .cs-pl-ask {
     display: flex; align-items: flex-start; gap: 9px;
@@ -801,7 +805,7 @@ const iterations = [
     backdrop-filter: blur(4px);
   }
   .cs-iter-label { display: inline-block; font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--studio-accent); margin-bottom: 12px; }
-  .cs-iter-heading { font-family: var(--studio-serif); font-size: var(--text-2xl); line-height: 1.2; color: var(--studio-text); margin-bottom: 14px; letter-spacing: -0.015em; }
+  .cs-iter-heading { font-family: var(--studio-serif); font-weight: 700; font-size: var(--text-2xl); line-height: 1.2; color: var(--studio-text); margin-bottom: 14px; letter-spacing: -0.02em; }
   .cs-iter-body p { font-size: var(--text-lg); color: var(--studio-text-body); line-height: 1.75; }
 
   /* ===== Links ===== */
@@ -873,32 +877,13 @@ const iterations = [
 </style>
 
 <script>
+  import { initMobileMenu } from "../../scripts/mobile-menu";
   document.addEventListener("DOMContentLoaded", () => {
     const root = document.querySelector('[data-variation-content="studio"]');
     if (!root) return;
 
     // Reveal on scroll
-    const reveals = root.querySelectorAll(".studio-reveal");
-    reveals.forEach((el) => {
-      el.style.animationPlayState = "paused";
-      el.style.opacity = "0";
-      el.style.transform = "translateY(16px)";
-    });
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            el.style.animationPlayState = "running";
-            el.style.opacity = "";
-            el.style.transform = "";
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
-    );
-    reveals.forEach((el) => observer.observe(el));
+    setupScrollReveal(root, 0.12);
 
     // Principles tabs
     const pl = root.querySelector("[data-principles]");
@@ -961,7 +946,9 @@ const iterations = [
       closeBtn.addEventListener("click", close);
       lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !lb.hasAttribute("hidden")) close();
+        if (lb.hasAttribute("hidden")) return;
+        if (e.key === "Escape") close();
+        else trapTab(lb, e);
       });
     }
 
@@ -985,30 +972,87 @@ const iterations = [
       closeBtn.addEventListener("click", close);
       cm.addEventListener("click", (e) => { if (e.target === cm) close(); });
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !cm.hasAttribute("hidden")) close();
+        if (cm.hasAttribute("hidden")) return;
+        if (e.key === "Escape") close();
+        else trapTab(cm, e);
       });
     }
 
-    // Mobile menu toggle
-    const toggle = root.querySelector(".studio-menu-toggle");
-    const nav = root.querySelector(".studio-nav");
-    if (toggle && nav) {
-      const openMenu = () => {
-        nav.style.display = "flex"; nav.style.flexDirection = "column";
-        nav.style.position = "absolute"; nav.style.top = "64px"; nav.style.left = "0"; nav.style.right = "0";
-        nav.style.background = "var(--studio-bg)"; nav.style.padding = "24px";
-        nav.style.borderBottom = "1px solid var(--studio-border)"; nav.style.gap = "16px";
-      };
-      const closeMenu = () => {
-        nav.style.display = ""; nav.style.flexDirection = ""; nav.style.position = "";
-        nav.style.top = ""; nav.style.left = ""; nav.style.right = "";
-        nav.style.background = ""; nav.style.padding = ""; nav.style.borderBottom = ""; nav.style.gap = "";
-      };
-      toggle.addEventListener("click", () => {
-        const isOpen = nav.style.display === "flex";
-        isOpen ? closeMenu() : openMenu();
-      });
-      nav.querySelectorAll(".studio-nav-link").forEach((link) => link.addEventListener("click", closeMenu));
-    }
+    initMobileMenu(root.querySelector<HTMLElement>(".studio-header"));
   });
+
+  // Keep Tab / Shift+Tab cycling inside an open dialog.
+  function trapTab(dialog: Element, e: KeyboardEvent) {
+    if (e.key !== "Tab") return;
+    const focusables = Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((el) => el.offsetParent !== null || el === document.activeElement);
+    if (focusables.length === 0) {
+      e.preventDefault();
+      return;
+    }
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+    if (!dialog.contains(active)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  // Scroll-triggered reveal. Skipped entirely for reduced motion (the CSS
+  // doesn't hide anything then). A 4s safety net reveals whatever is still
+  // hidden, so content can never stay invisible if the observer never fires.
+  function setupScrollReveal(root: Element, threshold: number) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    const reveals = Array.from(root.querySelectorAll<HTMLElement>(".studio-reveal"));
+    const pending = new Set(reveals);
+    let observerFired = false;
+
+    const reveal = (el: HTMLElement) => {
+      if (!pending.has(el)) return;
+      pending.delete(el);
+      el.style.animationPlayState = "running";
+      el.style.opacity = "";
+      el.style.transform = "";
+      observer.unobserve(el);
+    };
+
+    reveals.forEach((el) => {
+      el.style.animationPlayState = "paused";
+      el.style.opacity = "0";
+      el.style.transform = "translateY(16px)";
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        observerFired = true;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) reveal(entry.target as HTMLElement);
+        });
+      },
+      { threshold, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    reveals.forEach((el) => observer.observe(el));
+
+    window.setTimeout(() => {
+      // If the observer never reported, reveal everything; otherwise reveal
+      // anything at or above the viewport the visitor has already passed.
+      const viewportBottom = window.innerHeight;
+      pending.forEach((el) => {
+        if (!observerFired || el.getBoundingClientRect().top < viewportBottom) reveal(el);
+      });
+    }, 4000);
+  }
 </script>

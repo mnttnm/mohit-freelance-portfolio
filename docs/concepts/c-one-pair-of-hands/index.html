@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--
+  CONCEPT C — "One Pair of Hands" (interactive workbench hero)
+
+  TYPE: Bricolage Grotesque (Google Fonts, variable: optical size + width + weight)
+  does every job on the page — a punchy, narrow display cut at headline size and
+  a calm text cut at 13px — because one family stretching across every role is
+  the typographic version of the pitch: one person, every layer. Fragment Mono
+  is the instrument in the Build/Design lenses (specs, tree, test log) — crisp,
+  neutral, tabular, never a costume. No serif anywhere.
+
+  THESIS: the hero is not a picture of a product, it is a product. One small
+  review-queue app sits on a bench; four lenses along its edge (Design, Build,
+  Test, Automate) show the SAME app through each discipline. The visitor can
+  poke the app and switch the lens — the proof is the interaction itself.
+  Refuses: the two-column "headline + screenshot" hero and the four-sheet stack.
+
+  OWN-WORLD: warm off-white ground, ink text, one deep green accent (palette
+  kept from DESIGN.md), clay red reserved for redline measurements. Materials:
+  a bench (white, 1px hairline, soft offset shadow), a tool rail, an inspector
+  panel. Tactile, precise, playful.
+
+  STORY: "every layer of this was made by one person" → "he can do that for my
+  product" → Book a call.
+
+  FIRST VIEWPORT (1440): headline top-left, lede + CTA top-right, the bench
+  spanning full width beneath: rail | live app | inspector.
+
+  SYNTHETIC DATA NOTE: the mini app ("Asset review") and its items are a demo
+  authored for this page — not a client product, not a screenshot. All facts in
+  the page copy (10+ years, freelance since 2023, Bengaluru, project outcomes)
+  come from src/content/portfolio.ts and src/content/projects.ts.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohit Tater — Design engineer who ships the whole product</title>
+<meta name="description" content="Design, engineering, QA and AI workflows — one person, end to end. Switch the lens on a live app and see every layer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  /* ---------- tokens (mirrors src/styles/tokens.css) ---------- */
+  :root {
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --body: #4a4a4a;
+    --muted: #8a8a8a;
+    --accent: #2d5a3d;
+    --accent-pressed: #234a31;
+    --wash: #eef1ed;
+    --border: #e5e0da;
+    --clay: #b4533c;
+    --on-accent: #ffffff;
+
+    --accent-tint:   color-mix(in srgb, var(--accent) 8%,  transparent);
+    --accent-soft:   color-mix(in srgb, var(--accent) 18%, transparent);
+    --accent-line:   color-mix(in srgb, var(--accent) 32%, transparent);
+    --accent-strong: color-mix(in srgb, var(--accent) 50%, transparent);
+    --ink-a08: color-mix(in srgb, var(--ink) 8%,  transparent);
+    --ink-a16: color-mix(in srgb, var(--ink) 16%, transparent);
+    --ink-a24: color-mix(in srgb, var(--ink) 24%, transparent);
+    --ink-a40: color-mix(in srgb, var(--ink) 40%, transparent);
+
+    --font-sans: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'Fragment Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-spring: cubic-bezier(0.34, 1.46, 0.64, 1);
+
+    --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 18px; --r-pill: 999px;
+
+    --container: 1200px;
+    --gutter: 24px;
+    --rail: 84px;
+    --inspector: 292px;
+  }
+
+  /* ---------- base ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--on-accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--r-xs); }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  svg { display: block; }
+  .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* ---------- nav ---------- */
+  .nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
+  .nav-inner { height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .wordmark { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { font-size: 0.92rem; text-decoration: none; color: var(--body); transition: color .2s var(--ease-out); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { color: var(--accent) !important; font-weight: 600; }
+  @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 44px 0 72px; }
+  .hero-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 48px; align-items: end; margin-bottom: 32px; }
+  h1 {
+    margin: 0;
+    font-size: clamp(2.35rem, 5.6vw, 5.25rem);
+    font-weight: 800;
+    font-stretch: 90%;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    max-width: 11ch;
+  }
+  .hero-aside { display: flex; flex-direction: column; gap: 20px; padding-bottom: 6px; }
+  .lede { margin: 0; font-size: 1.1rem; line-height: 1.55; color: var(--body); text-wrap: pretty; max-width: 44ch; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: var(--r-sm);
+    background: var(--accent); color: var(--on-accent); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    box-shadow: 0 1px 0 var(--accent-pressed), 0 8px 18px -10px var(--accent-strong);
+    transition: background .2s var(--ease-out), transform .18s var(--ease-out), box-shadow .2s var(--ease-out);
+  }
+  .btn:hover { background: var(--accent-pressed); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0) scale(0.98); box-shadow: 0 1px 0 var(--accent-pressed); }
+  .link { font-weight: 500; font-size: 0.95rem; color: var(--body); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 1px; transition: color .2s, border-color .2s; }
+  .link:hover { color: var(--accent); border-color: var(--accent-line); }
+  .facts { margin: 0; font-size: 0.82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 10px; }
+  .facts span + span::before { content: ''; display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--border); vertical-align: middle; margin-right: 10px; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 36px 0 56px; }
+    .hero-head { grid-template-columns: 1fr; row-gap: 22px; margin-bottom: 24px; }
+    h1 { max-width: 12ch; }
+    .hero-aside { padding-bottom: 0; }
+  }
+
+  /* ---------- the bench ---------- */
+  .bench {
+    --dwell: 3000ms;
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    grid-template-areas: "rail panel";
+    min-height: 480px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+    box-shadow: 0 30px 60px -40px var(--ink-a40), 0 2px 6px -2px var(--ink-a08);
+    overflow: clip;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .bench { opacity: 0; transform: translateY(14px); }
+    .js .is-ready .bench { opacity: 1; transform: none; transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+  }
+
+  /* rail (tablist) */
+  .rail { grid-area: rail; position: relative; display: flex; flex-direction: column; padding: 8px; gap: 4px; border-right: 1px solid var(--border); background: var(--surface); }
+  .rail-ind {
+    position: absolute; z-index: 0; left: 8px; top: 8px;
+    width: calc(var(--rail) - 16px); height: 76px;
+    border-radius: var(--r-md); background: var(--wash);
+    transform: translateY(calc(var(--idx, 0) * 80px));
+    transition: transform .5s var(--ease-out);
+    overflow: hidden;
+  }
+  .rail-ind::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+  [data-auto="on"] .rail-ind.run::after { animation: fill var(--dwell) linear forwards; }
+  @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .tab {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    height: 76px; border: 0; background: transparent; border-radius: var(--r-md);
+    color: var(--muted); cursor: pointer;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em;
+    transition: color .25s var(--ease-out), transform .18s var(--ease-out);
+  }
+  .tab svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s var(--ease-spring); }
+  .tab:hover { color: var(--ink); }
+  .tab:hover svg { transform: translateY(-1px); }
+  .tab[aria-selected="true"] { color: var(--accent); }
+  .tab[aria-selected="true"] svg { transform: scale(1.08); }
+  .tab:active { transform: scale(0.96); }
+  .tab:focus-visible { outline-offset: -3px; }
+
+  .panel { grid-area: panel; display: grid; grid-template-columns: minmax(0, 1fr) var(--inspector); grid-template-areas: "stage inspector"; min-width: 0; }
+
+  /* stage */
+  .stage { grid-area: stage; position: relative; background: var(--bg); padding: 28px; container-type: inline-size; container-name: stage; display: flex; align-items: center; }
+  .stage::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(var(--ink-a24) 1px, transparent 1.2px); background-size: 8px 8px; background-position: 4px 4px; opacity: 0; transition: opacity .35s var(--ease-out); pointer-events: none; }
+  [data-lens="design"] .stage::before { opacity: 0.55; }
+
+  /* inspector */
+  .inspector { grid-area: inspector; border-left: 1px solid var(--border); background: var(--surface); display: flex; flex-direction: column; min-width: 0; }
+  .note { padding: 22px 22px 18px; flex: 1; display: flex; flex-direction: column; gap: 12px; animation: note-in .45s var(--ease-out); }
+  .note[hidden] { display: none; }
+  @keyframes note-in { from { opacity: 0; transform: translateY(6px); } }
+  .note-title { margin: 0; display: flex; align-items: baseline; gap: 10px; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; }
+  .note-title small { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 400; color: var(--muted); }
+  .note-lede { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--body); text-wrap: pretty; }
+  .note-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 0.74rem; line-height: 1.45; color: var(--ink); }
+  .note-list li { display: flex; gap: 10px; align-items: baseline; padding: 5px 0; border-top: 1px solid var(--border); }
+  .note-list li:first-child { border-top: 0; }
+  .note-list .k { color: var(--muted); flex: 0 0 auto; min-width: 5.5ch; }
+  .note-list .v { color: var(--ink); overflow-wrap: anywhere; }
+  .note-list .tree { white-space: pre; }
+  .note-list .ok { color: var(--accent); font-weight: 700; }
+  .note-list .bad { color: var(--clay); font-weight: 700; }
+  .note-list .dim { color: var(--muted); }
+  /* staggered reveal for live lists (tests, agent log) */
+  .note-list.live li { opacity: 0; transform: translateX(-4px); transition: opacity .35s var(--ease-out), transform .35s var(--ease-out); transition-delay: calc(var(--i, 0) * 140ms); }
+  .note-list.live.on li { opacity: 1; transform: none; }
+  .note-summary { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); }
+  .note-summary strong { color: var(--ink); font-weight: 600; }
+  .inspector-stamp { padding: 12px 22px 14px; border-top: 1px solid var(--border); background: var(--bg); font-size: 0.76rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .inspector-stamp svg { width: 14px; height: 14px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  .bench-hint { margin: 14px 2px 0; font-size: 0.8rem; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .bench-hint kbd { font-family: var(--font-mono); font-size: 0.68rem; padding: 2px 6px; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: var(--r-xs); background: var(--surface); color: var(--body); }
+
+  /* ---------- the mini app ---------- */
+  .app {
+    --sb: 128px;
+    position: relative; width: 100%;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+    box-shadow: 0 18px 40px -30px var(--ink-a40), 0 1px 2px var(--ink-a08);
+    font-size: 12px; line-height: 1.35;
+  }
+  .app-top { display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 12px; border-bottom: 1px solid var(--border); border-radius: var(--r-md) var(--r-md) 0 0; background: var(--surface); }
+  .app-top .dots { display: flex; gap: 5px; }
+  .app-top .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .app-name { font-weight: 700; letter-spacing: -0.01em; }
+  .app-batch { margin-left: auto; color: var(--muted); font-family: var(--font-mono); font-size: 10.5px; }
+  .app-body { position: relative; display: grid; grid-template-columns: var(--sb) minmax(0, 1fr) 208px; column-gap: 16px; padding: 14px; }
+
+  .side { position: relative; display: flex; flex-direction: column; gap: 2px; }
+  .side-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 9px; border-radius: var(--r-sm); color: var(--body); font-weight: 500; }
+  .side-item.on { background: var(--wash); color: var(--ink); font-weight: 600; }
+  .side-item b { font-family: var(--font-mono); font-weight: 400; font-size: 10.5px; color: var(--muted); min-width: 1ch; text-align: right; }
+  .side-item.on b { color: var(--accent); }
+  .side-foot { margin-top: auto; padding: 8px 9px 0; color: var(--muted); font-size: 10.5px; }
+
+  .list { position: relative; display: flex; flex-direction: column; gap: 8px; }
+  .row {
+    position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr) auto 18px; align-items: center; gap: 10px;
+    width: 100%; padding: 7px 9px 7px 7px; text-align: left;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-sm); cursor: pointer;
+    transition: border-color .2s var(--ease-out), background .2s var(--ease-out), transform .18s var(--ease-out);
+  }
+  .row:hover { border-color: var(--accent-line); }
+  .row:active { transform: scale(0.995); }
+  .row[aria-pressed="true"] { border-color: var(--accent); background: var(--wash); }
+  .row[data-status="done"] { opacity: 0.72; }
+  .thumb { width: 30px; height: 24px; border-radius: 3px; background: var(--wash); position: relative; overflow: hidden; }
+  .thumb::after { content: ''; position: absolute; inset: 0; background: var(--accent); opacity: .35; }
+  .thumb.t-a::after { inset: 8px 4px 4px 4px; border-radius: 2px 2px 0 0; }
+  .thumb.t-b::after { inset: 5px 6px 5px 6px; border-radius: 2px; }
+  .thumb.t-c::after { inset: 3px 10px; border-radius: 2px; }
+  .thumb.t-d::after { inset: 5px 9px; border-radius: 50%; }
+  .row-main { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .row-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-dims { font-family: var(--font-mono); font-size: 10px; color: var(--muted); white-space: nowrap; }
+  .row-ai { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: var(--r-pill); background: var(--wash); color: var(--accent); white-space: nowrap; }
+  .row-ai[data-ai="check"] { background: color-mix(in srgb, var(--clay) 10%, transparent); color: var(--clay); }
+  .row-state { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; transition: background .25s var(--ease-out), transform .3s var(--ease-spring); transform: scale(0.6); }
+  .row-state svg { width: 12px; height: 12px; stroke: var(--on-accent); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .2s; }
+  .row[data-status="done"] .row-state { background: var(--accent); transform: scale(1); }
+  .row[data-status="done"] .row-state .ic-check { opacity: 1; }
+  .row[data-status="flagged"] .row-state { background: var(--clay); transform: scale(1); }
+  .row[data-status="flagged"] .row-state .ic-flag { opacity: 1; }
+
+  .detail { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--surface); }
+  .detail-head { position: relative; }
+  .detail-title { font-size: 13px; font-weight: 600; margin: 0; }
+  .detail-dims { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .compare i { display: block; height: 52px; border-radius: 3px; background: var(--wash); position: relative; overflow: hidden; }
+  .compare i::after { content: ''; position: absolute; inset: 10px 8px; border-radius: 2px; background: var(--accent); opacity: .3; }
+  .compare i:last-child::after { inset: 8px 14px; }
+  .compare i:last-child { outline: 1px solid var(--accent-line); outline-offset: -1px; }
+  .detail-note { position: relative; margin: 0; color: var(--body); font-size: 12px; line-height: 1.4; }
+  .detail-note b { font-weight: 600; color: var(--ink); }
+  .detail-note[data-risk="medium"] b { color: var(--clay); }
+  .detail-actions { position: relative; display: flex; gap: 6px; margin-top: 2px; }
+  .abtn { position: relative; flex: 1; padding: 7px 8px; border-radius: var(--r-sm); border: 1px solid var(--border); background: var(--surface); font-weight: 600; font-size: 12px; cursor: pointer; transition: background .18s var(--ease-out), transform .15s var(--ease-out), border-color .18s; }
+  .abtn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .abtn.primary:hover { background: var(--accent-pressed); }
+  .abtn:not(.primary):hover { border-color: var(--ink-a24); }
+  .abtn:active, .abtn.press { transform: scale(0.96); }
+  .abtn[disabled] { opacity: 0.45; cursor: default; transform: none; }
+  .detail-state { font-size: 11px; font-weight: 600; color: var(--accent); min-height: 14px; }
+  .detail-state[data-s="flagged"] { color: var(--clay); }
+
+  /* ---------- lens: Design (redlines) ---------- */
+  .m { position: absolute; z-index: 6; pointer-events: none; display: flex; align-items: center; justify-content: center; color: var(--clay); font-family: var(--font-mono); font-size: 10px; line-height: 1; opacity: 0; transition: opacity .2s var(--ease-out); }
+  [data-lens="design"] .m { opacity: 1; transition: opacity .4s var(--ease-out) .1s; }
+  .m span { position: relative; z-index: 1; background: var(--surface); padding: 1px 3px; border-radius: 2px; }
+  .m::before { content: ''; position: absolute; background: var(--clay); }
+  .m-h { border-left: 1px solid var(--clay); border-right: 1px solid var(--clay); height: 14px; }
+  .m-h::before { left: 0; right: 0; top: 50%; height: 1px; }
+  .m-v { border-top: 1px solid var(--clay); border-bottom: 1px solid var(--clay); width: 14px; }
+  .m-v::before { top: 0; bottom: 0; left: 50%; width: 1px; }
+  .m-tag { padding: 2px 5px; border-radius: 3px; background: var(--clay); color: #fff; }
+  .m-tag span { background: transparent; color: inherit; padding: 0; }
+  .m-sb { left: var(--sb); top: 50%; width: 16px; transform: translateY(-50%); }
+  .m-gap { left: 50%; top: -8px; height: 8px; transform: translateX(-50%); }
+  .m-pad { left: -12px; top: 50%; width: 12px; transform: translateY(-50%); }
+  .m-type { left: 0; top: -18px; }
+  .m-type-2 { left: 0; top: -18px; }
+  .m-color { left: 0; top: -18px; }
+  .m-grid { right: 10px; top: 10px; }
+  /* the detail card breathes in Design so each spec tag has a gap to live in */
+  .detail { transition: gap .35s var(--ease-out), padding .35s var(--ease-out); }
+  [data-lens="design"] .detail { gap: 24px; padding-top: 30px; }
+
+  /* ---------- lens: Build (component outlines) ---------- */
+  [data-c] { outline: 1px dashed transparent; outline-offset: -1px; transition: outline-color .3s var(--ease-out); }
+  [data-c]::before { content: attr(data-c); position: absolute; z-index: 7; left: -1px; top: -1px; font-family: var(--font-mono); font-size: 9.5px; line-height: 1; padding: 3px 5px; background: var(--accent); color: var(--on-accent); border-radius: 0 0 4px 0; opacity: 0; transform: translateY(-2px); transition: opacity .25s var(--ease-out), transform .25s var(--ease-out); pointer-events: none; }
+  [data-lens="build"] [data-c] { outline-color: var(--accent-line); }
+  [data-lens="build"] [data-c]::before { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 60ms); }
+  /* container labels sit just above their box; leaf components keep only the outline */
+  .side::before, .list::before, .detail::before { top: auto; bottom: 100%; left: -1px; border-radius: 4px 4px 0 0; }
+  .row::before, .compare::before, .abtn::before { display: none; }
+  [data-lens="build"] .app::before { border-radius: var(--r-md) 0 4px 0; }
+
+  /* ---------- lens: Test (ticks) ---------- */
+  [data-test]::after {
+    content: ''; position: absolute; z-index: 8; right: -7px; top: -7px; width: 16px; height: 16px; border-radius: 50%;
+    background-color: var(--accent);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 8.3l2.3 2.3L11.6 5.8'/%3E%3C/svg%3E");
+    background-size: 12px; background-position: center; background-repeat: no-repeat;
+    box-shadow: 0 0 0 2px var(--surface);
+    transform: scale(0); transition: transform .3s var(--ease-out);
+  }
+  [data-lens="test"] [data-test]::after { transform: scale(1); transition: transform .45s var(--ease-spring); transition-delay: calc(var(--i, 0) * 160ms + 120ms); }
+  [data-lens="test"] .app { box-shadow: 0 18px 40px -30px var(--ink-a40), 0 0 0 1px var(--accent-line); }
+
+  /* ---------- lens: Automate (agent cursor) ---------- */
+  .cursor { position: absolute; z-index: 9; left: 0; top: 0; opacity: 0; pointer-events: none; transform: translate(40px, 40px); transition: transform .62s var(--ease-in-out), opacity .25s var(--ease-out); }
+  .cursor.is-on { opacity: 1; }
+  .cursor-arrow { width: 18px; height: 18px; filter: drop-shadow(0 1px 2px var(--ink-a24)); transform-origin: 20% 20%; transition: transform .12s var(--ease-out); }
+  .cursor.press .cursor-arrow { transform: scale(0.82); }
+  .cursor-tag { position: absolute; left: 16px; top: 16px; white-space: nowrap; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: var(--r-pill); background: var(--accent); color: var(--on-accent); box-shadow: 0 2px 6px -2px var(--ink-a40); }
+
+  /* ---------- responsive: bench ---------- */
+  @media (max-width: 900px) {
+    :root { --rail: auto; }
+    .bench { grid-template-columns: 1fr; grid-template-areas: "rail" "panel"; min-height: 0; }
+    .panel { grid-template-columns: 1fr; grid-template-areas: "stage" "inspector"; }
+    .rail { flex-direction: row; border-right: 0; border-bottom: 1px solid var(--border); padding: 6px; gap: 0; }
+    .rail-ind { left: 6px; top: 6px; width: calc((100% - 12px) / 4); height: 56px; transform: translateX(calc(var(--idx, 0) * 100%)); }
+    .tab { flex: 1; height: 56px; flex-direction: row; gap: 6px; font-size: 0.78rem; }
+    .tab svg { width: 17px; height: 17px; }
+    .stage { padding: 16px 12px; }
+    .inspector { border-left: 0; border-top: 1px solid var(--border); }
+    .note { padding: 16px 16px 14px; gap: 8px; }
+    .note-list .tree { white-space: pre-wrap; }
+  }
+  @media (max-width: 420px) { .tab { gap: 4px; font-size: 0.74rem; } .tab svg { width: 15px; height: 15px; } }
+
+  /* the mini app reflows inside its own box */
+  @container stage (max-width: 620px) {
+    .app-body { grid-template-columns: 1fr; row-gap: 12px; padding: 12px; }
+    .side { flex-direction: row; gap: 6px; }
+    .side-item { padding: 5px 8px; font-size: 11px; }
+    .side-foot { display: none; }
+    .m-sb { display: none; }
+    .m-grid { display: none; }
+    .row { grid-template-columns: 26px minmax(0, 1fr) auto 18px; }
+    .compare i { height: 40px; }
+  }
+
+  /* ---------- work (glimpse of the next section) ---------- */
+  .work { padding: 48px 0 72px; border-top: 1px solid var(--border); }
+  .work-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 48px; align-items: end; margin-bottom: 28px; }
+  h2 { margin: 0; font-size: clamp(1.9rem, 3.4vw, 2.8rem); font-weight: 800; font-stretch: 92%; letter-spacing: -0.03em; line-height: 1; }
+  .work-lede { margin: 0; color: var(--body); font-size: 1rem; line-height: 1.5; text-wrap: pretty; max-width: 46ch; }
+  .ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+  .ledger li { border-bottom: 1px solid var(--border); }
+  .entry { display: grid; grid-template-columns: 112px minmax(0, 1.1fr) minmax(0, 1fr) auto; align-items: center; gap: 24px; padding: 18px 8px; margin: 0 -8px; text-decoration: none; border-radius: var(--r-md); transition: background .25s var(--ease-out); }
+  .entry:hover { background: var(--surface); }
+  .mini { width: 112px; height: 72px; border-radius: var(--r-sm); background: var(--surface); border: 1px solid var(--border); display: grid; place-items: center; transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out); }
+  .entry:hover .mini { transform: translateY(-2px) rotate(-0.6deg); box-shadow: 0 14px 24px -18px var(--ink-a40); }
+  .mini svg { width: 84px; height: 52px; stroke: var(--accent); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .mini svg .f { fill: var(--wash); stroke: none; }
+  .entry-title { display: flex; flex-direction: column; gap: 3px; }
+  .entry-title strong { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; }
+  .entry-title span { font-size: 0.82rem; color: var(--muted); }
+  .entry-outcome { margin: 0; font-size: 0.95rem; color: var(--body); line-height: 1.4; text-wrap: pretty; }
+  .layers { display: flex; gap: 4px; }
+  .layers i { font-style: normal; font-size: 0.7rem; font-weight: 600; padding: 3px 8px; border-radius: var(--r-pill); border: 1px solid var(--border); color: var(--muted); }
+  .layers i.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .work-more { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-weight: 600; text-decoration: none; color: var(--ink); }
+  .work-more svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; transition: transform .25s var(--ease-out); }
+  .work-more:hover svg { transform: translateX(3px); }
+  @media (max-width: 900px) {
+    .work { padding: 40px 0 56px; }
+    .work-head { grid-template-columns: 1fr; row-gap: 14px; }
+    .entry { grid-template-columns: 72px minmax(0, 1fr); grid-template-areas: "mini title" "mini outcome" "layers layers"; gap: 6px 14px; padding: 16px 0; margin: 0; border-radius: 0; }
+    .mini { grid-area: mini; width: 72px; height: 48px; align-self: start; }
+    .mini svg { width: 56px; height: 34px; }
+    .entry-title { grid-area: title; }
+    .entry-outcome { grid-area: outcome; font-size: 0.9rem; }
+    .layers { grid-area: layers; margin-top: 8px; flex-wrap: wrap; }
+  }
+
+  /* ---------- footer stub ---------- */
+  .foot { border-top: 1px solid var(--border); padding: 28px 0 40px; font-size: 0.85rem; color: var(--muted); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .foot a { color: var(--body); text-decoration: none; }
+  .foot a:hover { color: var(--accent); }
+  .foot nav { display: flex; gap: 18px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; transition-delay: 0ms !important; animation-delay: 0ms !important; }
+    .cursor { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="wordmark" href="/">Mohit Tater</a>
+    <nav class="nav-links" aria-label="Site">
+      <a href="/projects">Work</a>
+      <a href="/about">About</a>
+      <a class="nav-cta" href="https://cal.com/tatermohit/call-with-mohit-tater">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero-head">
+      <h1 id="hero-title">Every layer, one pair of hands.</h1>
+      <div class="hero-aside">
+        <p class="lede"><strong>I'm Mohit, a design engineer who ships the whole product</strong> — design, engineering, QA and AI workflows, with no hand-offs. The app on the bench is real: switch the lens and see every layer.</p>
+        <div class="actions">
+          <a class="btn" href="https://cal.com/tatermohit/call-with-mohit-tater">Book a call
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a class="link" href="#work">See the work</a>
+        </div>
+        <p class="facts"><span>10+ years across design, engineering and QA</span><span>Freelance since 2023, Bengaluru</span></p>
+      </div>
+    </div>
+
+    <!-- THE BENCH -->
+    <div class="bench" id="bench" data-lens="design" data-auto="on">
+      <div class="rail" role="tablist" aria-label="Lens on the app" aria-orientation="vertical">
+        <span class="rail-ind run" id="rail-ind" aria-hidden="true"></span>
+        <button class="tab" role="tab" id="tab-design" aria-selected="true" aria-controls="bench-panel" data-lens="design">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v18M17 3v18M3 7h18M3 17h18"/><rect x="7" y="7" width="10" height="10"/></svg>
+          Design
+        </button>
+        <button class="tab" role="tab" id="tab-build" aria-selected="false" aria-controls="bench-panel" data-lens="build" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></svg>
+          Build
+        </button>
+        <button class="tab" role="tab" id="tab-test" aria-selected="false" aria-controls="bench-panel" data-lens="test" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.6 2.6L16.5 9"/></svg>
+          Test
+        </button>
+        <button class="tab" role="tab" id="tab-automate" aria-selected="false" aria-controls="bench-panel" data-lens="automate" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4l14 7.5-6.2 1.8L10.5 20z"/><path d="M15 16l4 4"/></svg>
+          Automate
+        </button>
+      </div>
+
+      <div id="bench-panel" class="panel" role="tabpanel" aria-labelledby="tab-design">
+        <div class="stage">
+          <!-- Demo product, synthetic data. See head comment. -->
+          <div class="app" data-c="AppShell" role="group" aria-label="Demo app: asset review queue">
+            <div class="app-top" data-test style="--i:0">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="app-name">Asset review</span>
+              <span class="app-batch">batch 42 · <span id="count-total">4</span> items</span>
+            </div>
+            <div class="app-body">
+              <span class="m m-h m-sb" aria-hidden="true"><span>16</span></span>
+
+              <nav class="side" data-c="Sidebar" data-test style="--i:1" aria-label="Queue sections">
+                <span class="side-item on">Queue <b id="count-pending">4</b></span>
+                <span class="side-item">Flagged <b id="count-flagged">0</b></span>
+                <span class="side-item">Done <b id="count-done">0</b></span>
+                <span class="side-foot">first-pass checks on</span>
+              </nav>
+
+              <div class="list" data-c="QueueList" data-test style="--i:2" role="group" aria-label="Items">
+                <button class="row" data-c="QueueRow" data-id="a" data-status="pending" aria-pressed="true">
+                  <span class="thumb t-a" aria-hidden="true"></span>
+                  <span class="row-main"><span class="row-name">hero-banner.png</span><span class="row-dims">1920×600 → 1080×1080</span></span>
+                  <span class="row-ai" data-ai="pass">AI pass</span>
+                  <span class="row-state" aria-hidden="true"><svg class="ic-check" viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.3 4.7-5"/></svg><svg class="ic-flag" viewBox="0 0 12 12" style="position:absolute"><path d="M3 10.5V2h6l-1.5 2.5L9 7H3"/></svg></span>
+                </button>
+                <button class="row" data-c="QueueRow" data-id="b" data-status="pending" aria-pressed="false">
+                  <span class="m m-v m-gap" aria-hidden="true"><span>8</span></span>
+                  <span class="thumb t-b" aria-hidden="true"></span>
+                  <span class="row-main"><span class="row-name">promo-card.jpg</span><span class="row-dims">1600×900 → 1200×628</span></span>
+                  <span class="row-ai" data-ai="pass">AI pass</span>
+                  <span class="row-state" aria-hidden="true"><svg class="ic-check" viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.3 4.7-5"/></svg><svg class="ic-flag" viewBox="0 0 12 12" style="position:absolute"><path d="M3 10.5V2h6l-1.5 2.5L9 7H3"/></svg></span>
+                </button>
+                <button class="row" data-c="QueueRow" data-id="c" data-status="pending" aria-pressed="false">
+                  <span class="thumb t-c" aria-hidden="true"></span>
+                  <span class="row-main"><span class="row-name">story.png</span><span class="row-dims">1600×900 → 1080×1920</span></span>
+                  <span class="row-ai" data-ai="check">AI check</span>
+                  <span class="row-state" aria-hidden="true"><svg class="ic-check" viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.3 4.7-5"/></svg><svg class="ic-flag" viewBox="0 0 12 12" style="position:absolute"><path d="M3 10.5V2h6l-1.5 2.5L9 7H3"/></svg></span>
+                </button>
+                <button class="row" data-c="QueueRow" data-id="d" data-status="pending" aria-pressed="false">
+                  <span class="thumb t-d" aria-hidden="true"></span>
+                  <span class="row-main"><span class="row-name">thumb.png</span><span class="row-dims">1600×900 → 400×400</span></span>
+                  <span class="row-ai" data-ai="pass">AI pass</span>
+                  <span class="row-state" aria-hidden="true"><svg class="ic-check" viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.3 4.7-5"/></svg><svg class="ic-flag" viewBox="0 0 12 12" style="position:absolute"><path d="M3 10.5V2h6l-1.5 2.5L9 7H3"/></svg></span>
+                </button>
+              </div>
+
+              <div class="detail" data-c="DetailCard" data-test style="--i:3" aria-live="polite">
+                <div class="detail-head">
+                  <span class="m m-h m-pad" aria-hidden="true"><span>12</span></span>
+                  <span class="m m-tag m-type" aria-hidden="true"><span>title · 13 / 600</span></span>
+                  <p class="detail-title" id="d-title">hero-banner.png</p>
+                  <span class="detail-dims" id="d-dims">1920×600 → 1080×1080</span>
+                </div>
+                <div class="compare" data-c="Compare" aria-hidden="true"><i></i><i></i></div>
+                <p class="detail-note" id="d-note" data-risk="low"><span class="m m-tag m-type-2" aria-hidden="true"><span>body · 12 / 400</span></span><b>Low risk.</b> Faces intact, no text near the crop.</p>
+                <div class="detail-actions">
+                  <span class="m m-tag m-color" aria-hidden="true"><span>accent #2d5a3d</span></span>
+                  <button class="abtn primary" id="btn-approve" data-c="Button" data-test style="--i:4" type="button">Approve</button>
+                  <button class="abtn" id="btn-flag" data-c="Button" type="button">Flag</button>
+                </div>
+                <span class="detail-state" id="d-state" data-s=""></span>
+              </div>
+            </div>
+          </div>
+
+          <span class="m m-tag m-grid" aria-hidden="true"><span>grid 8px</span></span>
+          <div class="cursor" id="cursor" aria-hidden="true">
+            <svg class="cursor-arrow" viewBox="0 0 18 18"><path d="M2 1.5l5.2 13.4 2.1-5.3 5.4-1.9z" fill="#1a1a1a" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            <span class="cursor-tag">agent</span>
+          </div>
+        </div>
+
+        <aside class="inspector">
+          <section class="note" id="note-design">
+            <p class="note-title">Design <small>lens 1 / 4</small></p>
+            <p class="note-lede">Specs are drawn on the live app, not on a mockup: an 8px rhythm, two type styles, one accent that marks the single primary action.</p>
+            <ul class="note-list">
+              <li><span class="k">grid</span><span class="v">8px, 4px half-step</span></li>
+              <li><span class="k">gaps</span><span class="v">16 between panels, 8 between rows</span></li>
+              <li><span class="k">type</span><span class="v">title 13/600 · body 12/400 · mono for data</span></li>
+              <li><span class="k">accent</span><span class="v">#2d5a3d — on Approve only</span></li>
+              <li><span class="k">radii</span><span class="v">6 controls · 10 windows</span></li>
+            </ul>
+            <p class="note-summary">Then I open the editor and <strong>build exactly this</strong>.</p>
+          </section>
+
+          <section class="note" id="note-build" hidden>
+            <p class="note-title">Build <small>lens 2 / 4</small></p>
+            <p class="note-lede">Seven components, one state object, pure functions for every change. The outlines are the real DOM you're looking at.</p>
+            <ul class="note-list">
+              <li class="tree">&lt;AppShell&gt;
+  &lt;Sidebar counts={3} /&gt;
+  &lt;QueueList&gt;
+    &lt;QueueRow /&gt; ×4
+  &lt;/QueueList&gt;
+  &lt;DetailCard&gt;
+    &lt;Compare /&gt;
+    &lt;Button&gt;Approve&lt;/Button&gt;
+    &lt;Button ghost&gt;Flag&lt;/Button&gt;
+  &lt;/DetailCard&gt;
+&lt;/AppShell&gt;</li>
+            </ul>
+            <p class="note-summary">State in, view out — so the next lens <strong>can prove it</strong>.</p>
+          </section>
+
+          <section class="note" id="note-test" hidden>
+            <p class="note-title">Test <small>lens 3 / 4</small></p>
+            <p class="note-lede">Five checks, run in your browser the moment this lens opened. Not a recording.</p>
+            <ul class="note-list live" id="test-list"></ul>
+            <p class="note-summary" id="test-summary"></p>
+          </section>
+
+          <section class="note" id="note-automate" hidden>
+            <p class="note-title">Automate <small>lens 4 / 4</small></p>
+            <p class="note-lede">An agent clears the low-risk items and leaves the judgment call to you — the split behind my AI review work.</p>
+            <ul class="note-list live on" id="agent-log"></ul>
+            <p class="note-summary">AI for the first pass, <strong>a human where it matters</strong>.</p>
+          </section>
+
+          <div class="inspector-stamp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.4l-5 2.8 1.2-5.6L4 8.8l5.6-.6z"/></svg>
+            Every layer here: designed, built, tested and automated by one person.
+          </div>
+        </aside>
+      </div>
+    </div>
+    <p class="bench-hint" id="bench-hint">
+      <span>Switch lenses with the tabs or <kbd>←</kbd> <kbd>→</kbd>.</span>
+      <span>The app itself works too — pick a row, approve it.</span>
+    </p>
+    <p class="sr-only" id="lens-status" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- glimpse of the next section: selected work in this world -->
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <div class="work-head">
+      <h2 id="work-title">Work that shipped.</h2>
+      <p class="work-lede">Enterprise tools, SaaS products and agent workflows — some built for clients, some on my own time. Each row shows which layers I owned.</p>
+    </div>
+    <ul class="ledger">
+      <li>
+        <a class="entry" href="/projects#ops-workspace">
+          <span class="mini" aria-hidden="true"><svg viewBox="0 0 84 52"><rect class="f" x="1" y="1" width="20" height="50" rx="2"/><rect x="1" y="1" width="82" height="50" rx="3"/><path d="M21 1v50M28 12h48M28 22h48M28 32h48M28 42h30"/><path d="M5 9h12M5 16h12M5 23h12"/></svg></span>
+          <span class="entry-title"><strong>Enterprise Ops Workspace</strong><span>Enterprise app</span></span>
+          <p class="entry-outcome">Complex internal tool, delivered end-to-end — onboarding, data views, templates, reporting.</p>
+          <span class="layers" aria-label="Layers owned: design, build"><i class="on">Design</i><i class="on">Build</i><i>Test</i><i>Automate</i></span>
+        </a>
+      </li>
+      <li>
+        <a class="entry" href="/projects#ai-resizing-studio">
+          <span class="mini" aria-hidden="true"><svg viewBox="0 0 84 52"><rect class="f" x="3" y="8" width="34" height="36" rx="2"/><rect x="3" y="8" width="34" height="36" rx="2"/><rect x="47" y="2" width="34" height="48" rx="2"/><path d="M39 26h6M12 36l8-10 6 6 4-4 4 8"/><path d="M56 42l8-10 6 6 4-4"/><path d="M62 10l2.3 2.3 4.7-5"/></svg></span>
+          <span class="entry-title"><strong>AI Resizing Studio</strong><span>AI image pipeline</span></span>
+          <p class="entry-outcome">AI handles first-pass QA; humans review only what matters.</p>
+          <span class="layers" aria-label="Layers owned: design, build, test, automate"><i class="on">Design</i><i class="on">Build</i><i class="on">Test</i><i class="on">Automate</i></span>
+        </a>
+      </li>
+      <li>
+        <a class="entry" href="/projects#reviewhub">
+          <span class="mini" aria-hidden="true"><svg viewBox="0 0 84 52"><rect class="f" x="2" y="16" width="20" height="20" rx="3"/><rect x="2" y="16" width="20" height="20" rx="3"/><rect x="32" y="16" width="20" height="20" rx="3"/><rect x="62" y="16" width="20" height="20" rx="3"/><path d="M22 26h10M52 26h10"/><path d="M9 26h6M39 23h6M39 29h6M69 26l2.3 2.3 4.7-5"/></svg></span>
+          <span class="entry-title"><strong>ReviewHub</strong><span>Agentic workflow</span></span>
+          <p class="entry-outcome">Agent-powered feedback loop, end-to-end — from a pixel annotation to a closed status.</p>
+          <span class="layers" aria-label="Layers owned: design, build, automate"><i class="on">Design</i><i class="on">Build</i><i>Test</i><i class="on">Automate</i></span>
+        </a>
+      </li>
+      <li>
+        <a class="entry" href="/projects#dashboard-skill">
+          <span class="mini" aria-hidden="true"><svg viewBox="0 0 84 52"><rect x="1" y="1" width="82" height="50" rx="3"/><rect class="f" x="8" y="30" width="10" height="14"/><rect class="f" x="24" y="20" width="10" height="24"/><rect class="f" x="40" y="26" width="10" height="18"/><rect class="f" x="56" y="10" width="10" height="34"/><path d="M8 44h66"/><path d="M8 30h10v14H8zM24 20h10v24H24zM40 26h10v18H40zM56 10h10v34H56z"/></svg></span>
+          <span class="entry-title"><strong>Designing Dashboards</strong><span>Design case study</span></span>
+          <p class="entry-outcome">Generic chart-dumps → actionable launchpads.</p>
+          <span class="layers" aria-label="Layers owned: design, test, automate"><i class="on">Design</i><i>Build</i><i class="on">Test</i><i class="on">Automate</i></span>
+        </a>
+      </li>
+    </ul>
+    <a class="work-more" href="/projects">See all projects <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+  </div>
+</section>
+</main>
+
+<footer class="container foot">
+  <span>Mohit Tater · Design engineer · Bengaluru</span>
+  <nav aria-label="Elsewhere">
+    <a href="https://mohit.stream">mohit.stream</a>
+    <a href="https://github.com/mnttnm">GitHub</a>
+    <a href="https://www.linkedin.com/in/tatermohit/">LinkedIn</a>
+  </nav>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = (ms) => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+
+  const bench = $('#bench');
+  const tabs = $$('[role="tab"]', bench);
+  const tablist = $('[role="tablist"]', bench);
+  const panel = $('#bench-panel');
+  const ind = $('#rail-ind');
+  const status = $('#lens-status');
+  const stage = $('.stage', bench);
+  const cursor = $('#cursor');
+
+  const LENSES = ['design', 'build', 'test', 'automate'];
+  const DWELL = { design: 3200, build: 3200, test: 3800, automate: 7200 };
+  const LABEL = { design: 'Design lens: spacing and type specs on the app', build: 'Build lens: component tree', test: 'Test lens: checks running', automate: 'Automate lens: an agent working the queue' };
+
+  /* ---------- mini app: state + pure functions ---------- */
+  const ITEMS = [
+    { id: 'a', name: 'hero-banner.png', dims: '1920×600 → 1080×1080', risk: 'low',    note: 'Faces intact, no text near the crop.' },
+    { id: 'b', name: 'promo-card.jpg',  dims: '1600×900 → 1200×628',  risk: 'low',    note: 'Logo kept clear of the edge.' },
+    { id: 'c', name: 'story.png',       dims: '1600×900 → 1080×1920', risk: 'medium', note: 'Headline sits 6px from the crop edge — needs a human.' },
+    { id: 'd', name: 'thumb.png',       dims: '1600×900 → 400×400',   risk: 'low',    note: 'Subject centred, nothing lost.' },
+  ];
+  const fresh = () => ({ items: ITEMS.map(i => ({ ...i, status: 'pending' })), selectedId: 'a' });
+  const setStatus = (items, id, status) => items.map(i => i.id === id ? { ...i, status } : i);
+  const approve = (items, id) => setStatus(items, id, 'done');
+  const flag = (items, id) => setStatus(items, id, 'flagged');
+  const select = (state, id) => state.items.some(i => i.id === id) ? { ...state, selectedId: id } : state;
+  const count = (items, s) => items.filter(i => i.status === s).length;
+
+  let state = fresh();
+  const rows = $$('.row', bench);
+  const el = {
+    title: $('#d-title'), dims: $('#d-dims'), note: $('#d-note'), dstate: $('#d-state'),
+    approve: $('#btn-approve'), flagBtn: $('#btn-flag'),
+    pending: $('#count-pending'), flagged: $('#count-flagged'), done: $('#count-done'),
+  };
+  const RISK = { low: 'Low risk.', medium: 'Needs a look.' };
+  const STATE_TEXT = { pending: '', done: 'Approved', flagged: 'Flagged for review' };
+
+  function render() {
+    rows.forEach(r => {
+      const it = state.items.find(i => i.id === r.dataset.id);
+      r.dataset.status = it.status;
+      r.setAttribute('aria-pressed', String(it.id === state.selectedId));
+    });
+    const it = state.items.find(i => i.id === state.selectedId);
+    el.title.textContent = it.name;
+    el.dims.textContent = it.dims;
+    el.note.dataset.risk = it.risk;
+    // keep the redline tag (first child) and rewrite the text after it
+    const tag = el.note.querySelector('.m');
+    el.note.textContent = '';
+    if (tag) el.note.appendChild(tag);
+    const b = document.createElement('b'); b.textContent = RISK[it.risk] + ' ';
+    el.note.appendChild(b); el.note.appendChild(document.createTextNode(it.note));
+    el.dstate.textContent = STATE_TEXT[it.status];
+    el.dstate.dataset.s = it.status;
+    const locked = it.status !== 'pending';
+    el.approve.disabled = locked; el.flagBtn.disabled = locked;
+    el.pending.textContent = count(state.items, 'pending');
+    el.flagged.textContent = count(state.items, 'flagged');
+    el.done.textContent = count(state.items, 'done');
+  }
+  rows.forEach(r => r.addEventListener('click', () => { state = select(state, r.dataset.id); render(); }));
+  el.approve.addEventListener('click', () => { state = { ...state, items: approve(state.items, state.selectedId) }; render(); });
+  el.flagBtn.addEventListener('click', () => { state = { ...state, items: flag(state.items, state.selectedId) }; render(); });
+  render();
+
+  /* ---------- lens machinery ---------- */
+  let lens = 'design';
+  let runId = 0;
+  let auto = !reduce;
+  let timer = null;
+  let inView = true;
+
+  function setLens(next, by) {
+    if (!LENSES.includes(next)) return;
+    runId += 1;
+    const id = runId;
+    lens = next;
+    bench.dataset.lens = next;
+    bench.style.setProperty('--dwell', DWELL[next] + 'ms');
+    tabs.forEach(t => {
+      const on = t.dataset.lens === next;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    panel.setAttribute('aria-labelledby', 'tab-' + next);
+    ind.style.setProperty('--idx', LENSES.indexOf(next));
+    ind.classList.remove('run'); void ind.offsetWidth; ind.classList.add('run');
+    LENSES.forEach(l => { $('#note-' + l).hidden = l !== next; });
+    status.textContent = LABEL[next];
+    cursor.classList.remove('is-on');
+    if (next === 'test') runTests(id);
+    if (next === 'automate') runAgent(id);
+    if (by === 'auto') schedule();
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (!auto) return;
+    timer = setTimeout(() => {
+      if (document.hidden || !inView) { schedule(); return; }
+      setLens(LENSES[(LENSES.indexOf(lens) + 1) % LENSES.length], 'auto');
+    }, DWELL[lens]);
+  }
+
+  function takeControl() {
+    if (!auto) return;
+    auto = false;
+    clearTimeout(timer);
+    bench.dataset.auto = 'off';
+  }
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => { takeControl(); setLens(t.dataset.lens, 'user'); });
+  });
+  tablist.addEventListener('keydown', (e) => {
+    const i = LENSES.indexOf(lens);
+    let n = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % LENSES.length;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i - 1 + LENSES.length) % LENSES.length;
+    if (e.key === 'Home') n = 0;
+    if (e.key === 'End') n = LENSES.length - 1;
+    if (n === null) return;
+    e.preventDefault();
+    takeControl();
+    setLens(LENSES[n], 'user');
+    tabs[n].focus();
+  });
+  // poking the app also hands over control
+  stage.addEventListener('pointerdown', takeControl, { passive: true });
+  stage.addEventListener('keydown', takeControl);
+  // ← → anywhere on the page (not inside inputs) switch lenses too
+  document.addEventListener('keydown', (e) => {
+    if (e.target.closest('[role="tablist"], input, textarea, select')) return;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const i = LENSES.indexOf(lens);
+    takeControl();
+    setLens(LENSES[(i + (e.key === 'ArrowRight' ? 1 : -1) + LENSES.length) % LENSES.length], 'user');
+  });
+
+  const orient = matchMedia('(max-width: 900px)');
+  const setOrient = () => tablist.setAttribute('aria-orientation', orient.matches ? 'horizontal' : 'vertical');
+  orient.addEventListener('change', setOrient); setOrient();
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => {
+      inView = en.isIntersecting;
+      if (inView && auto) schedule(); else clearTimeout(timer);
+    }, { threshold: 0.35 }).observe(bench);
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && auto) schedule(); });
+
+  /* ---------- Test lens: real checks against the demo ---------- */
+  function luminance(hex) {
+    const c = hex.replace('#', '').match(/.{2}/g).map(h => parseInt(h, 16) / 255).map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  const contrast = (a, b) => { const l1 = luminance(a), l2 = luminance(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+  const TESTS = [
+    ['renders 4 queue rows', () => $$('.row', bench).length === 4],
+    ['selecting a row updates the detail card', () => select(fresh(), 'c').selectedId === 'c' && select(fresh(), 'zzz').selectedId === 'a'],
+    ['approve moves a row to Done, nothing else', () => { const s = fresh(); const n = approve(s.items, 'b'); return n[1].status === 'done' && s.items[1].status === 'pending' && count(n, 'done') === 1; }],
+    ['every control has an accessible name', () => $$('button', bench).every(b => (b.textContent.trim() || b.getAttribute('aria-label')))],
+    ['body text contrast ≥ 4.5:1', () => contrast('#4a4a4a', '#ffffff') >= 4.5],
+  ];
+  function runTests(id) {
+    const list = $('#test-list'), sum = $('#test-summary');
+    list.classList.remove('on'); list.innerHTML = ''; sum.textContent = '';
+    const t0 = performance.now();
+    const results = TESTS.map(([name, fn]) => { let ok = false; try { ok = !!fn(); } catch (e) { ok = false; } return { name, ok }; });
+    const ms = Math.max(1, Math.round(performance.now() - t0));
+    results.forEach((r, i) => {
+      const li = document.createElement('li'); li.style.setProperty('--i', i);
+      const k = document.createElement('span'); k.className = r.ok ? 'ok' : 'bad'; k.textContent = r.ok ? 'PASS' : 'FAIL';
+      const v = document.createElement('span'); v.className = 'v'; v.textContent = r.name;
+      li.append(k, v); list.appendChild(li);
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => { if (id === runId) list.classList.add('on'); }));
+    const passed = results.filter(r => r.ok).length;
+    setTimeout(() => { if (id !== runId) return; sum.innerHTML = `<strong>${passed} of ${results.length} passed</strong> · ${ms} ms, just now.`; }, reduce ? 0 : results.length * 140 + 200);
+  }
+
+  /* ---------- Automate lens: an agent works the queue ---------- */
+  function moveCursorTo(target) {
+    const s = stage.getBoundingClientRect(), t = target.getBoundingClientRect();
+    const x = t.left - s.left + t.width * 0.62, y = t.top - s.top + t.height * 0.55;
+    cursor.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+  }
+  function log(text, cls) {
+    const ul = $('#agent-log');
+    const li = document.createElement('li');
+    const k = document.createElement('span'); k.className = 'k ' + (cls || 'dim'); k.textContent = cls === 'ok' ? 'done' : cls === 'bad' ? 'you' : '·';
+    const v = document.createElement('span'); v.className = 'v'; v.textContent = text;
+    li.append(k, v); ul.appendChild(li);
+    requestAnimationFrame(() => li.classList.add('on'));
+  }
+  async function runAgent(id) {
+    const ul = $('#agent-log'); ul.innerHTML = '';
+    state = fresh(); render();
+    const steps = [
+      { say: 'New batch of 4. First-pass checks marked 3 low-risk.' },
+      { to: 'a', act: 'done',    say: 'hero-banner.png — low risk → approved', cls: 'ok' },
+      { to: 'b', act: 'done',    say: 'promo-card.jpg — low risk → approved', cls: 'ok' },
+      { to: 'c', act: 'flagged', say: 'story.png — text 6px from the crop → left for you', cls: 'bad' },
+      { to: 'd', act: 'done',    say: 'thumb.png — low risk → approved', cls: 'ok' },
+      { say: '3 approved, 1 waiting for a human. That is the split I design for.' },
+    ];
+    if (!reduce) { moveCursorTo(rows[0]); await wait(60); cursor.classList.add('is-on'); }
+    for (const st of steps) {
+      if (id !== runId) return;
+      if (st.to) {
+        const row = rows.find(r => r.dataset.id === st.to);
+        if (!reduce) { moveCursorTo(row); await wait(640); if (id !== runId) return; press(); }
+        state = select(state, st.to); render();
+        await wait(380); if (id !== runId) return;
+        const btn = st.act === 'done' ? el.approve : el.flagBtn;
+        if (!reduce) { moveCursorTo(btn); await wait(520); if (id !== runId) return; press(btn); }
+        state = { ...state, items: setStatus(state.items, st.to, st.act) }; render();
+        log(st.say, st.cls);
+        await wait(420);
+      } else {
+        log(st.say);
+        await wait(820);
+      }
+    }
+    if (!reduce) { await wait(400); if (id === runId) cursor.classList.remove('is-on'); }
+  }
+  function press(btn) {
+    cursor.classList.add('press');
+    if (btn) btn.classList.add('press');
+    setTimeout(() => { cursor.classList.remove('press'); if (btn) btn.classList.remove('press'); }, 140);
+  }
+
+  /* ---------- entrance + start ---------- */
+  const start = () => {
+    document.body.classList.add('is-ready');
+    bench.style.setProperty('--dwell', (DWELL.design + 700) + 'ms');
+    ind.classList.remove('run'); void ind.offsetWidth; ind.classList.add('run');
+    if (reduce) { bench.dataset.auto = 'off'; return; }
+    setTimeout(() => { if (auto) schedule(); }, 700);
+  };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start, start); else start();
+  setTimeout(() => { if (!document.body.classList.contains('is-ready')) start(); }, 900);
+})();
+</script>
+</body>
+</html>

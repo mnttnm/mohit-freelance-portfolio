@@ -8,7 +8,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: var(--text-lg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,8 +16,45 @@ html {
 body {
   line-height: 1.6;
   overflow-x: clip;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Glide to in-page anchors only for visitors who haven't asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Anchor targets land below the fixed 64px header instead of under it. */
+[id] { scroll-margin-top: 88px; }
+
+/* One consistent, visible keyboard focus ring site-wide (mouse clicks don't
+   show it — :focus-visible only matches keyboard/AT focus). */
+:where(a, button, [role="button"], [tabindex], input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+:where([tabindex="-1"]):focus { outline: none; }
+
+/* Skip link: first Tab stop on every page, hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  z-index: 200;
+  padding: 8px 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px var(--scrim-a16);
+  transition: top 0.2s var(--ease-out);
+}
+.skip-link:focus { top: 12px; }
+
+/* Taps shouldn't flash the grey iOS highlight box over custom press states. */
+a, button, [role="button"] { -webkit-tap-highlight-color: transparent; }
 
 /* Variation-specific body defaults */
 body.variation-studio {
@@ -27,26 +63,8 @@ body.variation-studio {
   font-family: var(--font-sans);
 }
 
-body.variation-operator {
-  background: #09090B;
-  color: #E4E4E7;
-  font-family: 'Inter', -apple-system, sans-serif;
-}
-
-body.variation-conversational {
-  background: #F5F0E8;
-  color: #2C2418;
-  font-family: 'Instrument Sans', -apple-system, sans-serif;
-}
-
-body.variation-minimal {
-  background: #FAFAFA;
-  color: #111111;
-  font-family: 'Instrument Sans', -apple-system, sans-serif;
-}
-
 /* Fallback if no variation set */
-body:not(.variation-studio):not(.variation-operator):not(.variation-conversational):not(.variation-minimal) {
+body:not(.variation-studio) {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
@@ -62,17 +80,70 @@ body.variation-studio ::selection {
   color: var(--color-on-accent);
 }
 
-body.variation-operator ::selection {
-  background: #F59E0B;
-  color: #09090B;
+/* ===== Mobile menu (all page headers) =====
+   Driven by src/scripts/mobile-menu.ts. Selectors carry element + attribute
+   weight so they win over each page's scoped `.…-nav { display: none }`. */
+header[data-menu] button[data-menu-toggle] {
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  /* 44px tap target; the negative margin keeps the bars optically aligned
+     with the container edge. */
+  min-width: 44px;
+  min-height: 44px;
+  margin-right: -11px;
 }
 
-body.variation-conversational ::selection {
-  background: #C45D3E;
-  color: #fff;
+header[data-menu] button[data-menu-toggle] > span {
+  transition: transform 0.3s var(--ease-out);
 }
 
-body.variation-minimal ::selection {
-  background: #111;
-  color: #fff;
+/* Bars fold into an X while the menu is open. */
+header[data-menu].is-menu-open button[data-menu-toggle] > span:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+
+header[data-menu].is-menu-open button[data-menu-toggle] > span:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  /* A panel that drops from under the header. Hidden with visibility (not
+     display) so it can fade and slide both ways. */
+  header[data-menu] nav[data-menu-panel] {
+    display: flex;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 12px var(--site-container-padding-mobile) 20px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+    transition:
+      opacity 0.18s var(--ease-out),
+      transform 0.22s var(--ease-out),
+      visibility 0s linear 0.22s;
+  }
+
+  header[data-menu].is-menu-open nav[data-menu-panel] {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition:
+      opacity 0.18s var(--ease-out),
+      transform 0.22s var(--ease-out),
+      visibility 0s;
+  }
+
+  header[data-menu] nav[data-menu-panel] > a {
+    display: block;
+    padding: 10px 0;
+    font-size: var(--text-md);
+  }
 }
