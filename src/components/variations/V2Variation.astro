@@ -2259,6 +2259,20 @@ const craftLayers = [
       gap: 8px;
     }
   }
+
+  /* Phones: the two facts don't fit on one line in the mono face, so stack
+     them cleanly instead of leaving the dot stranded at a line end. */
+  @media (max-width: 560px) {
+    .v2-trust-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .v2-trust-sep {
+      display: none;
+    }
+  }
 </style>
 
 <script>
